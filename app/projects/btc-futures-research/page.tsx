@@ -26,6 +26,14 @@ const monitoringItems = [
   "WATCH and FAIL statuses are maintenance signals, not trading signals.",
 ];
 
+const roleItems = [
+  "Designed the research-only validation workflow.",
+  "Built the BTCUSDT data and diagnostic reporting pipeline.",
+  "Implemented forward validation, diagnostic review, RV48 risk audit, and cluster audit tooling.",
+  "Added cron-based operational monitoring with flock locks and health checks.",
+  "Separated research diagnostics from execution permissions.",
+];
+
 export default function BtcFuturesResearchPage() {
   return (
     <PageShell>
@@ -54,6 +62,21 @@ export default function BtcFuturesResearchPage() {
         </Card>
       </PageSection>
 
+      <PageSection title="My Role">
+        <Card>
+          <ul className="space-y-4">
+            {roleItems.map((item) => (
+              <li
+                key={item}
+                className="border-l border-emerald-300/40 pl-4 text-neutral-300"
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
+        </Card>
+      </PageSection>
+
       <PageSection title="Architecture">
         <div className="grid gap-4 md:grid-cols-2">
           {architectureItems.map((item) => (
@@ -66,11 +89,29 @@ export default function BtcFuturesResearchPage() {
       </PageSection>
 
       <PageSection title="System Health Snapshot">
+        <div className="mb-6 rounded-lg border border-white/10 bg-neutral-900 px-5 py-4">
+          <p className="text-sm text-neutral-300">
+            Static snapshot from the research server health report. Operational
+            status only, not a trading signal.
+          </p>
+          <p className="mt-2 text-sm font-semibold text-neutral-100">
+            Snapshot date: 2026-07-07 UTC
+          </p>
+        </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {healthSnapshot.map((item) => (
             <MetricCard key={item.label} label={item.label} value={item.value} />
           ))}
         </div>
+      </PageSection>
+
+      <PageSection title="Tech Stack">
+        <Card>
+          <p className="text-lg font-semibold text-white">
+            Python · pandas · CSV reports · cron · Linux · GitHub · AWS Lightsail ·
+            Next.js · Vercel
+          </p>
+        </Card>
       </PageSection>
 
       <PageSection title="Validation Layer">

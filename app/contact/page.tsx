@@ -12,7 +12,7 @@ export default function ContactPage() {
     <PageShell>
       <PageSection
         eyebrow="Contact"
-        title="Research-Focused Opportunities"
+        title="Open to Quant Research & Market Data Infrastructure Roles"
         className="pt-16"
       >
         <div className="grid gap-6 lg:grid-cols-[1fr_0.9fr]">
