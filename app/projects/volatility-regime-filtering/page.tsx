@@ -4,7 +4,7 @@ import { Card, PageSection, PageShell } from "@/components/site-shell";
 export const metadata: Metadata = {
   title: "Volatility Regime Filtering in Futures Markets | Woosub Shin",
   description:
-    "MSc thesis project on EGARCH-based volatility regime conditioning for intraday futures research.",
+    "MSc thesis project on EGARCH-based volatility regime conditioning across equity index and commodity futures.",
 };
 
 const tags = [
@@ -12,17 +12,56 @@ const tags = [
   "Volatility Modeling",
   "EGARCH",
   "Intraday Futures",
+  "Cross-Asset Futures",
   "Risk Management",
   "Python",
 ];
 
-const methodologyItems = [
-  "Daily EGARCH(1,1) model with Student's t innovations.",
-  "Volatility regime classification using percentile thresholds.",
-  "5-minute intraday futures data during regular trading hours.",
-  "Strategy modules conditioned on volatility regime.",
-  "Transaction costs and ATR-based risk controls included.",
-  "Comparison against no-EGARCH and alternative volatility filters.",
+const studiedMarkets = [
+  "E-mini Nasdaq-100 futures",
+  "E-mini S&P 500 futures",
+  "Crude Oil futures",
+];
+
+const dataFrequencyItems = [
+  "Daily data used for EGARCH volatility estimation.",
+  "5-minute intraday data used for strategy evaluation.",
+  "Regular trading hours / intraday session filtering.",
+  "Daily regime labels merged into intraday observations by date.",
+  "Transaction costs and risk controls included in the framework.",
+];
+
+const methodologyGroups = [
+  {
+    title: "EGARCH Volatility Layer",
+    items: [
+      "EGARCH(1,1) model.",
+      "Student's t innovations.",
+      "Daily conditional volatility estimates.",
+      "Volatility regimes classified using percentile thresholds.",
+      "Asymmetry parameter interpreted as volatility response to negative shocks.",
+    ],
+  },
+  {
+    title: "Intraday Strategy Layer",
+    items: [
+      "Medium volatility: trend-following module.",
+      "Low volatility: mean-reversion module.",
+      "High volatility: no exposure / flat state.",
+      "ATR-based risk controls.",
+      "Same underlying intraday logic compared with and without EGARCH conditioning.",
+    ],
+  },
+  {
+    title: "Validation Layer",
+    items: [
+      "Ablation test comparing the EGARCH-filtered framework with an otherwise identical no-EGARCH framework.",
+      "Alternative volatility filters considered.",
+      "Walk-forward validation.",
+      "Bootstrap / robustness checks.",
+      "Subperiod and asset-level interpretation.",
+    ],
+  },
 ];
 
 const architectureLayers = [
@@ -45,19 +84,34 @@ const architectureLayers = [
 ];
 
 const findings = [
-  "Removing the volatility filter weakened the framework's risk-adjusted profile.",
-  "The strongest evidence came from ablation and robustness comparisons.",
-  "EGARCH performed well as a volatility-regime filter, but it should not be interpreted as a universal trading rule.",
-  "Statistical evidence supported the usefulness of volatility conditioning, while robustness tests showed that model choice uncertainty remains important.",
+  "The EGARCH-conditioned framework showed stronger risk-adjusted behavior than the corresponding no-filter version in the main research setting.",
+  "The evidence is strongest when interpreted through ablation: removing the volatility filter weakens the framework.",
+  "EGARCH was most useful as a volatility-regime admissibility layer, not as a direction predictor.",
+  "Cross-asset results highlight that volatility conditioning is useful but not universally transferable without degradation.",
+  "Robustness testing showed that model choice and sample design matter, so the result should be read as evidence for regime-filtering discipline rather than a universal trading rule.",
+];
+
+const supportedInterpretations = [
+  "Volatility regime filters can improve the discipline of an intraday framework.",
+  "EGARCH can be useful when treated as a permission layer.",
+  "Ablation testing is essential for separating model contribution from entry-rule behavior.",
+];
+
+const unsupportedInterpretations = [
+  "EGARCH does not predict direction.",
+  "The framework is not a universal trading strategy.",
+  "The results are not causal proof.",
+  "The results are not live trading permission.",
+  "The results are not investment advice.",
 ];
 
 const limitations = [
   "Results are sample-specific.",
-  "This is not causal proof.",
-  "Parameter selection and regime thresholds require care.",
-  "Performance can decay under walk-forward validation.",
-  "Volatility filtering is useful for risk control, but not sufficient for trade direction.",
-  "Academic research results should not be treated as live trading permission.",
+  "Regime thresholds are design choices.",
+  "Transaction cost assumptions matter.",
+  "Walk-forward degradation is expected in realistic re-selection.",
+  "Cross-asset behavior can differ, especially between equity index futures and commodity futures.",
+  "Academic backtests are not live trading systems.",
 ];
 
 const lessons = [
@@ -71,8 +125,10 @@ const lessons = [
 const skills = [
   "Financial econometrics",
   "EGARCH / GARCH-family volatility modeling",
-  "Intraday data cleaning",
+  "Intraday futures data cleaning",
+  "Cross-asset futures research",
   "Backtesting discipline",
+  "Ablation testing",
   "Robustness testing",
   "Bootstrap inference",
   "Walk-forward validation",
@@ -99,13 +155,14 @@ export default function VolatilityRegimeFilteringPage() {
           Volatility Regime Filtering in Futures Markets
         </h1>
         <p className="mt-5 max-w-4xl text-xl text-neutral-300">
-          MSc thesis project on EGARCH-based volatility regime conditioning for
-          intraday futures research.
+          An EGARCH-based intraday futures research framework for
+          volatility-conditioned trade admissibility across equity index and
+          commodity futures.
         </p>
         <p className="mt-5 max-w-4xl text-neutral-400">
-          An EGARCH-based intraday futures research framework for
-          volatility-conditioned trade admissibility. The project treats volatility
-          permission as separate from directional entry logic.
+          This academic project studies volatility permission separately from
+          directional entry logic, with EGARCH used as a regime filter rather than
+          a price-direction model.
         </p>
         <a
           href="/papers/volatility-regime-filtering-thesis.pdf"
@@ -127,6 +184,27 @@ export default function VolatilityRegimeFilteringPage() {
         </div>
       </section>
 
+      <PageSection title="Overview">
+        <Card>
+          <div className="max-w-4xl space-y-5 text-neutral-300">
+            <p>
+              This MSc thesis studies whether daily EGARCH volatility regimes can
+              improve the risk-adjusted profile of an intraday futures framework by
+              acting as a trade admissibility layer. The model is not used to
+              forecast price direction. Instead, EGARCH classifies the volatility
+              environment, and the intraday strategy logic is allowed or restricted
+              depending on the regime.
+            </p>
+            <p>
+              The project connects financial econometrics with intraday market data
+              engineering: daily volatility estimates are merged into 5-minute
+              futures data, and the same underlying trading logic is compared with
+              and without volatility conditioning.
+            </p>
+          </div>
+        </Card>
+      </PageSection>
+
       <PageSection title="Research Question">
         <Card>
           <h2 className="max-w-4xl text-2xl font-semibold text-white">
@@ -142,34 +220,64 @@ export default function VolatilityRegimeFilteringPage() {
         </Card>
       </PageSection>
 
-      <PageSection title="Research Context">
-        <div className="grid gap-4 md:grid-cols-2">
+      <PageSection title="Asset Universe">
+        <div className="grid gap-4 lg:grid-cols-[0.8fr_1.2fr]">
           <Card>
-            <h2 className="text-lg font-semibold text-white">Assets</h2>
+            <h2 className="text-lg font-semibold text-white">Studied Markets</h2>
             <ul className="mt-4 space-y-3 text-neutral-300">
-              <li>E-mini Nasdaq-100 futures</li>
-              <li>E-mini S&amp;P 500 futures</li>
+              {studiedMarkets.map((market) => (
+                <li key={market}>{market}</li>
+              ))}
             </ul>
           </Card>
           <Card>
-            <h2 className="text-lg font-semibold text-white">Regime Use</h2>
-            <ul className="mt-4 space-y-3 text-neutral-300">
-              <li>High volatility: flat / no exposure.</li>
-              <li>Medium volatility: trend-following module.</li>
-              <li>Low volatility: mean-reversion module.</li>
-            </ul>
+            <p className="text-neutral-300">
+              The thesis focuses on liquid futures markets across equity index and
+              commodity exposure. Equity index futures provide the main setting for
+              the intraday framework, while crude oil futures add a cross-market
+              commodity case for assessing whether volatility-regime behavior
+              generalizes beyond equity indices.
+            </p>
           </Card>
         </div>
       </PageSection>
 
-      <PageSection title="Methodology">
+      <PageSection title="Data and Frequency">
         <div className="grid gap-4 md:grid-cols-2">
-          {methodologyItems.map((item) => (
+          {dataFrequencyItems.map((item) => (
             <Card key={item}>
               <p className="text-neutral-300">{item}</p>
             </Card>
           ))}
         </div>
+      </PageSection>
+
+      <PageSection title="Methodology">
+        <div className="grid gap-4 lg:grid-cols-3">
+          {methodologyGroups.map((group) => (
+            <Card key={group.title}>
+              <h2 className="text-lg font-semibold text-white">{group.title}</h2>
+              <ul className="mt-4 space-y-3 text-neutral-300">
+                {group.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </Card>
+          ))}
+        </div>
+      </PageSection>
+
+      <PageSection title="Research Design">
+        <Card>
+          <p className="max-w-4xl text-neutral-300">
+            The central design choice is to separate permission, direction, and
+            execution. EGARCH determines whether the volatility environment is
+            suitable for exposure. Directional logic is handled by intraday
+            indicators, while risk controls govern exits and drawdown behavior. This
+            separation helps evaluate whether volatility modeling contributes
+            information beyond the entry rules themselves.
+          </p>
+        </Card>
       </PageSection>
 
       <PageSection title="Framework Architecture">
@@ -196,6 +304,31 @@ export default function VolatilityRegimeFilteringPage() {
             ))}
           </ul>
         </Card>
+      </PageSection>
+
+      <PageSection title="Results Interpretation">
+        <div className="grid gap-4 md:grid-cols-2">
+          <Card>
+            <h2 className="text-lg font-semibold text-white">
+              What the Thesis Supports
+            </h2>
+            <ul className="mt-4 space-y-3 text-neutral-300">
+              {supportedInterpretations.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </Card>
+          <Card>
+            <h2 className="text-lg font-semibold text-white">
+              What the Thesis Does Not Support
+            </h2>
+            <ul className="mt-4 space-y-3 text-neutral-300">
+              {unsupportedInterpretations.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </Card>
+        </div>
       </PageSection>
 
       <PageSection title="Robustness and Limitations">

@@ -48,9 +48,9 @@ export default function ProjectsPage() {
               Volatility Regime Filtering in Futures Markets
             </h2>
             <p className="mt-4 text-neutral-400">
-              EGARCH-based volatility regime conditioning for intraday futures
-              research, framed as an admissibility filter rather than a direction
-              predictor.
+              MSc thesis project studying EGARCH-conditioned volatility regimes as
+              a trade admissibility layer across intraday futures markets,
+              including equity index and crude oil futures.
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
               {["EGARCH", "Intraday futures", "Risk filtering"].map((tag) => (
