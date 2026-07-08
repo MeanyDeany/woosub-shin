@@ -91,6 +91,28 @@ export default function Home() {
         </div>
       </PageSection>
 
+      <PageSection eyebrow="Selected research" title="Financial Econometrics">
+        <Card>
+          <p className="text-sm font-semibold uppercase text-emerald-300">
+            MSc thesis
+          </p>
+          <h2 className="mt-4 text-2xl font-semibold text-white">
+            Volatility Regime Filtering in Futures Markets
+          </h2>
+          <p className="mt-4 max-w-3xl text-neutral-400">
+            EGARCH-based volatility regime conditioning for intraday futures
+            research. The thesis frames volatility modeling as a risk and
+            admissibility layer, not as a direction predictor.
+          </p>
+          <Link
+            href="/projects/volatility-regime-filtering"
+            className="mt-6 inline-flex rounded-lg border border-emerald-300/50 px-4 py-2 text-sm font-semibold text-emerald-200 transition hover:bg-emerald-300/10 focus:outline-none focus:ring-2 focus:ring-emerald-300"
+          >
+            View thesis project
+          </Link>
+        </Card>
+      </PageSection>
+
       <PageSection eyebrow="Contact" title="Research and Infrastructure Roles">
         <Card>
           <p className="max-w-3xl text-neutral-300">

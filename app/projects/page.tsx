@@ -4,7 +4,11 @@ import { Card, PageSection, PageShell } from "@/components/site-shell";
 export default function ProjectsPage() {
   return (
     <PageShell>
-      <PageSection eyebrow="Projects" title="Research Infrastructure Work" className="pt-16">
+      <PageSection
+        eyebrow="Projects"
+        title="Research Projects and Papers"
+        className="pt-16"
+      >
         <div className="grid gap-6 lg:grid-cols-2">
           <Card>
             <p className="text-sm font-semibold uppercase text-emerald-300">
@@ -37,17 +41,63 @@ export default function ProjectsPage() {
           </Card>
 
           <Card>
-            <p className="text-sm font-semibold uppercase text-neutral-500">
-              Portfolio direction
+            <p className="text-sm font-semibold uppercase text-emerald-300">
+              MSc thesis
             </p>
             <h2 className="mt-4 text-2xl font-semibold text-white">
-              Financial econometrics systems
+              Volatility Regime Filtering in Futures Markets
             </h2>
             <p className="mt-4 text-neutral-400">
-              Future project writeups can cover feature validation, regime stability,
-              risk diagnostics, and reproducible research workflows. Each project
-              should distinguish research evidence from trading permission.
+              EGARCH-based volatility regime conditioning for intraday futures
+              research, framed as an admissibility filter rather than a direction
+              predictor.
             </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {["EGARCH", "Intraday futures", "Risk filtering"].map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-lg border border-white/10 px-3 py-1 text-sm text-neutral-300"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <Link
+              href="/projects/volatility-regime-filtering"
+              className="mt-7 inline-flex rounded-lg border border-emerald-300/50 px-4 py-2 text-sm font-semibold text-emerald-200 transition hover:bg-emerald-300/10 focus:outline-none focus:ring-2 focus:ring-emerald-300"
+            >
+              Open thesis project
+            </Link>
+          </Card>
+
+          <Card>
+            <p className="text-sm font-semibold uppercase text-emerald-300">
+              Seminar paper
+            </p>
+            <h2 className="mt-4 text-2xl font-semibold text-white">
+              Bitcoin Bubble Detection with GSADF
+            </h2>
+            <p className="mt-4 text-neutral-400">
+              A crypto-asset bubble detection study using right-tailed
+              explosive-root testing to examine Bitcoin price dynamics and bubble
+              episodes.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {["Bitcoin", "GSADF", "Bubble detection"].map((tag) => (
+                <span
+                  key={tag}
+                  className="rounded-lg border border-white/10 px-3 py-1 text-sm text-neutral-300"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <Link
+              href="/projects/bitcoin-bubble-gsadf"
+              className="mt-7 inline-flex rounded-lg border border-emerald-300/50 px-4 py-2 text-sm font-semibold text-emerald-200 transition hover:bg-emerald-300/10 focus:outline-none focus:ring-2 focus:ring-emerald-300"
+            >
+              Open seminar project
+            </Link>
           </Card>
         </div>
       </PageSection>
