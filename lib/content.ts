@@ -6,54 +6,174 @@ export const navigation = [
   { href: "/contact", label: "Contact" },
 ];
 
+export type ArchitectureStage = {
+  title: string;
+  description: string;
+  details: readonly string[];
+};
+
+export const architectureStages: readonly ArchitectureStage[] = [
+  {
+    title: "Market Data",
+    description: "A factual, completed-candle source for downstream research.",
+    details: [
+      "BTCUSDT 5-minute OHLCV",
+      "Local SQLite source",
+      "Exact completed-candle handling",
+      "Read-only research access where applicable",
+    ],
+  },
+  {
+    title: "Hourly Input Construction",
+    description: "Deterministic inputs aligned to exact UTC research windows.",
+    details: [
+      "Exact completed UTC hourly inputs",
+      "No interpolation or forward fill",
+      "No tolerance joins",
+      "Factual source hashes",
+    ],
+  },
+  {
+    title: "Daily Model Fits",
+    description: "Four independent statistical volatility specifications.",
+    details: [
+      "GARCH(1,1) Student-t",
+      "EGARCH(1,1) Student-t",
+      "GJR-GARCH(1,1) Student-t",
+      "HAR-RV",
+    ],
+  },
+  {
+    title: "Hourly Forecast States",
+    description: "Raw next-hour variance evidence without policy interpretation.",
+    details: [
+      "Decimal variance and volatility forecasts",
+      "No annualization or 10,000 scaling",
+      "No regime or direction interpretation",
+      "No entry, veto, or permission interpretation",
+    ],
+  },
+  {
+    title: "Forward Outcome Validation",
+    description: "Factual outcomes calculated only after the forecast horizon closes.",
+    details: [
+      "Next completed one-hour window",
+      "One exact anchor 5-minute candle and twelve exact future 5-minute candles",
+      "Realized variance from decimal log returns",
+      "Forecast error, realized volatility, and QLIKE loss",
+    ],
+  },
+  {
+    title: "Health and Integrity Monitoring",
+    description: "Operational checks for the evidence pipeline and its ledgers.",
+    details: [
+      "Scheduler, source, fit, state, and outcome health",
+      "Semantic duplicate and orphan-reference detection",
+      "Fit/state mismatch detection",
+      "Latest four-model outcome coverage",
+    ],
+  },
+];
+
+export const shadowModels = [
+  {
+    name: "GARCH(1,1)-t",
+    description:
+      "A symmetric conditional-variance model with Student-t innovations for heavy-tailed returns.",
+  },
+  {
+    name: "EGARCH(1,1)-t",
+    description:
+      "A log-variance specification that represents asymmetric volatility responses without positivity constraints.",
+  },
+  {
+    name: "GJR-GARCH(1,1)-t",
+    description:
+      "A threshold model that allows negative and positive return shocks to affect variance differently.",
+  },
+  {
+    name: "HAR-RV",
+    description:
+      "A heterogeneous autoregressive model built from realized-volatility components across multiple horizons.",
+  },
+] as const;
+
+export const ledgerProperties = [
+  "Append-only records",
+  "Deterministic event identities",
+  "Deterministic content hashes",
+  "Exact source provenance",
+  "Fit/state referential integrity",
+  "Semantic fit-slot protection",
+  "Orphan-reference blocking",
+  "Fit/state mismatch blocking",
+  "Semantic duplicate blocking",
+  "Conflicting factual content blocking",
+  "Immutable historical evidence",
+] as const;
+
+export const schedulerJobs = [
+  "Hourly GARCH-family state generation",
+  "Hourly HAR-RV state generation",
+  "Hourly forward outcome processing",
+  "Daily GARCH-family fitting",
+  "Daily HAR-RV fitting",
+  "Hourly health validation",
+  "Daily maturity review",
+] as const;
+
+export const schedulerControls = [
+  "Staggered UTC scheduling",
+  "Serialized scheduler execution",
+  "Process locks and separate append locks",
+  "Scheduler status and schedule-hash validation",
+  "Automatic cron observation",
+  "Production fit generation is scheduler-controlled",
+  "Production state generation is scheduler-controlled",
+  "Forward-outcome appends are scheduler-controlled",
+  "Manual production appends are outside normal operating procedure",
+] as const;
+
+export const operationalSnapshot = [
+  { label: "Shadow models", value: "4" },
+  { label: "Scheduled jobs", value: "7" },
+  { label: "Ledger blockers at initial validation", value: "0" },
+  { label: "Semantic duplicates at initial validation", value: "0" },
+  { label: "Initial forward outcome rows", value: "8" },
+  { label: "Outcome maturity", value: "BOOTSTRAP" },
+  { label: "Production execution", value: "DISABLED" },
+] as const;
+
+export const demonstratedCapabilities = [
+  "Statistical volatility model implementation",
+  "Deterministic research pipelines",
+  "Anti-lookahead validation",
+  "Immutable and append-only event design",
+  "Data provenance and content hashing",
+  "Scheduler, lock, and concurrency design",
+  "Failure-state handling",
+  "Operational health monitoring",
+  "Separation of research evidence from execution",
+  "Production-style research operations on constrained infrastructure",
+] as const;
+
 export const boundaryItems = [
-  "This project is research-only.",
-  "No live trading.",
-  "No paper trading approval.",
-  "No Binance execution.",
-  "No entry permission.",
-  "No short permission.",
-  "No leverage sizing.",
-  "No veto rule.",
-  "No investment advice.",
-];
-
-export const architectureItems = [
-  {
-    title: "Data Layer",
-    detail: "BTCUSDT OHLCV, funding, open interest",
-  },
-  {
-    title: "Feature Layer",
-    detail: "EMA, RSI, ATR, realized volatility, V2 candidate flags",
-  },
-  {
-    title: "Validation Layer",
-    detail: "forward validation, diagnostic review, RV48 risk audit, cluster audit",
-  },
-  {
-    title: "Ops Layer",
-    detail: "cron automation, flock locks, health checks, CPU/memory/disk monitoring",
-  },
-];
-
-export const healthSnapshot = [
-  { label: "overall_status", value: "PASS" },
-  { label: "WATCH", value: "0" },
-  { label: "FAIL", value: "0" },
-  { label: "cron", value: "staggered" },
-  { label: "report cadence", value: "30 minutes" },
-  { label: "CPU", value: "no high CPU process" },
-  { label: "reboot required", value: "no" },
-];
-
-export const researchLessons = [
-  "A candidate signal is not a trading rule.",
-  "Sample size and cluster dominance matter.",
-  "Forward validation must be separated from development.",
-  "Operational reliability matters even in research systems.",
-  "Automation should reduce emotional discretionary decisions, not amplify them.",
-];
+  "Research-only system",
+  "No live trading",
+  "No paper trading approval",
+  "No Binance execution",
+  "No broker integration",
+  "No order routing",
+  "No entry permission",
+  "No short permission",
+  "No leverage",
+  "No position sizing",
+  "No automatic veto rule",
+  "Policy state is not entry permission",
+  "Model maturity is not strategy approval",
+  "Lower forecast loss is not trading permission",
+  "No investment advice",
+] as const;
 
 export const researchNotes = [
   {

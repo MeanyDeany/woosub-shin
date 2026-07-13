@@ -3,12 +3,12 @@ import { Card, PageSection, PageShell } from "@/components/site-shell";
 
 const focusAreas = [
   "Market data validation",
-  "Volatility-regime diagnostics",
-  "Forward validation workflows",
-  "Research operations monitoring",
+  "Volatility forecasting infrastructure",
+  "Immutable research evidence",
+  "Operational integrity monitoring",
 ];
 
-const systemFlow = ["Data", "Features", "Validation", "Operations"];
+const systemFlow = ["Inputs", "Forecasts", "Evidence", "Integrity"];
 
 export default function Home() {
   return (
@@ -25,8 +25,9 @@ export default function Home() {
             MSc Economics | Financial Econometrics | Quant Research Infrastructure
           </p>
           <p className="mt-6 max-w-3xl text-lg leading-8 text-neutral-400">
-            I build research systems for market data validation, volatility-regime
-            diagnostics, and risk-aware trading infrastructure.
+            I build research systems for market data validation, volatility
+            forecasting, immutable evidence pipelines, and operationally reliable
+            research infrastructure.
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Link
@@ -63,13 +64,13 @@ export default function Home() {
               BTC Futures Research Assistant
             </p>
             <h2 className="mt-4 text-2xl font-semibold text-white">
-              Research-only diagnostics and validation infrastructure for BTCUSDT
-              futures.
+              Immutable volatility forecast evidence for BTCUSDT futures research.
             </h2>
             <p className="mt-4 text-neutral-400">
-              A structured research assistant for market-data checks, volatility
-              candidate tracking, forward validation, and operational health
-              monitoring. It is intentionally separated from trading execution.
+              A research-only pipeline for statistical volatility forecasts,
+              append-only evidence ledgers, factual forward outcome validation, and
+              operational integrity monitoring. Research evidence remains strictly
+              separated from execution and strategy permission.
             </p>
             <Link
               href="/projects/btc-futures-research"
