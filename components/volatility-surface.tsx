@@ -31,10 +31,10 @@ type DeviceNavigator = Navigator & {
 
 function interpolateColor(value: number) {
   const stops = [
-    new THREE.Color("#67e8f9"),
-    new THREE.Color("#60a5fa"),
-    new THREE.Color("#a78bfa"),
-    new THREE.Color("#fbbf24"),
+    new THREE.Color("#42D7F5"),
+    new THREE.Color("#4D8DFF"),
+    new THREE.Color("#9B6CFF"),
+    new THREE.Color("#FFB547"),
   ];
   const normalized = THREE.MathUtils.clamp((value - 0.2) / 0.82, 0, 1);
   const scaled = normalized * (stops.length - 1);
@@ -49,8 +49,8 @@ function buildRibbonGeometry(values: readonly number[], modelIndex: number) {
   const colors: number[] = [];
   const uvs: number[] = [];
   const indices: number[] = [];
-  const ribbonWidth = 0.72;
-  const modelSpacing = 1.28;
+  const ribbonWidth = 0.88;
+  const modelSpacing = 1.36;
   const modelCenter =
     (modelIndex - (SHADOW_MODEL_NAMES.length - 1) / 2) * modelSpacing;
 
@@ -61,8 +61,8 @@ function buildRibbonGeometry(values: readonly number[], modelIndex: number) {
       const timeProgress = timeIndex / (values.length - 1);
 
       positions.push(
-        (timeProgress - 0.5) * 7,
-        value * 2.35 - 0.9,
+        (timeProgress - 0.5) * 7.6,
+        value * 3.45 - 1.28,
         modelCenter + (edgeIndex === 0 ? -ribbonWidth / 2 : ribbonWidth / 2),
       );
       colors.push(color.r, color.g, color.b);
@@ -114,7 +114,7 @@ function SurfaceMesh({
 
   useFrame(({ clock }) => {
     if (groupRef.current) {
-      groupRef.current.rotation.y = -0.19 + Math.sin(clock.elapsedTime * 0.22) * 0.035;
+      groupRef.current.rotation.y = -0.29 + Math.sin(clock.elapsedTime * 0.16) * 0.018;
     }
   });
 
@@ -139,7 +139,7 @@ function SurfaceMesh({
   }
 
   return (
-    <group ref={groupRef} rotation={[-0.08, -0.19, 0]}>
+    <group ref={groupRef} rotation={[-0.19, -0.29, 0]}>
       {geometries.map(({ geometry, model }) => (
         <group key={model}>
           <mesh
@@ -151,17 +151,17 @@ function SurfaceMesh({
               vertexColors
               side={THREE.DoubleSide}
               transparent
-              opacity={0.8}
-              roughness={0.64}
-              metalness={0.08}
+              opacity={0.9}
+              roughness={0.5}
+              metalness={0.06}
             />
           </mesh>
           <mesh geometry={geometry}>
             <meshBasicMaterial
-              color="#dbeafe"
+              color="#DCE3EC"
               wireframe
               transparent
-              opacity={0.16}
+              opacity={0.12}
             />
           </mesh>
         </group>
@@ -217,15 +217,15 @@ export function VolatilitySurface() {
   const sample = SURFACE_SAMPLES[asset];
 
   return (
-    <div>
-      <div className="mb-4 flex min-h-11 flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <div className="min-h-[548px] min-w-0">
+      <div className="mb-3 flex min-h-11 flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <div className="mb-2"><ProvenanceBadge provenance={sample.provenance} /></div>
-          <p className="text-sm font-medium text-neutral-200">{sample.status}</p>
-          <p className="mt-1 max-w-2xl text-xs leading-5 text-neutral-500">{sample.context}</p>
+          <p className="text-sm font-medium text-[#DCE3EC]">{sample.status}</p>
+          <p className="mt-1 max-w-2xl text-xs leading-5 text-[#7E8B9D]">{sample.context}</p>
         </div>
         <div
-          className="flex w-fit gap-1 rounded-lg border border-white/10 bg-neutral-950 p-1"
+          className="flex w-fit gap-1 rounded-lg border border-[#7E8B9D]/15 bg-[#080B11] p-1"
           role="group"
           aria-label="Research asset surface"
         >
@@ -240,8 +240,8 @@ export function VolatilitySurface() {
               }}
               className={`min-w-20 rounded-md px-3 py-2 text-xs font-semibold transition focus:outline-none focus:ring-2 focus:ring-cyan-300 ${
                 asset === assetOption
-                  ? "bg-white/10 text-white"
-                  : "text-neutral-400 hover:bg-white/[0.06] hover:text-neutral-200"
+                  ? "bg-[#4D8DFF]/15 text-white"
+                  : "text-[#7E8B9D] hover:bg-white/[0.05] hover:text-[#DCE3EC]"
               }`}
             >
               {assetOption}
@@ -251,12 +251,12 @@ export function VolatilitySurface() {
       </div>
 
       <div
-        className="relative h-[420px] w-full overflow-hidden bg-neutral-950 sm:h-[540px]"
+        className="relative h-[350px] w-full overflow-hidden bg-[#07090D] sm:h-[390px] 2xl:h-[400px]"
         data-surface-mode={surfaceMode}
       >
         {surfaceMode === "interactive" ? (
           <Canvas
-            camera={{ position: [5.4, 4.2, 6.5], fov: 39, near: 0.1, far: 50 }}
+            camera={{ position: [6.2, 5, 7.8], fov: 36, near: 0.1, far: 50 }}
             dpr={[1, 1.5]}
             fallback={<VolatilitySurfaceFallback asset={asset} />}
             gl={{
@@ -266,13 +266,14 @@ export function VolatilitySurface() {
               preserveDrawingBuffer: true,
             }}
           >
-            <color attach="background" args={["#0a0a0a"]} />
-            <ambientLight intensity={0.7} />
-            <directionalLight position={[3, 5, 4]} intensity={1.4} color="#dbeafe" />
-            <directionalLight position={[-4, 2, -2]} intensity={0.7} color="#c4b5fd" />
+            <color attach="background" args={["#07090D"]} />
+            <ambientLight intensity={0.48} />
+            <directionalLight position={[3.5, 5.5, 4]} intensity={1.65} color="#42D7F5" />
+            <directionalLight position={[-4.5, 2.5, -2.5]} intensity={0.9} color="#9B6CFF" />
+            <pointLight position={[0, 3.5, -4]} intensity={0.32} color="#FFB547" />
             <gridHelper
-              args={[8, 12, "#334155", "#172033"]}
-              position={[0, -0.89, 0]}
+              args={[9, 8, "#18334A", "#101722"]}
+              position={[0, -1.24, 0]}
             />
             <SurfaceMesh asset={asset} onHover={setHover} />
           </Canvas>
@@ -282,18 +283,18 @@ export function VolatilitySurface() {
 
         {hover && surfaceMode === "interactive" ? (
           <div
-            className="pointer-events-none absolute z-10 w-48 rounded-md border border-white/10 bg-neutral-950/95 px-3 py-3 text-xs shadow-xl"
+            className="pointer-events-none absolute z-10 w-48 rounded-md border border-[#7E8B9D]/20 bg-[#080B11]/95 px-3 py-3 text-xs shadow-2xl"
             style={{ left: `${hover.left}%`, top: `${hover.top}%` }}
             role="status"
           >
             <p className="font-semibold text-white">{hover.asset}</p>
-            <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-neutral-400">
+            <dl className="mt-2 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-[#7E8B9D]">
               <dt>Model</dt>
-              <dd className="text-right text-neutral-200">{hover.model}</dd>
+              <dd className="text-right text-[#DCE3EC]">{hover.model}</dd>
               <dt>Time</dt>
-              <dd className="text-right text-neutral-200">T-{17 - hover.timeIndex}h</dd>
+              <dd className="text-right text-[#DCE3EC]">T-{17 - hover.timeIndex}h</dd>
               <dt>Normalized</dt>
-              <dd className="text-right font-mono text-neutral-200">
+              <dd className="text-right font-mono text-[#DCE3EC]">
                 {hover.value.toFixed(3)}
               </dd>
             </dl>
@@ -301,20 +302,16 @@ export function VolatilitySurface() {
         ) : null}
       </div>
 
-      <div className="mt-4 flex flex-col gap-4 text-xs text-neutral-500 lg:flex-row lg:items-center lg:justify-between">
+      <div className="mt-4 flex flex-col gap-4 text-xs text-[#7E8B9D] lg:flex-row lg:items-center lg:justify-between">
         <div className="flex flex-wrap gap-x-4 gap-y-2">
           {SHADOW_MODEL_NAMES.map((model) => (
             <span key={model} className="inline-flex items-center gap-2">
-              <span
-                aria-hidden="true"
-                className="h-1.5 w-1.5 rounded-full"
-                style={{ backgroundColor: MODEL_COLORS[model] }}
-              />
+              <span aria-hidden="true" className="h-px w-5" style={{ backgroundColor: MODEL_COLORS[model] }} />
               {model}
             </span>
           ))}
         </div>
-        <p className="font-mono">X: ILLUSTRATIVE TIME · Y: DISCRETE MODEL · Z: NORMALIZED ILLUSTRATIVE VARIANCE</p>
+        <p className="font-mono leading-5">X: ILLUSTRATIVE TIME · Y: DISCRETE MODEL · Z: NORMALIZED ILLUSTRATIVE VARIANCE</p>
       </div>
     </div>
   );

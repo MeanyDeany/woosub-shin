@@ -105,8 +105,8 @@ export const SURFACE_SAMPLES: Record<ResearchAsset, SurfaceSample> = {
 };
 
 export const MODEL_COLORS: Record<ShadowModelName, string> = {
-  "GARCH(1,1)-t": "#67e8f9",
-  "EGARCH(1,1)-t": "#60a5fa",
-  "GJR-GARCH(1,1)-t": "#a78bfa",
-  "HAR-RV": "#fbbf24",
+  "GARCH(1,1)-t": "#42D7F5",
+  "EGARCH(1,1)-t": "#4D8DFF",
+  "GJR-GARCH(1,1)-t": "#9B6CFF",
+  "HAR-RV": "#FFB547",
 };
