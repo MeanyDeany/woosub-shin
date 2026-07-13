@@ -3,13 +3,14 @@
 import { Canvas, type ThreeEvent, useFrame } from "@react-three/fiber";
 import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
+import { ProvenanceBadge } from "@/components/provenance-badge";
 import { VolatilitySurfaceFallback } from "@/components/volatility-surface-fallback";
 import {
   MODEL_COLORS,
   SHADOW_MODEL_NAMES,
   SURFACE_SAMPLES,
   type ResearchAsset,
-  type SurfaceSample,
+  type ShadowModelName,
 } from "@/lib/research-visual-data";
 import { shouldUseStaticSurface } from "@/lib/surface-capability";
 
@@ -28,8 +29,6 @@ type DeviceNavigator = Navigator & {
   deviceMemory?: number;
 };
 
-const modelSubdivisions = 6;
-
 function interpolateColor(value: number) {
   const stops = [
     new THREE.Color("#67e8f9"),
@@ -45,57 +44,39 @@ function interpolateColor(value: number) {
   return stops[lowerIndex].clone().lerp(stops[upperIndex], scaled - lowerIndex);
 }
 
-function buildSurfaceGeometry(sample: SurfaceSample) {
-  const timeCount = sample.values[SHADOW_MODEL_NAMES[0]].length;
-  const rowCount = (SHADOW_MODEL_NAMES.length - 1) * modelSubdivisions + 1;
+function buildRibbonGeometry(values: readonly number[], modelIndex: number) {
   const positions: number[] = [];
   const colors: number[] = [];
   const uvs: number[] = [];
   const indices: number[] = [];
+  const ribbonWidth = 0.72;
+  const modelSpacing = 1.28;
+  const modelCenter =
+    (modelIndex - (SHADOW_MODEL_NAMES.length - 1) / 2) * modelSpacing;
 
-  for (let rowIndex = 0; rowIndex < rowCount; rowIndex += 1) {
-    const modelPosition = rowIndex / modelSubdivisions;
-    const lowerModelIndex = Math.min(
-      Math.floor(modelPosition),
-      SHADOW_MODEL_NAMES.length - 1,
-    );
-    const upperModelIndex = Math.min(
-      lowerModelIndex + 1,
-      SHADOW_MODEL_NAMES.length - 1,
-    );
-    const modelBlend = modelPosition - lowerModelIndex;
-    const lowerValues = sample.values[SHADOW_MODEL_NAMES[lowerModelIndex]];
-    const upperValues = sample.values[SHADOW_MODEL_NAMES[upperModelIndex]];
-
-    for (let timeIndex = 0; timeIndex < timeCount; timeIndex += 1) {
-      const value = THREE.MathUtils.lerp(
-        lowerValues[timeIndex],
-        upperValues[timeIndex],
-        modelBlend,
-      );
+  for (let edgeIndex = 0; edgeIndex < 2; edgeIndex += 1) {
+    for (let timeIndex = 0; timeIndex < values.length; timeIndex += 1) {
+      const value = values[timeIndex];
       const color = interpolateColor(value);
-      const timeProgress = timeIndex / (timeCount - 1);
-      const modelProgress = rowIndex / (rowCount - 1);
+      const timeProgress = timeIndex / (values.length - 1);
 
       positions.push(
         (timeProgress - 0.5) * 7,
         value * 2.35 - 0.9,
-        (modelProgress - 0.5) * 4.2,
+        modelCenter + (edgeIndex === 0 ? -ribbonWidth / 2 : ribbonWidth / 2),
       );
       colors.push(color.r, color.g, color.b);
-      uvs.push(timeProgress, modelProgress);
+      uvs.push(timeProgress, edgeIndex);
     }
   }
 
-  for (let rowIndex = 0; rowIndex < rowCount - 1; rowIndex += 1) {
-    for (let timeIndex = 0; timeIndex < timeCount - 1; timeIndex += 1) {
-      const topLeft = rowIndex * timeCount + timeIndex;
-      const topRight = topLeft + 1;
-      const bottomLeft = (rowIndex + 1) * timeCount + timeIndex;
-      const bottomRight = bottomLeft + 1;
+  for (let timeIndex = 0; timeIndex < values.length - 1; timeIndex += 1) {
+    const topLeft = timeIndex;
+    const topRight = topLeft + 1;
+    const bottomLeft = values.length + timeIndex;
+    const bottomRight = bottomLeft + 1;
 
-      indices.push(topLeft, bottomLeft, topRight, topRight, bottomLeft, bottomRight);
-    }
+    indices.push(topLeft, bottomLeft, topRight, topRight, bottomLeft, bottomRight);
   }
 
   const geometry = new THREE.BufferGeometry();
@@ -117,9 +98,19 @@ function SurfaceMesh({
 }) {
   const groupRef = useRef<THREE.Group>(null);
   const sample = SURFACE_SAMPLES[asset];
-  const geometry = useMemo(() => buildSurfaceGeometry(sample), [sample]);
+  const geometries = useMemo(
+    () =>
+      SHADOW_MODEL_NAMES.map((model, modelIndex) => ({
+        geometry: buildRibbonGeometry(sample.values[model], modelIndex),
+        model,
+      })),
+    [sample],
+  );
 
-  useEffect(() => () => geometry.dispose(), [geometry]);
+  useEffect(
+    () => () => geometries.forEach(({ geometry }) => geometry.dispose()),
+    [geometries],
+  );
 
   useFrame(({ clock }) => {
     if (groupRef.current) {
@@ -127,14 +118,15 @@ function SurfaceMesh({
     }
   });
 
-  function handlePointerMove(event: ThreeEvent<PointerEvent>) {
+  function handlePointerMove(
+    event: ThreeEvent<PointerEvent>,
+    model: ShadowModelName,
+  ) {
     if (!event.uv) return;
     event.stopPropagation();
 
     const timeCount = sample.values[SHADOW_MODEL_NAMES[0]].length;
     const timeIndex = Math.round(event.uv.x * (timeCount - 1));
-    const modelIndex = Math.round(event.uv.y * (SHADOW_MODEL_NAMES.length - 1));
-    const model = SHADOW_MODEL_NAMES[modelIndex];
 
     onHover({
       asset,
@@ -148,28 +140,32 @@ function SurfaceMesh({
 
   return (
     <group ref={groupRef} rotation={[-0.08, -0.19, 0]}>
-      <mesh
-        geometry={geometry}
-        onPointerMove={handlePointerMove}
-        onPointerOut={() => onHover(null)}
-      >
-        <meshStandardMaterial
-          vertexColors
-          side={THREE.DoubleSide}
-          transparent
-          opacity={0.78}
-          roughness={0.64}
-          metalness={0.08}
-        />
-      </mesh>
-      <mesh geometry={geometry}>
-        <meshBasicMaterial
-          color="#dbeafe"
-          wireframe
-          transparent
-          opacity={0.16}
-        />
-      </mesh>
+      {geometries.map(({ geometry, model }) => (
+        <group key={model}>
+          <mesh
+            geometry={geometry}
+            onPointerMove={(event) => handlePointerMove(event, model)}
+            onPointerOut={() => onHover(null)}
+          >
+            <meshStandardMaterial
+              vertexColors
+              side={THREE.DoubleSide}
+              transparent
+              opacity={0.8}
+              roughness={0.64}
+              metalness={0.08}
+            />
+          </mesh>
+          <mesh geometry={geometry}>
+            <meshBasicMaterial
+              color="#dbeafe"
+              wireframe
+              transparent
+              opacity={0.16}
+            />
+          </mesh>
+        </group>
+      ))}
     </group>
   );
 }
@@ -224,10 +220,9 @@ export function VolatilitySurface() {
     <div>
       <div className="mb-4 flex min-h-11 flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <p className="text-sm text-neutral-300">{sample.context}</p>
-          <p className="mt-1 text-xs text-neutral-500">
-            Frozen, sanitized portfolio sample. No live data.
-          </p>
+          <div className="mb-2"><ProvenanceBadge provenance={sample.provenance} /></div>
+          <p className="text-sm font-medium text-neutral-200">{sample.status}</p>
+          <p className="mt-1 max-w-2xl text-xs leading-5 text-neutral-500">{sample.context}</p>
         </div>
         <div
           className="flex w-fit gap-1 rounded-lg border border-white/10 bg-neutral-950 p-1"
@@ -319,7 +314,7 @@ export function VolatilitySurface() {
             </span>
           ))}
         </div>
-        <p className="font-mono">X: TIME · Y: MODEL · Z: NORMALIZED VARIANCE</p>
+        <p className="font-mono">X: ILLUSTRATIVE TIME · Y: DISCRETE MODEL · Z: NORMALIZED ILLUSTRATIVE VARIANCE</p>
       </div>
     </div>
   );

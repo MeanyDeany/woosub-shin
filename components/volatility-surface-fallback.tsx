@@ -4,14 +4,20 @@ import {
   SURFACE_SAMPLES,
   type ResearchAsset,
 } from "@/lib/research-visual-data";
+import { ProvenanceBadge } from "@/components/provenance-badge";
 
 const width = 920;
 const height = 460;
 
-function projectPoint(timeIndex: number, modelIndex: number, value: number) {
+function projectPoint(
+  timeIndex: number,
+  modelIndex: number,
+  value: number,
+  bandEdge = 0,
+) {
   return {
     x: 76 + timeIndex * 42 + modelIndex * 23,
-    y: 352 - modelIndex * 54 - value * 112,
+    y: 352 - modelIndex * 54 - value * 112 + bandEdge * 9,
   };
 }
 
@@ -27,31 +33,26 @@ export function VolatilitySurfaceFallback({ asset }: { asset: ResearchAsset }) {
   const timeCount = sample.values[SHADOW_MODEL_NAMES[0]].length;
   const polygons = [];
 
-  for (let modelIndex = 0; modelIndex < SHADOW_MODEL_NAMES.length - 1; modelIndex += 1) {
+  for (let modelIndex = 0; modelIndex < SHADOW_MODEL_NAMES.length; modelIndex += 1) {
     const currentValues = sample.values[SHADOW_MODEL_NAMES[modelIndex]];
-    const nextValues = sample.values[SHADOW_MODEL_NAMES[modelIndex + 1]];
 
     for (let timeIndex = 0; timeIndex < timeCount - 1; timeIndex += 1) {
       const points = [
-        projectPoint(timeIndex, modelIndex, currentValues[timeIndex]),
-        projectPoint(timeIndex + 1, modelIndex, currentValues[timeIndex + 1]),
-        projectPoint(timeIndex + 1, modelIndex + 1, nextValues[timeIndex + 1]),
-        projectPoint(timeIndex, modelIndex + 1, nextValues[timeIndex]),
+        projectPoint(timeIndex, modelIndex, currentValues[timeIndex], -1),
+        projectPoint(timeIndex + 1, modelIndex, currentValues[timeIndex + 1], -1),
+        projectPoint(timeIndex + 1, modelIndex, currentValues[timeIndex + 1], 1),
+        projectPoint(timeIndex, modelIndex, currentValues[timeIndex], 1),
       ];
       const averageValue =
-        (currentValues[timeIndex] +
-          currentValues[timeIndex + 1] +
-          nextValues[timeIndex] +
-          nextValues[timeIndex + 1]) /
-        4;
+        (currentValues[timeIndex] + currentValues[timeIndex + 1]) / 2;
 
       polygons.push(
         <polygon
           key={`${modelIndex}-${timeIndex}`}
           points={points.map((point) => `${point.x},${point.y}`).join(" ")}
           fill={surfaceColor(averageValue)}
-          fillOpacity="0.13"
-          stroke="rgba(148, 163, 184, 0.14)"
+          fillOpacity="0.2"
+          stroke="rgba(148, 163, 184, 0.18)"
           strokeWidth="0.75"
         />,
       );
@@ -70,11 +71,11 @@ export function VolatilitySurfaceFallback({ asset }: { asset: ResearchAsset }) {
         aria-labelledby="volatility-surface-fallback-title volatility-surface-fallback-description"
       >
         <title id="volatility-surface-fallback-title">
-          {`Static normalized volatility forecast surface for ${asset}`}
+          {`Static normalized variance ribbons for ${asset}`}
         </title>
         <desc id="volatility-surface-fallback-description">
-          A static two-dimensional projection of frozen normalized forecast variance
-          values over time and across four shadow models.
+          Four separate model ribbons show deterministic conceptual normalized
+          variance values across an illustrative time index.
         </desc>
         <rect width={width} height={height} fill="#0a0a0a" />
         <g stroke="rgba(148, 163, 184, 0.12)" strokeWidth="1">
@@ -105,7 +106,7 @@ export function VolatilitySurfaceFallback({ asset }: { asset: ResearchAsset }) {
         <g fill="#737373" fontSize="12" fontFamily="ui-monospace, monospace">
           <text x="790" y="411">TIME</text>
           <text x="58" y="78">NORMALIZED VARIANCE</text>
-          <text x="118" y="404">MODEL DIMENSION</text>
+          <text x="118" y="404">DISCRETE MODEL SPECIFICATION</text>
         </g>
       </svg>
       <div className="absolute left-4 top-4 rounded-md border border-white/10 bg-neutral-950/90 px-3 py-2 text-xs text-neutral-400">
@@ -119,7 +120,12 @@ export function VolatilitySurfaceLoading() {
   return (
     <div aria-busy="true" aria-label="Loading volatility forecast surface">
       <div className="mb-4 flex min-h-11 flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm text-neutral-400">Frozen, sanitized portfolio sample</p>
+        <div>
+          <ProvenanceBadge provenance="conceptual-illustration" />
+          <p className="mt-2 text-sm text-neutral-400">
+            Conceptual normalized surface generated from deterministic illustrative data.
+          </p>
+        </div>
         <div className="flex w-fit gap-1 rounded-lg border border-white/10 bg-neutral-950 p-1">
           {(["BTCUSDT", "NQ", "ES"] as const).map((asset) => (
             <span

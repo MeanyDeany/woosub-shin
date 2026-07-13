@@ -128,9 +128,10 @@ export const schedulerControls = [
   "Process locks and separate append locks",
   "Scheduler status and schedule-hash validation",
   "Automatic cron observation",
-  "No manual fit execution",
-  "No manual state execution",
-  "No manual forward-outcome append",
+  "Production fit generation is scheduler-controlled",
+  "Production state generation is scheduler-controlled",
+  "Forward-outcome appends are scheduler-controlled",
+  "Manual production appends are outside normal operating procedure",
 ] as const;
 
 export const operationalSnapshot = [

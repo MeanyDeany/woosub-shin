@@ -8,16 +8,33 @@ export const SHADOW_MODEL_NAMES = [
 export type ShadowModelName = (typeof SHADOW_MODEL_NAMES)[number];
 export type ResearchAsset = "BTCUSDT" | "NQ" | "ES";
 
+export type DataProvenance =
+  | "current-static-snapshot"
+  | "academic-context"
+  | "conceptual-illustration"
+  | "planned-research";
+
+export const PROVENANCE_LABELS: Record<DataProvenance, string> = {
+  "current-static-snapshot": "Current static snapshot",
+  "academic-context": "Academic context",
+  "conceptual-illustration": "Conceptual illustration",
+  "planned-research": "Planned research",
+};
+
 export type SurfaceSample = {
   label: string;
   context: string;
+  provenance: "conceptual-illustration";
+  status: string;
   values: Record<ShadowModelName, readonly number[]>;
 };
 
 export const SURFACE_SAMPLES: Record<ResearchAsset, SurfaceSample> = {
   BTCUSDT: {
     label: "BTCUSDT",
-    context: "Active research-infrastructure environment",
+    context: "Current operational forecast-evidence research environment; no trading execution",
+    provenance: "conceptual-illustration",
+    status: "Current research infrastructure",
     values: {
       "GARCH(1,1)-t": [
         0.34, 0.36, 0.42, 0.39, 0.45, 0.52, 0.49, 0.58, 0.72, 0.65,
@@ -39,7 +56,9 @@ export const SURFACE_SAMPLES: Record<ResearchAsset, SurfaceSample> = {
   },
   NQ: {
     label: "NQ",
-    context: "Academic futures research context",
+    context: "Prior futures and volatility-regime research; not running in the BTC operational pipeline",
+    provenance: "conceptual-illustration",
+    status: "Academic research asset",
     values: {
       "GARCH(1,1)-t": [
         0.26, 0.28, 0.3, 0.33, 0.37, 0.35, 0.4, 0.46, 0.43, 0.48,
@@ -61,7 +80,9 @@ export const SURFACE_SAMPLES: Record<ResearchAsset, SurfaceSample> = {
   },
   ES: {
     label: "ES",
-    context: "Academic futures research context",
+    context: "Prior futures and volatility-regime research; not running in the BTC operational pipeline",
+    provenance: "conceptual-illustration",
+    status: "Academic research asset",
     values: {
       "GARCH(1,1)-t": [
         0.22, 0.24, 0.27, 0.29, 0.31, 0.34, 0.32, 0.35, 0.39, 0.42,
@@ -89,43 +110,3 @@ export const MODEL_COLORS: Record<ShadowModelName, string> = {
   "GJR-GARCH(1,1)-t": "#a78bfa",
   "HAR-RV": "#fbbf24",
 };
-
-export const REALIZED_OUTCOME_SAMPLE = [
-  0.3, 0.39, 0.44, 0.37, 0.5, 0.58, 0.52, 0.7, 0.76, 0.62, 0.66, 0.73,
-  0.88, 0.84, 0.71, 0.77, 0.86, 0.9,
-] as const;
-
-export const FORECAST_OUTCOME_SAMPLE = [
-  0.32, 0.35, 0.41, 0.4, 0.47, 0.54, 0.52, 0.61, 0.73, 0.68, 0.62, 0.67,
-  0.79, 0.84, 0.77, 0.73, 0.8, 0.9,
-] as const;
-
-export const DESCRIPTIVE_LOSS_SAMPLE = [
-  { model: "GARCH(1,1)-t", qlike: 0.418, mae: 0.116, rmse: 0.164 },
-  { model: "EGARCH(1,1)-t", qlike: 0.406, mae: 0.122, rmse: 0.171 },
-  { model: "GJR-GARCH(1,1)-t", qlike: 0.411, mae: 0.119, rmse: 0.168 },
-  { model: "HAR-RV", qlike: 0.429, mae: 0.113, rmse: 0.16 },
-] as const;
-
-export const MONTE_CARLO_BANDS = {
-  q10: [
-    0.5, 0.47, 0.44, 0.41, 0.39, 0.36, 0.34, 0.32, 0.3, 0.29, 0.27, 0.26,
-    0.25, 0.24, 0.23, 0.22,
-  ],
-  q25: [
-    0.5, 0.49, 0.47, 0.45, 0.44, 0.42, 0.41, 0.4, 0.39, 0.38, 0.37, 0.36,
-    0.36, 0.35, 0.35, 0.34,
-  ],
-  q50: [
-    0.5, 0.51, 0.52, 0.51, 0.53, 0.54, 0.55, 0.54, 0.56, 0.57, 0.58, 0.57,
-    0.59, 0.6, 0.59, 0.61,
-  ],
-  q75: [
-    0.5, 0.54, 0.57, 0.59, 0.62, 0.65, 0.67, 0.7, 0.72, 0.75, 0.77, 0.8,
-    0.82, 0.85, 0.87, 0.9,
-  ],
-  q90: [
-    0.5, 0.57, 0.62, 0.67, 0.72, 0.77, 0.82, 0.87, 0.91, 0.95, 0.98, 1.0,
-    1.02, 1.04, 1.06, 1.08,
-  ],
-} as const;
