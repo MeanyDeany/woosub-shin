@@ -5,6 +5,13 @@ import {
   PageSection,
   PageShell,
 } from "@/components/site-shell";
+import { MonteCarloVisual } from "@/components/monte-carlo-visual";
+import {
+  DescriptiveErrorSummary,
+  ForecastHistoryChart,
+  ForecastOutcomeChart,
+} from "@/components/supporting-chart";
+import { VolatilitySurfaceLoader } from "@/components/volatility-surface-loader";
 import {
   architectureStages,
   boundaryItems,
@@ -28,6 +35,14 @@ const heroBoundaries = [
   "No live or paper trading approval",
   "No exchange, broker, or order-routing connection",
   "No entry, short-permission, or strategy-approval role",
+] as const;
+
+const roleItems = [
+  "Designed the immutable fit, forecast-state, and forward-outcome evidence workflow",
+  "Implemented statistical volatility models and factual horizon validation",
+  "Built deterministic event identities, content hashes, and ledger integrity controls",
+  "Designed scheduler, lock, concurrency, and failure-state monitoring",
+  "Maintained a strict separation between research evidence and execution permissions",
 ] as const;
 
 export default function BtcFuturesResearchPage() {
@@ -88,6 +103,79 @@ export default function BtcFuturesResearchPage() {
             </ul>
           </Card>
         </div>
+      </PageSection>
+
+      <section className="border-y border-white/10 bg-white/[0.02]">
+        <div className="mx-auto max-w-6xl px-5 py-14 lg:px-8">
+          <div className="mb-8 max-w-4xl">
+            <p className="mb-3 text-sm font-semibold uppercase text-cyan-200">
+              Frozen multi-asset research view
+            </p>
+            <h2 className="text-2xl font-semibold text-white sm:text-3xl">
+              Volatility Forecast Surface
+            </h2>
+            <p className="mt-4 leading-7 text-neutral-400">
+              A continuous mesh maps time, model dimension, and normalized one-hour
+              forecast variance. The selector changes only the sanitized static
+              sample rendered in this portfolio.
+            </p>
+          </div>
+          <VolatilitySurfaceLoader />
+          <div className="mt-8 grid gap-4 border-t border-white/10 pt-6 lg:grid-cols-[0.7fr_1.3fr]">
+            <p className="text-sm font-semibold text-neutral-200">
+              Multi-asset research architecture in active development
+            </p>
+            <p className="text-sm leading-7 text-neutral-400">
+              BTCUSDT currently serves as the active research-infrastructure
+              environment, while NQ and ES provide academic and empirical cross-asset
+              context. The longer-term objective is a unified multi-asset research and
+              automation framework, not a claimed live multi-asset production system.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <PageSection eyebrow="Descriptive evidence" title="Supporting Research Views">
+        <p className="mb-8 max-w-4xl leading-7 text-neutral-400">
+          These historical views use sanitized frozen values to explain the evidence
+          workflow. They do not display live forecasts, strategy results, or trading
+          permissions.
+        </p>
+        <div className="grid gap-6 xl:grid-cols-2">
+          <ForecastHistoryChart />
+          <ForecastOutcomeChart />
+        </div>
+        <div className="mt-6">
+          <DescriptiveErrorSummary />
+        </div>
+      </PageSection>
+
+      <PageSection eyebrow="Uncertainty" title="Monte Carlo Research Visualization">
+        <p className="mb-8 max-w-4xl leading-7 text-neutral-400">
+          A static fan chart illustrates how simulated normalized variance scenarios
+          disperse across a research horizon. It visualizes forecast uncertainty and
+          path variability only.
+        </p>
+        <MonteCarloVisual />
+        <p className="mt-6 max-w-4xl text-sm leading-6 text-neutral-500">
+          Illustrative scenario dispersion for research uncertainty. This does not
+          represent trading performance or investment return projections.
+        </p>
+      </PageSection>
+
+      <PageSection eyebrow="Contribution" title="My Role">
+        <Card>
+          <ul className="grid gap-4 md:grid-cols-2">
+            {roleItems.map((item) => (
+              <li
+                key={item}
+                className="border-l border-emerald-300/40 pl-4 leading-7 text-neutral-300"
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
+        </Card>
       </PageSection>
 
       <PageSection eyebrow="Evidence pipeline" title="System Architecture">
