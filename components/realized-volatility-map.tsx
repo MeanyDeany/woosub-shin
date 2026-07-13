@@ -18,7 +18,7 @@ function FlowNode({ title, role }: { title: string; role: string }) {
 export function RealizedVolatilityMap() {
   return (
     <div>
-      <ProvenanceBadge provenance="current-static-snapshot" />
+      <ProvenanceBadge provenance="conceptual-illustration" />
       <div className="mt-5 grid gap-3 md:grid-cols-[1fr_auto_1fr] md:items-center">
         <FlowNode title="5-minute decimal log returns" role="Research input" />
         <span aria-hidden="true" className="hidden text-neutral-600 md:block">→</span>

@@ -12,8 +12,7 @@ function Arrow() {
 export function MultiAssetLineage() {
   return (
     <div>
-      <ProvenanceBadge provenance="academic-context" />
-      <div className="mt-5 grid gap-3 sm:grid-cols-2">
+      <div className="grid gap-3 sm:grid-cols-2">
         {[
           ["NQ Futures", "Academic thesis research"],
           ["ES Futures", "Academic thesis research"],
@@ -23,7 +22,10 @@ export function MultiAssetLineage() {
             href="/projects/volatility-regime-filtering"
             className="rounded-lg border border-white/10 bg-white/[0.04] px-5 py-4 transition hover:border-emerald-300/40 focus:outline-none focus:ring-2 focus:ring-emerald-400"
           >
-            <span className="font-semibold text-white">{asset}</span>
+            <span className="flex flex-wrap items-center justify-between gap-3">
+              <span className="font-semibold text-white">{asset}</span>
+              <ProvenanceBadge provenance="academic-context" />
+            </span>
             <span className="mt-1 block text-sm text-neutral-400">{context}</span>
           </Link>
         ))}
@@ -35,13 +37,19 @@ export function MultiAssetLineage() {
       </div>
       <Arrow />
       <div className="rounded-lg border border-emerald-300/30 bg-emerald-300/[0.05] px-5 py-4 text-center">
-        <p className="font-semibold text-white">BTCUSDT Research Infrastructure</p>
-        <p className="mt-1 text-sm text-neutral-400">Current forecast-evidence operations</p>
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          <p className="font-semibold text-white">BTCUSDT Research Infrastructure</p>
+          <ProvenanceBadge provenance="current-static-snapshot" />
+        </div>
+        <p className="mt-2 text-sm text-neutral-400">Current forecast-evidence operations</p>
       </div>
       <Arrow />
       <div className="rounded-lg border border-white/10 px-5 py-4 text-center">
-        <p className="font-semibold text-white">Unified Multi-Asset Framework</p>
-        <p className="mt-1 text-sm text-neutral-400">Long-term architecture objective</p>
+        <div className="flex flex-wrap items-center justify-center gap-3">
+          <p className="font-semibold text-white">Unified Multi-Asset Framework</p>
+          <ProvenanceBadge provenance="planned-research" />
+        </div>
+        <p className="mt-2 text-sm text-neutral-400">Long-term architecture objective</p>
       </div>
       <Arrow />
       <div className="rounded-lg border border-dashed border-amber-300/30 px-5 py-4 text-center">
