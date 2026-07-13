@@ -18,12 +18,12 @@ export default function ProjectsPage() {
               BTC Futures Research Assistant
             </h1>
             <p className="mt-4 text-neutral-400">
-              Research-only diagnostics and validation infrastructure for BTCUSDT
-              futures, with operational health monitoring and explicit safety
-              boundaries.
+              Research infrastructure for immutable BTCUSDT volatility forecasts,
+              factual forward outcome validation, and operational integrity
+              monitoring, with a strict boundary from execution.
             </p>
             <div className="mt-6 flex flex-wrap gap-2">
-              {["Validation", "Volatility regimes", "Ops monitoring"].map((tag) => (
+              {["Volatility forecasts", "Event ledgers", "Research operations"].map((tag) => (
                 <span
                   key={tag}
                   className="rounded-lg border border-white/10 px-3 py-1 text-sm text-neutral-300"
