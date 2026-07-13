@@ -1,8 +1,8 @@
+import type { ReactNode } from "react";
 import {
   BoundaryList,
   Card,
   MetricCard,
-  PageSection,
   PageShell,
 } from "@/components/site-shell";
 import { EvidenceMaturity } from "@/components/evidence-maturity";
@@ -11,6 +11,7 @@ import { MonteCarloVisual } from "@/components/monte-carlo-visual";
 import { MultiAssetLineage } from "@/components/multi-asset-lineage";
 import { ProvenanceBadge } from "@/components/provenance-badge";
 import { RealizedVolatilityMap } from "@/components/realized-volatility-map";
+import { ResearchArchitectureStrip } from "@/components/research-architecture-strip";
 import { VolatilitySurfaceLoader } from "@/components/volatility-surface-loader";
 import {
   architectureStages,
@@ -37,6 +38,13 @@ const heroBoundaries = [
   "No entry, short-permission, or strategy-approval role",
 ] as const;
 
+const identityRows = [
+  "Multi-asset research direction",
+  "Immutable evidence ledgers",
+  "Shadow volatility forecasts",
+  "Research-only operation",
+] as const;
+
 const roleItems = [
   "Designed the research-only evidence architecture",
   "Implemented and integrated GARCH, EGARCH, GJR-GARCH, and HAR-RV workflows",
@@ -57,230 +65,366 @@ const priorBenchmarks = [
   "Garman-Klass volatility",
 ] as const;
 
+const sectionTones = {
+  amber: "bg-[#0D0C0B]",
+  base: "bg-[#07090D]",
+  black: "bg-[#050608]",
+  deep: "bg-[#080B11]",
+  elevated: "bg-[#0B0F16]",
+  neutral: "bg-[#0A0D12]",
+  violet: "bg-[#090811]",
+} as const;
+
+function ResearchSection({
+  children,
+  eyebrow,
+  intro,
+  title,
+  tone = "base",
+}: {
+  children: ReactNode;
+  eyebrow: string;
+  intro?: string;
+  title: string;
+  tone?: keyof typeof sectionTones;
+}) {
+  return (
+    <section className={`border-t border-[#7E8B9D]/12 ${sectionTones[tone]}`}>
+      <div className="mx-auto max-w-[1260px] px-5 py-16 sm:py-20 lg:px-8 lg:py-24">
+        <div className="mb-9 max-w-4xl">
+          <p className="text-[11px] font-semibold uppercase tracking-normal text-[#42D7F5]">
+            {eyebrow}
+          </p>
+          <h2 className="mt-3 text-3xl font-semibold leading-tight tracking-normal text-[#F4F7FB] sm:text-4xl">
+            {title}
+          </h2>
+          {intro ? (
+            <p className="mt-4 max-w-3xl text-base leading-7 text-[#7E8B9D]">{intro}</p>
+          ) : null}
+        </div>
+        {children}
+      </div>
+    </section>
+  );
+}
+
 export default function BtcFuturesResearchPage() {
   return (
     <PageShell>
-      <section className="mx-auto max-w-6xl px-5 py-16 sm:py-20 lg:px-8">
-        <p className="mb-5 text-sm font-semibold uppercase text-emerald-300">
-          Quant research infrastructure
-        </p>
-        <h1 className="max-w-4xl text-4xl font-semibold text-white sm:text-5xl">
-          BTC Futures Research Assistant
-        </h1>
-        <p className="mt-5 max-w-4xl text-xl leading-8 text-neutral-300">
-          Research infrastructure for immutable volatility forecasts, factual
-          forward outcome validation, and operational integrity monitoring.
-        </p>
-        <div className="mt-9 grid gap-px overflow-hidden rounded-lg border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">
-          {heroBoundaries.map((item) => (
-            <p key={item} className="bg-neutral-950 px-4 py-4 text-sm leading-6 text-neutral-300">
-              {item}
-            </p>
-          ))}
-        </div>
-        <p className="mt-5 max-w-4xl text-sm leading-6 text-neutral-500">
-          Model outputs remain descriptive research evidence. They are never presented as strategy approval.
-        </p>
-      </section>
+      <section className="relative isolate overflow-hidden bg-[#07090D]">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-[linear-gradient(125deg,rgba(66,215,245,0.045),transparent_28%,transparent_70%,rgba(155,108,255,0.055))]"
+        />
+        <div className="relative mx-auto max-w-[1520px] px-5 py-10 sm:py-12 lg:px-8 xl:px-10">
+          <div className="grid min-w-0 gap-10 xl:grid-cols-12 xl:items-center xl:gap-7">
+            <div className="min-w-0 xl:col-span-3">
+              <p className="text-[11px] font-semibold uppercase tracking-normal text-[#42D7F5]">
+                Quant research infrastructure
+              </p>
+              <h1 className="mt-5 text-[42px] font-semibold leading-[1.02] tracking-normal text-[#F4F7FB] sm:text-[52px] xl:text-[64px] 2xl:text-[72px]">
+                BTC Futures Research Assistant
+              </h1>
+              <p className="mt-6 max-w-xl text-lg leading-8 text-[#B6C0CF]">
+                Research infrastructure for immutable volatility forecasts, factual
+                forward outcome validation, and operational integrity monitoring.
+              </p>
+              <div className="mt-8 border-t border-[#7E8B9D]/15">
+                {identityRows.map((item, index) => (
+                  <div
+                    key={item}
+                    className="flex items-center gap-3 border-b border-[#7E8B9D]/10 py-3 text-sm text-[#7E8B9D]"
+                  >
+                    <span className="font-mono text-[10px] text-[#42D7F5]">
+                      0{index + 1}
+                    </span>
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
 
-      <PageSection eyebrow="Purpose" title="Project Overview">
-        <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
-          <Card>
-            <p className="text-lg leading-8 text-neutral-300">
-              The system preserves factual research history so forecasts, realized outcomes,
-              and operational checks can be reproduced and audited without rewriting prior evidence.
-            </p>
-            <p className="mt-5 leading-7 text-neutral-400">
-              Its role ends at evidence generation. Strategy interpretation and execution sit outside the system boundary.
-            </p>
-          </Card>
-          <Card>
-            <ul className="space-y-4">
-              {overviewPrinciples.map((item) => (
-                <li key={item} className="border-l border-emerald-300/40 pl-4 text-neutral-300">{item}</li>
-              ))}
-            </ul>
-          </Card>
-        </div>
-      </PageSection>
+            <div className="min-w-0 xl:col-span-6">
+              <div className="mb-4 flex items-center justify-between gap-4">
+                <p className="text-[11px] font-semibold uppercase tracking-normal text-[#7E8B9D]">
+                  Discrete model surface
+                </p>
+                <span className="font-mono text-[10px] text-[#475466]">NORMALIZED · ILLUSTRATIVE</span>
+              </div>
+              <VolatilitySurfaceLoader />
+            </div>
 
-      <PageSection eyebrow="Contribution" title="My Role">
-        <Card>
-          <ul className="grid gap-4 md:grid-cols-2">
-            {roleItems.map((item) => (
-              <li key={item} className="border-l border-emerald-300/40 pl-4 leading-7 text-neutral-300">{item}</li>
-            ))}
-          </ul>
-        </Card>
-      </PageSection>
+            <aside className="grid min-w-0 gap-4 sm:grid-cols-2 xl:col-span-3 xl:grid-cols-1">
+              <div className="rounded-lg border border-[#7E8B9D]/15 bg-[#0B0F16]/90 p-5">
+                <p className="text-[11px] font-semibold uppercase tracking-normal text-[#B6C0CF]">
+                  Research context
+                </p>
+                <div className="mt-4 space-y-4">
+                  <ContextRow asset="BTCUSDT" provenance="current-static-snapshot" />
+                  <ContextRow asset="NQ" provenance="academic-context" />
+                  <ContextRow asset="ES" provenance="academic-context" />
+                  <ContextRow asset="GC" provenance="planned-research" />
+                </div>
+              </div>
 
-      <section className="border-y border-white/10 bg-white/[0.02]">
-        <div className="mx-auto max-w-6xl px-5 py-14 lg:px-8">
-          <div className="mb-8 max-w-4xl">
-            <p className="mb-3 text-sm font-semibold uppercase text-cyan-200">Interactive research view</p>
-            <h2 className="text-2xl font-semibold text-white sm:text-3xl">Volatility Forecast Surface</h2>
-            <p className="mt-4 leading-7 text-neutral-400">
-              Four discrete model ribbons map an illustrative time index against normalized variance.
-              The model axis represents separate statistical specifications, not a continuous mathematical dimension.
-            </p>
+              <div className="rounded-lg border border-[#FFB547]/20 bg-[#0D0C0B]/90 p-5">
+                <p className="text-[11px] font-semibold uppercase tracking-normal text-[#B6C0CF]">
+                  Evidence maturity
+                </p>
+                <dl className="mt-4 divide-y divide-[#7E8B9D]/12">
+                  {[
+                    ["Active shadow models", "4"],
+                    ["Forward outcome rows", "8"],
+                    ["Current maturity", "BOOTSTRAP"],
+                    ["Reviewable threshold", "168+"],
+                  ].map(([label, value]) => (
+                    <div key={label} className="flex items-center justify-between gap-4 py-3">
+                      <dt className="text-xs text-[#7E8B9D]">{label}</dt>
+                      <dd className="font-mono text-xs font-semibold text-[#F4F7FB]">{value}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </aside>
           </div>
-          <VolatilitySurfaceLoader />
-          <p className="mt-6 max-w-5xl text-sm leading-7 text-neutral-500">
-            Conceptual normalized surface generated from deterministic illustrative data. It does not represent historical or production forecasts.
+
+          <div className="mt-10 grid gap-px overflow-hidden rounded-lg border border-[#7E8B9D]/15 bg-[#7E8B9D]/15 sm:grid-cols-2 lg:grid-cols-4">
+            {heroBoundaries.map((item) => (
+              <p key={item} className="bg-[#080B11] px-4 py-4 text-sm leading-6 text-[#B6C0CF]">
+                {item}
+              </p>
+            ))}
+          </div>
+          <p className="mt-4 max-w-4xl text-sm leading-6 text-[#7E8B9D]">
+            Model outputs remain descriptive research evidence. They are never presented as strategy approval.
           </p>
         </div>
       </section>
 
-      <PageSection eyebrow="Research lineage" title="Multi-Asset Research Lineage">
-        <MultiAssetLineage />
-      </PageSection>
+      <ResearchArchitectureStrip />
 
-      <PageSection eyebrow="Current forecast category" title="Active Forecast Models">
+      <ResearchSection eyebrow="Purpose and contribution" title="Evidence infrastructure, not a strategy layer" tone="base">
+        <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
+          <div>
+            <h3 className="text-xl font-semibold text-[#F4F7FB]">Project Overview</h3>
+            <p className="mt-5 text-lg leading-8 text-[#B6C0CF]">
+              The system preserves factual research history so forecasts, realized outcomes,
+              and operational checks can be reproduced and audited without rewriting prior evidence.
+            </p>
+            <p className="mt-5 leading-7 text-[#7E8B9D]">
+              Its role ends at evidence generation. Strategy interpretation and execution sit outside the system boundary.
+            </p>
+            <ul className="mt-8 divide-y divide-[#7E8B9D]/12 border-y border-[#7E8B9D]/12">
+              {overviewPrinciples.map((item) => (
+                <li key={item} className="py-4 text-sm leading-6 text-[#B6C0CF]">{item}</li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-xl font-semibold text-[#F4F7FB]">My Role</h3>
+            <ul className="mt-5 grid gap-x-8 sm:grid-cols-2">
+              {roleItems.map((item, index) => (
+                <li key={item} className="flex gap-3 border-b border-[#7E8B9D]/12 py-4 text-sm leading-6 text-[#B6C0CF]">
+                  <span className="font-mono text-[10px] text-[#42D7F5]">{String(index + 1).padStart(2, "0")}</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </ResearchSection>
+
+      <ResearchSection eyebrow="Research lineage" title="Multi-asset research progression" tone="deep">
+        <MultiAssetLineage />
+      </ResearchSection>
+
+      <ResearchSection
+        eyebrow="Current forecast category"
+        title="Active forecast models"
+        intro="Four statistical specifications produce comparable raw next-hour decimal variance forecasts for research evidence."
+        tone="elevated"
+      >
         <ProvenanceBadge provenance="current-static-snapshot" />
-        <p className="mt-5 max-w-4xl leading-7 text-neutral-400">
-          These models produce comparable raw next-hour decimal variance forecasts for research evidence.
-        </p>
         <div className="mt-6 grid gap-4 md:grid-cols-2">
-          {shadowModels.map((model) => (
-            <Card key={model.name}>
-              <h3 className="text-lg font-semibold text-white">{model.name}</h3>
-              <p className="mt-3 leading-7 text-neutral-400">{model.description}</p>
+          {shadowModels.map((model, index) => (
+            <Card key={model.name} className="relative overflow-hidden">
+              <span className="absolute inset-y-6 left-0 w-px bg-[#9B6CFF]/70" aria-hidden="true" />
+              <div className="flex items-start justify-between gap-4">
+                <h3 className="text-lg font-semibold text-white">{model.name}</h3>
+                <span className="font-mono text-[10px] text-[#7E8B9D]">0{index + 1}</span>
+              </div>
+              <p className="mt-3 leading-7 text-[#7E8B9D]">{model.description}</p>
             </Card>
           ))}
         </div>
-        <p className="mt-6 rounded-lg border border-emerald-300/30 bg-emerald-300/[0.05] px-5 py-5 text-sm leading-7 text-neutral-200">
+        <p className="mt-6 border-l border-[#3DDC97]/45 pl-5 text-sm leading-7 text-[#B6C0CF]">
           Their outputs are not market regimes, direction forecasts, entry signals, vetoes, sizing instructions, leverage decisions, or trading permissions.
         </p>
-      </PageSection>
 
-      <PageSection eyebrow="Feature ecosystem" title="Realized-Volatility Research Map">
-        <RealizedVolatilityMap />
-      </PageSection>
-
-      <PageSection eyebrow="Historical research context" title="Prior Benchmarks and Challengers">
-        <ProvenanceBadge provenance="academic-context" />
-        <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {priorBenchmarks.map((model) => (
-            <div key={model} className="rounded-lg border border-white/10 px-4 py-4">
-              <p className="font-semibold text-neutral-100">{model}</p>
-              <p className="mt-2 text-xs uppercase text-neutral-500">Prior benchmark research</p>
-            </div>
-          ))}
+        <div className="mt-20 border-t border-[#7E8B9D]/12 pt-16">
+          <div className="mb-8 max-w-3xl">
+            <p className="text-[11px] font-semibold uppercase tracking-normal text-[#42D7F5]">Feature ecosystem</p>
+            <h3 className="mt-3 text-2xl font-semibold text-[#F4F7FB] sm:text-3xl">
+              Realized-volatility research map
+            </h3>
+          </div>
+          <RealizedVolatilityMap />
         </div>
-        <p className="mt-5 text-sm leading-6 text-neutral-500">
-          These are historical benchmark contexts, not current operational shadow models. No comparative performance claim is presented.
-        </p>
-      </PageSection>
+      </ResearchSection>
 
-      <PageSection eyebrow="Conceptual mechanics" title="Model Response Explorer">
+      <ResearchSection eyebrow="Conceptual mechanics" title="Model response explorer" tone="base">
         <ModelResponseExplorer />
-      </PageSection>
-
-      <PageSection eyebrow="Uncertainty" title="Monte Carlo Variance Uncertainty">
-        <MonteCarloVisual />
-      </PageSection>
-
-      <PageSection eyebrow="Evidence discipline" title="Evidence Maturity">
-        <EvidenceMaturity />
-      </PageSection>
-
-      <PageSection eyebrow="Evidence pipeline" title="System Architecture">
-        <ProvenanceBadge provenance="current-static-snapshot" />
-        <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {architectureStages.map((stage, index) => (
-            <Card key={stage.title} className="flex h-full flex-col">
-              <div className="flex items-start justify-between gap-4">
-                <h3 className="text-lg font-semibold text-white">{stage.title}</h3>
-                <span className="font-mono text-sm text-neutral-500">{String(index + 1).padStart(2, "0")}</span>
-              </div>
-              <p className="mt-3 leading-7 text-neutral-400">{stage.description}</p>
-              <ul className="mt-5 space-y-2 border-t border-white/10 pt-5 text-sm leading-6 text-neutral-300">
-                {stage.details.map((detail) => <li key={detail}>{detail}</li>)}
-              </ul>
-            </Card>
-          ))}
-        </div>
-      </PageSection>
-
-      <PageSection eyebrow="Auditability" title="Immutable Event Architecture">
-        <ProvenanceBadge provenance="current-static-snapshot" />
-        <div className="mt-5 rounded-lg border border-white/10 bg-neutral-900 p-5 sm:p-6">
-          <div className="grid gap-3 md:grid-cols-[1fr_auto_1fr_auto_1fr] md:items-center" aria-label="Fit ledger to state ledger to forward outcome ledger">
-            {["Fit Ledger", "State Ledger", "Forward Outcome Ledger"].map((ledger, index) => (
-              <div key={ledger} className="contents">
-                {index > 0 ? <span aria-hidden="true" className="hidden text-center text-neutral-600 md:block">→</span> : null}
-                <div className="rounded-lg border border-white/10 bg-neutral-950 px-5 py-5 text-center">
-                  <p className="text-sm font-semibold text-neutral-100">{ledger}</p>
-                </div>
+        <div className="mt-16 border-t border-[#7E8B9D]/12 pt-12">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-normal text-[#42D7F5]">Historical research context</p>
+              <h3 className="mt-3 text-2xl font-semibold text-[#F4F7FB]">Prior benchmarks and challengers</h3>
+            </div>
+            <ProvenanceBadge provenance="academic-context" />
+          </div>
+          <div className="mt-6 grid gap-px overflow-hidden rounded-lg border border-[#7E8B9D]/15 bg-[#7E8B9D]/15 sm:grid-cols-2 lg:grid-cols-4">
+            {priorBenchmarks.map((model) => (
+              <div key={model} className="bg-[#080B11] px-5 py-5">
+                <p className="font-semibold text-[#F4F7FB]">{model}</p>
+                <p className="mt-2 text-[10px] uppercase tracking-normal text-[#7E8B9D]">Prior benchmark research</p>
               </div>
             ))}
           </div>
+          <p className="mt-5 text-sm leading-6 text-[#7E8B9D]">
+            These are historical benchmark contexts, not current operational shadow models. No comparative performance claim is presented.
+          </p>
         </div>
-        <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {ledgerProperties.map((property) => (
-            <div key={property} className="rounded-lg border border-white/10 px-4 py-3 text-sm leading-6 text-neutral-300">{property}</div>
+      </ResearchSection>
+
+      <ResearchSection eyebrow="Uncertainty" title="Monte Carlo variance uncertainty" tone="violet">
+        <MonteCarloVisual />
+      </ResearchSection>
+
+      <ResearchSection eyebrow="Evidence discipline" title="Evidence maturity" tone="amber">
+        <EvidenceMaturity />
+      </ResearchSection>
+
+      <ResearchSection
+        eyebrow="Evidence pipeline"
+        title="System architecture"
+        intro="A deterministic path from completed market data to inspectable model evidence and operational health."
+        tone="neutral"
+      >
+        <ProvenanceBadge provenance="current-static-snapshot" />
+        <ol className="mt-7 divide-y divide-[#7E8B9D]/12 border-y border-[#7E8B9D]/12">
+          {architectureStages.map((stage, index) => (
+            <li key={stage.title} className="grid gap-5 py-7 md:grid-cols-[3.5rem_0.8fr_1.2fr] md:items-start">
+              <span className="font-mono text-sm text-[#42D7F5]">{String(index + 1).padStart(2, "0")}</span>
+              <div>
+                <h3 className="text-lg font-semibold text-[#F4F7FB]">{stage.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-[#7E8B9D]">{stage.description}</p>
+              </div>
+              <ul className="grid gap-2 text-sm leading-6 text-[#B6C0CF] sm:grid-cols-2">
+                {stage.details.map((detail) => <li key={detail}>{detail}</li>)}
+              </ul>
+            </li>
+          ))}
+        </ol>
+      </ResearchSection>
+
+      <ResearchSection eyebrow="Auditability" title="Immutable event architecture" tone="deep">
+        <ProvenanceBadge provenance="current-static-snapshot" />
+        <div className="mt-7 grid gap-3 md:grid-cols-[1fr_auto_1fr_auto_1fr] md:items-center" aria-label="Fit ledger to state ledger to forward outcome ledger">
+          {["Fit Ledger", "State Ledger", "Forward Outcome Ledger"].map((ledger, index) => (
+            <div key={ledger} className="contents">
+              {index > 0 ? <span aria-hidden="true" className="hidden text-center text-[#475466] md:block">→</span> : null}
+              <div className="rounded-lg border border-[#FFB547]/20 bg-[#0E131C] px-5 py-6 text-center">
+                <p className="text-sm font-semibold text-[#F4F7FB]">{ledger}</p>
+              </div>
+            </div>
           ))}
         </div>
-        <p className="mt-6 max-w-4xl leading-7 text-neutral-400">
+        <div className="mt-6 grid gap-px overflow-hidden rounded-lg border border-[#7E8B9D]/15 bg-[#7E8B9D]/15 sm:grid-cols-2 lg:grid-cols-3">
+          {ledgerProperties.map((property) => (
+            <div key={property} className="bg-[#080B11] px-4 py-3 text-sm leading-6 text-[#B6C0CF]">{property}</div>
+          ))}
+        </div>
+        <p className="mt-7 max-w-4xl leading-7 text-[#7E8B9D]">
           The ledger chain makes provenance, concurrency decisions, and failure states inspectable. Historical evidence stays immutable as research interpretation evolves.
         </p>
-      </PageSection>
+      </ResearchSection>
 
-      <PageSection eyebrow="Research operations" title="Operational Scheduler">
+      <ResearchSection eyebrow="Research operations" title="Operational scheduler" tone="neutral">
         <ProvenanceBadge provenance="current-static-snapshot" />
-        <div className="mt-5 grid gap-6 lg:grid-cols-2">
-          <Card>
-            <p className="text-sm font-semibold uppercase text-neutral-500">Seven scheduled jobs</p>
-            <ol className="mt-5 space-y-3">
+        <div className="mt-7 grid gap-10 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-normal text-[#7E8B9D]">Seven scheduled jobs</p>
+            <ol className="mt-4 divide-y divide-[#7E8B9D]/12 border-y border-[#7E8B9D]/12">
               {schedulerJobs.map((job, index) => (
-                <li key={job} className="flex gap-4 text-neutral-300">
-                  <span className="font-mono text-sm text-neutral-500">{String(index + 1).padStart(2, "0")}</span>
+                <li key={job} className="flex gap-4 py-3 text-sm text-[#B6C0CF]">
+                  <span className="font-mono text-[10px] text-[#42D7F5]">{String(index + 1).padStart(2, "0")}</span>
                   <span>{job}</span>
                 </li>
               ))}
             </ol>
-          </Card>
-          <Card>
-            <p className="text-sm font-semibold uppercase text-neutral-500">Operating controls</p>
-            <ul className="mt-5 space-y-3">
+          </div>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-normal text-[#7E8B9D]">Operating controls</p>
+            <ul className="mt-4 grid gap-3 sm:grid-cols-2">
               {schedulerControls.map((control) => (
-                <li key={control} className="border-l border-emerald-300/40 pl-4 text-neutral-300">{control}</li>
+                <li key={control} className="border-l border-[#3DDC97]/40 pl-4 text-sm leading-6 text-[#B6C0CF]">{control}</li>
               ))}
             </ul>
-          </Card>
+          </div>
         </div>
-        <p className="mt-6 rounded-lg border border-white/10 bg-neutral-900 px-5 py-4 text-sm leading-6 text-neutral-300">
+        <p className="mt-8 rounded-lg border border-[#7E8B9D]/15 bg-[#080B11] px-5 py-4 text-sm leading-6 text-[#B6C0CF]">
           Operational health is research infrastructure evidence, not a trading signal.
         </p>
-      </PageSection>
 
-      <PageSection eyebrow="2026-07-13 UTC" title="Static Operational Snapshot">
-        <ProvenanceBadge provenance="current-static-snapshot" />
-        <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {operationalSnapshot.map((item) => <MetricCard key={item.label} label={item.label} value={item.value} />)}
+        <div className="mt-20 border-t border-[#7E8B9D]/12 pt-14">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-normal text-[#42D7F5]">2026-07-13 UTC</p>
+              <h3 className="mt-3 text-2xl font-semibold text-[#F4F7FB] sm:text-3xl">Static operational snapshot</h3>
+            </div>
+            <ProvenanceBadge provenance="current-static-snapshot" />
+          </div>
+          <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {operationalSnapshot.map((item) => <MetricCard key={item.label} label={item.label} value={item.value} />)}
+          </div>
+          <p className="mt-6 max-w-4xl text-sm leading-6 text-[#7E8B9D]">
+            Static portfolio snapshot. This is not a live server monitor, model ranking, strategy approval, or trading-readiness indicator.
+          </p>
         </div>
-        <p className="mt-6 max-w-4xl text-sm leading-6 text-neutral-500">
-          Static portfolio snapshot. This is not a live server monitor, model ranking, strategy approval, or trading-readiness indicator.
-        </p>
-      </PageSection>
+      </ResearchSection>
 
-      <PageSection eyebrow="Engineering scope" title="What This Project Demonstrates">
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <ResearchSection eyebrow="Engineering scope" title="What this project demonstrates" tone="base">
+        <div className="grid gap-px overflow-hidden rounded-lg border border-[#7E8B9D]/15 bg-[#7E8B9D]/15 sm:grid-cols-2 lg:grid-cols-3">
           {demonstratedCapabilities.map((capability) => (
-            <div key={capability} className="rounded-lg border border-white/10 bg-white/[0.04] px-4 py-4 text-sm leading-6 text-neutral-300">{capability}</div>
+            <div key={capability} className="bg-[#0E131C] px-5 py-5 text-sm leading-6 text-[#B6C0CF]">{capability}</div>
           ))}
         </div>
-        <Card className="mt-6">
-          <p className="text-sm font-semibold uppercase text-emerald-300">BTC research system stack</p>
-          <p className="mt-4 text-lg leading-8 text-neutral-200">
+        <div className="mt-8 border-l border-[#42D7F5]/45 pl-5">
+          <p className="text-xs font-semibold uppercase tracking-normal text-[#42D7F5]">BTC research system stack</p>
+          <p className="mt-4 text-lg leading-8 text-[#DCE3EC]">
             Python · pandas · NumPy · arch · SQLite · CSV event ledgers · Linux · cron · flock · GitHub · AWS Lightsail
           </p>
-        </Card>
-      </PageSection>
+        </div>
+      </ResearchSection>
 
-      <PageSection eyebrow="Non-negotiable constraints" title="Research Boundaries">
+      <ResearchSection eyebrow="Non-negotiable constraints" title="Research boundaries" tone="black">
         <BoundaryList items={[...boundaryItems]} />
-      </PageSection>
+      </ResearchSection>
     </PageShell>
+  );
+}
+
+function ContextRow({
+  asset,
+  provenance,
+}: {
+  asset: string;
+  provenance: "academic-context" | "current-static-snapshot" | "planned-research";
+}) {
+  return (
+    <div className="flex flex-wrap items-center justify-between gap-2">
+      <span className="font-mono text-xs font-semibold text-[#F4F7FB]">{asset}</span>
+      <ProvenanceBadge provenance={provenance} />
+    </div>
   );
 }

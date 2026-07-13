@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #f5f5f5;
+  --background: #07090d;
+  --foreground: #f4f7fb;
 }
 
 @theme inline {
@@ -19,10 +19,25 @@ body {
 }
 
 ::selection {
-  background: #34d399;
-  color: #052e1b;
+  background: #42d7f5;
+  color: #07090d;
 }
 
 a {
   text-underline-offset: 4px;
+}
+
+html {
+  background: #07090d;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }
