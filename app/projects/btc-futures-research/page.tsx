@@ -7,6 +7,8 @@ import {
   PageShell,
 } from "@/components/site-shell";
 import { EvidenceMaturity } from "@/components/evidence-maturity";
+import { EvidencePipelineExplorer } from "@/components/evidence-pipeline-explorer";
+import { FailureModeAtlas } from "@/components/failure-mode-atlas";
 import { ModelResponseExplorer } from "@/components/model-response-explorer";
 import { MonteCarloVisual } from "@/components/monte-carlo-visual";
 import { MultiAssetLineage } from "@/components/multi-asset-lineage";
@@ -15,10 +17,8 @@ import { RealizedVolatilityMap } from "@/components/realized-volatility-map";
 import { ResearchArchitectureStrip } from "@/components/research-architecture-strip";
 import { VolatilitySurfaceLoader } from "@/components/volatility-surface-loader";
 import {
-  architectureStages,
   boundaryItems,
   demonstratedCapabilities,
-  ledgerProperties,
   operationalSnapshot,
   schedulerControls,
   schedulerJobs,
@@ -85,18 +85,20 @@ const sectionTones = {
 function ResearchSection({
   children,
   eyebrow,
+  id,
   intro,
   title,
   tone = "base",
 }: {
   children: ReactNode;
   eyebrow: string;
+  id?: string;
   intro?: string;
   title: string;
   tone?: keyof typeof sectionTones;
 }) {
   return (
-    <section className={`border-t border-[#7E8B9D]/12 ${sectionTones[tone]}`}>
+    <section id={id} className={`border-t border-[#7E8B9D]/12 ${sectionTones[tone]}`}>
       <div className="mx-auto max-w-[1260px] px-5 py-16 sm:py-20 lg:px-8 lg:py-24">
         <div className="mb-9 max-w-4xl">
           <p className="text-[11px] font-semibold uppercase tracking-normal text-[#42D7F5]">
@@ -312,48 +314,22 @@ export default function BtcFuturesResearchPage() {
       </ResearchSection>
 
       <ResearchSection
+        id="evidence-pipeline"
         eyebrow="Evidence pipeline"
-        title="System architecture"
-        intro="A deterministic path from completed market data to inspectable model evidence and operational health."
+        title="Evidence Pipeline Explorer"
+        intro="Follow one deterministic synthetic event from completed observations through forward validation and integrity review."
         tone="neutral"
       >
-        <ProvenanceBadge provenance="current-static-snapshot" />
-        <ol className="mt-7 divide-y divide-[#7E8B9D]/12 border-y border-[#7E8B9D]/12">
-          {architectureStages.map((stage, index) => (
-            <li key={stage.title} className="grid gap-5 py-7 md:grid-cols-[3.5rem_0.8fr_1.2fr] md:items-start">
-              <span className="font-mono text-sm text-[#42D7F5]">{String(index + 1).padStart(2, "0")}</span>
-              <div>
-                <h3 className="text-lg font-semibold text-[#F4F7FB]">{stage.title}</h3>
-                <p className="mt-2 text-sm leading-6 text-[#7E8B9D]">{stage.description}</p>
-              </div>
-              <ul className="grid gap-2 text-sm leading-6 text-[#B6C0CF] sm:grid-cols-2">
-                {stage.details.map((detail) => <li key={detail}>{detail}</li>)}
-              </ul>
-            </li>
-          ))}
-        </ol>
+        <EvidencePipelineExplorer />
       </ResearchSection>
 
-      <ResearchSection eyebrow="Auditability" title="Immutable event architecture" tone="deep">
-        <ProvenanceBadge provenance="current-static-snapshot" />
-        <div className="mt-7 grid gap-3 md:grid-cols-[1fr_auto_1fr_auto_1fr] md:items-center" aria-label="Fit ledger to state ledger to forward outcome ledger">
-          {["Fit Ledger", "State Ledger", "Forward Outcome Ledger"].map((ledger, index) => (
-            <div key={ledger} className="contents">
-              {index > 0 ? <span aria-hidden="true" className="hidden text-center text-[#475466] md:block">→</span> : null}
-              <div className="rounded-lg border border-[#FFB547]/20 bg-[#0E131C] px-5 py-6 text-center">
-                <p className="text-sm font-semibold text-[#F4F7FB]">{ledger}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="mt-6 grid gap-px overflow-hidden rounded-lg border border-[#7E8B9D]/15 bg-[#7E8B9D]/15 sm:grid-cols-2 lg:grid-cols-3">
-          {ledgerProperties.map((property) => (
-            <div key={property} className="bg-[#080B11] px-4 py-3 text-sm leading-6 text-[#B6C0CF]">{property}</div>
-          ))}
-        </div>
-        <p className="mt-7 max-w-4xl leading-7 text-[#7E8B9D]">
-          The ledger chain makes provenance, concurrency decisions, and failure states inspectable. Historical evidence stays immutable as research interpretation evolves.
-        </p>
+      <ResearchSection
+        eyebrow="Integrity refusals"
+        title="Failure Mode Atlas"
+        intro="A reliable research pipeline should fail visibly when evidence is premature, duplicated, orphaned, stale, or changed during publication."
+        tone="deep"
+      >
+        <FailureModeAtlas />
       </ResearchSection>
 
       <ResearchSection eyebrow="Research operations" title="Operational scheduler" tone="neutral">

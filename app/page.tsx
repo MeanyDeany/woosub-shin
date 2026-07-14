@@ -121,8 +121,8 @@ export default function Home() {
               short permission, leverage sizing, execution connection, or investment advice.
             </p>
             <div className="mt-8">
-              <CtaLink href="/projects/btc-futures-research" kind="primary">
-                Inspect the flagship system
+              <CtaLink href="/projects/btc-futures-research#evidence-pipeline" kind="primary">
+                Inspect the evidence pipeline
               </CtaLink>
             </div>
           </div>
