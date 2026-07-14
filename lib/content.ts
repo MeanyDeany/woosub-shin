@@ -6,75 +6,6 @@ export const navigation = [
   { href: "/contact", label: "Contact" },
 ];
 
-export type ArchitectureStage = {
-  title: string;
-  description: string;
-  details: readonly string[];
-};
-
-export const architectureStages: readonly ArchitectureStage[] = [
-  {
-    title: "Market Data",
-    description: "A factual, completed-candle source for downstream research.",
-    details: [
-      "BTCUSDT 5-minute OHLCV",
-      "Local SQLite source",
-      "Exact completed-candle handling",
-      "Read-only research access where applicable",
-    ],
-  },
-  {
-    title: "Hourly Input Construction",
-    description: "Deterministic inputs aligned to exact UTC research windows.",
-    details: [
-      "Exact completed UTC hourly inputs",
-      "No interpolation or forward fill",
-      "No tolerance joins",
-      "Factual source hashes",
-    ],
-  },
-  {
-    title: "Daily Model Fits",
-    description: "Four independent statistical volatility specifications.",
-    details: [
-      "GARCH(1,1) Student-t",
-      "EGARCH(1,1) Student-t",
-      "GJR-GARCH(1,1) Student-t",
-      "HAR-RV",
-    ],
-  },
-  {
-    title: "Hourly Forecast States",
-    description: "Raw next-hour variance evidence without policy interpretation.",
-    details: [
-      "Decimal variance and volatility forecasts",
-      "No annualization or 10,000 scaling",
-      "No regime or direction interpretation",
-      "No entry, veto, or permission interpretation",
-    ],
-  },
-  {
-    title: "Forward Outcome Validation",
-    description: "Factual outcomes calculated only after the forecast horizon closes.",
-    details: [
-      "Next completed one-hour window",
-      "One exact anchor 5-minute candle and twelve exact future 5-minute candles",
-      "Realized variance from decimal log returns",
-      "Forecast error, realized volatility, and QLIKE loss",
-    ],
-  },
-  {
-    title: "Health and Integrity Monitoring",
-    description: "Operational checks for the evidence pipeline and its ledgers.",
-    details: [
-      "Scheduler, source, fit, state, and outcome health",
-      "Semantic duplicate and orphan-reference detection",
-      "Fit/state mismatch detection",
-      "Latest four-model outcome coverage",
-    ],
-  },
-];
-
 export const shadowModels = [
   {
     name: "GARCH(1,1)-t",
@@ -96,20 +27,6 @@ export const shadowModels = [
     description:
       "A heterogeneous autoregressive model built from realized-volatility components across multiple horizons.",
   },
-] as const;
-
-export const ledgerProperties = [
-  "Append-only records",
-  "Deterministic event identities",
-  "Deterministic content hashes",
-  "Exact source provenance",
-  "Fit/state referential integrity",
-  "Semantic fit-slot protection",
-  "Orphan-reference blocking",
-  "Fit/state mismatch blocking",
-  "Semantic duplicate blocking",
-  "Conflicting factual content blocking",
-  "Immutable historical evidence",
 ] as const;
 
 export const schedulerJobs = [
