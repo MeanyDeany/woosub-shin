@@ -9,13 +9,12 @@ import {
 import { EvidenceMaturity } from "@/components/evidence-maturity";
 import { EvidencePipelineExplorer } from "@/components/evidence-pipeline-explorer";
 import { FailureModeAtlas } from "@/components/failure-mode-atlas";
-import { ModelResponseExplorer } from "@/components/model-response-explorer";
 import { MonteCarloVisual } from "@/components/monte-carlo-visual";
 import { MultiAssetLineage } from "@/components/multi-asset-lineage";
 import { ProvenanceBadge } from "@/components/provenance-badge";
 import { RealizedVolatilityMap } from "@/components/realized-volatility-map";
 import { ResearchArchitectureStrip } from "@/components/research-architecture-strip";
-import { VolatilitySurfaceLoader } from "@/components/volatility-surface-loader";
+import { VolatilityShockLab } from "@/components/volatility-shock-lab";
 import {
   boundaryItems,
   demonstratedCapabilities,
@@ -126,7 +125,7 @@ export default function BtcFuturesResearchPage() {
           className="pointer-events-none absolute inset-0 bg-[linear-gradient(125deg,rgba(66,215,245,0.045),transparent_28%,transparent_70%,rgba(155,108,255,0.055))]"
         />
         <div className="relative mx-auto max-w-[1520px] px-5 py-10 sm:py-12 lg:px-8 xl:px-10">
-          <div className="grid min-w-0 gap-10 xl:grid-cols-12 xl:items-center xl:gap-7">
+          <div className="grid min-w-0 gap-10 xl:grid-cols-12 xl:items-start xl:gap-7">
             <div className="min-w-0 xl:col-span-3">
               <p className="text-[11px] font-semibold uppercase tracking-normal text-[#42D7F5]">
                 Quant research infrastructure
@@ -153,17 +152,11 @@ export default function BtcFuturesResearchPage() {
               </div>
             </div>
 
-            <div className="min-w-0 xl:col-span-6">
-              <div className="mb-4 flex items-center justify-between gap-4">
-                <p className="text-[11px] font-semibold uppercase tracking-normal text-[#7E8B9D]">
-                  Discrete model surface
-                </p>
-                <span className="font-mono text-[10px] text-[#475466]">NORMALIZED · ILLUSTRATIVE</span>
-              </div>
-              <VolatilitySurfaceLoader />
+            <div className="min-w-0 xl:col-span-9">
+              <VolatilityShockLab />
             </div>
 
-            <aside className="grid min-w-0 gap-4 sm:grid-cols-2 xl:col-span-3 xl:grid-cols-1">
+            <aside className="grid min-w-0 gap-4 sm:grid-cols-2 xl:col-span-9 xl:col-start-4">
               <div className="rounded-lg border border-[#7E8B9D]/15 bg-[#0B0F16]/90 p-5">
                 <p className="text-[11px] font-semibold uppercase tracking-normal text-[#B6C0CF]">
                   Research context
@@ -281,28 +274,25 @@ export default function BtcFuturesResearchPage() {
         </div>
       </ResearchSection>
 
-      <ResearchSection eyebrow="Conceptual mechanics" title="Model response explorer" tone="base">
-        <ModelResponseExplorer />
-        <div className="mt-16 border-t border-[#7E8B9D]/12 pt-12">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="text-[11px] font-semibold uppercase tracking-normal text-[#42D7F5]">Historical research context</p>
-              <h3 className="mt-3 text-2xl font-semibold text-[#F4F7FB]">Prior benchmarks and challengers</h3>
-            </div>
-            <ProvenanceBadge provenance="academic-context" />
-          </div>
-          <div className="mt-6 grid gap-px overflow-hidden rounded-lg border border-[#7E8B9D]/15 bg-[#7E8B9D]/15 sm:grid-cols-2 lg:grid-cols-4">
-            {priorBenchmarks.map((model) => (
-              <div key={model} className="bg-[#080B11] px-5 py-5">
-                <p className="font-semibold text-[#F4F7FB]">{model}</p>
-                <p className="mt-2 text-[10px] uppercase tracking-normal text-[#7E8B9D]">Prior benchmark research</p>
-              </div>
-            ))}
-          </div>
-          <p className="mt-5 text-sm leading-6 text-[#7E8B9D]">
-            These are historical benchmark contexts, not shadow models recorded in the initial public baseline. No comparative performance claim is presented.
+      <ResearchSection eyebrow="Historical research context" title="Prior benchmarks and challengers" tone="base">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+          <p className="max-w-3xl text-sm leading-6 text-[#7E8B9D]">
+            Earlier benchmark specifications provide academic context for the current
+            public research architecture without implying comparative performance.
           </p>
+          <ProvenanceBadge provenance="academic-context" />
         </div>
+        <div className="mt-6 grid gap-px overflow-hidden rounded-lg border border-[#7E8B9D]/15 bg-[#7E8B9D]/15 sm:grid-cols-2 lg:grid-cols-4">
+          {priorBenchmarks.map((model) => (
+            <div key={model} className="bg-[#080B11] px-5 py-5">
+              <p className="font-semibold text-[#F4F7FB]">{model}</p>
+              <p className="mt-2 text-[10px] uppercase tracking-normal text-[#7E8B9D]">Prior benchmark research</p>
+            </div>
+          ))}
+        </div>
+        <p className="mt-5 text-sm leading-6 text-[#7E8B9D]">
+          These are historical benchmark contexts, not shadow models recorded in the initial public baseline. No comparative performance claim is presented.
+        </p>
       </ResearchSection>
 
       <ResearchSection eyebrow="Uncertainty" title="Monte Carlo variance uncertainty" tone="violet">
