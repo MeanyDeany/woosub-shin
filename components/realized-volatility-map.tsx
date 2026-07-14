@@ -46,7 +46,7 @@ export function RealizedVolatilityMap() {
             role="Historical research component"
           />
           <p className="text-xs leading-5 text-[#7E8B9D]">
-            Diagnostic feature, not an independent active shadow forecast model.
+            Diagnostic feature, not an independent shadow model in the public baseline.
           </p>
         </div>
 

@@ -1,106 +1,163 @@
 import type { Metadata } from "next";
-import { Card, PageSection, PageShell } from "@/components/site-shell";
+import {
+  CtaLink,
+  EditorialSection,
+  EvidenceBand,
+  PageHero,
+  ResearchTag,
+  StatusLabel,
+} from "@/components/editorial";
+import { PageShell } from "@/components/site-shell";
 
 export const metadata: Metadata = {
-  title: "Bitcoin Bubble Detection with GSADF | Woosub Shin",
+  title: "Bitcoin Bubble Detection with GSADF",
   description:
-    "A seminar paper applying explosive-root testing to Bitcoin price dynamics.",
+    "A seminar paper applying right-tailed GSADF explosive-root testing to Bitcoin price dynamics as an academic time-series diagnostic.",
 };
 
-const methodItems = [
-  "Right-tailed explosive-root testing applied to Bitcoin price dynamics.",
-  "GSADF-style bubble detection used to examine periods of explosive behavior.",
-  "Time-series framing focused on diagnostics rather than market guidance.",
-];
+const method = [
+  {
+    index: "01",
+    title: "Frame the series",
+    text: "Define the Bitcoin price sample and the time-series question before interpreting explosive episodes.",
+  },
+  {
+    index: "02",
+    title: "Apply right-tailed tests",
+    text: "Use recursive explosive-root statistics to evaluate departures from unit-root behavior across varying windows.",
+  },
+  {
+    index: "03",
+    title: "Date episodes",
+    text: "Compare test statistics with critical values to identify periods of statistically explosive behavior.",
+  },
+  {
+    index: "04",
+    title: "Constrain interpretation",
+    text: "Treat detections as sample-bound diagnostics rather than trading signals or proof of fundamental mispricing.",
+  },
+] as const;
 
 const lessons = [
-  "Bubble diagnostics require cautious interpretation and clear sample boundaries.",
-  "Explosive-root evidence can identify unusual price dynamics without becoming a trading rule.",
-  "Crypto-asset research benefits from separating statistical diagnostics from market recommendations.",
-];
-
-const boundaryItems = [
-  "This paper is academic research.",
-  "It is not financial advice.",
-  "It does not provide trading signals.",
-  "It does not recommend buying or selling Bitcoin.",
-];
+  ["Sample boundaries matter", "Episode dating depends on the selected series, frequency, and sample window."],
+  ["Diagnostics are not decisions", "Explosive-root evidence can characterize price dynamics without becoming a buy or sell rule."],
+  ["Interpretation needs context", "A statistical bubble label does not by itself explain the economic mechanism behind an episode."],
+] as const;
 
 export default function BitcoinBubbleGsadfPage() {
   return (
     <PageShell>
-      <section className="mx-auto max-w-6xl px-5 py-16 lg:px-8">
-        <p className="mb-5 text-sm font-semibold uppercase text-emerald-300">
-          Seminar paper
-        </p>
-        <h1 className="max-w-4xl text-4xl font-semibold text-white sm:text-5xl">
-          Bitcoin Bubble Detection with GSADF
-        </h1>
-        <p className="mt-5 max-w-3xl text-xl text-neutral-300">
-          A seminar paper applying explosive-root testing to Bitcoin price dynamics.
-        </p>
-        <a
-          href="/papers/bitcoin-bubble-gsadf-seminar-paper.pdf"
-          target="_blank"
-          rel="noreferrer"
-          className="mt-8 inline-flex rounded-lg bg-emerald-300 px-4 py-2 text-sm font-semibold text-neutral-950 transition hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:ring-offset-2 focus:ring-offset-neutral-950"
-        >
-          View PDF
-        </a>
-      </section>
+      <PageHero
+        accent="amber"
+        eyebrow="Seminar paper · Crypto-asset diagnostics"
+        title="Bitcoin Bubble Detection with GSADF"
+        intro="A time-series study applying right-tailed explosive-root testing to identify and interpret periods of statistically explosive Bitcoin price behavior."
+        actions={
+          <CtaLink
+            href="/papers/bitcoin-bubble-gsadf-seminar-paper.pdf"
+            kind="primary"
+            newTab
+          >
+            View paper PDF
+          </CtaLink>
+        }
+        metadata={[
+          { label: "Asset", value: "Bitcoin" },
+          { label: "Method", value: "GSADF" },
+          { label: "Question", value: "Explosive price dynamics" },
+          { label: "Context", value: "Academic diagnostic" },
+        ]}
+      />
 
-      <PageSection title="Overview">
-        <Card>
-          <p className="max-w-4xl text-neutral-300">
-            This seminar paper studies Bitcoin bubble detection using
-            right-tailed explosive-root testing. The project is positioned as a
-            crypto-asset diagnostic study, not as an investment product.
+      <EditorialSection
+        accent="amber"
+        eyebrow="Research framing"
+        title="A diagnostic question, not a market recommendation"
+      >
+        <div className="grid gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(17rem,0.8fr)] lg:gap-16">
+          <p className="text-lg leading-8 text-[#B6C0CF]">
+            The paper examines whether recursive right-tailed unit-root tests can
+            identify periods when Bitcoin prices exhibit explosive behavior. The
+            statistical result describes the series within the sample; it does not
+            recommend buying, selling, timing, or execution.
           </p>
-        </Card>
-      </PageSection>
-
-      <PageSection title="Method">
-        <div className="grid gap-4 md:grid-cols-3">
-          {methodItems.map((item) => (
-            <Card key={item}>
-              <p className="text-neutral-300">{item}</p>
-            </Card>
-          ))}
+          <div>
+            <StatusLabel accent="amber">Academic context</StatusLabel>
+            <div className="mt-5 flex flex-wrap gap-2">
+              {[
+                "Bitcoin",
+                "GSADF",
+                "Explosive roots",
+                "Bubble dating",
+                "Time series",
+              ].map((tag) => (
+                <ResearchTag key={tag}>{tag}</ResearchTag>
+              ))}
+            </div>
+          </div>
         </div>
-      </PageSection>
+      </EditorialSection>
 
-      <PageSection title="Research Framing">
-        <Card>
-          <p className="max-w-4xl text-neutral-300">
-            The paper uses statistical tests to examine bubble episodes and Bitcoin
-            price dynamics. Its purpose is academic interpretation of explosive-root
-            diagnostics, not financial advice or execution guidance.
-          </p>
-        </Card>
-      </PageSection>
-
-      <PageSection title="Lessons">
-        <div className="grid gap-4 md:grid-cols-3">
-          {lessons.map((lesson) => (
-            <Card key={lesson}>
-              <p className="text-neutral-300">{lesson}</p>
-            </Card>
+      <EditorialSection
+        accent="violet"
+        eyebrow="Method"
+        title="Recursive testing with bounded interpretation"
+        tone="deep"
+      >
+        <ol className="grid gap-px border border-[#7E8B9D]/15 bg-[#7E8B9D]/15 md:grid-cols-2 lg:grid-cols-4">
+          {method.map((step) => (
+            <li key={step.title} className="bg-[#0B0F16] p-5 sm:p-6">
+              <span className="font-mono text-[0.65rem] text-[#C3AEFF]">{step.index}</span>
+              <h3 className="mt-5 text-base font-semibold text-[#F4F7FB]">{step.title}</h3>
+              <p className="mt-3 text-sm leading-7 text-[#8996A8]">{step.text}</p>
+            </li>
           ))}
-        </div>
-      </PageSection>
+        </ol>
+      </EditorialSection>
 
-      <PageSection title="Boundary">
-        <div className="grid gap-3 md:grid-cols-2">
-          {boundaryItems.map((item) => (
-            <div
-              key={item}
-              className="rounded-lg border border-white/10 bg-neutral-900 px-4 py-3 text-sm text-neutral-200"
-            >
-              {item}
+      <EditorialSection
+        accent="blue"
+        eyebrow="Research record"
+        title="What the paper establishes"
+      >
+        <EvidenceBand
+          accent="amber"
+          items={[
+            { label: "Test family", value: "Right-tailed explosive-root tests" },
+            { label: "Recursive design", value: "Varying windows across the sample" },
+            { label: "Output", value: "Statistically explosive episodes" },
+            { label: "Boundary", value: "No trading or investment guidance" },
+          ]}
+        />
+      </EditorialSection>
+
+      <EditorialSection
+        accent="amber"
+        eyebrow="Lessons"
+        title="The test is only as strong as its framing"
+        tone="warm"
+      >
+        <dl className="grid gap-px border border-[#7E8B9D]/15 bg-[#7E8B9D]/15 lg:grid-cols-3">
+          {lessons.map(([term, detail]) => (
+            <div key={term} className="bg-[#0D0C0B] p-6">
+              <dt className="font-semibold text-[#F4F7FB]">{term}</dt>
+              <dd className="mt-4 text-sm leading-7 text-[#8996A8]">{detail}</dd>
             </div>
           ))}
-        </div>
-      </PageSection>
+        </dl>
+      </EditorialSection>
+
+      <EditorialSection
+        accent="amber"
+        eyebrow="Research boundary"
+        title="Academic interpretation only"
+        tone="deep"
+      >
+        <p className="max-w-4xl text-base leading-8 text-[#A8B3C2]">
+          This seminar paper is academic research. It does not provide trading
+          signals, recommend buying or selling Bitcoin, or offer investment advice.
+        </p>
+      </EditorialSection>
     </PageShell>
   );
 }

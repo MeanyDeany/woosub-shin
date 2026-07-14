@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import {
   BoundaryList,
@@ -24,6 +25,12 @@ import {
   shadowModels,
 } from "@/lib/content";
 
+export const metadata: Metadata = {
+  title: "BTC Futures Research Assistant",
+  description:
+    "A public research-infrastructure showcase for immutable BTCUSDT volatility forecasts, time-respecting forward outcomes, provenance, and integrity monitoring.",
+};
+
 const overviewPrinciples = [
   "Not a market-direction predictor or entry-signal generator",
   "Records model forecasts, realized outcomes, and operational integrity separately",
@@ -41,7 +48,7 @@ const heroBoundaries = [
 const identityRows = [
   "Multi-asset research direction",
   "Immutable evidence ledgers",
-  "Shadow volatility forecasts",
+  "Initial shadow-model baseline",
   "Research-only operation",
 ] as const;
 
@@ -169,13 +176,13 @@ export default function BtcFuturesResearchPage() {
 
               <div className="rounded-lg border border-[#FFB547]/20 bg-[#0D0C0B]/90 p-5">
                 <p className="text-[11px] font-semibold uppercase tracking-normal text-[#B6C0CF]">
-                  Evidence maturity
+                  Initial public evidence snapshot
                 </p>
                 <dl className="mt-4 divide-y divide-[#7E8B9D]/12">
                   {[
-                    ["Active shadow models", "4"],
-                    ["Forward outcome rows", "8"],
-                    ["Current maturity", "BOOTSTRAP"],
+                    ["Shadow models at baseline", "4"],
+                    ["Initial outcome rows", "8"],
+                    ["Baseline maturity", "BOOTSTRAP"],
                     ["Reviewable threshold", "168+"],
                   ].map(([label, value]) => (
                     <div key={label} className="flex items-center justify-between gap-4 py-3">
@@ -239,9 +246,9 @@ export default function BtcFuturesResearchPage() {
       </ResearchSection>
 
       <ResearchSection
-        eyebrow="Current forecast category"
-        title="Active forecast models"
-        intro="Four statistical specifications produce comparable raw next-hour decimal variance forecasts for research evidence."
+        eyebrow="Public snapshot forecast category"
+        title="Baseline forecast models"
+        intro="The initial public snapshot records four statistical specifications producing comparable raw next-hour decimal variance evidence."
         tone="elevated"
       >
         <ProvenanceBadge provenance="current-static-snapshot" />
@@ -291,7 +298,7 @@ export default function BtcFuturesResearchPage() {
             ))}
           </div>
           <p className="mt-5 text-sm leading-6 text-[#7E8B9D]">
-            These are historical benchmark contexts, not current operational shadow models. No comparative performance claim is presented.
+            These are historical benchmark contexts, not shadow models recorded in the initial public baseline. No comparative performance claim is presented.
           </p>
         </div>
       </ResearchSection>
@@ -379,8 +386,8 @@ export default function BtcFuturesResearchPage() {
         <div className="mt-20 border-t border-[#7E8B9D]/12 pt-14">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-normal text-[#42D7F5]">2026-07-13 UTC</p>
-              <h3 className="mt-3 text-2xl font-semibold text-[#F4F7FB] sm:text-3xl">Static operational snapshot</h3>
+              <p className="text-[11px] font-semibold uppercase tracking-normal text-[#42D7F5]">Public showcase baseline · 2026-07-13 UTC</p>
+              <h3 className="mt-3 text-2xl font-semibold text-[#F4F7FB] sm:text-3xl">Initial public operational snapshot</h3>
             </div>
             <ProvenanceBadge provenance="current-static-snapshot" />
           </div>
@@ -388,7 +395,7 @@ export default function BtcFuturesResearchPage() {
             {operationalSnapshot.map((item) => <MetricCard key={item.label} label={item.label} value={item.value} />)}
           </div>
           <p className="mt-6 max-w-4xl text-sm leading-6 text-[#7E8B9D]">
-            Static portfolio snapshot. This is not a live server monitor, model ranking, strategy approval, or trading-readiness indicator.
+            Fixed portfolio baseline for the initial public showcase. It does not refresh, does not represent a production server, and is not a live monitor, model ranking, strategy approval, or trading-readiness indicator.
           </p>
         </div>
       </ResearchSection>

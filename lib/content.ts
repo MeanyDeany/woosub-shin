@@ -135,13 +135,13 @@ export const schedulerControls = [
 ] as const;
 
 export const operationalSnapshot = [
-  { label: "Shadow models", value: "4" },
-  { label: "Scheduled jobs", value: "7" },
+  { label: "Shadow models at baseline", value: "4" },
+  { label: "Scheduled jobs at baseline", value: "7" },
   { label: "Ledger blockers at initial validation", value: "0" },
   { label: "Semantic duplicates at initial validation", value: "0" },
   { label: "Initial forward outcome rows", value: "8" },
-  { label: "Outcome maturity", value: "BOOTSTRAP" },
-  { label: "Production execution", value: "DISABLED" },
+  { label: "Baseline outcome maturity", value: "BOOTSTRAP" },
+  { label: "Execution integration", value: "NOT INCLUDED" },
 ] as const;
 
 export const demonstratedCapabilities = [
