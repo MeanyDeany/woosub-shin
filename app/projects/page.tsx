@@ -8,9 +8,9 @@ import {
 import { PageShell } from "@/components/site-shell";
 
 export const metadata: Metadata = {
-  title: "Projects",
+  title: "Research Systems",
   description:
-    "An editorial index of Woosub Shin's quant research infrastructure, financial econometrics, and time-series research projects.",
+    "MeanyDeany research systems and academic lineage across volatility infrastructure, financial econometrics, and time-series diagnostics.",
 };
 
 const projects = [
@@ -23,7 +23,7 @@ const projects = [
     methods: ["GARCH", "EGARCH", "GJR-GARCH", "HAR-RV", "Event ledgers"],
     question:
       "How can statistical volatility forecasts become reviewable evidence while remaining strictly separated from strategy permission and trading execution?",
-    status: "Public showcase baseline",
+    status: "Flagship research infrastructure",
     title: "BTC Futures Research Assistant",
     type: "Research infrastructure",
   },
@@ -36,7 +36,7 @@ const projects = [
     methods: ["NQ", "ES", "EGARCH", "5-minute data", "Robustness"],
     question:
       "Can volatility-regime filtering improve the discipline of an intraday NQ and ES futures framework without treating EGARCH as a direction predictor?",
-    status: "MSc thesis",
+    status: "Academic foundation",
     title: "Volatility Regime Filtering in Futures Markets",
     type: "Financial econometrics",
   },
@@ -49,7 +49,7 @@ const projects = [
     methods: ["Bitcoin", "GSADF", "Explosive roots", "Time series"],
     question:
       "How can GSADF testing identify statistically explosive Bitcoin price episodes while keeping diagnostic evidence separate from market recommendations?",
-    status: "Seminar paper",
+    status: "Earlier time-series research",
     title: "Bitcoin Bubble Detection with GSADF",
     type: "Crypto-asset diagnostics",
   },
@@ -59,21 +59,21 @@ export default function ProjectsPage() {
   return (
     <PageShell>
       <PageHero
-        eyebrow="Project index"
-        title="Research systems, econometrics, and evidence"
-        intro="Three projects trace a consistent practice: define the research question, constrain each model's role, and preserve the path from data to interpretation."
+        eyebrow="MeanyDeany · Research systems"
+        title="Research systems and academic lineage"
+        intro="The program connects an earlier diagnostic study, an academic financial-econometrics foundation, and a current public evidence infrastructure."
         metadata={[
-          { label: "Primary", value: "Research infrastructure" },
-          { label: "Academic", value: "MSc thesis · seminar paper" },
+          { label: "Flagship", value: "BTC evidence infrastructure" },
+          { label: "Foundation", value: "MSc thesis · seminar paper" },
           { label: "Markets", value: "BTCUSDT · NQ · ES" },
           { label: "Boundary", value: "No execution systems" },
         ]}
       />
 
       <EditorialSection
-        eyebrow="Portfolio sequence"
-        title="Editorial project index"
-        intro="Project type, question, contribution, methods, and context are kept visible so the scope can be understood before opening a detail page."
+        eyebrow="Program sequence"
+        title="One research program, three stages"
+        intro="Each system retains its provenance, research question, methods, and bounded contribution."
       >
         <div>
           {projects.map((project) => (
@@ -85,7 +85,7 @@ export default function ProjectsPage() {
       <EditorialSection
         accent="amber"
         eyebrow="Common standard"
-        title="What travels across the portfolio"
+        title="What travels across the program"
         tone="deep"
       >
         <EvidenceBand

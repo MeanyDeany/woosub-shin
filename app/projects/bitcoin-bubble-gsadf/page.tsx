@@ -82,7 +82,7 @@ export default function BitcoinBubbleGsadfPage() {
             recommend buying, selling, timing, or execution.
           </p>
           <div>
-            <StatusLabel accent="amber">Academic context</StatusLabel>
+            <StatusLabel accent="amber">Earlier time-series research</StatusLabel>
             <div className="mt-5 flex flex-wrap gap-2">
               {[
                 "Bitcoin",

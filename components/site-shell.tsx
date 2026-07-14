@@ -11,10 +11,10 @@ export function SiteHeader() {
           className="group flex w-fit flex-col gap-1 focus-visible:outline-none sm:flex-row sm:items-baseline sm:gap-3"
         >
           <span className="text-base font-semibold tracking-[-0.02em] text-[#F4F7FB] group-hover:text-white">
-            Woosub Shin
+            MeanyDeany
           </span>
           <span className="text-[0.61rem] font-medium uppercase tracking-[0.13em] text-[#6F7D90] sm:text-[0.66rem] sm:tracking-[0.14em]">
-            Quant Research · Financial Econometrics
+            Quantitative Research Systems
           </span>
         </Link>
         <div className="-mx-2 min-w-0 overflow-x-auto px-2 pb-0.5 lg:mx-0 lg:px-0">
@@ -34,11 +34,11 @@ export function SiteFooter() {
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.15fr_0.7fr_1.15fr]">
           <div>
             <p className="text-lg font-semibold tracking-[-0.025em] text-[#F4F7FB]">
-              Woosub Shin
+              MeanyDeany
             </p>
             <p className="mt-3 max-w-sm text-sm leading-6 text-[#8996A8]">
-              Quant research, financial econometrics, and auditable research
-              infrastructure.
+              A public quantitative research program in volatility, validation,
+              and auditable evidence infrastructure.
             </p>
           </div>
           <div>
@@ -71,13 +71,13 @@ export function SiteFooter() {
               Research boundary
             </p>
             <p className="mt-4 max-w-md text-sm leading-6 text-[#8996A8]">
-              Research-only portfolio. No trading signals, execution services, or
+              Research-only public program. No trading signals, execution services, or
               investment advice.
             </p>
           </div>
         </div>
         <p className="mt-12 border-t border-[#7E8B9D]/12 pt-5 font-mono text-[0.65rem] uppercase tracking-[0.12em] text-[#566274]">
-          © {currentYear} Woosub Shin · Public portfolio
+          © {currentYear} MeanyDeany · Public research program
         </p>
       </div>
     </footer>

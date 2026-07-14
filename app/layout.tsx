@@ -14,11 +14,11 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Woosub Shin | Quant Research & Financial Econometrics",
-    template: "%s | Woosub Shin",
+    default: "MeanyDeany | Quantitative Research Systems",
+    template: "%s | MeanyDeany",
   },
   description:
-    "Quant research portfolio spanning financial econometrics, volatility modeling, time-respecting validation, and auditable research infrastructure.",
+    "A public quantitative research program spanning volatility modeling, financial econometrics, time-respecting validation, and auditable research infrastructure.",
 };
 
 export default function RootLayout({

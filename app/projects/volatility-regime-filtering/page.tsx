@@ -147,7 +147,10 @@ export default function VolatilityRegimeFilteringPage() {
             <p className="text-[0.65rem] font-semibold uppercase tracking-[0.15em] text-[#8CB5FF]">
               Research tags
             </p>
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mt-4">
+              <StatusLabel accent="blue">Academic foundation</StatusLabel>
+            </div>
+            <div className="mt-5 flex flex-wrap gap-2">
               {tags.map((tag) => (
                 <ResearchTag key={tag}>{tag}</ResearchTag>
               ))}
