@@ -13,9 +13,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Woosub Shin | Quant Research Infrastructure",
+  title: {
+    default: "Woosub Shin | Quant Research & Financial Econometrics",
+    template: "%s | Woosub Shin",
+  },
   description:
-    "Portfolio for financial econometrics, volatility forecasting, immutable research evidence, and research infrastructure.",
+    "Quant research portfolio spanning financial econometrics, volatility modeling, time-respecting validation, and auditable research infrastructure.",
 };
 
 export default function RootLayout({

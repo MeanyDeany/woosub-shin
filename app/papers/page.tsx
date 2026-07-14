@@ -1,89 +1,114 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Card, PageSection, PageShell } from "@/components/site-shell";
+import {
+  CtaLink,
+  EditorialSection,
+  PageHero,
+  ResearchTag,
+  StatusLabel,
+} from "@/components/editorial";
+import { PageShell } from "@/components/site-shell";
 
 export const metadata: Metadata = {
-  title: "Papers | Woosub Shin",
+  title: "Papers",
   description:
-    "Selected academic and research papers in financial econometrics, futures markets, and crypto-asset diagnostics.",
+    "Academic papers by Woosub Shin on volatility-regime filtering in NQ and ES futures and GSADF-based Bitcoin bubble diagnostics.",
 };
 
 const papers = [
   {
-    title: "Volatility Regime Filtering in Futures Markets",
-    label: "MSc Thesis",
-    description:
-      "An EGARCH-based intraday futures research framework studying whether volatility-regime conditioning can improve the risk-adjusted profile of an otherwise identical futures strategy framework.",
-    tags: [
-      "Financial Econometrics",
-      "EGARCH",
-      "Intraday Futures",
-      "Volatility Regimes",
-      "Risk Management",
-    ],
+    abstract:
+      "Studies whether daily EGARCH volatility regimes can serve as a risk and admissibility layer for an intraday NQ and ES futures framework. The volatility model is evaluated as conditioning context, not as a price-direction predictor.",
+    accent: "blue" as const,
+    methods: ["EGARCH(1,1)", "Student-t", "Ablation", "Walk-forward", "Bootstrap"],
     pdfHref: "/papers/volatility-regime-filtering-thesis.pdf",
     projectHref: "/projects/volatility-regime-filtering",
+    scope: "E-mini Nasdaq-100 (NQ) and E-mini S&P 500 (ES) intraday futures",
+    title: "Volatility Regime Filtering in Futures Markets",
+    type: "MSc Economics thesis",
   },
   {
-    title: "Bitcoin Bubble Detection with GSADF",
-    label: "Seminar Paper",
-    description:
-      "A crypto-asset bubble detection study using right-tailed explosive-root testing to examine Bitcoin price dynamics and bubble episodes.",
-    tags: ["Bitcoin", "GSADF", "Bubble Detection", "Time Series", "Crypto Assets"],
+    abstract:
+      "Applies right-tailed explosive-root testing to examine periods of statistically explosive Bitcoin price behavior. The study is framed as a time-series diagnostic, not as market guidance or a trading rule.",
+    accent: "amber" as const,
+    methods: ["GSADF", "Right-tailed tests", "Explosive roots", "Time series"],
     pdfHref: "/papers/bitcoin-bubble-gsadf-seminar-paper.pdf",
+    projectHref: "/projects/bitcoin-bubble-gsadf",
+    scope: "Bitcoin price dynamics",
+    title: "Bitcoin Bubble Detection with GSADF",
+    type: "Seminar paper",
   },
-];
+] as const;
 
 export default function PapersPage() {
   return (
     <PageShell>
-      <PageSection eyebrow="Academic work" title="Papers" className="pt-16">
-        <p className="-mt-4 mb-8 max-w-3xl text-neutral-400">
-          Selected academic and research papers in financial econometrics, futures
-          markets, and crypto-asset diagnostics.
-        </p>
-        <div className="grid gap-6 lg:grid-cols-2">
-          {papers.map((paper) => (
-            <Card key={paper.title}>
-              <p className="text-sm font-semibold uppercase text-emerald-300">
-                {paper.label}
+      <PageHero
+        accent="blue"
+        eyebrow="Publication archive"
+        title="Papers"
+        intro="A compact archive of academic work in financial econometrics and crypto-asset time-series diagnostics, with methods and market scope made explicit."
+        metadata={[
+          { label: "Archive", value: "2 academic papers" },
+          { label: "Methods", value: "EGARCH · GSADF" },
+          { label: "Scope", value: "NQ · ES · Bitcoin" },
+          { label: "Format", value: "Original PDF files" },
+        ]}
+      />
+
+      <EditorialSection
+        accent="blue"
+        eyebrow="Academic work"
+        title="Publication record"
+        intro="Each entry separates its summary, empirical scope, and methods from the actions used to read the paper or inspect its project context."
+      >
+        <ol>
+          {papers.map((paper, index) => (
+            <li
+              key={paper.title}
+              className="grid gap-7 border-t border-[#7E8B9D]/18 py-10 first:border-t-0 first:pt-0 lg:grid-cols-[3rem_minmax(0,1.2fr)_minmax(16rem,0.8fr)] lg:gap-10"
+            >
+              <p className="font-mono text-xs text-[#8CB5FF]">
+                {String(index + 1).padStart(2, "0")}
               </p>
-              <h1 className="mt-4 text-2xl font-semibold text-white">
-                {paper.title}
-              </h1>
-              <p className="mt-4 text-neutral-400">{paper.description}</p>
-              <div className="mt-6 flex flex-wrap gap-2">
-                {paper.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="rounded-lg border border-white/10 px-3 py-1 text-sm text-neutral-300"
-                  >
-                    {tag}
-                  </span>
-                ))}
+              <article>
+                <StatusLabel accent={paper.accent}>{paper.type}</StatusLabel>
+                <h3 className="mt-5 text-2xl font-semibold leading-tight tracking-[-0.03em] text-[#F4F7FB] sm:text-3xl">
+                  {paper.title}
+                </h3>
+                <p className="mt-5 max-w-3xl text-base leading-8 text-[#A8B3C2]">
+                  {paper.abstract}
+                </p>
+                <dl className="mt-7 border-y border-[#7E8B9D]/15">
+                  <div className="grid gap-2 py-4 sm:grid-cols-[7rem_1fr]">
+                    <dt className="text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#6F7D90]">
+                      Market scope
+                    </dt>
+                    <dd className="text-sm leading-6 text-[#DCE3EC]">{paper.scope}</dd>
+                  </div>
+                </dl>
+              </article>
+              <div className="flex flex-col items-start justify-between gap-8">
+                <div>
+                  <p className="text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#6F7D90]">
+                    Methods
+                  </p>
+                  <div className="mt-4 flex flex-wrap gap-2">
+                    {paper.methods.map((method) => (
+                      <ResearchTag key={method}>{method}</ResearchTag>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row lg:flex-col xl:flex-row">
+                  <CtaLink href={paper.pdfHref} kind="primary" newTab>
+                    View PDF
+                  </CtaLink>
+                  <CtaLink href={paper.projectHref}>Project page</CtaLink>
+                </div>
               </div>
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-                <a
-                  href={paper.pdfHref}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="rounded-lg bg-emerald-300 px-4 py-2 text-center text-sm font-semibold text-neutral-950 transition hover:bg-emerald-200 focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:ring-offset-2 focus:ring-offset-neutral-950"
-                >
-                  View PDF
-                </a>
-                {paper.projectHref ? (
-                  <Link
-                    href={paper.projectHref}
-                    className="rounded-lg border border-emerald-300/50 px-4 py-2 text-center text-sm font-semibold text-emerald-200 transition hover:bg-emerald-300/10 focus:outline-none focus:ring-2 focus:ring-emerald-300"
-                  >
-                    Project Page
-                  </Link>
-                ) : null}
-              </div>
-            </Card>
+            </li>
           ))}
-        </div>
-      </PageSection>
+        </ol>
+      </EditorialSection>
     </PageShell>
   );
 }

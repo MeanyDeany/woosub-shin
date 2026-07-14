@@ -53,7 +53,7 @@ export function MultiAssetLineage() {
             <ProvenanceBadge provenance="current-static-snapshot" />
           </div>
           <p className="mt-2 text-sm leading-6 text-[#7E8B9D]">
-            Current forecast-evidence operations
+            Initial public forecast-evidence baseline
           </p>
         </div>
 
@@ -80,9 +80,9 @@ export function MultiAssetLineage() {
       </div>
       <p className="mt-7 max-w-5xl text-sm leading-7 text-[#7E8B9D]">
         NQ and ES established the academic foundation for volatility-regime research.
-        BTCUSDT currently hosts the operational forecast-evidence infrastructure. Gold
-        futures are a planned commodity generalization asset. The long-term objective
-        is a unified multi-asset research and automation framework.
+        The public BTCUSDT showcase documents an initial forecast-evidence infrastructure
+        baseline. Gold futures are a planned commodity generalization asset. The
+        long-term objective is a unified multi-asset research and automation framework.
       </p>
     </div>
   );

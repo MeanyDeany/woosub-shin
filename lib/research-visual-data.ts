@@ -15,7 +15,7 @@ export type DataProvenance =
   | "planned-research";
 
 export const PROVENANCE_LABELS: Record<DataProvenance, string> = {
-  "current-static-snapshot": "Current static snapshot",
+  "current-static-snapshot": "Initial public snapshot",
   "academic-context": "Academic context",
   "conceptual-illustration": "Conceptual illustration",
   "planned-research": "Planned research",
@@ -32,9 +32,9 @@ export type SurfaceSample = {
 export const SURFACE_SAMPLES: Record<ResearchAsset, SurfaceSample> = {
   BTCUSDT: {
     label: "BTCUSDT",
-    context: "Current operational forecast-evidence research environment; no trading execution",
+    context: "Illustrative surface connected to the initial public research baseline; no trading execution",
     provenance: "conceptual-illustration",
-    status: "Current research infrastructure",
+    status: "Public showcase baseline",
     values: {
       "GARCH(1,1)-t": [
         0.34, 0.36, 0.42, 0.39, 0.45, 0.52, 0.49, 0.58, 0.72, 0.65,
