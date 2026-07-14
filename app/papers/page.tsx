@@ -11,7 +11,7 @@ import { PageShell } from "@/components/site-shell";
 export const metadata: Metadata = {
   title: "Papers",
   description:
-    "Academic papers by Woosub Shin on volatility-regime filtering in NQ and ES futures and GSADF-based Bitcoin bubble diagnostics.",
+    "MeanyDeany academic papers on volatility-regime filtering in NQ and ES futures and GSADF-based Bitcoin bubble diagnostics.",
 };
 
 const papers = [
@@ -44,9 +44,9 @@ export default function PapersPage() {
     <PageShell>
       <PageHero
         accent="blue"
-        eyebrow="Publication archive"
+        eyebrow="MeanyDeany · Publication archive"
         title="Papers"
-        intro="A compact archive of academic work in financial econometrics and crypto-asset time-series diagnostics, with methods and market scope made explicit."
+        intro="The academic foundation of the research program: original work in financial econometrics and crypto-asset time-series diagnostics."
         metadata={[
           { label: "Archive", value: "2 academic papers" },
           { label: "Methods", value: "EGARCH · GSADF" },

@@ -10,7 +10,7 @@ import { PageShell } from "@/components/site-shell";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Contact Woosub Shin about quant research, financial econometrics, market data, and research infrastructure roles.",
+    "Technical and professional correspondence with MeanyDeany, the public research identity of Woosub Shin.",
 };
 
 const interests = [
@@ -25,16 +25,16 @@ export default function ContactPage() {
   return (
     <PageShell>
       <PageHero
-        eyebrow="Contact"
-        title="Build research that can be inspected"
-        intro="I am interested in roles and conversations at the intersection of quant research, financial econometrics, market data, and reliable research infrastructure."
+        eyebrow="Research correspondence"
+        title="Technical and professional correspondence"
+        intro="For research discussions, technical questions, academic correspondence, or professional inquiries, use the channels below."
         actions={
           <>
             <a
               href="mailto:woosub815@gmail.com"
               className="inline-flex min-h-11 items-center justify-center border border-[#42D7F5] bg-[#42D7F5] px-5 py-2.5 text-sm font-semibold text-[#061016] transition-colors hover:border-[#7BE7FA] hover:bg-[#7BE7FA] focus-visible:outline-none"
             >
-              Email Woosub <span className="ml-2" aria-hidden="true">→</span>
+              Send email <span className="ml-2" aria-hidden="true">→</span>
             </a>
             <CtaLink href="https://github.com/MeanyDeany" newTab>
               View GitHub
@@ -51,35 +51,44 @@ export default function ContactPage() {
 
       <EditorialSection
         accent="blue"
-        eyebrow="Areas of interest"
-        title="Where the work fits"
-        intro="The strongest fit is research that values careful temporal construction, model-role discipline, and infrastructure that preserves evidence under review."
+        eyebrow="Public identity"
+        title="MeanyDeany is the public research identity of Woosub Shin."
+        intro="The public program brings together quantitative research systems, academic financial econometrics, and evidence-focused infrastructure under one consistent identity."
       >
-        <ul className="grid gap-px border border-[#7E8B9D]/15 bg-[#7E8B9D]/15 sm:grid-cols-2 lg:grid-cols-5">
-          {interests.map((interest, index) => (
-            <li key={interest} className="bg-[#0B0F16] px-5 py-6 last:sm:col-span-2 last:lg:col-span-1">
-              <span className="font-mono text-[0.65rem] text-[#8CB5FF]">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <p className="mt-4 text-sm font-medium leading-6 text-[#DCE3EC]">
-                {interest}
-              </p>
-            </li>
-          ))}
-        </ul>
+        <div className="grid gap-10 lg:grid-cols-[minmax(16rem,0.65fr)_minmax(0,1.35fr)] lg:items-start">
+          <dl className="border-y border-[#7E8B9D]/15">
+            <div className="grid gap-2 py-4 sm:grid-cols-[7rem_1fr]">
+              <dt className="text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#6F7D90]">Public identity</dt>
+              <dd className="text-sm text-[#DCE3EC]">MeanyDeany</dd>
+            </div>
+            <div className="grid gap-2 border-t border-[#7E8B9D]/12 py-4 sm:grid-cols-[7rem_1fr]">
+              <dt className="text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#6F7D90]">Researcher</dt>
+              <dd className="text-sm text-[#DCE3EC]">Woosub Shin</dd>
+            </div>
+          </dl>
+          <ul className="grid gap-px border border-[#7E8B9D]/15 bg-[#7E8B9D]/15 sm:grid-cols-2">
+            {interests.map((interest, index) => (
+              <li key={interest} className="bg-[#0B0F16] px-5 py-5 last:sm:col-span-2">
+                <span className="font-mono text-[0.65rem] text-[#8CB5FF]">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <p className="mt-3 text-sm font-medium leading-6 text-[#DCE3EC]">{interest}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
       </EditorialSection>
 
       <EditorialSection
         accent="amber"
         eyebrow="Direct channels"
-        title="A concise next step"
+        title="Contact details"
         tone="deep"
       >
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,0.7fr)] lg:items-start">
           <p className="max-w-2xl text-lg leading-8 text-[#B6C0CF]">
-            For a role, research discussion, or technical question, email is the
-            clearest channel. GitHub contains the public code context connected to
-            this portfolio.
+            Email is the clearest channel for correspondence. GitHub contains the
+            public code context connected to this research program.
           </p>
           <dl className="border-y border-[#7E8B9D]/15">
             <div className="grid gap-2 py-4 sm:grid-cols-[5rem_1fr]">

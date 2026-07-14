@@ -1,8 +1,8 @@
 export const navigation = [
-  { href: "/", label: "Home" },
-  { href: "/projects", label: "Projects" },
+  { href: "/", label: "Program" },
+  { href: "/projects", label: "Systems" },
   { href: "/papers", label: "Papers" },
-  { href: "/research", label: "Research" },
+  { href: "/research", label: "Methodology" },
   { href: "/contact", label: "Contact" },
 ];
 

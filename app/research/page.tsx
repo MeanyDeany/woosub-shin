@@ -8,9 +8,9 @@ import {
 import { PageShell } from "@/components/site-shell";
 
 export const metadata: Metadata = {
-  title: "Research Philosophy",
+  title: "Research Methodology",
   description:
-    "Woosub Shin's research philosophy: time-respecting data construction, model comparison, immutable provenance, and separation of evidence from permission and execution.",
+    "MeanyDeany research methodology: time-respecting construction, narrow model roles, robust comparison, immutable evidence, and visible failure states.",
 };
 
 const principles = [
@@ -64,9 +64,9 @@ export default function ResearchPage() {
     <PageShell>
       <PageHero
         accent="violet"
-        eyebrow="Research philosophy"
-        title="Validation before interpretation"
-        intro="My research style emphasizes temporally valid construction, explicit model roles, durable provenance, and a hard separation between evidence, policy, and execution."
+        eyebrow="MeanyDeany · Methodology"
+        title="Research methodology"
+        intro="Time-respecting construction, narrow model roles, robust comparison, immutable evidence, and visible failure states."
         metadata={[
           { label: "Data", value: "Time-respecting" },
           { label: "Models", value: "Compared, not canonized" },

@@ -46,7 +46,7 @@ const heroBoundaries = [
 ] as const;
 
 const identityRows = [
-  "Multi-asset research direction",
+  "Current public research infrastructure",
   "Immutable evidence ledgers",
   "Initial shadow-model baseline",
   "Research-only operation",
@@ -228,7 +228,7 @@ export default function BtcFuturesResearchPage() {
             </ul>
           </div>
           <div>
-            <h3 className="text-xl font-semibold text-[#F4F7FB]">My Role</h3>
+            <h3 className="text-xl font-semibold text-[#F4F7FB]">Research contribution</h3>
             <ul className="mt-5 grid gap-x-8 sm:grid-cols-2">
               {roleItems.map((item, index) => (
                 <li key={item} className="flex gap-3 border-b border-[#7E8B9D]/12 py-4 text-sm leading-6 text-[#B6C0CF]">
