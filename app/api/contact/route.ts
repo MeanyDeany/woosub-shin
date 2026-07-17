@@ -7,6 +7,7 @@ export const dynamic = "force-dynamic";
 const MAX_BODY_BYTES = 16_384;
 const RATE_WINDOW_MS = 10 * 60 * 1000;
 const RATE_LIMIT = 5;
+const MIN_RATE_SALT_LENGTH = 32;
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const rateBuckets = new Map<string, { count: number; resetAt: number }>();
@@ -74,16 +75,15 @@ function isAllowedOrigin(request: NextRequest) {
   }
 }
 
-function requestRateKey(request: NextRequest) {
+function requestRateKey(request: NextRequest, salt: string) {
   const forwarded = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
   const address = forwarded || request.headers.get("x-real-ip") || "unknown";
-  const salt = process.env.CONTACT_RATE_SALT || "meanydeany-contact-rate";
   return createHash("sha256").update(`${salt}:${address}`).digest("hex");
 }
 
-function isRateLimited(request: NextRequest) {
+function isRateLimited(request: NextRequest, salt: string) {
   const now = Date.now();
-  const key = requestRateKey(request);
+  const key = requestRateKey(request, salt);
   const bucket = rateBuckets.get(key);
 
   if (!bucket || bucket.resetAt <= now) {
@@ -110,7 +110,16 @@ export async function POST(request: NextRequest) {
     return Response.json({ error: "Expected a JSON request." }, { status: 415 });
   }
 
-  if (isRateLimited(request)) {
+  const rateSalt = process.env.CONTACT_RATE_SALT?.trim();
+  if (!rateSalt || rateSalt.length < MIN_RATE_SALT_LENGTH) {
+    console.error("CONTACT_RATE_SALT is not configured with at least 32 characters.");
+    return Response.json(
+      { error: "The contact service is not configured yet." },
+      { status: 503 },
+    );
+  }
+
+  if (isRateLimited(request, rateSalt)) {
     return Response.json(
       { error: "Too many messages. Please wait before trying again." },
       { status: 429 },
