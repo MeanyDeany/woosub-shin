@@ -2,8 +2,24 @@
   position: relative;
 }
 
-.header-menu__trigger {
+.header-menu__top {
+  display: inline-flex;
+  align-items: center;
+}
+
+.header-menu__parent-link {
+  padding-right: 0.12rem;
+  text-decoration: none;
+}
+
+.header-menu__toggle {
+  display: inline-flex;
+  min-height: 2.5rem;
+  min-width: 1.45rem;
+  align-items: center;
+  justify-content: center;
   border: 0;
+  padding: 0 0.12rem;
   background: transparent;
   cursor: pointer;
 }
