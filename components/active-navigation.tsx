@@ -60,11 +60,12 @@ export function ActiveNavigation() {
 
           const expanded = openMenu === item.href;
           const panelId = `submenu-${item.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
+          const alignmentClass = item.href === "/research" ? "header-menu--align-right" : "";
 
           return (
             <li
               key={item.href}
-              className="header-menu"
+              className={`header-menu ${alignmentClass}`}
               onMouseEnter={() => setOpenMenu(item.href)}
               onMouseLeave={() => setOpenMenu(null)}
               onFocus={() => setOpenMenu(item.href)}
