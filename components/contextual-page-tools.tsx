@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
+import "@/components/contextual-page-tools.module.css";
 
 const BTC_PATH = "/projects/btc-futures-research";
 
