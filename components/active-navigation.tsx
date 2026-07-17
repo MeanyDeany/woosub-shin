@@ -12,20 +12,32 @@ function isActiveRoute(pathname: string, href: string) {
 
 export function ActiveNavigation() {
   const pathname = usePathname();
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
+  const [openMenuState, setOpenMenuState] = useState<{
+    href: string;
+    pathname: string;
+  } | null>(null);
   const navRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    setOpenMenu(null);
-  }, [pathname]);
+  const openMenu = openMenuState?.pathname === pathname ? openMenuState.href : null;
 
   useEffect(() => {
     function handlePointerDown(event: PointerEvent) {
-      if (!navRef.current?.contains(event.target as Node)) setOpenMenu(null);
+      if (!navRef.current?.contains(event.target as Node)) setOpenMenuState(null);
     }
 
     function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") setOpenMenu(null);
+      if (event.key !== "Escape") return;
+
+      const openPanel = navRef.current?.querySelector<HTMLElement>(
+        ".header-menu__panel--open",
+      );
+      if (!openPanel) return;
+
+      const toggle = openPanel
+        .closest(".header-menu")
+        ?.querySelector<HTMLButtonElement>(".header-menu__toggle");
+      event.preventDefault();
+      setOpenMenuState(null);
+      toggle?.focus();
     }
 
     document.addEventListener("pointerdown", handlePointerDown);
@@ -50,7 +62,7 @@ export function ActiveNavigation() {
                 <Link
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className={`theme-nav-link ${activeClass} inline-flex min-h-10 items-center text-xs font-medium transition-colors focus-visible:outline-none sm:text-[0.82rem]`}
+                  className={`theme-nav-link ${activeClass} inline-flex min-h-10 items-center text-xs font-medium transition-colors sm:text-[0.82rem]`}
                 >
                   {item.label}
                 </Link>
@@ -66,12 +78,11 @@ export function ActiveNavigation() {
             <li
               key={item.href}
               className={`header-menu ${alignmentClass}`}
-              onMouseEnter={() => setOpenMenu(item.href)}
-              onMouseLeave={() => setOpenMenu(null)}
-              onFocus={() => setOpenMenu(item.href)}
+              onMouseEnter={() => setOpenMenuState({ href: item.href, pathname })}
+              onMouseLeave={() => setOpenMenuState(null)}
               onBlur={(event) => {
                 if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
-                  setOpenMenu(null);
+                  setOpenMenuState(null);
                 }
               }}
             >
@@ -79,8 +90,9 @@ export function ActiveNavigation() {
                 <Link
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className={`theme-nav-link ${activeClass} header-menu__parent-link inline-flex min-h-10 items-center text-xs font-medium transition-colors focus-visible:outline-none sm:text-[0.82rem]`}
-                  onClick={() => setOpenMenu(null)}
+                  className={`theme-nav-link ${activeClass} header-menu__parent-link inline-flex min-h-10 items-center text-xs font-medium transition-colors sm:text-[0.82rem]`}
+                  onClick={() => setOpenMenuState(null)}
+                  onFocus={() => setOpenMenuState({ href: item.href, pathname })}
                 >
                   {item.label}
                 </Link>
@@ -91,7 +103,9 @@ export function ActiveNavigation() {
                   aria-haspopup="menu"
                   aria-controls={panelId}
                   className="theme-nav-link header-menu__toggle"
-                  onClick={() => setOpenMenu(expanded ? null : item.href)}
+                  onClick={() =>
+                    setOpenMenuState(expanded ? null : { href: item.href, pathname })
+                  }
                 >
                   <span aria-hidden="true" className="header-menu__chevron">⌄</span>
                 </button>
@@ -109,7 +123,7 @@ export function ActiveNavigation() {
                         href={child.href}
                         role="menuitem"
                         className="header-menu__link"
-                        onClick={() => setOpenMenu(null)}
+                        onClick={() => setOpenMenuState(null)}
                       >
                         <span className="header-menu__label">{child.label}</span>
                         <span className="header-menu__detail">{child.detail}</span>

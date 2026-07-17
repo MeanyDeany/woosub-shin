@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import "./navigation.css";
 
@@ -31,12 +31,6 @@ const themeScript = `
     document.documentElement.style.colorScheme = "light";
   }
 })();
-`;
-
-const analyticsScript = `
-window.va = window.va || function () {
-  (window.vaq = window.vaq || []).push(arguments);
-};
 `;
 
 export const metadata: Metadata = {
@@ -83,12 +77,7 @@ export default function RootLayout({
       </head>
       <body className="flex min-h-full flex-col">
         {children}
-        <Script
-          id="vercel-analytics-init"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{ __html: analyticsScript }}
-        />
-        <Script src="/_vercel/insights/script.js" strategy="afterInteractive" />
+        <Analytics />
       </body>
     </html>
   );

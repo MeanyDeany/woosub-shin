@@ -21,25 +21,51 @@ After adding or changing environment variables, redeploy the site.
 
 ## Private visitor analytics
 
-The root layout loads Vercel Web Analytics from `/_vercel/insights/script.js`.
+The root layout renders `Analytics` from `@vercel/analytics/next` exactly once. The
+official Next.js integration records the initial page load and client-side route changes
+without a second manual analytics script.
 
-In the Vercel project dashboard:
+To enable analytics for the `woosub-shin` Vercel project:
 
-1. Open **Analytics**.
-2. Enable **Web Analytics**.
-3. Redeploy the Production deployment.
-4. Use the private Vercel dashboard to view visitors, page views, countries, referrers, devices, browsers, and operating systems.
+1. Sign in to Vercel and select the **woosub-shin** project.
+2. Open **Analytics**, choose **Web Analytics**, and select **Enable**.
+3. Redeploy the Production deployment. Enabling Web Analytics provisions the project
+   intake routes on the next deployment.
+4. Visit a production page and follow at least one internal link so both an initial load
+   and a client-side route change are observed.
+5. In browser developer tools, confirm that the Network panel receives successful
+   requests to Vercel's generated `/<unique-path>/view` intake endpoint. The exact path
+   is deployment-generated and must not be hardcoded.
+6. Return to **Analytics**, select the Production environment, and confirm events arrive.
+   Use the **Visitors** and **Page Views** views and their panels to inspect countries,
+   referrers, device types, browsers, and operating systems.
 
-No visitor count or analytics dashboard is exposed on the public website.
+The authenticated, project-access-controlled Vercel dashboard is the source of truth.
+The website exposes no visitor count, analytics viewer, admin route, analytics API,
+credential, or project secret. An exact owner-only on-site counter would require real
+authentication and a server-side analytics API, so no client-only substitute is provided.
+
+For strictly owner-only visibility, keep the owner as the only Vercel account with access
+to this project and review team and project membership periodically. Analytics access is
+not automatically limited to one person when other Vercel team members can access the
+project.
 
 ## Geolocation and privacy
 
 Vercel supplies approximate country, region, and city headers to the contact endpoint on deployed requests. Local development normally has no geolocation headers.
 
-The form notification includes only the approximate location. It does not include the raw IP address. Vercel Web Analytics uses anonymized visitor identification and is viewed only through the authenticated Vercel project dashboard.
+The private form notification includes only the approximate location. The contact endpoint
+uses the request address transiently to derive a salted SHA-256 key for its best-effort
+in-memory burst limit; it does not log, email, return, or persist the raw IP address.
+
+Vercel Web Analytics stores anonymous aggregate data without cookies. Analytics events are
+not tied to or associated with a persisted raw IP address, and Vercel's daily visitor hash
+cannot track a visitor between different days or websites. Do not send personal information
+through custom analytics events.
 
 ## Current limitations
 
 - The in-memory contact burst limit is best effort because serverless instances can restart or scale horizontally.
 - For sustained spam, add a managed challenge such as Turnstile or a Vercel WAF rule.
 - Delivery depends on Resend availability, a valid API key, and verified sender DNS.
+- Analytics visibility depends on Vercel project membership; review access if the dashboard must remain strictly owner-only.

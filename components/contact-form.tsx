@@ -1,14 +1,18 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type FormStatus = "idle" | "sending" | "success" | "error";
 
 export function ContactForm() {
   const formRef = useRef<HTMLFormElement>(null);
-  const startedAtRef = useRef(Date.now());
+  const startedAtRef = useRef(0);
   const [status, setStatus] = useState<FormStatus>("idle");
   const [feedback, setFeedback] = useState("");
+
+  useEffect(() => {
+    startedAtRef.current = Date.now();
+  }, []);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -52,7 +56,7 @@ export function ContactForm() {
   }
 
   const inputClass =
-    "site-strong w-full rounded-2xl border border-[#7187AB]/22 bg-white/62 px-4 py-3.5 text-sm shadow-[inset_0_1px_0_rgba(255,255,255,0.92)] outline-none backdrop-blur-xl transition focus:border-[#2580D8]/55 focus:ring-4 focus:ring-[#2580D8]/10 dark:border-white/10";
+    "contact-input site-strong w-full rounded-2xl px-4 py-3.5 text-sm outline-none backdrop-blur-xl transition";
 
   return (
     <form
@@ -123,7 +127,7 @@ export function ContactForm() {
 
       <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="site-muted max-w-xl text-xs leading-5">
-          Your contact details and message are emailed privately to Woosub Shin. They are not
+          Your contact details and message are emailed privately to MeanyDeany. They are not
           published on the site. Approximate country and city may be attached from Vercel&apos;s
           geolocation headers; the raw IP address is not included or stored by this form.
         </p>
@@ -140,10 +144,10 @@ export function ContactForm() {
         <p
           role="status"
           aria-live="polite"
-          className={`mt-5 rounded-2xl px-4 py-3 text-sm ${
+          className={`form-feedback mt-5 rounded-2xl px-4 py-3 text-sm ${
             status === "success"
-              ? "border border-emerald-500/20 bg-emerald-500/10 text-emerald-700"
-              : "border border-red-500/20 bg-red-500/10 text-red-700"
+              ? "form-feedback--success"
+              : "form-feedback--error"
           }`}
         >
           {feedback}

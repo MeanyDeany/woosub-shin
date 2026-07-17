@@ -154,14 +154,14 @@
 }
 
 :global(html[data-theme="dark"] .section-dock__panel) {
-  border-color: rgba(255, 255, 255, 0.1);
-  background: rgba(12, 15, 21, 0.9);
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(20, 25, 35, 0.92);
   box-shadow: 0 24px 72px rgba(0, 0, 0, 0.42), inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 :global(html[data-theme="dark"] .section-dock__eyebrow),
 :global(html[data-theme="dark"] .section-dock__index) {
-  color: #6f7d90;
+  color: #a8b3c2;
 }
 
 :global(html[data-theme="dark"] .section-dock__link) {

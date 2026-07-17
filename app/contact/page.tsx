@@ -11,7 +11,7 @@ import { PageShell } from "@/components/site-shell";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Technical and professional correspondence with MeanyDeany, the public research identity of Woosub Shin.",
+    "Technical and professional correspondence with MeanyDeany, an independent quantitative research identity.",
 };
 
 const interests = [
@@ -33,7 +33,7 @@ export default function ContactPage() {
           <>
             <a
               href="#message"
-              className="inline-flex min-h-11 items-center justify-center rounded-full border border-[#17243D] bg-[#17243D] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(32,55,94,0.18)] transition-transform hover:-translate-y-0.5 hover:bg-[#22375B] focus-visible:outline-none"
+              className="inline-flex min-h-11 items-center justify-center rounded-full border border-[#17243D] bg-[#17243D] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(32,55,94,0.18)] transition-transform hover:-translate-y-0.5 hover:bg-[#22375B]"
             >
               Write a message <span className="ml-2" aria-hidden="true">↓</span>
             </a>
@@ -84,19 +84,19 @@ export default function ContactPage() {
 
       <EditorialSection
         accent="blue"
-        eyebrow="Public identity"
-        title="MeanyDeany is the public research identity of Woosub Shin."
-        intro="The public program brings together quantitative research systems, academic financial econometrics, and evidence-focused infrastructure under one consistent identity."
+        eyebrow="Research identity"
+        title="MeanyDeany is an independent quantitative research identity focused on auditable market-data, volatility, and validation systems."
+        intro="The public program brings together quantitative research systems, academic financial econometrics, and evidence-focused infrastructure under one consistent brand."
       >
         <div className="grid gap-10 lg:grid-cols-[minmax(16rem,0.65fr)_minmax(0,1.35fr)] lg:items-start">
-          <dl className="border-y border-[#7E8B9D]/15">
-            <div className="grid gap-2 py-4 sm:grid-cols-[7rem_1fr]">
-              <dt className="text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#6F7D90]">Public identity</dt>
-              <dd className="text-sm text-[#DCE3EC]">MeanyDeany</dd>
+          <dl className="metadata-list border-y">
+            <div className="metadata-row grid gap-2 py-4 sm:grid-cols-[7rem_1fr]">
+              <dt className="metadata-key">Identity</dt>
+              <dd className="metadata-value">MeanyDeany</dd>
             </div>
-            <div className="grid gap-2 border-t border-[#7E8B9D]/12 py-4 sm:grid-cols-[7rem_1fr]">
-              <dt className="text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#6F7D90]">Researcher</dt>
-              <dd className="text-sm text-[#DCE3EC]">Woosub Shin</dd>
+            <div className="metadata-row grid gap-2 border-t py-4 sm:grid-cols-[7rem_1fr]">
+              <dt className="metadata-key">Focus</dt>
+              <dd className="metadata-value">Auditable market data, volatility, and validation systems</dd>
             </div>
           </dl>
           <ul className="grid gap-px border border-[#7E8B9D]/15 bg-[#7E8B9D]/15 sm:grid-cols-2">
@@ -123,19 +123,19 @@ export default function ContactPage() {
             The form is the quickest route. Direct email remains available if the form service
             is unavailable. GitHub contains the public code context connected to this program.
           </p>
-          <dl className="border-y border-[#7E8B9D]/15">
-            <div className="grid gap-2 py-4 sm:grid-cols-[5rem_1fr]">
-              <dt className="text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#6F7D90]">Email</dt>
+          <dl className="metadata-list border-y">
+            <div className="metadata-row grid gap-2 py-4 sm:grid-cols-[5rem_1fr]">
+              <dt className="metadata-key">Email</dt>
               <dd>
-                <a className="text-sm text-[#DCE3EC] underline decoration-[#42D7F5]/45 hover:text-white" href="mailto:woosub815@gmail.com">
+                <a className="metadata-link metadata-value underline decoration-[#42D7F5]/45" href="mailto:woosub815@gmail.com">
                   woosub815@gmail.com
                 </a>
               </dd>
             </div>
-            <div className="grid gap-2 border-t border-[#7E8B9D]/12 py-4 sm:grid-cols-[5rem_1fr]">
-              <dt className="text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#6F7D90]">GitHub</dt>
+            <div className="metadata-row grid gap-2 border-t py-4 sm:grid-cols-[5rem_1fr]">
+              <dt className="metadata-key">GitHub</dt>
               <dd>
-                <a className="text-sm text-[#DCE3EC] underline decoration-[#42D7F5]/45 hover:text-white" href="https://github.com/MeanyDeany" target="_blank" rel="noreferrer">
+                <a className="metadata-link metadata-value underline decoration-[#42D7F5]/45" href="https://github.com/MeanyDeany" target="_blank" rel="noreferrer">
                   github.com/MeanyDeany
                 </a>
               </dd>

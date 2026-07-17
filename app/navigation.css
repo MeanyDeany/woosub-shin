@@ -35,9 +35,7 @@
   transition: transform 120ms ease;
 }
 
-.header-menu:has(.header-menu__panel--open) .header-menu__chevron,
-.header-menu:hover .header-menu__chevron,
-.header-menu:focus-within .header-menu__chevron {
+.header-menu:has(.header-menu__panel--open) .header-menu__chevron {
   transform: rotate(180deg);
 }
 
@@ -66,9 +64,7 @@
     transform 130ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.header-menu__panel--open,
-.header-menu:hover .header-menu__panel,
-.header-menu:focus-within .header-menu__panel {
+.header-menu__panel--open {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -82,9 +78,7 @@
   transform-origin: top right;
 }
 
-.header-menu--align-right .header-menu__panel--open,
-.header-menu--align-right:hover .header-menu__panel,
-.header-menu--align-right:focus-within .header-menu__panel {
+.header-menu--align-right .header-menu__panel--open {
   transform: translate(0, 0) scale(1);
 }
 
@@ -193,10 +187,42 @@ html[data-theme="dark"] .header-menu__link:focus-visible {
 }
 
 @media (max-width: 720px) {
+  .site-header__inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.2rem 1rem;
+    padding-top: 0.45rem;
+    padding-bottom: 0.35rem;
+  }
+
+  .site-header__actions {
+    display: contents;
+  }
+
+  .header-navigation-wrap {
+    grid-row: 2;
+    grid-column: 1 / -1;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: visible;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: none;
+  }
+
+  .header-navigation-wrap::-webkit-scrollbar {
+    display: none;
+  }
+
+  .theme-toggle {
+    grid-row: 1;
+    grid-column: 2;
+    justify-self: end;
+  }
+
   .header-menu__panel,
   .header-menu--align-right .header-menu__panel {
     position: fixed;
-    top: 4.15rem;
+    top: 6.4rem;
     right: 0.75rem;
     left: auto;
     transform: translateY(0.35rem) scale(0.985);
@@ -204,11 +230,7 @@ html[data-theme="dark"] .header-menu__link:focus-visible {
   }
 
   .header-menu__panel--open,
-  .header-menu:hover .header-menu__panel,
-  .header-menu:focus-within .header-menu__panel,
-  .header-menu--align-right .header-menu__panel--open,
-  .header-menu--align-right:hover .header-menu__panel,
-  .header-menu--align-right:focus-within .header-menu__panel {
+  .header-menu--align-right .header-menu__panel--open {
     transform: translateY(0) scale(1);
   }
 }

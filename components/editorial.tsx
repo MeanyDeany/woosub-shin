@@ -4,27 +4,19 @@ import type { ReactNode } from "react";
 export type Accent = "amber" | "blue" | "cyan" | "emerald" | "violet";
 
 const accentText: Record<Accent, string> = {
-  amber: "text-[#A85D08]",
-  blue: "text-[#2563C9]",
-  cyan: "text-[#087E9B]",
-  emerald: "text-[#08765A]",
-  violet: "text-[#7251C8]",
+  amber: "annotation-accent annotation-accent--amber text-[#A85D08]",
+  blue: "annotation-accent annotation-accent--blue text-[#2563C9]",
+  cyan: "annotation-accent annotation-accent--cyan text-[#087E9B]",
+  emerald: "annotation-accent annotation-accent--emerald text-[#08765A]",
+  violet: "annotation-accent annotation-accent--violet text-[#7251C8]",
 };
 
-const accentBorder: Record<Accent, string> = {
-  amber: "border-[#D89238]/35",
-  blue: "border-[#5891EA]/35",
-  cyan: "border-[#49AFC4]/35",
-  emerald: "border-[#4BA98B]/35",
-  violet: "border-[#977FE0]/35",
-};
-
-const accentBackground: Record<Accent, string> = {
-  amber: "bg-[#FFF4E4]/75",
-  blue: "bg-[#EDF5FF]/75",
-  cyan: "bg-[#EAFBFE]/75",
-  emerald: "bg-[#ECFAF5]/75",
-  violet: "bg-[#F4F0FF]/75",
+const statusAccent: Record<Accent, string> = {
+  amber: "status-label--amber",
+  blue: "status-label--blue",
+  cyan: "status-label--cyan",
+  emerald: "status-label--emerald",
+  violet: "status-label--violet",
 };
 
 export type MetaItem = {
@@ -60,7 +52,7 @@ export function PageHero({
       <div className="relative mx-auto grid max-w-[1320px] gap-10 px-5 py-16 sm:py-24 lg:grid-cols-[minmax(0,1.35fr)_minmax(18rem,0.65fr)] lg:gap-16 lg:px-8 lg:py-28">
         <div className="min-w-0">
           <p
-            className={`text-[0.68rem] font-semibold uppercase tracking-[0.18em] ${accentText[accent]}`}
+            className={`eyebrow-label text-[0.68rem] font-semibold uppercase tracking-[0.18em] ${accentText[accent]}`}
           >
             {eyebrow}
           </p>
@@ -100,7 +92,7 @@ export function SectionHeading({
     <div className="mb-10 max-w-4xl sm:mb-12">
       {eyebrow ? (
         <p
-          className={`text-[0.68rem] font-semibold uppercase tracking-[0.18em] ${accentText[accent]}`}
+          className={`eyebrow-label text-[0.68rem] font-semibold uppercase tracking-[0.18em] ${accentText[accent]}`}
         >
           {eyebrow}
         </p>
@@ -165,7 +157,7 @@ export function EditorialSection({
 
 export function ResearchTag({ children }: { children: ReactNode }) {
   return (
-    <span className="inline-flex rounded-full border border-[#7187AB]/18 bg-white/65 px-3 py-1.5 text-[0.69rem] font-medium uppercase tracking-[0.09em] text-[#526079] shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-lg">
+    <span className="research-tag inline-flex rounded-full px-3 py-1.5 text-[0.69rem] font-medium uppercase tracking-[0.09em] backdrop-blur-lg">
       {children}
     </span>
   );
@@ -180,7 +172,7 @@ export function StatusLabel({
 }) {
   return (
     <span
-      className={`inline-flex w-fit items-center rounded-full border px-3 py-1.5 text-[0.66rem] font-semibold uppercase tracking-[0.12em] ${accentBorder[accent]} ${accentBackground[accent]} ${accentText[accent]}`}
+      className={`status-label ${statusAccent[accent]} inline-flex w-fit items-center rounded-full border px-3 py-1.5 text-[0.66rem] font-semibold uppercase tracking-[0.12em]`}
     >
       <span aria-hidden="true" className="mr-2 h-1.5 w-1.5 rounded-full bg-current" />
       {children}
@@ -201,10 +193,10 @@ export function CtaLink({
 }) {
   const className =
     kind === "primary"
-      ? "inline-flex min-h-11 items-center justify-center rounded-full border border-[#17243D] bg-[#17243D] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(32,55,94,0.18)] transition-transform hover:-translate-y-0.5 hover:bg-[#22375B] focus-visible:outline-none"
+      ? "inline-flex min-h-11 items-center justify-center rounded-full border border-[#17243D] bg-[#17243D] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(32,55,94,0.18)] transition-transform hover:-translate-y-0.5 hover:bg-[#22375B]"
       : kind === "text"
-        ? "inline-flex min-h-10 items-center border-b border-[#2580D8]/35 py-2 text-sm font-semibold text-[#176FC1] transition-colors hover:border-[#176FC1] hover:text-[#0C5798] focus-visible:outline-none"
-        : "inline-flex min-h-11 items-center justify-center rounded-full border border-[#7187AB]/24 bg-white/58 px-5 py-2.5 text-sm font-semibold text-[#24324A] shadow-[inset_0_1px_0_rgba(255,255,255,0.95)] backdrop-blur-xl transition-all hover:-translate-y-0.5 hover:border-[#2580D8]/45 hover:bg-white/82 focus-visible:outline-none";
+        ? "inline-flex min-h-10 items-center border-b border-[#2580D8]/35 py-2 text-sm font-semibold text-[#176FC1] transition-colors hover:border-[#176FC1] hover:text-[#0C5798]"
+        : "inline-flex min-h-11 items-center justify-center rounded-full border border-[#7187AB]/24 bg-white/58 px-5 py-2.5 text-sm font-semibold text-[#24324A] shadow-[inset_0_1px_0_rgba(255,255,255,0.95)] backdrop-blur-xl transition-all hover:-translate-y-0.5 hover:border-[#2580D8]/45 hover:bg-white/82";
 
   if (newTab) {
     return (
@@ -233,16 +225,16 @@ export function TechnicalMetadata({
   rows: readonly MetaItem[];
 }) {
   return (
-    <dl className={`glass-panel rounded-[1.75rem] px-5 py-2 ${className}`}>
+    <dl className={`glass-panel technical-metadata rounded-[1.75rem] px-5 py-2 ${className}`}>
       {rows.map((row) => (
         <div
           key={row.label}
-          className="grid grid-cols-[minmax(5.5rem,0.7fr)_minmax(0,1.3fr)] gap-4 border-b border-[#7187AB]/14 py-4 last:border-b-0"
+          className="technical-metadata__row grid grid-cols-[minmax(5.5rem,0.7fr)_minmax(0,1.3fr)] gap-4 border-b py-4 last:border-b-0"
         >
-          <dt className="text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#758198]">
+          <dt className="metadata-key">
             {row.label}
           </dt>
-          <dd className={`text-sm leading-5 ${accentText[accent]}`}>{row.value}</dd>
+          <dd className={`technical-metadata__value min-w-0 text-sm leading-5 ${accentText[accent]}`}>{row.value}</dd>
         </div>
       ))}
     </dl>
@@ -261,15 +253,15 @@ export function CapabilityBand({
   label?: string;
 }) {
   return (
-    <div className="border-y border-[#7187AB]/15 bg-white/34 backdrop-blur-lg">
+    <div className="capability-band border-y backdrop-blur-lg">
       <div className="mx-auto max-w-[1320px] px-5 py-7 lg:px-8">
-        <p className="mb-5 text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-[#1677D2]">
+        <p className="eyebrow-label annotation-accent annotation-accent--blue mb-5 text-[0.65rem] font-semibold uppercase tracking-[0.16em]">
           {label}
         </p>
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {items.map((item, index) => (
-            <li key={item} className="glass-panel rounded-2xl px-4 py-4 text-sm leading-6 text-[#526079]">
-              <span className="mr-3 font-mono text-[0.62rem] text-[#2563C9]">
+            <li key={item} className="glass-panel capability-chip rounded-2xl px-4 py-4 text-sm leading-6">
+              <span className="annotation-accent annotation-accent--blue mr-3 font-mono text-[0.62rem]">
                 {String(index + 1).padStart(2, "0")}
               </span>
               {item}
@@ -324,7 +316,7 @@ export function ProjectIndexRow({
         </div>
         <div className="flex flex-col justify-between gap-7">
           <div>
-            <p className="text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#758198]">
+            <p className="metadata-key">
               Contribution
             </p>
             <p className="mt-3 text-sm leading-6 text-[#657189]">{contribution}</p>
@@ -354,7 +346,7 @@ export function EvidenceBand({
     <dl className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
       {items.map((item) => (
         <div key={item.label} className="glass-panel rounded-2xl px-5 py-5">
-          <dt className="text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#758198]">
+          <dt className="metadata-key">
             {item.label}
           </dt>
           <dd className={`mt-2 text-sm leading-6 ${accentText[accent]}`}>{item.value}</dd>
