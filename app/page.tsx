@@ -1,276 +1,252 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import {
-  CtaLink,
-  EditorialSection,
-  PageHero,
-  ResearchTag,
-  StatusLabel,
-} from "@/components/editorial";
 import { PageShell } from "@/components/site-shell";
 
 export const metadata: Metadata = {
-  title: "Research Program",
+  title: "Quantitative Research Systems",
   description:
-    "MeanyDeany is a public quantitative research program spanning financial econometrics, immutable evidence pipelines, and reusable research infrastructure.",
+    "MeanyDeany builds quantitative research infrastructure for market data, model validation, and decision control.",
 };
 
-const lineage = [
+const pillars = [
   {
-    accent: "amber" as const,
-    index: "01",
-    href: "/projects/bitcoin-bubble-gsadf",
-    label: "Earlier time-series research",
-    title: "Bitcoin bubble diagnostics",
-    detail: "GSADF testing established a first discipline: statistical detection must remain separate from market recommendation.",
+    number: "01",
+    title: "Capture what actually happened.",
+    detail:
+      "Exact market bytes, canonical datasets, immutable manifests, and provenance that can be inspected later.",
   },
   {
-    accent: "blue" as const,
-    index: "02",
-    href: "/projects/volatility-regime-filtering",
-    label: "Academic financial-econometrics foundation",
-    title: "Volatility-regime filtering for NQ and ES",
-    detail: "The MSc thesis treated EGARCH as volatility-conditioning context rather than a directional predictor.",
+    number: "02",
+    title: "Test what the model claims.",
+    detail:
+      "Time-respecting validation, forward outcomes, bounded comparisons, and failure states that stay visible.",
   },
   {
-    accent: "cyan" as const,
-    index: "03",
-    href: "/projects/btc-futures-research",
-    label: "Current public research infrastructure",
-    title: "BTC evidence infrastructure",
-    detail: "The flagship system records model fits, forecast states, forward outcomes, provenance, and integrity review as distinct evidence stages.",
+    number: "03",
+    title: "Control what the evidence can authorize.",
+    detail:
+      "A forecast is not permission. A regime is not a trade. Research evidence stays separate from execution.",
   },
+] as const;
+
+const systems = [
   {
-    accent: "violet" as const,
-    index: "04",
+    label: "Market data",
+    title: "Evidence starts before the model.",
+    detail:
+      "Controlled acquisition, exact-byte verification, canonical normalization, and reproducible dataset identity.",
     href: "/projects",
-    label: "Future multi-asset research direction",
-    title: "Unified multi-asset research framework",
-    detail: "The next research direction is reusable validation architecture across assets, with factual scope labels kept separate from operational claims.",
+    link: "Explore the systems",
+  },
+  {
+    label: "Model validation",
+    title: "Results must survive time.",
+    detail:
+      "Forward validation, anti-lookahead construction, immutable outcomes, and explicit uncertainty boundaries.",
+    href: "/research",
+    link: "Read the methodology",
+  },
+  {
+    label: "Decision control",
+    title: "Failure should be loud.",
+    detail:
+      "Stale data, broken lineage, premature conclusions, and operational faults are surfaced instead of silently repaired.",
+    href: "/projects/btc-futures-research#evidence-pipeline",
+    link: "Inspect the pipeline",
   },
 ] as const;
 
-const scope = [
-  ["BTCUSDT", "Current research infrastructure", "cyan"],
-  ["NQ / ES", "Academic foundation", "blue"],
-  ["SPY / QQQ", "Controlled data-trial scope", "emerald"],
-  ["Gold", "Planned commodity research", "violet"],
+const pipeline = [
+  "Market data",
+  "Canonical evidence",
+  "Model state",
+  "Forward outcome",
+  "Integrity review",
 ] as const;
 
-const architecture = [
-  ["01", "Market Data", "Completed observations with explicit source identity"],
-  ["02", "Input Construction", "Time-aligned inputs with no silent repair"],
-  ["03", "Model Fits", "Narrow statistical specifications and frozen provenance"],
-  ["04", "Forecast States", "Descriptive model evidence without permission semantics"],
-  ["05", "Forward Outcomes", "Outcomes appended only after the horizon closes"],
-  ["06", "Integrity Review", "Duplicates, references, freshness, and failure states inspected"],
-] as const;
+function Arrow() {
+  return <span aria-hidden="true">↗</span>;
+}
 
-const principles = [
-  "No lookahead repair",
-  "No retrospective rewriting",
-  "No model-to-permission shortcut",
-  "No execution authority",
-] as const;
+const primaryButton =
+  "inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#17243D] px-6 text-sm font-semibold text-white shadow-[0_14px_34px_rgba(39,66,109,0.20)] transition-transform hover:-translate-y-0.5 hover:bg-[#22375B] focus-visible:outline-none";
 
-const findings = [
-  "EGARCH was studied as a volatility-conditioning layer, not a direction predictor.",
-  "Its point estimate exceeded GARCH and GJR-GARCH in a pre-OOS comparison, but the difference was not statistically decisive.",
-  "HAR-Jump survived as a defensive risk-context candidate, not an entry signal.",
-  "Evidence integrity and operational reliability became part of the research methodology.",
-] as const;
+const secondaryButton =
+  "inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[#7187AB]/24 bg-white/58 px-6 text-sm font-semibold text-[#24324A] shadow-[inset_0_1px_0_rgba(255,255,255,0.95)] backdrop-blur-xl transition-all hover:-translate-y-0.5 hover:border-[#2580D8]/45 hover:bg-white/82 focus-visible:outline-none";
 
 export default function Home() {
   return (
     <PageShell>
-      <PageHero
-        eyebrow="MeanyDeany · Quantitative Research Systems"
-        title="Volatility, validation, and evidence that can survive inspection."
-        intro="A public quantitative research program spanning financial econometrics, immutable evidence pipelines, and reusable research infrastructure."
-        actions={
-          <>
-            <CtaLink href="#flagship" kind="primary">
-              Explore the research system
-            </CtaLink>
-            <CtaLink href="/research">Read the methodology</CtaLink>
-          </>
-        }
-        metadata={[
-          { label: "Identity", value: "MeanyDeany" },
-          { label: "Focus", value: "Volatility · validation · evidence" },
-          { label: "Method", value: "Time-respecting and auditable" },
-          { label: "Boundary", value: "Research only" },
-        ]}
-      />
+      <section className="relative isolate overflow-hidden border-b border-[#6880A8]/12 bg-white/10">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -left-40 -top-48 -z-10 h-[44rem] w-[44rem] rounded-full bg-[#6DC1FF]/24 blur-3xl"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-48 top-4 -z-10 h-[42rem] w-[42rem] rounded-full bg-[#B29BFF]/18 blur-3xl"
+        />
+        <div className="mx-auto flex min-h-[calc(100svh-4rem)] max-w-[1440px] flex-col justify-center px-5 py-24 sm:px-8 sm:py-32 lg:px-12">
+          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[#1677D2]">
+            MeanyDeany · Quantitative Research Systems
+          </p>
 
-      <EditorialSection
-        id="flagship"
-        eyebrow="Flagship system"
-        title="BTC Futures Research Assistant"
-        intro="The current public research infrastructure turns statistical volatility forecasts into inspectable evidence without crossing into strategy approval or execution."
-      >
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1.25fr)_minmax(19rem,0.75fr)] lg:gap-16">
-          <div>
-            <StatusLabel accent="cyan">Current public research infrastructure</StatusLabel>
-            <p className="mt-7 max-w-3xl text-xl leading-9 text-[#DCE3EC]">
-              A deterministic BTCUSDT research pipeline for model fits, hourly forecast
-              states, forward outcomes, immutable provenance, and integrity monitoring.
-            </p>
-            <p className="mt-5 max-w-3xl text-base leading-8 text-[#8996A8]">
-              Model evidence remains descriptive. The system provides no entry permission,
-              short permission, leverage sizing, execution connection, or investment advice.
-            </p>
-            <div className="mt-8">
-              <CtaLink href="/projects/btc-futures-research#evidence-pipeline" kind="primary">
-                Inspect the evidence pipeline
-              </CtaLink>
-            </div>
+          <h1 className="mt-8 max-w-[82rem] text-[clamp(3.7rem,10.5vw,9rem)] font-semibold leading-[0.88] tracking-[-0.075em] text-[#111A2E]">
+            Shit always happens
+            <span className="block">in the market.</span>
+          </h1>
+
+          <p className="mt-10 max-w-[58rem] text-[clamp(1.45rem,3vw,2.7rem)] font-medium leading-[1.12] tracking-[-0.035em] text-[#27364F]">
+            So we build systems that fail visibly before capital does.
+          </p>
+
+          <p className="mt-7 max-w-[48rem] text-base leading-7 text-[#657189] sm:text-lg sm:leading-8">
+            Quantitative research infrastructure for market data, model validation,
+            and decision control. Built to expose bad assumptions, stale evidence,
+            and silent failures before they become decisions.
+          </p>
+
+          <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <Link href="/projects/btc-futures-research" className={primaryButton}>
+              See the flagship system
+              <Arrow />
+            </Link>
+            <Link href="/projects" className={secondaryButton}>
+              View all research
+              <Arrow />
+            </Link>
           </div>
-          <dl className="border-y border-[#7E8B9D]/18">
-            {[
-              ["Evidence", "Append-only event ledgers"],
-              ["Models", "GARCH family · HAR-RV"],
-              ["Validation", "Forward outcomes after horizon close"],
-              ["Authority", "No execution or permission role"],
-            ].map(([label, value]) => (
-              <div key={label} className="grid gap-2 border-b border-[#7E8B9D]/12 py-4 last:border-b-0 sm:grid-cols-[7rem_1fr]">
-                <dt className="text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#6F7D90]">{label}</dt>
-                <dd className="text-sm leading-6 text-[#67DFF7]">{value}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-      </EditorialSection>
 
-      <EditorialSection
-        accent="blue"
-        eyebrow="Research lineage"
-        title="From diagnostics to reusable evidence systems"
-        intro="The program develops through connected questions rather than disconnected project cards. Each stage keeps its original provenance and claim boundary."
-        tone="deep"
-      >
-        <ol className="divide-y divide-[#7E8B9D]/15 border-y border-[#7E8B9D]/15">
-          {lineage.map((item) => (
-            <li
-              key={item.index}
-              className="grid gap-4 py-7 md:grid-cols-[3rem_minmax(13rem,0.75fr)_minmax(0,1.25fr)] md:gap-8"
-            >
-              <span className="font-mono text-xs text-[#8CB5FF]">{item.index}</span>
-              <div>
-                <StatusLabel accent={item.accent}>{item.label}</StatusLabel>
-                <h3 className="mt-4 text-xl font-semibold text-[#F4F7FB]">
-                  <Link className="underline decoration-[#475466] hover:decoration-[#42D7F5]" href={item.href}>
-                    {item.title}
-                  </Link>
+          <p className="mt-12 text-xs uppercase tracking-[0.16em] text-[#77839A]">
+            Research only · No signals · No execution
+          </p>
+        </div>
+      </section>
+
+      <section className="border-b border-[#6880A8]/12 bg-white/32 backdrop-blur-sm">
+        <div className="mx-auto max-w-[1440px] px-5 py-24 sm:px-8 sm:py-32 lg:px-12 lg:py-40">
+          <p className="text-sm font-semibold text-[#1677D2]">Why this exists</p>
+          <h2 className="mt-4 max-w-[68rem] text-[clamp(2.8rem,7vw,6.8rem)] font-semibold leading-[0.94] tracking-[-0.065em] text-[#111A2E]">
+            Markets do not fail politely.
+          </h2>
+          <p className="mt-8 max-w-[50rem] text-xl leading-8 tracking-[-0.02em] text-[#657189] sm:text-2xl sm:leading-9">
+            Data arrives late. Models drift. Infrastructure breaks. Humans improvise.
+            The research system should make each failure inspectable.
+          </p>
+
+          <ol className="mt-20 grid gap-5 lg:grid-cols-3">
+            {pillars.map((pillar) => (
+              <li key={pillar.number} className="glass-panel rounded-[2rem] p-7 sm:p-9">
+                <span className="font-mono text-xs text-[#2563C9]">{pillar.number}</span>
+                <h3 className="mt-10 text-3xl font-semibold leading-tight tracking-[-0.04em] text-[#111A2E]">
+                  {pillar.title}
                 </h3>
-              </div>
-              <p className="text-sm leading-7 text-[#8996A8]">{item.detail}</p>
-            </li>
-          ))}
-        </ol>
-      </EditorialSection>
-
-      <EditorialSection
-        accent="emerald"
-        eyebrow="Current research scope"
-        title="Scope labels, not live operational states"
-        intro="These labels describe the public research program's present and planned coverage. They do not report live market, model, server, or execution status."
-      >
-        <dl className="divide-y divide-[#7E8B9D]/15 border-y border-[#7E8B9D]/15">
-          {scope.map(([asset, state, accent], index) => (
-            <div
-              key={asset}
-              className="grid gap-4 py-5 sm:grid-cols-[3rem_minmax(8rem,0.6fr)_minmax(0,1.4fr)] sm:items-center sm:gap-6"
-            >
-              <span className="font-mono text-[0.68rem] text-[#79E8B5]">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <dt className="font-mono text-sm font-semibold text-[#F4F7FB]">{asset}</dt>
-              <dd><StatusLabel accent={accent}>{state}</StatusLabel></dd>
-            </div>
-          ))}
-        </dl>
-      </EditorialSection>
-
-      <EditorialSection
-        accent="violet"
-        eyebrow="Research architecture"
-        title="A traceable path from observation to review"
-        intro="Each stage has one bounded responsibility, preserving the distinction between factual inputs, model output, later outcomes, and integrity decisions."
-        tone="deep"
-      >
-        <ol className="grid gap-px border border-[#7E8B9D]/15 bg-[#7E8B9D]/15 sm:grid-cols-2 lg:grid-cols-3">
-          {architecture.map(([index, title, detail]) => (
-            <li key={title} className="min-w-0 bg-[#0B0F16] p-6">
-              <span className="font-mono text-[0.65rem] text-[#C3AEFF]">{index}</span>
-              <h3 className="mt-5 text-base font-semibold text-[#F4F7FB]">{title}</h3>
-              <p className="mt-3 text-sm leading-7 text-[#8996A8]">{detail}</p>
-            </li>
-          ))}
-        </ol>
-        <div className="mt-8 flex flex-wrap gap-2">
-          {principles.map((principle) => <ResearchTag key={principle}>{principle}</ResearchTag>)}
+                <p className="mt-5 text-base leading-7 text-[#657189]">
+                  {pillar.detail}
+                </p>
+              </li>
+            ))}
+          </ol>
         </div>
-      </EditorialSection>
+      </section>
 
-      <EditorialSection
-        accent="amber"
-        eyebrow="Bounded findings"
-        title="What the research record currently supports"
-        intro="These statements preserve uncertainty and model-role limits. They are research findings, not trading instructions."
-        tone="warm"
-      >
-        <ol className="divide-y divide-[#7E8B9D]/15 border-y border-[#7E8B9D]/15">
-          {findings.map((finding, index) => (
-            <li key={finding} className="grid gap-3 py-5 sm:grid-cols-[3rem_1fr] sm:gap-6">
-              <span className="font-mono text-[0.68rem] text-[#FFC56F]">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <p className="text-base leading-8 text-[#B6C0CF]">{finding}</p>
-            </li>
-          ))}
-        </ol>
-      </EditorialSection>
+      <section className="border-b border-[#6880A8]/12 bg-white/12 backdrop-blur-sm">
+        <div className="mx-auto max-w-[1440px] px-5 py-24 sm:px-8 sm:py-32 lg:px-12 lg:py-40">
+          <p className="text-sm font-semibold text-[#1677D2]">What we build</p>
+          <h2 className="mt-4 max-w-[66rem] text-[clamp(2.8rem,7vw,6.5rem)] font-semibold leading-[0.94] tracking-[-0.065em] text-[#111A2E]">
+            Research infrastructure. Not signal theatre.
+          </h2>
 
-      <EditorialSection
-        accent="blue"
-        eyebrow="Research record"
-        title="Papers and methodology"
-      >
-        <div className="divide-y divide-[#7E8B9D]/15 border-y border-[#7E8B9D]/15">
-          {[
-            ["Academic papers", "Original thesis and seminar-paper PDFs with their project context.", "/papers", "Open papers"],
-            ["Research methodology", "Time-respecting construction, narrow model roles, robust comparison, and visible failure states.", "/research", "Read methodology"],
-          ].map(([title, detail, href, label]) => (
-            <article key={href} className="grid gap-5 py-7 md:grid-cols-[minmax(12rem,0.6fr)_minmax(0,1fr)_auto] md:items-center md:gap-8">
-              <h3 className="text-xl font-semibold text-[#F4F7FB]">{title}</h3>
-              <p className="text-sm leading-7 text-[#8996A8]">{detail}</p>
-              <Link className="text-sm font-semibold text-[#DCE3EC] underline decoration-[#42D7F5]/45 hover:text-white" href={href}>
-                {label}
-              </Link>
-            </article>
-          ))}
-        </div>
-      </EditorialSection>
-
-      <EditorialSection
-        eyebrow="Research correspondence"
-        title="Questions, critiques, and technical correspondence"
-        tone="deep"
-      >
-        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
-          <div>
-            <p className="max-w-3xl text-lg leading-8 text-[#B6C0CF]">
-              Correspondence about the public research program, its methodology, or
-              professional applications of auditable quantitative research is welcome.
-            </p>
-            <p className="mt-4 font-mono text-[0.65rem] uppercase tracking-[0.12em] text-[#566274]">
-              Public research identity: MeanyDeany
-            </p>
+          <div className="mt-16 grid gap-5 lg:grid-cols-3">
+            {systems.map((system, index) => (
+              <article
+                key={system.label}
+                className="glass-panel flex min-h-[30rem] flex-col rounded-[2rem] p-7 sm:p-9"
+              >
+                <div className="flex items-center justify-between text-xs uppercase tracking-[0.15em] text-[#758198]">
+                  <span>{system.label}</span>
+                  <span className="font-mono text-[#2563C9]">0{index + 1}</span>
+                </div>
+                <h3 className="mt-12 text-4xl font-semibold leading-[1.02] tracking-[-0.045em] text-[#111A2E] sm:text-5xl">
+                  {system.title}
+                </h3>
+                <p className="mt-6 text-base leading-7 text-[#657189]">
+                  {system.detail}
+                </p>
+                <Link
+                  href={system.href}
+                  className="mt-auto inline-flex w-fit items-center gap-2 pt-12 text-sm font-semibold text-[#1677D2] transition-colors hover:text-[#0D589C] focus-visible:outline-none"
+                >
+                  {system.link}
+                  <Arrow />
+                </Link>
+              </article>
+            ))}
           </div>
-          <CtaLink href="/contact" kind="primary">Contact</CtaLink>
         </div>
-      </EditorialSection>
+      </section>
+
+      <section className="border-b border-[#6880A8]/12 bg-white/36 backdrop-blur-sm">
+        <div className="mx-auto max-w-[1440px] px-5 py-24 sm:px-8 sm:py-32 lg:px-12 lg:py-40">
+          <div className="grid gap-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(20rem,0.9fr)] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold text-[#1677D2]">Flagship system</p>
+              <h2 className="mt-4 max-w-[56rem] text-[clamp(3rem,7vw,7rem)] font-semibold leading-[0.92] tracking-[-0.07em] text-[#111A2E]">
+                A research system should show its work.
+              </h2>
+              <p className="mt-8 max-w-[46rem] text-xl leading-8 text-[#657189] sm:text-2xl sm:leading-9">
+                The BTC Futures Research Assistant separates data, model states,
+                later outcomes, and integrity review into an inspectable evidence chain.
+              </p>
+            </div>
+
+            <div className="glass-panel rounded-[2rem] p-7 sm:p-9">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#758198]">
+                Evidence pipeline
+              </p>
+              <ol className="mt-7 divide-y divide-[#7187AB]/14">
+                {pipeline.map((stage, index) => (
+                  <li key={stage} className="flex items-center gap-5 py-4 first:pt-0 last:pb-0">
+                    <span className="font-mono text-xs text-[#2563C9]">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="text-base font-semibold text-[#24324A]">{stage}</span>
+                  </li>
+                ))}
+              </ol>
+              <Link
+                href="/projects/btc-futures-research#evidence-pipeline"
+                className={`${primaryButton} mt-9`}
+              >
+                Inspect the evidence pipeline
+                <Arrow />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-white/14 backdrop-blur-sm">
+        <div className="mx-auto max-w-[1440px] px-5 py-24 text-center sm:px-8 sm:py-32 lg:px-12 lg:py-40">
+          <div className="glass-panel mx-auto max-w-[76rem] rounded-[2.5rem] px-6 py-16 sm:px-10 sm:py-24">
+            <p className="mx-auto max-w-[68rem] text-[clamp(2.8rem,7.5vw,7.3rem)] font-semibold leading-[0.92] tracking-[-0.07em] text-[#111A2E]">
+              No black box.
+              <span className="block">No silent repair.</span>
+              <span className="block">No hidden permission.</span>
+            </p>
+            <div className="mt-12 flex flex-col justify-center gap-3 sm:flex-row">
+              <Link href="/research" className={primaryButton}>
+                Read the methodology
+                <Arrow />
+              </Link>
+              <Link href="/contact" className={secondaryButton}>
+                Contact
+                <Arrow />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
     </PageShell>
   );
 }

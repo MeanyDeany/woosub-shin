@@ -1,24 +1,24 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { ActiveNavigation } from "@/components/active-navigation";
+import { ContextualPageTools } from "@/components/contextual-page-tools";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export function SiteHeader() {
   return (
-    <header className="relative z-50 border-b border-[#7E8B9D]/18 bg-[#07090D]/96 backdrop-blur-md">
-      <div className="mx-auto flex max-w-[1320px] flex-col gap-4 px-5 py-4 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+    <header className="site-header sticky top-0 z-50 backdrop-blur-2xl">
+      <div className="mx-auto flex min-h-16 max-w-[1440px] items-center justify-between gap-4 px-5 sm:px-8 lg:px-12">
         <Link
           href="/"
-          className="group flex w-fit flex-col gap-1 focus-visible:outline-none sm:flex-row sm:items-baseline sm:gap-3"
+          className="site-brand text-sm font-semibold tracking-[-0.02em] transition-colors focus-visible:outline-none"
         >
-          <span className="text-base font-semibold tracking-[-0.02em] text-[#F4F7FB] group-hover:text-white">
-            MeanyDeany
-          </span>
-          <span className="text-[0.61rem] font-medium uppercase tracking-[0.13em] text-[#6F7D90] sm:text-[0.66rem] sm:tracking-[0.14em]">
-            Quantitative Research Systems
-          </span>
+          MeanyDeany
         </Link>
-        <div className="-mx-2 min-w-0 overflow-x-auto px-2 pb-0.5 lg:mx-0 lg:px-0">
-          <ActiveNavigation />
+        <div className="flex min-w-0 items-center gap-3 sm:gap-5">
+          <div className="min-w-0 overflow-x-auto">
+            <ActiveNavigation />
+          </div>
+          <ThemeToggle />
         </div>
       </div>
     </header>
@@ -29,56 +29,37 @@ export function SiteFooter() {
   const currentYear = new Date().getUTCFullYear();
 
   return (
-    <footer className="border-t border-[#42D7F5]/20 bg-[#050608]">
-      <div className="mx-auto max-w-[1320px] px-5 py-12 lg:px-8 lg:py-14">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.15fr_0.7fr_1.15fr]">
+    <footer className="site-footer backdrop-blur-xl">
+      <div className="mx-auto max-w-[1440px] px-5 py-12 sm:px-8 lg:px-12">
+        <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="text-lg font-semibold tracking-[-0.025em] text-[#F4F7FB]">
-              MeanyDeany
-            </p>
-            <p className="mt-3 max-w-sm text-sm leading-6 text-[#8996A8]">
-              A public quantitative research program in volatility, validation,
-              and auditable evidence infrastructure.
+            <p className="site-strong text-lg font-semibold tracking-[-0.03em]">MeanyDeany</p>
+            <p className="site-muted mt-3 max-w-xl text-sm leading-6">
+              Quantitative research infrastructure for market data, model validation,
+              and decision control.
             </p>
           </div>
-          <div>
-            <p className="text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-[#67DFF7]">
-              Connect
-            </p>
-            <ul className="mt-4 space-y-3 text-sm">
-              <li>
-                <a
-                  href="mailto:woosub815@gmail.com"
-                  className="text-[#B6C0CF] underline decoration-[#475466] hover:text-white focus-visible:outline-none"
-                >
-                  Email
-                </a>
-              </li>
-              <li>
-                <a
-                  href="https://github.com/MeanyDeany"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-[#B6C0CF] underline decoration-[#475466] hover:text-white focus-visible:outline-none"
-                >
-                  GitHub
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <p className="text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-[#FFC56F]">
-              Research boundary
-            </p>
-            <p className="mt-4 max-w-md text-sm leading-6 text-[#8996A8]">
-              Research-only public program. No trading signals, execution services, or
-              investment advice.
-            </p>
+          <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium">
+            <a
+              href="mailto:woosub815@gmail.com"
+              className="site-link transition-colors focus-visible:outline-none"
+            >
+              Email
+            </a>
+            <a
+              href="https://github.com/MeanyDeany"
+              target="_blank"
+              rel="noreferrer"
+              className="site-link transition-colors focus-visible:outline-none"
+            >
+              GitHub ↗
+            </a>
           </div>
         </div>
-        <p className="mt-12 border-t border-[#7E8B9D]/12 pt-5 font-mono text-[0.65rem] uppercase tracking-[0.12em] text-[#566274]">
-          © {currentYear} MeanyDeany · Public research program
-        </p>
+        <div className="site-footer-rule site-muted mt-10 flex flex-col gap-3 border-t pt-5 text-xs sm:flex-row sm:items-center sm:justify-between">
+          <p>© {currentYear} MeanyDeany</p>
+          <p>Research only · No signals · No execution</p>
+        </div>
       </div>
     </footer>
   );
@@ -86,14 +67,15 @@ export function SiteFooter() {
 
 export function PageShell({ children }: { children: ReactNode }) {
   return (
-    <div className="flex min-h-dvh flex-col bg-[#07090D] text-[#F4F7FB]">
+    <div className="cosmic-page flex min-h-dvh flex-col">
       <a
         href="#main-content"
-        className="fixed left-4 top-3 z-[100] -translate-y-24 bg-[#42D7F5] px-4 py-2 text-sm font-semibold text-[#061016] transition-transform focus:translate-y-0"
+        className="skip-link fixed left-4 top-3 z-[100] -translate-y-24 rounded-full px-4 py-2 text-sm font-semibold shadow-lg transition-transform focus:translate-y-0"
       >
         Skip to content
       </a>
       <SiteHeader />
+      <ContextualPageTools />
       <main id="main-content" className="flex-1">
         {children}
       </main>
@@ -114,15 +96,15 @@ export function PageSection({
   className?: string;
 }) {
   return (
-    <section className={`border-t border-[#7E8B9D]/12 bg-[#07090D] ${className}`}>
+    <section className={`theme-section border-t backdrop-blur-sm ${className}`}>
       <div className="mx-auto max-w-[1320px] px-5 py-16 sm:py-20 lg:px-8 lg:py-24">
         <div className="mb-10 max-w-4xl">
           {eyebrow ? (
-            <p className="mb-3 text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#67DFF7]">
+            <p className="site-accent mb-3 text-[0.68rem] font-semibold uppercase tracking-[0.18em]">
               {eyebrow}
             </p>
           ) : null}
-          <h2 className="text-3xl font-semibold leading-tight tracking-[-0.035em] text-white sm:text-4xl lg:text-[2.75rem]">
+          <h2 className="site-strong text-3xl font-semibold leading-tight tracking-[-0.035em] sm:text-4xl lg:text-[2.75rem]">
             {title}
           </h2>
         </div>
@@ -139,18 +121,14 @@ export function Card({
   children: ReactNode;
   className?: string;
 }) {
-  return (
-    <div className={`border border-[#7E8B9D]/16 bg-[#0E131C] p-6 ${className}`}>
-      {children}
-    </div>
-  );
+  return <div className={`glass-panel rounded-[1.5rem] p-6 ${className}`}>{children}</div>;
 }
 
 export function MetricCard({ label, value }: { label: string; value: string }) {
   return (
     <Card className="min-h-28">
-      <p className="text-sm text-[#7E8B9D]">{label}</p>
-      <p className="mt-3 text-xl font-semibold text-white">{value}</p>
+      <p className="site-muted text-sm">{label}</p>
+      <p className="site-strong mt-3 text-xl font-semibold">{value}</p>
     </Card>
   );
 }
@@ -159,10 +137,7 @@ export function BoundaryList({ items }: { items: string[] }) {
   return (
     <ul className="grid gap-3 sm:grid-cols-2">
       {items.map((item) => (
-        <li
-          key={item}
-          className="border border-[#7E8B9D]/15 bg-[#0B0F16] px-4 py-3 text-sm text-[#DCE3EC]"
-        >
+        <li key={item} className="glass-panel site-body rounded-2xl px-4 py-3 text-sm">
           {item}
         </li>
       ))}
