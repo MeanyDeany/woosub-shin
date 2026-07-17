@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { ActiveNavigation } from "@/components/active-navigation";
+import { ContextualPageTools } from "@/components/contextual-page-tools";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 export function SiteHeader() {
@@ -74,6 +75,7 @@ export function PageShell({ children }: { children: ReactNode }) {
         Skip to content
       </a>
       <SiteHeader />
+      <ContextualPageTools />
       <main id="main-content" className="flex-1">
         {children}
       </main>
