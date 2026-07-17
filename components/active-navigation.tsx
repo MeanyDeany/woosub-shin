@@ -14,20 +14,17 @@ export function ActiveNavigation() {
 
   return (
     <nav aria-label="Primary navigation" className="min-w-0">
-      <ul className="scrollbar-none flex min-w-max items-center gap-5 sm:gap-7">
+      <ul className="scrollbar-none flex min-w-max items-center gap-4 sm:gap-7">
         {navigation.map((item) => {
           const active = isActiveRoute(pathname, item.href);
+          const activeClass = active ? "theme-nav-link--active" : "";
 
           return (
             <li key={item.href}>
               <Link
                 href={item.href}
                 aria-current={active ? "page" : undefined}
-                className={`inline-flex min-h-10 items-center text-xs font-medium transition-colors focus-visible:outline-none sm:text-[0.82rem] ${
-                  active
-                    ? "text-[#111A2E]"
-                    : "text-[#768298] hover:text-[#1677D2]"
-                }`}
+                className={`theme-nav-link ${activeClass} inline-flex min-h-10 items-center text-xs font-medium transition-colors focus-visible:outline-none sm:text-[0.82rem]`}
               >
                 {item.label}
               </Link>
