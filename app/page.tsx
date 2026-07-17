@@ -68,76 +68,80 @@ function Arrow() {
   return <span aria-hidden="true">↗</span>;
 }
 
+const primaryButton =
+  "inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#17243D] px-6 text-sm font-semibold text-white shadow-[0_14px_34px_rgba(39,66,109,0.20)] transition-transform hover:-translate-y-0.5 hover:bg-[#22375B] focus-visible:outline-none";
+
+const secondaryButton =
+  "inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[#7187AB]/24 bg-white/58 px-6 text-sm font-semibold text-[#24324A] shadow-[inset_0_1px_0_rgba(255,255,255,0.95)] backdrop-blur-xl transition-all hover:-translate-y-0.5 hover:border-[#2580D8]/45 hover:bg-white/82 focus-visible:outline-none";
+
 export default function Home() {
   return (
     <PageShell>
-      <section className="relative isolate overflow-hidden bg-[#07090D]">
+      <section className="relative isolate overflow-hidden border-b border-[#6880A8]/12 bg-white/10">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[48rem] bg-[radial-gradient(circle_at_50%_-15%,rgba(66,215,245,0.16),transparent_58%)]"
+          className="pointer-events-none absolute -left-40 -top-48 -z-10 h-[44rem] w-[44rem] rounded-full bg-[#6DC1FF]/24 blur-3xl"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-48 top-4 -z-10 h-[42rem] w-[42rem] rounded-full bg-[#B29BFF]/18 blur-3xl"
         />
         <div className="mx-auto flex min-h-[calc(100svh-4rem)] max-w-[1440px] flex-col justify-center px-5 py-24 sm:px-8 sm:py-32 lg:px-12">
-          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[#67DFF7]">
+          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[#1677D2]">
             MeanyDeany · Quantitative Research Systems
           </p>
 
-          <h1 className="mt-8 max-w-[78rem] text-[clamp(3.7rem,10.5vw,9rem)] font-semibold leading-[0.88] tracking-[-0.075em] text-[#F5F5F7]">
+          <h1 className="mt-8 max-w-[82rem] text-[clamp(3.7rem,10.5vw,9rem)] font-semibold leading-[0.88] tracking-[-0.075em] text-[#111A2E]">
             Shit always happens
             <span className="block">in the market.</span>
           </h1>
 
-          <p className="mt-10 max-w-[56rem] text-[clamp(1.45rem,3vw,2.7rem)] font-medium leading-[1.12] tracking-[-0.035em] text-[#F5F5F7]">
+          <p className="mt-10 max-w-[58rem] text-[clamp(1.45rem,3vw,2.7rem)] font-medium leading-[1.12] tracking-[-0.035em] text-[#27364F]">
             So we build systems that fail visibly before capital does.
           </p>
 
-          <p className="mt-7 max-w-[46rem] text-base leading-7 text-[#A1A1A6] sm:text-lg sm:leading-8">
+          <p className="mt-7 max-w-[48rem] text-base leading-7 text-[#657189] sm:text-lg sm:leading-8">
             Quantitative research infrastructure for market data, model validation,
             and decision control. Built to expose bad assumptions, stale evidence,
             and silent failures before they become decisions.
           </p>
 
           <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <Link
-              href="/projects/btc-futures-research"
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#F5F5F7] px-6 text-sm font-semibold text-[#1D1D1F] transition-transform hover:scale-[1.02] focus-visible:outline-none"
-            >
+            <Link href="/projects/btc-futures-research" className={primaryButton}>
               See the flagship system
               <Arrow />
             </Link>
-            <Link
-              href="/projects"
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/20 px-6 text-sm font-semibold text-[#F5F5F7] transition-colors hover:border-white/45 hover:bg-white/[0.05] focus-visible:outline-none"
-            >
+            <Link href="/projects" className={secondaryButton}>
               View all research
               <Arrow />
             </Link>
           </div>
 
-          <p className="mt-12 text-xs uppercase tracking-[0.16em] text-[#6E6E73]">
+          <p className="mt-12 text-xs uppercase tracking-[0.16em] text-[#77839A]">
             Research only · No signals · No execution
           </p>
         </div>
       </section>
 
-      <section className="bg-[#F5F5F7] text-[#1D1D1F]">
+      <section className="border-b border-[#6880A8]/12 bg-white/32 backdrop-blur-sm">
         <div className="mx-auto max-w-[1440px] px-5 py-24 sm:px-8 sm:py-32 lg:px-12 lg:py-40">
-          <p className="text-sm font-semibold text-[#0071E3]">Why this exists</p>
-          <h2 className="mt-4 max-w-[68rem] text-[clamp(2.8rem,7vw,6.8rem)] font-semibold leading-[0.94] tracking-[-0.065em]">
+          <p className="text-sm font-semibold text-[#1677D2]">Why this exists</p>
+          <h2 className="mt-4 max-w-[68rem] text-[clamp(2.8rem,7vw,6.8rem)] font-semibold leading-[0.94] tracking-[-0.065em] text-[#111A2E]">
             Markets do not fail politely.
           </h2>
-          <p className="mt-8 max-w-[48rem] text-xl leading-8 tracking-[-0.02em] text-[#6E6E73] sm:text-2xl sm:leading-9">
+          <p className="mt-8 max-w-[50rem] text-xl leading-8 tracking-[-0.02em] text-[#657189] sm:text-2xl sm:leading-9">
             Data arrives late. Models drift. Infrastructure breaks. Humans improvise.
             The research system should make each failure inspectable.
           </p>
 
-          <ol className="mt-20 grid gap-12 lg:grid-cols-3 lg:gap-10">
+          <ol className="mt-20 grid gap-5 lg:grid-cols-3">
             {pillars.map((pillar) => (
-              <li key={pillar.number} className="border-t border-black/15 pt-7">
-                <span className="font-mono text-xs text-[#86868B]">{pillar.number}</span>
-                <h3 className="mt-7 text-3xl font-semibold leading-tight tracking-[-0.04em]">
+              <li key={pillar.number} className="glass-panel rounded-[2rem] p-7 sm:p-9">
+                <span className="font-mono text-xs text-[#2563C9]">{pillar.number}</span>
+                <h3 className="mt-10 text-3xl font-semibold leading-tight tracking-[-0.04em] text-[#111A2E]">
                   {pillar.title}
                 </h3>
-                <p className="mt-5 text-base leading-7 text-[#6E6E73]">
+                <p className="mt-5 text-base leading-7 text-[#657189]">
                   {pillar.detail}
                 </p>
               </li>
@@ -146,10 +150,10 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-[#000000] text-[#F5F5F7]">
+      <section className="border-b border-[#6880A8]/12 bg-white/12 backdrop-blur-sm">
         <div className="mx-auto max-w-[1440px] px-5 py-24 sm:px-8 sm:py-32 lg:px-12 lg:py-40">
-          <p className="text-sm font-semibold text-[#67DFF7]">What we build</p>
-          <h2 className="mt-4 max-w-[62rem] text-[clamp(2.8rem,7vw,6.5rem)] font-semibold leading-[0.94] tracking-[-0.065em]">
+          <p className="text-sm font-semibold text-[#1677D2]">What we build</p>
+          <h2 className="mt-4 max-w-[66rem] text-[clamp(2.8rem,7vw,6.5rem)] font-semibold leading-[0.94] tracking-[-0.065em] text-[#111A2E]">
             Research infrastructure. Not signal theatre.
           </h2>
 
@@ -157,21 +161,21 @@ export default function Home() {
             {systems.map((system, index) => (
               <article
                 key={system.label}
-                className="flex min-h-[30rem] flex-col rounded-[2rem] bg-[#161617] p-7 sm:p-9"
+                className="glass-panel flex min-h-[30rem] flex-col rounded-[2rem] p-7 sm:p-9"
               >
-                <div className="flex items-center justify-between text-xs uppercase tracking-[0.15em] text-[#86868B]">
+                <div className="flex items-center justify-between text-xs uppercase tracking-[0.15em] text-[#758198]">
                   <span>{system.label}</span>
-                  <span className="font-mono">0{index + 1}</span>
+                  <span className="font-mono text-[#2563C9]">0{index + 1}</span>
                 </div>
-                <h3 className="mt-12 text-4xl font-semibold leading-[1.02] tracking-[-0.045em] sm:text-5xl">
+                <h3 className="mt-12 text-4xl font-semibold leading-[1.02] tracking-[-0.045em] text-[#111A2E] sm:text-5xl">
                   {system.title}
                 </h3>
-                <p className="mt-6 text-base leading-7 text-[#A1A1A6]">
+                <p className="mt-6 text-base leading-7 text-[#657189]">
                   {system.detail}
                 </p>
                 <Link
                   href={system.href}
-                  className="mt-auto inline-flex w-fit items-center gap-2 pt-12 text-sm font-semibold text-[#67DFF7] hover:text-[#9DECFB] focus-visible:outline-none"
+                  className="mt-auto inline-flex w-fit items-center gap-2 pt-12 text-sm font-semibold text-[#1677D2] transition-colors hover:text-[#0D589C] focus-visible:outline-none"
                 >
                   {system.link}
                   <Arrow />
@@ -182,37 +186,37 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-[#F5F5F7] text-[#1D1D1F]">
+      <section className="border-b border-[#6880A8]/12 bg-white/36 backdrop-blur-sm">
         <div className="mx-auto max-w-[1440px] px-5 py-24 sm:px-8 sm:py-32 lg:px-12 lg:py-40">
           <div className="grid gap-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(20rem,0.9fr)] lg:items-end">
             <div>
-              <p className="text-sm font-semibold text-[#0071E3]">Flagship system</p>
-              <h2 className="mt-4 max-w-[54rem] text-[clamp(3rem,7vw,7rem)] font-semibold leading-[0.92] tracking-[-0.07em]">
+              <p className="text-sm font-semibold text-[#1677D2]">Flagship system</p>
+              <h2 className="mt-4 max-w-[56rem] text-[clamp(3rem,7vw,7rem)] font-semibold leading-[0.92] tracking-[-0.07em] text-[#111A2E]">
                 A research system should show its work.
               </h2>
-              <p className="mt-8 max-w-[44rem] text-xl leading-8 text-[#6E6E73] sm:text-2xl sm:leading-9">
+              <p className="mt-8 max-w-[46rem] text-xl leading-8 text-[#657189] sm:text-2xl sm:leading-9">
                 The BTC Futures Research Assistant separates data, model states,
                 later outcomes, and integrity review into an inspectable evidence chain.
               </p>
             </div>
 
-            <div className="rounded-[2rem] bg-white p-7 shadow-[0_20px_80px_rgba(0,0,0,0.08)] sm:p-9">
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#86868B]">
+            <div className="glass-panel rounded-[2rem] p-7 sm:p-9">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#758198]">
                 Evidence pipeline
               </p>
-              <ol className="mt-7 divide-y divide-black/10">
+              <ol className="mt-7 divide-y divide-[#7187AB]/14">
                 {pipeline.map((stage, index) => (
                   <li key={stage} className="flex items-center gap-5 py-4 first:pt-0 last:pb-0">
-                    <span className="font-mono text-xs text-[#0071E3]">
+                    <span className="font-mono text-xs text-[#2563C9]">
                       {String(index + 1).padStart(2, "0")}
                     </span>
-                    <span className="text-base font-semibold">{stage}</span>
+                    <span className="text-base font-semibold text-[#24324A]">{stage}</span>
                   </li>
                 ))}
               </ol>
               <Link
                 href="/projects/btc-futures-research#evidence-pipeline"
-                className="mt-9 inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#1D1D1F] px-6 text-sm font-semibold text-white transition-transform hover:scale-[1.02] focus-visible:outline-none"
+                className={`${primaryButton} mt-9`}
               >
                 Inspect the evidence pipeline
                 <Arrow />
@@ -222,28 +226,24 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-[#07090D] text-[#F5F5F7]">
+      <section className="bg-white/14 backdrop-blur-sm">
         <div className="mx-auto max-w-[1440px] px-5 py-24 text-center sm:px-8 sm:py-32 lg:px-12 lg:py-40">
-          <p className="mx-auto max-w-[68rem] text-[clamp(2.8rem,7.5vw,7.3rem)] font-semibold leading-[0.92] tracking-[-0.07em]">
-            No black box.
-            <span className="block text-[#6E6E73]">No silent repair.</span>
-            No hidden permission.
-          </p>
-          <div className="mt-12 flex flex-col justify-center gap-3 sm:flex-row">
-            <Link
-              href="/research"
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#F5F5F7] px-6 text-sm font-semibold text-[#1D1D1F] transition-transform hover:scale-[1.02] focus-visible:outline-none"
-            >
-              Read the methodology
-              <Arrow />
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/20 px-6 text-sm font-semibold text-[#F5F5F7] transition-colors hover:border-white/45 hover:bg-white/[0.05] focus-visible:outline-none"
-            >
-              Contact
-              <Arrow />
-            </Link>
+          <div className="glass-panel mx-auto max-w-[76rem] rounded-[2.5rem] px-6 py-16 sm:px-10 sm:py-24">
+            <p className="mx-auto max-w-[68rem] text-[clamp(2.8rem,7.5vw,7.3rem)] font-semibold leading-[0.92] tracking-[-0.07em] text-[#111A2E]">
+              No black box.
+              <span className="block">No silent repair.</span>
+              <span className="block">No hidden permission.</span>
+            </p>
+            <div className="mt-12 flex flex-col justify-center gap-3 sm:flex-row">
+              <Link href="/research" className={primaryButton}>
+                Read the methodology
+                <Arrow />
+              </Link>
+              <Link href="/contact" className={secondaryButton}>
+                Contact
+                <Arrow />
+              </Link>
+            </div>
           </div>
         </div>
       </section>
