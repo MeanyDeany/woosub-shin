@@ -13,7 +13,9 @@ Configure these Vercel environment variables for Production and Preview:
 - `RESEND_API_KEY`: Resend API key with email-sending permission.
 - `CONTACT_FROM_EMAIL`: verified sender, recommended value `MeanyDeany Contact <contact@meanydeany.com>`.
 - `CONTACT_TO_EMAIL`: destination inbox, currently `woosub815@gmail.com`.
-- `CONTACT_RATE_SALT`: long random string used only to create short-lived in-memory rate-limit keys.
+- `CONTACT_RATE_SALT`: required random secret of at least 32 characters, used only to create short-lived in-memory rate-limit keys.
+
+The contact endpoint fails closed with HTTP 503 when `CONTACT_RATE_SALT` is missing, blank, or shorter than 32 characters. There is no built-in fallback salt.
 
 Before sending from `contact@meanydeany.com`, add `meanydeany.com` or a dedicated sending subdomain to Resend and complete its SPF and DKIM DNS verification.
 
@@ -66,6 +68,7 @@ through custom analytics events.
 ## Current limitations
 
 - The in-memory contact burst limit is best effort because serverless instances can restart or scale horizontally.
+- The contact endpoint is unavailable until a `CONTACT_RATE_SALT` of at least 32 characters is configured.
 - For sustained spam, add a managed challenge such as Turnstile or a Vercel WAF rule.
 - Delivery depends on Resend availability, a valid API key, and verified sender DNS.
 - Analytics visibility depends on Vercel project membership; review access if the dashboard must remain strictly owner-only.
