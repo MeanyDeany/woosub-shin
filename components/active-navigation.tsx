@@ -59,6 +59,7 @@ export function ActiveNavigation() {
           }
 
           const expanded = openMenu === item.href;
+          const panelId = `submenu-${item.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
 
           return (
             <li
@@ -73,18 +74,32 @@ export function ActiveNavigation() {
                 }
               }}
             >
-              <button
-                type="button"
-                aria-expanded={expanded}
-                aria-haspopup="menu"
-                className={`theme-nav-link ${activeClass} header-menu__trigger inline-flex min-h-10 items-center gap-1 text-xs font-medium transition-colors focus-visible:outline-none sm:text-[0.82rem]`}
-                onClick={() => setOpenMenu(expanded ? null : item.href)}
-              >
-                {item.label}
-                <span aria-hidden="true" className="header-menu__chevron">⌄</span>
-              </button>
+              <div className="header-menu__top">
+                <Link
+                  href={item.href}
+                  aria-current={active ? "page" : undefined}
+                  className={`theme-nav-link ${activeClass} header-menu__parent-link inline-flex min-h-10 items-center text-xs font-medium transition-colors focus-visible:outline-none sm:text-[0.82rem]`}
+                  onClick={() => setOpenMenu(null)}
+                >
+                  {item.label}
+                </Link>
+                <button
+                  type="button"
+                  aria-label={`${expanded ? "Close" : "Open"} ${item.label} submenu`}
+                  aria-expanded={expanded}
+                  aria-haspopup="menu"
+                  aria-controls={panelId}
+                  className="theme-nav-link header-menu__toggle"
+                  onClick={() => setOpenMenu(expanded ? null : item.href)}
+                >
+                  <span aria-hidden="true" className="header-menu__chevron">⌄</span>
+                </button>
+              </div>
 
-              <div className={`header-menu__panel ${expanded ? "header-menu__panel--open" : ""}`}>
+              <div
+                id={panelId}
+                className={`header-menu__panel ${expanded ? "header-menu__panel--open" : ""}`}
+              >
                 <p className="header-menu__eyebrow">{item.label}</p>
                 <ul role="menu" className="header-menu__list">
                   {item.children.map((child) => (
