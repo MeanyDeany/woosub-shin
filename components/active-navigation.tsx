@@ -25,8 +25,8 @@ export function ActiveNavigation() {
                 aria-current={active ? "page" : undefined}
                 className={`inline-flex min-h-10 items-center text-xs font-medium transition-colors focus-visible:outline-none sm:text-[0.82rem] ${
                   active
-                    ? "text-[#F5F5F7]"
-                    : "text-[#86868B] hover:text-[#F5F5F7]"
+                    ? "text-[#111A2E]"
+                    : "text-[#768298] hover:text-[#1677D2]"
                 }`}
               >
                 {item.label}
