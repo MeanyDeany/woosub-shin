@@ -89,7 +89,7 @@ export function SectionDock({ items }: { items: readonly SectionDockItem[] }) {
 
       <nav
         id="btc-page-sections"
-        aria-label="BTC research page sections"
+        aria-label="Multi-Asset Volatility Research System page sections"
         className="section-dock__panel"
       >
         <p className="section-dock__eyebrow">Quick navigation</p>

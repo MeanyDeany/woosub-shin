@@ -21,6 +21,7 @@ export function MultiAssetLineage() {
           {[
             ["NQ Futures", "Academic thesis research"],
             ["ES Futures", "Academic thesis research"],
+            ["Crude Oil (CL) Futures", "Academic thesis research"],
           ].map(([asset, context]) => (
             <Link
               key={asset}
@@ -79,10 +80,12 @@ export function MultiAssetLineage() {
         </div>
       </div>
       <p className="mt-7 max-w-5xl text-sm leading-7 text-[#7E8B9D]">
-        NQ and ES established the academic foundation for volatility-regime research.
-        The public BTCUSDT showcase documents an initial forecast-evidence infrastructure
-        baseline. Gold futures are a planned commodity generalization asset. The
-        long-term objective is a unified multi-asset research and automation framework.
+        NQ, ES, and Crude Oil (CL) futures established the academic foundation for
+        volatility-regime research. The public BTCUSDT showcase documents the current
+        forecast-evidence infrastructure baseline; those academic assets are not part of
+        its operational pipeline. Gold futures remain a planned commodity generalization
+        asset. The long-term objective is a unified multi-asset research and automation
+        framework.
       </p>
     </div>
   );

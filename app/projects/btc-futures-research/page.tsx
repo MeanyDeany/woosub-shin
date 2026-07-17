@@ -25,9 +25,9 @@ import {
 } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "BTC Futures Research Assistant",
+  title: "Multi-Asset Volatility Research System",
   description:
-    "A public research-infrastructure showcase for immutable BTCUSDT volatility forecasts, time-respecting forward outcomes, provenance, and integrity monitoring.",
+    "The current public BTCUSDT research and operational evidence context for immutable volatility forecasts, time-respecting forward outcomes, provenance, and integrity monitoring, within an academic NQ, ES, and Crude Oil (CL) lineage.",
 };
 
 const overviewPrinciples = [
@@ -45,9 +45,9 @@ const heroBoundaries = [
 ] as const;
 
 const identityRows = [
-  "Current public research infrastructure",
+  "Current public BTCUSDT research evidence",
+  "NQ, ES, and Crude Oil (CL) academic lineage",
   "Immutable evidence ledgers",
-  "Initial shadow-model baseline",
   "Research-only operation",
 ] as const;
 
@@ -119,7 +119,7 @@ function ResearchSection({
 export default function BtcFuturesResearchPage() {
   return (
     <PageShell>
-      <section className="relative isolate overflow-hidden bg-[#07090D]">
+      <section id="overview" className="relative isolate overflow-hidden bg-[#07090D]">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 bg-[linear-gradient(125deg,rgba(66,215,245,0.045),transparent_28%,transparent_70%,rgba(155,108,255,0.055))]"
@@ -130,12 +130,14 @@ export default function BtcFuturesResearchPage() {
               <p className="text-[11px] font-semibold uppercase tracking-normal text-[#42D7F5]">
                 Quant research infrastructure
               </p>
-              <h1 className="mt-5 text-[42px] font-semibold leading-[1.02] tracking-normal text-[#F4F7FB] sm:text-[52px] xl:text-[64px] 2xl:text-[72px]">
-                BTC Futures Research Assistant
+              <h1 className="mt-5 text-[42px] font-semibold leading-[1.02] tracking-normal text-[#F4F7FB] sm:text-[52px] xl:text-[58px] 2xl:text-[68px]">
+                Multi-Asset Volatility Research System
               </h1>
               <p className="mt-6 max-w-xl text-lg leading-8 text-[#B6C0CF]">
-                Research infrastructure for immutable volatility forecasts, factual
-                forward outcome validation, and operational integrity monitoring.
+                Current public BTCUSDT research infrastructure for immutable volatility
+                forecasts, factual forward outcome validation, and operational integrity
+                monitoring. NQ, ES, and Crude Oil (CL) remain academic lineage contexts,
+                not assets in this public pipeline.
               </p>
               <div className="mt-8 border-t border-[#7E8B9D]/15">
                 {identityRows.map((item, index) => (
@@ -165,13 +167,14 @@ export default function BtcFuturesResearchPage() {
                   <ContextRow asset="BTCUSDT" provenance="current-static-snapshot" />
                   <ContextRow asset="NQ" provenance="academic-context" />
                   <ContextRow asset="ES" provenance="academic-context" />
+                  <ContextRow asset="Crude Oil (CL)" provenance="academic-context" />
                   <ContextRow asset="GC" provenance="planned-research" />
                 </div>
               </div>
 
               <div className="rounded-lg border border-[#FFB547]/20 bg-[#0D0C0B]/90 p-5">
                 <p className="text-[11px] font-semibold uppercase tracking-normal text-[#B6C0CF]">
-                  Initial public evidence snapshot
+                  Initial public BTCUSDT evidence snapshot
                 </p>
                 <dl className="mt-4 divide-y divide-[#7E8B9D]/12">
                   {[
@@ -205,7 +208,7 @@ export default function BtcFuturesResearchPage() {
 
       <ResearchArchitectureStrip />
 
-      <ResearchSection eyebrow="Purpose and contribution" title="Evidence infrastructure, not a strategy layer" tone="base">
+      <ResearchSection id="purpose" eyebrow="Purpose and contribution" title="Evidence infrastructure, not a strategy layer" tone="base">
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
           <div>
             <h3 className="text-xl font-semibold text-[#F4F7FB]">Project Overview</h3>
@@ -236,14 +239,15 @@ export default function BtcFuturesResearchPage() {
         </div>
       </ResearchSection>
 
-      <ResearchSection eyebrow="Research lineage" title="Multi-asset research progression" tone="deep">
+      <ResearchSection id="lineage" eyebrow="Research lineage" title="Multi-asset research progression" tone="deep">
         <MultiAssetLineage />
       </ResearchSection>
 
       <ResearchSection
+        id="models"
         eyebrow="Public snapshot forecast category"
         title="Baseline forecast models"
-        intro="The initial public snapshot records four statistical specifications producing comparable raw next-hour decimal variance evidence."
+        intro="The initial public BTCUSDT snapshot records four statistical specifications producing comparable raw next-hour decimal variance evidence."
         tone="elevated"
       >
         <ProvenanceBadge provenance="current-static-snapshot" />
@@ -274,7 +278,7 @@ export default function BtcFuturesResearchPage() {
         </div>
       </ResearchSection>
 
-      <ResearchSection eyebrow="Historical research context" title="Prior benchmarks and challengers" tone="base">
+      <ResearchSection id="benchmarks" eyebrow="Historical research context" title="Prior benchmarks and challengers" tone="base">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <p className="max-w-3xl text-sm leading-6 text-[#7E8B9D]">
             Earlier benchmark specifications provide academic context for the current
@@ -295,11 +299,11 @@ export default function BtcFuturesResearchPage() {
         </p>
       </ResearchSection>
 
-      <ResearchSection eyebrow="Uncertainty" title="Monte Carlo variance uncertainty" tone="violet">
+      <ResearchSection id="uncertainty" eyebrow="Uncertainty" title="Monte Carlo variance uncertainty" tone="violet">
         <MonteCarloVisual />
       </ResearchSection>
 
-      <ResearchSection eyebrow="Evidence discipline" title="Evidence maturity" tone="amber">
+      <ResearchSection id="maturity" eyebrow="Evidence discipline" title="Evidence maturity" tone="amber">
         <EvidenceMaturity />
       </ResearchSection>
 
@@ -314,6 +318,7 @@ export default function BtcFuturesResearchPage() {
       </ResearchSection>
 
       <ResearchSection
+        id="failure-modes"
         eyebrow="Integrity refusals"
         title="Failure Mode Atlas"
         intro="A reliable research pipeline should fail visibly when evidence is premature, duplicated, orphaned, stale, or changed during publication."
@@ -322,7 +327,7 @@ export default function BtcFuturesResearchPage() {
         <FailureModeAtlas />
       </ResearchSection>
 
-      <ResearchSection eyebrow="Research operations" title="Operational scheduler" tone="neutral">
+      <ResearchSection id="operations" eyebrow="Current public BTCUSDT research operations" title="Operational scheduler" tone="neutral">
         <ProvenanceBadge provenance="current-static-snapshot" />
         <div className="mt-7 grid gap-10 lg:grid-cols-2 lg:gap-16">
           <div>
@@ -352,7 +357,7 @@ export default function BtcFuturesResearchPage() {
         <div className="mt-20 border-t border-[#7E8B9D]/12 pt-14">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-[11px] font-semibold uppercase tracking-normal text-[#42D7F5]">Public showcase baseline · 2026-07-13 UTC</p>
+              <p className="text-[11px] font-semibold uppercase tracking-normal text-[#42D7F5]">Public BTCUSDT showcase baseline · 2026-07-13 UTC</p>
               <h3 className="mt-3 text-2xl font-semibold text-[#F4F7FB] sm:text-3xl">Initial public operational snapshot</h3>
             </div>
             <ProvenanceBadge provenance="current-static-snapshot" />
@@ -361,26 +366,26 @@ export default function BtcFuturesResearchPage() {
             {operationalSnapshot.map((item) => <MetricCard key={item.label} label={item.label} value={item.value} />)}
           </div>
           <p className="mt-6 max-w-4xl text-sm leading-6 text-[#7E8B9D]">
-            Fixed portfolio baseline for the initial public showcase. It does not refresh, does not represent a production server, and is not a live monitor, model ranking, strategy approval, or trading-readiness indicator.
+            Fixed BTCUSDT research baseline for the initial public showcase. It does not refresh, does not represent a production server, and is not a live monitor, model ranking, strategy approval, or trading-readiness indicator.
           </p>
         </div>
       </ResearchSection>
 
-      <ResearchSection eyebrow="Engineering scope" title="What this project demonstrates" tone="base">
+      <ResearchSection id="engineering" eyebrow="Engineering scope" title="What this project demonstrates" tone="base">
         <div className="grid gap-px overflow-hidden rounded-lg border border-[#7E8B9D]/15 bg-[#7E8B9D]/15 sm:grid-cols-2 lg:grid-cols-3">
           {demonstratedCapabilities.map((capability) => (
             <div key={capability} className="bg-[#0E131C] px-5 py-5 text-sm leading-6 text-[#B6C0CF]">{capability}</div>
           ))}
         </div>
         <div className="mt-8 border-l border-[#42D7F5]/45 pl-5">
-          <p className="text-xs font-semibold uppercase tracking-normal text-[#42D7F5]">BTC research system stack</p>
+          <p className="text-xs font-semibold uppercase tracking-normal text-[#42D7F5]">Current public BTCUSDT research stack</p>
           <p className="mt-4 text-lg leading-8 text-[#DCE3EC]">
             Python · pandas · NumPy · arch · SQLite · CSV event ledgers · Linux · cron · flock · GitHub · AWS Lightsail
           </p>
         </div>
       </ResearchSection>
 
-      <ResearchSection eyebrow="Non-negotiable constraints" title="Research boundaries" tone="black">
+      <ResearchSection id="boundaries" eyebrow="Non-negotiable constraints" title="Research boundaries" tone="black">
         <BoundaryList items={[...boundaryItems]} />
       </ResearchSection>
     </PageShell>

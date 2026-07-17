@@ -1,10 +1,35 @@
 export const navigation = [
   { href: "/", label: "Home" },
-  { href: "/projects", label: "Systems" },
-  { href: "/papers", label: "Papers" },
-  { href: "/research", label: "Method" },
+  {
+    href: "/projects",
+    label: "Systems",
+    children: [
+      { href: "/projects", label: "All systems", detail: "Research systems and academic lineage" },
+      { href: "/projects/btc-futures-research", label: "Multi-Asset Volatility Research System", detail: "Current BTCUSDT evidence and academic multi-asset lineage" },
+      { href: "/projects/volatility-regime-filtering", label: "Volatility Regime Filtering", detail: "NQ, ES, and Crude Oil (CL) econometrics" },
+      { href: "/projects/bitcoin-bubble-gsadf", label: "Bitcoin Bubble Detection", detail: "GSADF time-series diagnostics" },
+    ],
+  },
+  {
+    href: "/papers",
+    label: "Papers",
+    children: [
+      { href: "/papers", label: "Publication archive", detail: "Original papers and project context" },
+      { href: "/papers/volatility-regime-filtering-thesis.pdf", label: "MSc thesis", detail: "Volatility regime filtering in futures" },
+      { href: "/papers/bitcoin-bubble-gsadf-seminar-paper.pdf", label: "Seminar paper", detail: "Bitcoin bubble detection with GSADF" },
+    ],
+  },
+  {
+    href: "/research",
+    label: "Method",
+    children: [
+      { href: "/research", label: "Research methodology", detail: "Time, validation, provenance, and boundaries" },
+      { href: "/projects/btc-futures-research#evidence-pipeline", label: "Evidence pipeline", detail: "Follow the research evidence chain" },
+      { href: "/projects/btc-futures-research#boundaries", label: "Research boundaries", detail: "What the systems cannot authorize" },
+    ],
+  },
   { href: "/contact", label: "Contact" },
-];
+] as const;
 
 export const shadowModels = [
   {

@@ -69,10 +69,10 @@ function Arrow() {
 }
 
 const primaryButton =
-  "inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#17243D] px-6 text-sm font-semibold text-white shadow-[0_14px_34px_rgba(39,66,109,0.20)] transition-transform hover:-translate-y-0.5 hover:bg-[#22375B] focus-visible:outline-none";
+  "inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#17243D] px-6 text-sm font-semibold text-white shadow-[0_14px_34px_rgba(39,66,109,0.20)] transition-transform hover:-translate-y-0.5 hover:bg-[#22375B]";
 
 const secondaryButton =
-  "inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[#7187AB]/24 bg-white/58 px-6 text-sm font-semibold text-[#24324A] shadow-[inset_0_1px_0_rgba(255,255,255,0.95)] backdrop-blur-xl transition-all hover:-translate-y-0.5 hover:border-[#2580D8]/45 hover:bg-white/82 focus-visible:outline-none";
+  "inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-[#7187AB]/24 bg-white/58 px-6 text-sm font-semibold text-[#24324A] shadow-[inset_0_1px_0_rgba(255,255,255,0.95)] backdrop-blur-xl transition-all hover:-translate-y-0.5 hover:border-[#2580D8]/45 hover:bg-white/82";
 
 export default function Home() {
   return (
@@ -175,7 +175,7 @@ export default function Home() {
                 </p>
                 <Link
                   href={system.href}
-                  className="mt-auto inline-flex w-fit items-center gap-2 pt-12 text-sm font-semibold text-[#1677D2] transition-colors hover:text-[#0D589C] focus-visible:outline-none"
+                  className="mt-auto inline-flex w-fit items-center gap-2 pt-12 text-sm font-semibold text-[#1677D2] transition-colors hover:text-[#0D589C]"
                 >
                   {system.link}
                   <Arrow />
@@ -195,8 +195,9 @@ export default function Home() {
                 A research system should show its work.
               </h2>
               <p className="mt-8 max-w-[46rem] text-xl leading-8 text-[#657189] sm:text-2xl sm:leading-9">
-                The BTC Futures Research Assistant separates data, model states,
-                later outcomes, and integrity review into an inspectable evidence chain.
+                The Multi-Asset Volatility Research System uses BTCUSDT for its current
+                public research and operational evidence context. NQ, ES, and Crude Oil
+                (CL) futures remain part of its academic lineage, not the current pipeline.
               </p>
             </div>
 

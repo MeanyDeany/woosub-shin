@@ -7,15 +7,15 @@ import { ThemeToggle } from "@/components/theme-toggle";
 export function SiteHeader() {
   return (
     <header className="site-header sticky top-0 z-50 backdrop-blur-2xl">
-      <div className="mx-auto flex min-h-16 max-w-[1440px] items-center justify-between gap-4 px-5 sm:px-8 lg:px-12">
+      <div className="site-header__inner mx-auto flex min-h-16 max-w-[1440px] items-center justify-between gap-4 px-5 sm:px-8 lg:px-12">
         <Link
           href="/"
-          className="site-brand text-sm font-semibold tracking-[-0.02em] transition-colors focus-visible:outline-none"
+          className="site-brand text-sm font-semibold tracking-[-0.02em] transition-colors"
         >
           MeanyDeany
         </Link>
-        <div className="flex min-w-0 items-center gap-3 sm:gap-5">
-          <div className="min-w-0 overflow-x-auto">
+        <div className="site-header__actions flex min-w-0 items-center gap-3 sm:gap-5">
+          <div className="header-navigation-wrap min-w-0">
             <ActiveNavigation />
           </div>
           <ThemeToggle />
@@ -42,7 +42,7 @@ export function SiteFooter() {
           <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium">
             <a
               href="mailto:woosub815@gmail.com"
-              className="site-link transition-colors focus-visible:outline-none"
+              className="site-link transition-colors"
             >
               Email
             </a>
@@ -50,7 +50,7 @@ export function SiteFooter() {
               href="https://github.com/MeanyDeany"
               target="_blank"
               rel="noreferrer"
-              className="site-link transition-colors focus-visible:outline-none"
+              className="site-link transition-colors"
             >
               GitHub ↗
             </a>

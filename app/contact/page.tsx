@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ContactForm } from "@/components/contact-form";
 import {
   CtaLink,
   EditorialSection,
@@ -10,7 +11,7 @@ import { PageShell } from "@/components/site-shell";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Technical and professional correspondence with MeanyDeany, the public research identity of Woosub Shin.",
+    "Technical and professional correspondence with MeanyDeany, an independent quantitative research identity.",
 };
 
 const interests = [
@@ -27,14 +28,14 @@ export default function ContactPage() {
       <PageHero
         eyebrow="Research correspondence"
         title="Technical and professional correspondence"
-        intro="For research discussions, technical questions, academic correspondence, or professional inquiries, use the channels below."
+        intro="For research discussions, technical questions, academic correspondence, or professional inquiries, send a private message below."
         actions={
           <>
             <a
-              href="mailto:woosub815@gmail.com"
-              className="inline-flex min-h-11 items-center justify-center border border-[#42D7F5] bg-[#42D7F5] px-5 py-2.5 text-sm font-semibold text-[#061016] transition-colors hover:border-[#7BE7FA] hover:bg-[#7BE7FA] focus-visible:outline-none"
+              href="#message"
+              className="inline-flex min-h-11 items-center justify-center rounded-full border border-[#17243D] bg-[#17243D] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(32,55,94,0.18)] transition-transform hover:-translate-y-0.5 hover:bg-[#22375B]"
             >
-              Send email <span className="ml-2" aria-hidden="true">→</span>
+              Write a message <span className="ml-2" aria-hidden="true">↓</span>
             </a>
             <CtaLink href="https://github.com/MeanyDeany" newTab>
               View GitHub
@@ -50,20 +51,52 @@ export default function ContactPage() {
       />
 
       <EditorialSection
+        id="message"
         accent="blue"
-        eyebrow="Public identity"
-        title="MeanyDeany is the public research identity of Woosub Shin."
-        intro="The public program brings together quantitative research systems, academic financial econometrics, and evidence-focused infrastructure under one consistent identity."
+        eyebrow="Private message"
+        title="Send a question directly"
+        intro="The form sends a private email notification. Messages are not displayed publicly or written to a website database."
+        tone="elevated"
+      >
+        <div className="grid gap-8 lg:grid-cols-[minmax(15rem,0.55fr)_minmax(0,1.45fr)] lg:items-start">
+          <div className="glass-panel rounded-[2rem] p-6 sm:p-8">
+            <p className="site-strong text-xl font-semibold tracking-[-0.03em]">
+              Useful topics
+            </p>
+            <ul className="site-body mt-5 grid gap-3 text-sm leading-6">
+              {interests.map((interest, index) => (
+                <li key={interest} className="flex gap-3 border-t border-[#7187AB]/14 pt-3 first:border-t-0 first:pt-0">
+                  <span className="font-mono text-[0.65rem] text-[#2563C9]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <span>{interest}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="site-muted mt-6 text-xs leading-5">
+              This channel is for research, technical, academic, and professional correspondence.
+              It is not a market-signal or investment-advice service.
+            </p>
+          </div>
+          <ContactForm />
+        </div>
+      </EditorialSection>
+
+      <EditorialSection
+        accent="blue"
+        eyebrow="Research identity"
+        title="MeanyDeany is an independent quantitative research identity focused on auditable market-data, volatility, and validation systems."
+        intro="The public program brings together quantitative research systems, academic financial econometrics, and evidence-focused infrastructure under one consistent brand."
       >
         <div className="grid gap-10 lg:grid-cols-[minmax(16rem,0.65fr)_minmax(0,1.35fr)] lg:items-start">
-          <dl className="border-y border-[#7E8B9D]/15">
-            <div className="grid gap-2 py-4 sm:grid-cols-[7rem_1fr]">
-              <dt className="text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#6F7D90]">Public identity</dt>
-              <dd className="text-sm text-[#DCE3EC]">MeanyDeany</dd>
+          <dl className="metadata-list border-y">
+            <div className="metadata-row grid gap-2 py-4 sm:grid-cols-[7rem_1fr]">
+              <dt className="metadata-key">Identity</dt>
+              <dd className="metadata-value">MeanyDeany</dd>
             </div>
-            <div className="grid gap-2 border-t border-[#7E8B9D]/12 py-4 sm:grid-cols-[7rem_1fr]">
-              <dt className="text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#6F7D90]">Researcher</dt>
-              <dd className="text-sm text-[#DCE3EC]">Woosub Shin</dd>
+            <div className="metadata-row grid gap-2 border-t py-4 sm:grid-cols-[7rem_1fr]">
+              <dt className="metadata-key">Focus</dt>
+              <dd className="metadata-value">Auditable market data, volatility, and validation systems</dd>
             </div>
           </dl>
           <ul className="grid gap-px border border-[#7E8B9D]/15 bg-[#7E8B9D]/15 sm:grid-cols-2">
@@ -87,22 +120,22 @@ export default function ContactPage() {
       >
         <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(20rem,0.7fr)] lg:items-start">
           <p className="max-w-2xl text-lg leading-8 text-[#B6C0CF]">
-            Email is the clearest channel for correspondence. GitHub contains the
-            public code context connected to this research program.
+            The form is the quickest route. Direct email remains available if the form service
+            is unavailable. GitHub contains the public code context connected to this program.
           </p>
-          <dl className="border-y border-[#7E8B9D]/15">
-            <div className="grid gap-2 py-4 sm:grid-cols-[5rem_1fr]">
-              <dt className="text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#6F7D90]">Email</dt>
+          <dl className="metadata-list border-y">
+            <div className="metadata-row grid gap-2 py-4 sm:grid-cols-[5rem_1fr]">
+              <dt className="metadata-key">Email</dt>
               <dd>
-                <a className="text-sm text-[#DCE3EC] underline decoration-[#42D7F5]/45 hover:text-white" href="mailto:woosub815@gmail.com">
+                <a className="metadata-link metadata-value underline decoration-[#42D7F5]/45" href="mailto:woosub815@gmail.com">
                   woosub815@gmail.com
                 </a>
               </dd>
             </div>
-            <div className="grid gap-2 border-t border-[#7E8B9D]/12 py-4 sm:grid-cols-[5rem_1fr]">
-              <dt className="text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#6F7D90]">GitHub</dt>
+            <div className="metadata-row grid gap-2 border-t py-4 sm:grid-cols-[5rem_1fr]">
+              <dt className="metadata-key">GitHub</dt>
               <dd>
-                <a className="text-sm text-[#DCE3EC] underline decoration-[#42D7F5]/45 hover:text-white" href="https://github.com/MeanyDeany" target="_blank" rel="noreferrer">
+                <a className="metadata-link metadata-value underline decoration-[#42D7F5]/45" href="https://github.com/MeanyDeany" target="_blank" rel="noreferrer">
                   github.com/MeanyDeany
                 </a>
               </dd>
@@ -110,8 +143,8 @@ export default function ContactPage() {
           </dl>
         </div>
         <div className="mt-10 flex flex-wrap gap-2">
-          <ResearchTag>Research only</ResearchTag>
-          <ResearchTag>No contact-form backend</ResearchTag>
+          <ResearchTag>Private email delivery</ResearchTag>
+          <ResearchTag>No message database</ResearchTag>
           <ResearchTag>No investment advice</ResearchTag>
         </div>
       </EditorialSection>

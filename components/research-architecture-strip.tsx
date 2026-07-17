@@ -4,6 +4,7 @@ const assets = [
   { label: "BTCUSDT Futures", provenance: "current-static-snapshot" as const },
   { label: "E-mini Nasdaq-100 Futures (NQ)", provenance: "academic-context" as const },
   { label: "E-mini S&P 500 Futures (ES)", provenance: "academic-context" as const },
+  { label: "Crude Oil (CL) Futures", provenance: "academic-context" as const },
   { label: "Gold Futures (GC)", provenance: "planned-research" as const },
 ];
 
