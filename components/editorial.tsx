@@ -4,27 +4,27 @@ import type { ReactNode } from "react";
 export type Accent = "amber" | "blue" | "cyan" | "emerald" | "violet";
 
 const accentText: Record<Accent, string> = {
-  amber: "text-[#FFC56F]",
-  blue: "text-[#8CB5FF]",
-  cyan: "text-[#67DFF7]",
-  emerald: "text-[#79E8B5]",
-  violet: "text-[#C3AEFF]",
+  amber: "text-[#A85D08]",
+  blue: "text-[#2563C9]",
+  cyan: "text-[#087E9B]",
+  emerald: "text-[#08765A]",
+  violet: "text-[#7251C8]",
 };
 
 const accentBorder: Record<Accent, string> = {
-  amber: "border-[#FFB547]/50",
-  blue: "border-[#4D8DFF]/50",
-  cyan: "border-[#42D7F5]/50",
-  emerald: "border-[#3DDC97]/50",
-  violet: "border-[#9B6CFF]/50",
+  amber: "border-[#D89238]/35",
+  blue: "border-[#5891EA]/35",
+  cyan: "border-[#49AFC4]/35",
+  emerald: "border-[#4BA98B]/35",
+  violet: "border-[#977FE0]/35",
 };
 
 const accentBackground: Record<Accent, string> = {
-  amber: "bg-[#FFB547]/[0.06]",
-  blue: "bg-[#4D8DFF]/[0.06]",
-  cyan: "bg-[#42D7F5]/[0.06]",
-  emerald: "bg-[#3DDC97]/[0.06]",
-  violet: "bg-[#9B6CFF]/[0.06]",
+  amber: "bg-[#FFF4E4]/75",
+  blue: "bg-[#EDF5FF]/75",
+  cyan: "bg-[#EAFBFE]/75",
+  emerald: "bg-[#ECFAF5]/75",
+  violet: "bg-[#F4F0FF]/75",
 };
 
 export type MetaItem = {
@@ -48,18 +48,26 @@ export function PageHero({
   title: string;
 }) {
   return (
-    <section className="border-b border-[#7E8B9D]/15 bg-[#07090D]">
-      <div className="mx-auto grid max-w-[1320px] gap-10 px-5 py-14 sm:py-18 lg:grid-cols-[minmax(0,1.4fr)_minmax(17rem,0.6fr)] lg:gap-16 lg:px-8 lg:py-24">
+    <section className="relative overflow-hidden border-b border-[#6880A8]/15 bg-white/22 backdrop-blur-sm">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-32 -top-44 h-[32rem] w-[32rem] rounded-full bg-[#70C4FF]/20 blur-3xl"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-36 top-0 h-[28rem] w-[28rem] rounded-full bg-[#B5A0FF]/16 blur-3xl"
+      />
+      <div className="relative mx-auto grid max-w-[1320px] gap-10 px-5 py-16 sm:py-24 lg:grid-cols-[minmax(0,1.35fr)_minmax(18rem,0.65fr)] lg:gap-16 lg:px-8 lg:py-28">
         <div className="min-w-0">
           <p
             className={`text-[0.68rem] font-semibold uppercase tracking-[0.18em] ${accentText[accent]}`}
           >
             {eyebrow}
           </p>
-          <h1 className="mt-5 max-w-5xl text-[clamp(2.65rem,7vw,5.7rem)] font-semibold leading-[0.98] tracking-[-0.055em] text-[#F4F7FB]">
+          <h1 className="mt-5 max-w-5xl text-[clamp(3rem,7vw,6.2rem)] font-semibold leading-[0.94] tracking-[-0.06em] text-[#111A2E]">
             {title}
           </h1>
-          <p className="mt-7 max-w-[46rem] text-lg leading-8 text-[#B6C0CF] sm:text-xl sm:leading-9">
+          <p className="mt-7 max-w-[46rem] text-lg leading-8 text-[#5F6C82] sm:text-xl sm:leading-9">
             {intro}
           </p>
           {actions ? (
@@ -97,11 +105,11 @@ export function SectionHeading({
           {eyebrow}
         </p>
       ) : null}
-      <h2 className="mt-3 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.035em] text-[#F4F7FB] sm:text-4xl lg:text-[2.75rem]">
+      <h2 className="mt-3 max-w-3xl text-3xl font-semibold leading-tight tracking-[-0.04em] text-[#111A2E] sm:text-4xl lg:text-[3rem]">
         {title}
       </h2>
       {intro ? (
-        <p className="mt-5 max-w-[46rem] text-base leading-7 text-[#8996A8] sm:text-lg sm:leading-8">
+        <p className="mt-5 max-w-[48rem] text-base leading-7 text-[#657189] sm:text-lg sm:leading-8">
           {intro}
         </p>
       ) : null}
@@ -110,10 +118,10 @@ export function SectionHeading({
 }
 
 const sectionTones = {
-  base: "bg-[#07090D]",
-  deep: "bg-[#080B11]",
-  elevated: "bg-[#0A0E15]",
-  warm: "bg-[#0D0C0B]",
+  base: "bg-white/18",
+  deep: "bg-white/38",
+  elevated: "bg-white/54",
+  warm: "bg-[#FFF9F0]/48",
 } as const;
 
 export function EditorialSection({
@@ -138,7 +146,7 @@ export function EditorialSection({
   return (
     <section
       id={id}
-      className={`border-t border-[#7E8B9D]/12 ${sectionTones[tone]} ${className}`}
+      className={`border-t border-[#6880A8]/13 backdrop-blur-[2px] ${sectionTones[tone]} ${className}`}
     >
       <div className="mx-auto max-w-[1320px] px-5 py-16 sm:py-20 lg:px-8 lg:py-24">
         {title ? (
@@ -157,7 +165,7 @@ export function EditorialSection({
 
 export function ResearchTag({ children }: { children: ReactNode }) {
   return (
-    <span className="inline-flex border border-[#7E8B9D]/20 bg-[#0B0F16] px-2.5 py-1.5 text-[0.69rem] font-medium uppercase tracking-[0.09em] text-[#A8B3C2]">
+    <span className="inline-flex rounded-full border border-[#7187AB]/18 bg-white/65 px-3 py-1.5 text-[0.69rem] font-medium uppercase tracking-[0.09em] text-[#526079] shadow-[inset_0_1px_0_rgba(255,255,255,0.9)] backdrop-blur-lg">
       {children}
     </span>
   );
@@ -172,12 +180,9 @@ export function StatusLabel({
 }) {
   return (
     <span
-      className={`inline-flex w-fit items-center border px-2.5 py-1.5 text-[0.66rem] font-semibold uppercase tracking-[0.12em] ${accentBorder[accent]} ${accentBackground[accent]} ${accentText[accent]}`}
+      className={`inline-flex w-fit items-center rounded-full border px-3 py-1.5 text-[0.66rem] font-semibold uppercase tracking-[0.12em] ${accentBorder[accent]} ${accentBackground[accent]} ${accentText[accent]}`}
     >
-      <span
-        aria-hidden="true"
-        className={`mr-2 h-1.5 w-1.5 rounded-full bg-current`}
-      />
+      <span aria-hidden="true" className="mr-2 h-1.5 w-1.5 rounded-full bg-current" />
       {children}
     </span>
   );
@@ -196,18 +201,16 @@ export function CtaLink({
 }) {
   const className =
     kind === "primary"
-      ? "inline-flex min-h-11 items-center justify-center border border-[#42D7F5] bg-[#42D7F5] px-5 py-2.5 text-sm font-semibold text-[#061016] transition-colors hover:border-[#7BE7FA] hover:bg-[#7BE7FA] focus-visible:outline-none"
+      ? "inline-flex min-h-11 items-center justify-center rounded-full border border-[#17243D] bg-[#17243D] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(32,55,94,0.18)] transition-transform hover:-translate-y-0.5 hover:bg-[#22375B] focus-visible:outline-none"
       : kind === "text"
-        ? "inline-flex min-h-10 items-center border-b border-[#42D7F5]/45 py-2 text-sm font-semibold text-[#DCE3EC] transition-colors hover:border-[#42D7F5] hover:text-white focus-visible:outline-none"
-        : "inline-flex min-h-11 items-center justify-center border border-[#7E8B9D]/35 bg-transparent px-5 py-2.5 text-sm font-semibold text-[#DCE3EC] transition-colors hover:border-[#42D7F5]/75 hover:text-white focus-visible:outline-none";
+        ? "inline-flex min-h-10 items-center border-b border-[#2580D8]/35 py-2 text-sm font-semibold text-[#176FC1] transition-colors hover:border-[#176FC1] hover:text-[#0C5798] focus-visible:outline-none"
+        : "inline-flex min-h-11 items-center justify-center rounded-full border border-[#7187AB]/24 bg-white/58 px-5 py-2.5 text-sm font-semibold text-[#24324A] shadow-[inset_0_1px_0_rgba(255,255,255,0.95)] backdrop-blur-xl transition-all hover:-translate-y-0.5 hover:border-[#2580D8]/45 hover:bg-white/82 focus-visible:outline-none";
 
   if (newTab) {
     return (
       <a href={href} target="_blank" rel="noreferrer" className={className}>
         {children}
-        <span className="ml-2" aria-hidden="true">
-          ↗
-        </span>
+        <span className="ml-2" aria-hidden="true">↗</span>
       </a>
     );
   }
@@ -215,9 +218,7 @@ export function CtaLink({
   return (
     <Link href={href} className={className}>
       {children}
-      <span className="ml-2" aria-hidden="true">
-        →
-      </span>
+      <span className="ml-2" aria-hidden="true">→</span>
     </Link>
   );
 }
@@ -232,13 +233,13 @@ export function TechnicalMetadata({
   rows: readonly MetaItem[];
 }) {
   return (
-    <dl className={`border-y border-[#7E8B9D]/18 ${className}`}>
+    <dl className={`glass-panel rounded-[1.75rem] px-5 py-2 ${className}`}>
       {rows.map((row) => (
         <div
           key={row.label}
-          className="grid grid-cols-[minmax(5.5rem,0.7fr)_minmax(0,1.3fr)] gap-4 border-b border-[#7E8B9D]/12 py-3.5 last:border-b-0"
+          className="grid grid-cols-[minmax(5.5rem,0.7fr)_minmax(0,1.3fr)] gap-4 border-b border-[#7187AB]/14 py-4 last:border-b-0"
         >
-          <dt className="text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#6F7D90]">
+          <dt className="text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#758198]">
             {row.label}
           </dt>
           <dd className={`text-sm leading-5 ${accentText[accent]}`}>{row.value}</dd>
@@ -249,7 +250,7 @@ export function TechnicalMetadata({
 }
 
 export function SubtleDivider() {
-  return <div className="h-px w-full bg-[#7E8B9D]/15" aria-hidden="true" />;
+  return <div className="h-px w-full bg-[#7187AB]/15" aria-hidden="true" />;
 }
 
 export function CapabilityBand({
@@ -260,15 +261,15 @@ export function CapabilityBand({
   label?: string;
 }) {
   return (
-    <div className="border-y border-[#7E8B9D]/18 bg-[#080B11]">
+    <div className="border-y border-[#7187AB]/15 bg-white/34 backdrop-blur-lg">
       <div className="mx-auto max-w-[1320px] px-5 py-7 lg:px-8">
-        <p className="mb-5 text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-[#67DFF7]">
+        <p className="mb-5 text-[0.65rem] font-semibold uppercase tracking-[0.16em] text-[#1677D2]">
           {label}
         </p>
-        <ul className="grid gap-px overflow-hidden border border-[#7E8B9D]/15 bg-[#7E8B9D]/15 sm:grid-cols-2 lg:grid-cols-5">
+        <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
           {items.map((item, index) => (
-            <li key={item} className="bg-[#0B0F16] px-4 py-4 text-sm leading-6 text-[#B6C0CF]">
-              <span className="mr-3 font-mono text-[0.62rem] text-[#4D8DFF]">
+            <li key={item} className="glass-panel rounded-2xl px-4 py-4 text-sm leading-6 text-[#526079]">
+              <span className="mr-3 font-mono text-[0.62rem] text-[#2563C9]">
                 {String(index + 1).padStart(2, "0")}
               </span>
               {item}
@@ -304,7 +305,7 @@ export function ProjectIndexRow({
   type,
 }: ProjectIndexRowProps) {
   return (
-    <article className={`border-t ${accentBorder[accent]} py-9 first:pt-0`}>
+    <article className="glass-panel mb-5 rounded-[2rem] p-6 last:mb-0 sm:p-8">
       <div className="grid gap-6 md:grid-cols-[3rem_minmax(0,1.15fr)_minmax(15rem,0.85fr)] md:gap-8">
         <p className={`font-mono text-xs ${accentText[accent]}`}>{index}</p>
         <div>
@@ -314,19 +315,19 @@ export function ProjectIndexRow({
             </p>
             <StatusLabel accent={accent}>{status}</StatusLabel>
           </div>
-          <h3 className="mt-4 text-2xl font-semibold leading-tight tracking-[-0.025em] text-[#F4F7FB] sm:text-3xl">
+          <h3 className="mt-4 text-2xl font-semibold leading-tight tracking-[-0.03em] text-[#111A2E] sm:text-3xl">
             {title}
           </h3>
-          <p className="mt-5 max-w-2xl text-base leading-7 text-[#B6C0CF]">
+          <p className="mt-5 max-w-2xl text-base leading-7 text-[#5F6C82]">
             {question}
           </p>
         </div>
         <div className="flex flex-col justify-between gap-7">
           <div>
-            <p className="text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#6F7D90]">
+            <p className="text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#758198]">
               Contribution
             </p>
-            <p className="mt-3 text-sm leading-6 text-[#A8B3C2]">{contribution}</p>
+            <p className="mt-3 text-sm leading-6 text-[#657189]">{contribution}</p>
             <div className="mt-5 flex flex-wrap gap-2">
               {methods.map((method) => (
                 <ResearchTag key={method}>{method}</ResearchTag>
@@ -334,9 +335,7 @@ export function ProjectIndexRow({
             </div>
           </div>
           <div>
-            <CtaLink href={href} kind="text">
-              Open project
-            </CtaLink>
+            <CtaLink href={href} kind="text">Open project</CtaLink>
           </div>
         </div>
       </div>
@@ -352,10 +351,10 @@ export function EvidenceBand({
   items: readonly MetaItem[];
 }) {
   return (
-    <dl className="grid gap-px overflow-hidden border border-[#7E8B9D]/15 bg-[#7E8B9D]/15 sm:grid-cols-2 lg:grid-cols-4">
+    <dl className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
       {items.map((item) => (
-        <div key={item.label} className="bg-[#0B0F16] px-5 py-5">
-          <dt className="text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#6F7D90]">
+        <div key={item.label} className="glass-panel rounded-2xl px-5 py-5">
+          <dt className="text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#758198]">
             {item.label}
           </dt>
           <dd className={`mt-2 text-sm leading-6 ${accentText[accent]}`}>{item.value}</dd>
