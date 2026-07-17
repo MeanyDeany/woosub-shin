@@ -15,7 +15,7 @@ export function SiteHeader() {
           MeanyDeany
         </Link>
         <div className="flex min-w-0 items-center gap-3 sm:gap-5">
-          <div className="min-w-0 overflow-x-auto">
+          <div className="header-navigation-wrap min-w-0">
             <ActiveNavigation />
           </div>
           <ThemeToggle />
