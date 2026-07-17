@@ -83,7 +83,7 @@ export default function Home() {
 
           <h1 className="mt-8 max-w-[78rem] text-[clamp(3.7rem,10.5vw,9rem)] font-semibold leading-[0.88] tracking-[-0.075em] text-[#F5F5F7]">
             Shit always happens
-            <span className="block text-[#6E6E73]">in the market.</span>
+            <span className="block">in the market.</span>
           </h1>
 
           <p className="mt-10 max-w-[56rem] text-[clamp(1.45rem,3vw,2.7rem)] font-medium leading-[1.12] tracking-[-0.035em] text-[#F5F5F7]">
