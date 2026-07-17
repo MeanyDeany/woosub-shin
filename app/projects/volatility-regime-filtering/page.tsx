@@ -13,7 +13,7 @@ import { PageShell } from "@/components/site-shell";
 export const metadata: Metadata = {
   title: "Volatility Regime Filtering in Futures Markets",
   description:
-    "MSc thesis on EGARCH volatility-regime filtering as a risk and admissibility layer for intraday NQ and ES futures research.",
+    "MSc thesis on EGARCH volatility-regime filtering as a risk and admissibility layer for intraday NQ, ES, and Crude Oil (CL) futures research.",
 };
 
 const tags = [
@@ -21,6 +21,7 @@ const tags = [
   "EGARCH",
   "NQ futures",
   "ES futures",
+  "Crude Oil (CL) futures",
   "Intraday data",
   "Risk filtering",
 ] as const;
@@ -41,7 +42,7 @@ const methodology = [
     accent: "blue" as const,
     index: "02",
     items: [
-      "Five-minute intraday NQ and ES observations",
+      "Five-minute intraday NQ, ES, and Crude Oil (CL) observations",
       "Daily regime labels aligned to intraday dates",
       "Trend-following and mean-reversion research modules",
       "Transaction-cost and risk-control assumptions",
@@ -62,7 +63,7 @@ const methodology = [
 ] as const;
 
 const architecture = [
-  ["01", "Data", "Daily and five-minute NQ and ES futures observations"],
+  ["01", "Data", "Daily and five-minute NQ, ES, and Crude Oil (CL) futures observations"],
   ["02", "Volatility", "EGARCH conditional volatility and regime labels"],
   ["03", "Admissibility", "Volatility context governs whether exposure is considered"],
   ["04", "Direction", "Separate intraday logic handles directional hypotheses"],
@@ -86,7 +87,7 @@ const limitations = [
   ["Threshold choice", "Volatility-regime thresholds are design choices that require sensitivity checks."],
   ["Cost assumptions", "Transaction costs and risk controls materially shape intraday evaluation."],
   ["Walk-forward degradation", "Re-selection under realistic chronology can weaken apparent in-sample performance."],
-  ["Market differences", "NQ and ES should be interpreted individually as well as together."],
+  ["Market differences", "NQ, ES, and Crude Oil (CL) should be interpreted individually as well as together."],
   ["Academic boundary", "The framework is a thesis experiment, not an execution system."],
 ] as const;
 
@@ -105,7 +106,7 @@ export default function VolatilityRegimeFilteringPage() {
         accent="blue"
         eyebrow="MSc Economics thesis · University of Copenhagen"
         title="Volatility Regime Filtering in Futures Markets"
-        intro="An intraday NQ and ES futures study using EGARCH as a volatility-regime risk and admissibility layer—not as a direction predictor."
+        intro="An intraday NQ, ES, and Crude Oil (CL) futures study using EGARCH as a volatility-regime risk and admissibility layer—not as a direction predictor."
         actions={
           <CtaLink
             href="/papers/volatility-regime-filtering-thesis.pdf"
@@ -116,7 +117,7 @@ export default function VolatilityRegimeFilteringPage() {
           </CtaLink>
         }
         metadata={[
-          { label: "Markets", value: "NQ · ES" },
+          { label: "Markets", value: "NQ · ES · Crude Oil (CL)" },
           { label: "Frequency", value: "Daily model · 5-minute evaluation" },
           { label: "Model role", value: "Risk and admissibility" },
           { label: "Context", value: "Academic research" },
@@ -170,7 +171,7 @@ export default function VolatilityRegimeFilteringPage() {
           items={[
             { label: "Model input", value: "Daily futures returns" },
             { label: "Research output", value: "Conditional-volatility regime" },
-            { label: "Intraday context", value: "Five-minute NQ and ES data" },
+            { label: "Intraday context", value: "Five-minute NQ, ES, and Crude Oil (CL) data" },
             { label: "Comparison", value: "Filtered versus no-filter framework" },
           ]}
         />

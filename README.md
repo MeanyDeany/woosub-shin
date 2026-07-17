@@ -25,4 +25,4 @@ npm run build
 
 ## Boundary
 
-The BTC Futures Research Assistant content is research-only. It is not financial advice, not a trading signal service, and does not imply live trading or paper trading approval.
+The Multi-Asset Volatility Research System content is research-only. BTCUSDT is the current public research and operational evidence context; NQ, ES, and Crude Oil (CL) futures belong to the academic multi-asset lineage and are not represented as assets in the current pipeline. The site is not financial advice, not a trading signal service, and does not imply live trading or paper trading approval.

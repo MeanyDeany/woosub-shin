@@ -17,25 +17,25 @@ const projects = [
   {
     accent: "cyan" as const,
     contribution:
-      "A deterministic pipeline joining volatility forecasts, forward outcomes, append-only evidence, provenance, and operational integrity checks without crossing into execution.",
+      "A deterministic BTCUSDT pipeline joining volatility forecasts, forward outcomes, append-only evidence, provenance, and operational integrity checks within a broader academic multi-asset lineage—without crossing into execution.",
     href: "/projects/btc-futures-research",
     index: "01",
     methods: ["GARCH", "EGARCH", "GJR-GARCH", "HAR-RV", "Event ledgers"],
     question:
       "How can statistical volatility forecasts become reviewable evidence while remaining strictly separated from strategy permission and trading execution?",
     status: "Flagship research infrastructure",
-    title: "BTC Futures Research Assistant",
+    title: "Multi-Asset Volatility Research System",
     type: "Research infrastructure",
   },
   {
     accent: "blue" as const,
     contribution:
-      "An academic comparison of an EGARCH-conditioned framework with otherwise identical intraday logic, treating volatility regime as a risk and admissibility layer.",
+      "An academic comparison across NQ, ES, and Crude Oil (CL) futures using an EGARCH-conditioned framework with otherwise identical intraday logic, treating volatility regime as a risk and admissibility layer.",
     href: "/projects/volatility-regime-filtering",
     index: "02",
-    methods: ["NQ", "ES", "EGARCH", "5-minute data", "Robustness"],
+    methods: ["NQ", "ES", "Crude Oil (CL)", "EGARCH", "5-minute data", "Robustness"],
     question:
-      "Can volatility-regime filtering improve the discipline of an intraday NQ and ES futures framework without treating EGARCH as a direction predictor?",
+      "Can volatility-regime filtering improve the discipline of an intraday NQ, ES, and Crude Oil (CL) futures framework without treating EGARCH as a direction predictor?",
     status: "Academic foundation",
     title: "Volatility Regime Filtering in Futures Markets",
     type: "Financial econometrics",
@@ -61,11 +61,11 @@ export default function ProjectsPage() {
       <PageHero
         eyebrow="MeanyDeany · Research systems"
         title="Research systems and academic lineage"
-        intro="The program connects an earlier diagnostic study, an academic financial-econometrics foundation, and a current public evidence infrastructure."
+        intro="The program connects an earlier diagnostic study, an academic multi-asset financial-econometrics foundation, and a current public BTCUSDT evidence infrastructure."
         metadata={[
-          { label: "Flagship", value: "BTC evidence infrastructure" },
+          { label: "Flagship", value: "Multi-Asset Volatility Research System" },
           { label: "Foundation", value: "MSc thesis · seminar paper" },
-          { label: "Markets", value: "BTCUSDT · NQ · ES" },
+          { label: "Market contexts", value: "BTCUSDT current · NQ · ES · Crude Oil (CL) academic" },
           { label: "Boundary", value: "No execution systems" },
         ]}
       />

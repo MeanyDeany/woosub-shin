@@ -11,18 +11,18 @@ import { PageShell } from "@/components/site-shell";
 export const metadata: Metadata = {
   title: "Papers",
   description:
-    "MeanyDeany academic papers on volatility-regime filtering in NQ and ES futures and GSADF-based Bitcoin bubble diagnostics.",
+    "MeanyDeany academic papers on volatility-regime filtering in NQ, ES, and Crude Oil (CL) futures and GSADF-based Bitcoin bubble diagnostics.",
 };
 
 const papers = [
   {
     abstract:
-      "Studies whether daily EGARCH volatility regimes can serve as a risk and admissibility layer for an intraday NQ and ES futures framework. The volatility model is evaluated as conditioning context, not as a price-direction predictor.",
+      "Studies whether daily EGARCH volatility regimes can serve as a risk and admissibility layer for an intraday NQ, ES, and Crude Oil (CL) futures framework. The volatility model is evaluated as conditioning context, not as a price-direction predictor.",
     accent: "blue" as const,
     methods: ["EGARCH(1,1)", "Student-t", "Ablation", "Walk-forward", "Bootstrap"],
     pdfHref: "/papers/volatility-regime-filtering-thesis.pdf",
     projectHref: "/projects/volatility-regime-filtering",
-    scope: "E-mini Nasdaq-100 (NQ) and E-mini S&P 500 (ES) intraday futures",
+    scope: "E-mini Nasdaq-100 (NQ), E-mini S&P 500 (ES), and Crude Oil (CL) intraday futures",
     title: "Volatility Regime Filtering in Futures Markets",
     type: "MSc Economics thesis",
   },
@@ -50,7 +50,7 @@ export default function PapersPage() {
         metadata={[
           { label: "Archive", value: "2 academic papers" },
           { label: "Methods", value: "EGARCH · GSADF" },
-          { label: "Scope", value: "NQ · ES · Bitcoin" },
+          { label: "Scope", value: "NQ · ES · Crude Oil (CL) · Bitcoin" },
           { label: "Format", value: "Original PDF files" },
         ]}
       />

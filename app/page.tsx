@@ -195,8 +195,9 @@ export default function Home() {
                 A research system should show its work.
               </h2>
               <p className="mt-8 max-w-[46rem] text-xl leading-8 text-[#657189] sm:text-2xl sm:leading-9">
-                The BTC Futures Research Assistant separates data, model states,
-                later outcomes, and integrity review into an inspectable evidence chain.
+                The Multi-Asset Volatility Research System uses BTCUSDT for its current
+                public research and operational evidence context. NQ, ES, and Crude Oil
+                (CL) futures remain part of its academic lineage, not the current pipeline.
               </p>
             </div>
 

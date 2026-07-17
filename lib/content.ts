@@ -5,8 +5,8 @@ export const navigation = [
     label: "Systems",
     children: [
       { href: "/projects", label: "All systems", detail: "Research systems and academic lineage" },
-      { href: "/projects/btc-futures-research", label: "BTC Futures Research Assistant", detail: "Evidence infrastructure and validation" },
-      { href: "/projects/volatility-regime-filtering", label: "Volatility Regime Filtering", detail: "NQ and ES financial econometrics" },
+      { href: "/projects/btc-futures-research", label: "Multi-Asset Volatility Research System", detail: "Current BTCUSDT evidence and academic multi-asset lineage" },
+      { href: "/projects/volatility-regime-filtering", label: "Volatility Regime Filtering", detail: "NQ, ES, and Crude Oil (CL) econometrics" },
       { href: "/projects/bitcoin-bubble-gsadf", label: "Bitcoin Bubble Detection", detail: "GSADF time-series diagnostics" },
     ],
   },
