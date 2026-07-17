@@ -127,6 +127,30 @@ a {
   color: #657189 !important;
 }
 
+.cosmic-page [class*="text-[#8CB5FF]"],
+.cosmic-page [class*="text-[#4D8DFF]"] {
+  color: #2563c9 !important;
+}
+
+.cosmic-page [class*="text-[#67DFF7]"],
+.cosmic-page [class*="text-[#42D7F5]"] {
+  color: #087e9b !important;
+}
+
+.cosmic-page [class*="text-[#79E8B5]"] {
+  color: #08765a !important;
+}
+
+.cosmic-page [class*="text-[#C3AEFF]"],
+.cosmic-page [class*="text-[#9B6CFF]"] {
+  color: #7251c8 !important;
+}
+
+.cosmic-page [class*="text-[#FFC56F]"],
+.cosmic-page [class*="text-[#FFB547]"] {
+  color: #a85d08 !important;
+}
+
 .cosmic-page h1.text-white,
 .cosmic-page h2.text-white,
 .cosmic-page h3.text-white,
