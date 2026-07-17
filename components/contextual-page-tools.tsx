@@ -1,34 +1,29 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { SectionDock, type SectionDockItem } from "@/components/section-dock";
-import styles from "@/components/contextual-page-tools.module.css";
+import { useEffect } from "react";
 
 const BTC_PATH = "/projects/btc-futures-research";
 
 const sections = [
-  { id: "overview", label: "Overview", heading: "BTC Futures Research Assistant" },
-  { id: "purpose", label: "Purpose", heading: "Evidence infrastructure, not a strategy layer" },
-  { id: "lineage", label: "Lineage", heading: "Multi-asset research progression" },
-  { id: "models", label: "Models", heading: "Baseline forecast models" },
-  { id: "benchmarks", label: "Benchmarks", heading: "Prior benchmarks and challengers" },
-  { id: "uncertainty", label: "Uncertainty", heading: "Monte Carlo variance uncertainty" },
-  { id: "maturity", label: "Maturity", heading: "Evidence maturity" },
-  { id: "evidence-pipeline", label: "Pipeline", heading: "Evidence Pipeline Explorer" },
-  { id: "failure-modes", label: "Failures", heading: "Failure Mode Atlas" },
-  { id: "operations", label: "Operations", heading: "Operational scheduler" },
-  { id: "engineering", label: "Engineering", heading: "What this project demonstrates" },
-  { id: "boundaries", label: "Boundaries", heading: "Research boundaries" },
-] as const satisfies readonly (SectionDockItem & { heading: string })[];
+  { id: "overview", heading: "BTC Futures Research Assistant" },
+  { id: "purpose", heading: "Evidence infrastructure, not a strategy layer" },
+  { id: "lineage", heading: "Multi-asset research progression" },
+  { id: "models", heading: "Baseline forecast models" },
+  { id: "benchmarks", heading: "Prior benchmarks and challengers" },
+  { id: "uncertainty", heading: "Monte Carlo variance uncertainty" },
+  { id: "maturity", heading: "Evidence maturity" },
+  { id: "evidence-pipeline", heading: "Evidence Pipeline Explorer" },
+  { id: "failure-modes", heading: "Failure Mode Atlas" },
+  { id: "operations", heading: "Operational scheduler" },
+  { id: "engineering", heading: "What this project demonstrates" },
+  { id: "boundaries", heading: "Research boundaries" },
+] as const;
 
 export function ContextualPageTools() {
   const pathname = usePathname();
-  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    setReady(false);
-
     if (pathname !== BTC_PATH) {
       document.documentElement.removeAttribute("data-page");
       return;
@@ -48,8 +43,6 @@ export function ContextualPageTools() {
       if (section) section.id = item.id;
     });
 
-    setReady(true);
-
     return () => {
       if (document.documentElement.dataset.page === "btc-research") {
         document.documentElement.removeAttribute("data-page");
@@ -57,11 +50,5 @@ export function ContextualPageTools() {
     };
   }, [pathname]);
 
-  if (pathname !== BTC_PATH || !ready) return null;
-
-  return (
-    <div className={styles.root}>
-      <SectionDock items={sections} />
-    </div>
-  );
+  return null;
 }
