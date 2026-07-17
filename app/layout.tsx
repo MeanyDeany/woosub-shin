@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
+import "./navigation.css";
 
 const siteUrl = "https://meanydeany.com";
 const siteTitle = "MeanyDeany | Quantitative Research Systems";
@@ -29,6 +31,12 @@ const themeScript = `
     document.documentElement.style.colorScheme = "light";
   }
 })();
+`;
+
+const analyticsScript = `
+window.va = window.va || function () {
+  (window.vaq = window.vaq || []).push(arguments);
+};
 `;
 
 export const metadata: Metadata = {
@@ -73,7 +81,15 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="flex min-h-full flex-col">{children}</body>
+      <body className="flex min-h-full flex-col">
+        {children}
+        <Script
+          id="vercel-analytics-init"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{ __html: analyticsScript }}
+        />
+        <Script src="/_vercel/insights/script.js" strategy="afterInteractive" />
+      </body>
     </html>
   );
 }
