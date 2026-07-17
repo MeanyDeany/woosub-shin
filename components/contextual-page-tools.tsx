@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { SectionDock, type SectionDockItem } from "@/components/section-dock";
+import styles from "@/components/contextual-page-tools.module.css";
 
 const BTC_PATH = "/projects/btc-futures-research";
 
@@ -58,5 +59,9 @@ export function ContextualPageTools() {
 
   if (pathname !== BTC_PATH || !ready) return null;
 
-  return <SectionDock items={sections} />;
+  return (
+    <div className={styles.root}>
+      <SectionDock items={sections} />
+    </div>
+  );
 }
