@@ -8,8 +8,8 @@ const BTC_PATH = "/projects/btc-futures-research";
 const LAB_PATH = "/projects/multi-asset-research-lab";
 
 const labSections = [
-  { href: "#proof", label: "Failures" },
-  { href: "#roadmap", label: "Roadmap" },
+  { href: "#proof", label: "Failures", primary: false },
+  { href: "#roadmap", label: "Roadmap", primary: false },
   { href: "#faq", label: "FAQ", primary: true },
 ] as const;
 
