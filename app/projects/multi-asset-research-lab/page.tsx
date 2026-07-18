@@ -111,6 +111,141 @@ const milestones = [
   "Bounded run deserialization and offline verify-run CLI",
 ] as const;
 
+const failureMuseum = [
+  {
+    trigger: "TLS transport failure",
+    response: "The request stopped and produced no dataset or run bundle.",
+    lesson: "Unavailable data is not silently converted into research evidence.",
+  },
+  {
+    trigger: "Corrupted or oversized JSON",
+    response: "Bounded parsing rejected the input with a sanitized failure.",
+    lesson: "A file existing on disk is not enough for the system to trust it.",
+  },
+  {
+    trigger: "Unexpected file inside a run",
+    response: "Exact-tree verification rejected the completed directory.",
+    lesson: "Extra evidence cannot be slipped into an already defined run.",
+  },
+  {
+    trigger: "Symlink or path indirection",
+    response: "The loader refused ambiguous and redirected filesystem paths.",
+    lesson: "Convenient path resolution does not outrank evidence identity.",
+  },
+  {
+    trigger: "Hash or observation mismatch",
+    response: "Canonical identity reconciliation failed closed.",
+    lesson: "Labels, filenames, and completion markers cannot overrule the bytes.",
+  },
+  {
+    trigger: "Broken output stream",
+    response: "The CLI returned a stable unexpected-failure boundary.",
+    lesson: "Even reporting failures remain visible instead of looking successful.",
+  },
+] as const;
+
+const roadmap = [
+  {
+    index: "01",
+    title: "Research contracts",
+    detail: "Asset, dataset, cost, session, environment, and experiment declarations.",
+    status: "Complete",
+    tone: "emerald" as const,
+  },
+  {
+    index: "02",
+    title: "Market-data evidence",
+    detail: "Controlled public capture, exact bytes, canonical normalization, and verification.",
+    status: "Complete",
+    tone: "emerald" as const,
+  },
+  {
+    index: "03",
+    title: "Verifiable run bundles",
+    detail: "Atomic publication, exact-tree checks, bounded reload, and offline verification.",
+    status: "Complete",
+    tone: "emerald" as const,
+  },
+  {
+    index: "04",
+    title: "Experiment run and result identity",
+    detail: "Deterministic contracts for binding experiments to observations and typed metrics.",
+    status: "In progress",
+    tone: "cyan" as const,
+  },
+  {
+    index: "05",
+    title: "Synthetic experiment runner",
+    detail: "A tightly bounded in-memory proof before historical research execution.",
+    status: "Planned",
+    tone: "blue" as const,
+  },
+  {
+    index: "06",
+    title: "Historical multi-asset validation",
+    detail: "Time-respecting experiments across additional assets after the runner is proven.",
+    status: "Planned",
+    tone: "blue" as const,
+  },
+  {
+    index: "07",
+    title: "Paper evaluation",
+    detail: "Requires separate evidence, controls, and an explicit future review.",
+    status: "Not approved",
+    tone: "amber" as const,
+  },
+  {
+    index: "08",
+    title: "Live trading",
+    detail: "Not part of the current system and not authorized by research progress.",
+    status: "Not approved",
+    tone: "amber" as const,
+  },
+] as const;
+
+const faq = [
+  {
+    question: "Does the system trade?",
+    answer:
+      "No. It does not place orders, manage positions, connect to a broker, or provide entry and short permission.",
+  },
+  {
+    question: "Does it make money today?",
+    answer:
+      "No. There is no live trading, fund, signal subscription, or software revenue. The current output is research infrastructure and verifiable evidence.",
+  },
+  {
+    question: "Why build infrastructure before strategies?",
+    answer:
+      "A profitable-looking backtest is weak evidence when the data, code, assumptions, and result history cannot be reproduced. The lab builds those controls first.",
+  },
+  {
+    question: "Why start with BTCUSDT?",
+    answer:
+      "It provides a continuous, liquid, public-data environment for proving the first end-to-end lifecycle. It is a controlled starting point, not the final asset universe.",
+  },
+  {
+    question: "Why call it multi-asset with one concrete adapter?",
+    answer:
+      "The contracts and evidence model are asset-neutral. Multi-asset capability is an architecture under validation, not a claim that multiple assets are already running.",
+  },
+  {
+    question: "Is this a finished product?",
+    answer:
+      "No. It is an active proprietary research build. The website documents what is operational, what remains planned, and what is explicitly not approved.",
+  },
+  {
+    question: "Is the source code public?",
+    answer:
+      "The core research implementation is private. This public site presents the architecture, demonstrated boundaries, and research progression without exposing operational internals.",
+  },
+  {
+    question: "What must happen before paper or live trading?",
+    answer:
+      "The project would need completed experiment contracts, a bounded runner, historical and forward validation, operational controls, and a separate explicit approval process. Research progress alone grants no permission.",
+  },
+] as const;
+
 const boundaries = [
   "No experiment execution yet",
   "No feature or model runner",
@@ -155,14 +290,14 @@ export default function MultiAssetResearchLabPage() {
             <CtaLink href="#what-it-is" kind="primary">
               See what the system does
             </CtaLink>
-            <CtaLink href="#architecture" kind="secondary">
-              Inspect the technical architecture
+            <CtaLink href="#proof" kind="secondary">
+              See what it has proven
             </CtaLink>
           </>
         }
         metadata={[
           { label: "System", value: "Systematic trading research infrastructure" },
-          { label: "Current phase", value: "Foundation and evidence lifecycle" },
+          { label: "Current phase", value: "Foundation and experiment identity" },
           { label: "Trades today", value: "No" },
           { label: "Generates revenue", value: "No" },
         ]}
@@ -355,6 +490,79 @@ export default function MultiAssetResearchLabPage() {
               </li>
             ))}
           </ol>
+        </div>
+      </EditorialSection>
+
+      <EditorialSection
+        id="proof"
+        accent="amber"
+        eyebrow="Proof, not profit"
+        title="Failures the system refused to hide"
+        intro="These are not hypothetical slogans. They are classes of failure the current implementation has been designed and tested to reject without manufacturing successful-looking evidence."
+        tone="warm"
+      >
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {failureMuseum.map((failure, index) => (
+            <article key={failure.trigger} className="glass-panel rounded-[2rem] p-6 sm:p-7">
+              <div className="flex items-center justify-between gap-4">
+                <span className="font-mono text-xs text-[#A85D08]">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <StatusLabel accent="amber">Rejected</StatusLabel>
+              </div>
+              <h3 className="mt-7 text-2xl font-semibold tracking-[-0.03em] text-[#111A2E]">
+                {failure.trigger}
+              </h3>
+              <p className="mt-5 text-sm font-semibold leading-6 text-[#3D4A60]">
+                {failure.response}
+              </p>
+              <p className="mt-3 text-sm leading-6 text-[#657189]">{failure.lesson}</p>
+            </article>
+          ))}
+        </div>
+      </EditorialSection>
+
+      <EditorialSection
+        id="roadmap"
+        accent="blue"
+        eyebrow="Current phase roadmap"
+        title="What is complete, what is next, and what is not approved"
+        intro="The roadmap separates engineering progress from trading permission. Completing a technical layer never automatically unlocks the next operational state."
+        tone="deep"
+      >
+        <ol className="overflow-hidden rounded-[2rem] border border-[#7187AB]/15 bg-white/32">
+          {roadmap.map((stage) => (
+            <li
+              key={stage.index}
+              className="grid gap-5 border-b border-[#7187AB]/14 p-6 last:border-b-0 md:grid-cols-[3rem_minmax(0,1fr)_auto] md:items-center md:p-7"
+            >
+              <span className="font-mono text-xs text-[#2563C9]">{stage.index}</span>
+              <div>
+                <h3 className="text-xl font-semibold text-[#111A2E]">{stage.title}</h3>
+                <p className="mt-2 text-sm leading-6 text-[#657189]">{stage.detail}</p>
+              </div>
+              <StatusLabel accent={stage.tone}>{stage.status}</StatusLabel>
+            </li>
+          ))}
+        </ol>
+      </EditorialSection>
+
+      <EditorialSection
+        id="faq"
+        accent="violet"
+        eyebrow="Direct answers"
+        title="Questions a skeptical visitor should ask"
+        intro="The project is easier to trust when its current limits are answered directly instead of hidden behind architecture diagrams."
+      >
+        <div className="grid gap-4 lg:grid-cols-2">
+          {faq.map((item) => (
+            <article key={item.question} className="glass-panel rounded-[1.75rem] p-6 sm:p-7">
+              <h3 className="text-xl font-semibold tracking-[-0.025em] text-[#111A2E]">
+                {item.question}
+              </h3>
+              <p className="mt-4 text-sm leading-6 text-[#657189]">{item.answer}</p>
+            </article>
+          ))}
         </div>
       </EditorialSection>
 
