@@ -41,6 +41,15 @@ export function SiteFooter() {
             </p>
           </div>
           <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium">
+            <Link href="/build-log" className="site-link transition-colors">
+              Build log
+            </Link>
+            <Link
+              href="/projects/multi-asset-research-lab/claims"
+              className="site-link transition-colors"
+            >
+              Claims ledger
+            </Link>
             <a
               href="mailto:woosub815@gmail.com"
               className="site-link transition-colors"
