@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { ActiveNavigation } from "@/components/active-navigation";
 import { ContextualPageTools } from "@/components/contextual-page-tools";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { VisitorStats } from "@/components/visitor-stats";
 
 export function SiteHeader() {
   return (
@@ -56,9 +57,12 @@ export function SiteFooter() {
             </a>
           </div>
         </div>
-        <div className="site-footer-rule site-muted mt-10 flex flex-col gap-3 border-t pt-5 text-xs sm:flex-row sm:items-center sm:justify-between">
+        <div className="site-footer-rule site-muted mt-10 grid gap-3 border-t pt-5 text-xs sm:grid-cols-[auto_1fr_auto] sm:items-center">
           <p>© {currentYear} MeanyDeany</p>
-          <p>Research only · No signals · No execution</p>
+          <p className="sm:justify-self-center">
+            <VisitorStats />
+          </p>
+          <p className="sm:justify-self-end">Research only · No signals · No execution</p>
         </div>
       </div>
     </footer>
