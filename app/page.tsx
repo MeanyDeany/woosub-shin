@@ -3,66 +3,68 @@ import Link from "next/link";
 import { PageShell } from "@/components/site-shell";
 
 export const metadata: Metadata = {
-  title: "Quantitative Research Systems",
+  title: "Systematic Trading Research Infrastructure",
   description:
-    "MeanyDeany builds quantitative research infrastructure for market data, reproducible experiments, model validation, and decision control.",
+    "MeanyDeany builds research and validation infrastructure that turns raw market data into verified datasets, reproducible experiments, and auditable results before capital is put at risk.",
 };
 
-const pillars = [
+const directAnswers = [
   {
     number: "01",
-    title: "Capture what actually happened.",
+    question: "What is it?",
+    answer: "Research and validation infrastructure for systematic trading.",
     detail:
-      "Exact market bytes, canonical datasets, immutable manifests, and provenance that can be inspected later.",
+      "It is the layer that checks data, experiment identity, reproducibility, and evidence quality before a trading strategy is trusted.",
   },
   {
     number: "02",
-    title: "Test what the model claims.",
+    question: "What does it do?",
+    answer: "It turns raw market data into evidence that can be audited.",
     detail:
-      "Time-respecting validation, deterministic experiment identity, bounded comparisons, and failure states that stay visible.",
+      "The system verifies datasets, preserves provenance, reproduces experiments, and keeps research results from being silently rewritten.",
   },
   {
     number: "03",
-    title: "Control what the evidence can authorize.",
+    question: "Does it make money?",
+    answer: "Not currently.",
     detail:
-      "A forecast is not permission. A regime is not a trade. Research evidence stays separate from execution.",
+      "There is no live strategy, fund, signal service, or trading revenue. The current product is the research foundation for future systematic strategies.",
   },
 ] as const;
 
 const systems = [
   {
-    label: "Research contracts",
-    title: "Identity before execution.",
+    label: "Market data",
+    title: "Know what the model actually saw.",
     detail:
-      "Asset-neutral contracts define datasets, experiments, costs, sessions, and canonical identities before any runner or model is allowed to exist.",
+      "Public market data is captured, verified, normalized, and assigned a deterministic identity before it becomes experiment input.",
+    href: "/projects/multi-asset-research-lab#evidence-lifecycle",
+    link: "Follow the data lifecycle",
+  },
+  {
+    label: "Research experiments",
+    title: "Make results reproducible.",
+    detail:
+      "Datasets, code, parameters, environments, and results are bound to exact identities so the same claim can be reconstructed and challenged.",
     href: "/projects/multi-asset-research-lab#architecture",
     link: "Inspect the architecture",
   },
   {
-    label: "Evidence lifecycle",
-    title: "Bytes become verifiable runs.",
-    detail:
-      "Controlled public acquisition, exact-byte evidence, canonical normalization, persistent run bundles, and offline verification form one bounded chain.",
-    href: "/projects/multi-asset-research-lab#evidence-lifecycle",
-    link: "Follow the lifecycle",
-  },
-  {
     label: "Decision control",
-    title: "Failure should be loud.",
+    title: "Keep evidence away from the order button.",
     detail:
-      "Stale data, broken lineage, malformed evidence, premature conclusions, and operational faults are surfaced instead of silently repaired.",
-    href: "/projects/btc-futures-research#evidence-pipeline",
-    link: "Inspect the BTC evidence system",
+      "A strong model result remains research evidence. It cannot silently become entry permission, strategy approval, position sizing, or execution authority.",
+    href: "/projects/btc-futures-research#boundaries",
+    link: "Read the hard boundaries",
   },
 ] as const;
 
 const pipeline = [
-  "Research contracts",
-  "Dataset identity",
-  "Controlled acquisition",
-  "Canonical normalization",
-  "Verified run bundles",
-  "Offline verification",
+  "Raw market data",
+  "Verified dataset",
+  "Reproducible experiment",
+  "Auditable result",
+  "Controlled decision",
 ] as const;
 
 function Arrow() {
@@ -87,64 +89,91 @@ export default function Home() {
           aria-hidden="true"
           className="pointer-events-none absolute -right-48 top-4 -z-10 h-[42rem] w-[42rem] rounded-full bg-[#B29BFF]/18 blur-3xl"
         />
-        <div className="mx-auto flex min-h-[calc(100svh-4rem)] max-w-[1440px] flex-col justify-center px-5 py-24 sm:px-8 sm:py-32 lg:px-12">
-          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[#1677D2]">
-            MeanyDeany · Quantitative Research Systems
-          </p>
+        <div className="mx-auto grid min-h-[calc(100svh-4rem)] max-w-[1440px] gap-14 px-5 py-24 sm:px-8 sm:py-32 lg:grid-cols-[minmax(0,1.2fr)_minmax(20rem,0.8fr)] lg:items-center lg:px-12">
+          <div>
+            <p className="text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[#1677D2]">
+              Research infrastructure for systematic trading
+            </p>
 
-          <h1 className="mt-8 max-w-[82rem] text-[clamp(3.7rem,10.5vw,9rem)] font-semibold leading-[0.88] tracking-[-0.075em] text-[#111A2E]">
-            Shit always happens
-            <span className="block">in the market.</span>
-          </h1>
+            <h1 className="mt-8 max-w-[72rem] text-[clamp(3.5rem,9vw,8rem)] font-semibold leading-[0.9] tracking-[-0.075em] text-[#111A2E]">
+              Check the trading idea
+              <span className="block">before risking capital.</span>
+            </h1>
 
-          <p className="mt-10 max-w-[58rem] text-[clamp(1.45rem,3vw,2.7rem)] font-medium leading-[1.12] tracking-[-0.035em] text-[#27364F]">
-            So we build systems that fail visibly before capital does.
-          </p>
+            <p className="mt-9 max-w-[55rem] text-[clamp(1.35rem,2.7vw,2.45rem)] font-medium leading-[1.15] tracking-[-0.035em] text-[#27364F]">
+              I build systems that turn raw market data into verified datasets,
+              reproducible experiments, and auditable research results.
+            </p>
 
-          <p className="mt-7 max-w-[48rem] text-base leading-7 text-[#657189] sm:text-lg sm:leading-8">
-            Quantitative research infrastructure for market data, reproducible
-            experiments, model validation, and decision control. Built to expose bad
-            assumptions, stale evidence, and silent failures before they become decisions.
-          </p>
+            <p className="mt-7 max-w-[48rem] text-base leading-7 text-[#657189] sm:text-lg sm:leading-8">
+              The goal is not to make a model look profitable. The goal is to determine
+              whether a research claim can be trusted, repeated, and rejected before it is
+              allowed anywhere near a trading decision.
+            </p>
 
-          <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <Link href="/projects/multi-asset-research-lab" className={primaryButton}>
-              Explore the flagship lab
-              <Arrow />
-            </Link>
-            <Link href="/projects" className={secondaryButton}>
-              View all research
-              <Arrow />
-            </Link>
+            <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <Link href="/projects/multi-asset-research-lab" className={primaryButton}>
+                See the flagship system
+                <Arrow />
+              </Link>
+              <Link href="/projects" className={secondaryButton}>
+                View all research
+                <Arrow />
+              </Link>
+            </div>
           </div>
 
-          <p className="mt-12 text-xs uppercase tracking-[0.16em] text-[#77839A]">
-            Research only · No signals · No execution
-          </p>
+          <aside className="glass-panel rounded-[2rem] p-7 sm:p-9">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#1677D2]">
+              Current status
+            </p>
+            <dl className="mt-7 divide-y divide-[#7187AB]/14">
+              {[
+                ["System", "Quant research and validation platform"],
+                ["Current phase", "Infrastructure and forward validation"],
+                ["Live trading", "No"],
+                ["Trading signals", "No"],
+                ["Current revenue", "No trading or software revenue"],
+                ["Long-term use", "Multi-asset systematic research"],
+              ].map(([label, value]) => (
+                <div key={label} className="grid gap-2 py-4 first:pt-0 last:pb-0 sm:grid-cols-[8rem_minmax(0,1fr)]">
+                  <dt className="text-xs uppercase tracking-[0.1em] text-[#77839A]">{label}</dt>
+                  <dd className="text-sm font-semibold leading-6 text-[#24324A]">{value}</dd>
+                </div>
+              ))}
+            </dl>
+            <p className="mt-8 border-l-2 border-[#2580D8]/45 pl-4 text-sm leading-6 text-[#657189]">
+              It is the wind tunnel, not the aircraft: a system for testing whether a future
+              trading engine deserves to exist.
+            </p>
+          </aside>
         </div>
       </section>
 
       <section className="border-b border-[#6880A8]/12 bg-white/32 backdrop-blur-sm">
         <div className="mx-auto max-w-[1440px] px-5 py-24 sm:px-8 sm:py-32 lg:px-12 lg:py-40">
-          <p className="text-sm font-semibold text-[#1677D2]">Why this exists</p>
-          <h2 className="mt-4 max-w-[68rem] text-[clamp(2.8rem,7vw,6.8rem)] font-semibold leading-[0.94] tracking-[-0.065em] text-[#111A2E]">
-            Markets do not fail politely.
+          <p className="text-sm font-semibold text-[#1677D2]">Plain-English answer</p>
+          <h2 className="mt-4 max-w-[72rem] text-[clamp(2.8rem,7vw,6.8rem)] font-semibold leading-[0.94] tracking-[-0.065em] text-[#111A2E]">
+            So what does this actually do?
           </h2>
-          <p className="mt-8 max-w-[50rem] text-xl leading-8 tracking-[-0.02em] text-[#657189] sm:text-2xl sm:leading-9">
-            Data arrives late. Models drift. Infrastructure breaks. Humans improvise.
-            The research system should make each failure inspectable.
+          <p className="mt-8 max-w-[56rem] text-xl leading-8 tracking-[-0.02em] text-[#657189] sm:text-2xl sm:leading-9">
+            It answers one question: can a systematic trading idea be trusted before money
+            is put at risk?
           </p>
 
-          <ol className="mt-20 grid gap-5 lg:grid-cols-3">
-            {pillars.map((pillar) => (
-              <li key={pillar.number} className="glass-panel rounded-[2rem] p-7 sm:p-9">
-                <span className="font-mono text-xs text-[#2563C9]">{pillar.number}</span>
-                <h3 className="mt-10 text-3xl font-semibold leading-tight tracking-[-0.04em] text-[#111A2E]">
-                  {pillar.title}
+          <ol className="mt-16 grid gap-5 lg:grid-cols-3">
+            {directAnswers.map((item) => (
+              <li key={item.number} className="glass-panel rounded-[2rem] p-7 sm:p-9">
+                <div className="flex items-center justify-between gap-4">
+                  <span className="font-mono text-xs text-[#2563C9]">{item.number}</span>
+                  <span className="text-xs font-semibold uppercase tracking-[0.12em] text-[#77839A]">
+                    {item.question}
+                  </span>
+                </div>
+                <h3 className="mt-9 text-3xl font-semibold leading-tight tracking-[-0.04em] text-[#111A2E]">
+                  {item.answer}
                 </h3>
-                <p className="mt-5 text-base leading-7 text-[#657189]">
-                  {pillar.detail}
-                </p>
+                <p className="mt-5 text-base leading-7 text-[#657189]">{item.detail}</p>
               </li>
             ))}
           </ol>
@@ -153,7 +182,7 @@ export default function Home() {
 
       <section className="border-b border-[#6880A8]/12 bg-white/12 backdrop-blur-sm">
         <div className="mx-auto max-w-[1440px] px-5 py-24 sm:px-8 sm:py-32 lg:px-12 lg:py-40">
-          <p className="text-sm font-semibold text-[#1677D2]">What we build</p>
+          <p className="text-sm font-semibold text-[#1677D2]">How it works</p>
           <h2 className="mt-4 max-w-[66rem] text-[clamp(2.8rem,7vw,6.5rem)] font-semibold leading-[0.94] tracking-[-0.065em] text-[#111A2E]">
             Research infrastructure. Not signal theatre.
           </h2>
@@ -171,9 +200,7 @@ export default function Home() {
                 <h3 className="mt-12 text-4xl font-semibold leading-[1.02] tracking-[-0.045em] text-[#111A2E] sm:text-5xl">
                   {system.title}
                 </h3>
-                <p className="mt-6 text-base leading-7 text-[#657189]">
-                  {system.detail}
-                </p>
+                <p className="mt-6 text-base leading-7 text-[#657189]">{system.detail}</p>
                 <Link
                   href={system.href}
                   className="mt-auto inline-flex w-fit items-center gap-2 pt-12 text-sm font-semibold text-[#1677D2] transition-colors hover:text-[#0D589C]"
@@ -191,21 +218,21 @@ export default function Home() {
         <div className="mx-auto max-w-[1440px] px-5 py-24 sm:px-8 sm:py-32 lg:px-12 lg:py-40">
           <div className="grid gap-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(20rem,0.9fr)] lg:items-end">
             <div>
-              <p className="text-sm font-semibold text-[#1677D2]">Flagship system</p>
-              <h2 className="mt-4 max-w-[56rem] text-[clamp(3rem,7vw,7rem)] font-semibold leading-[0.92] tracking-[-0.07em] text-[#111A2E]">
-                A research system should show its work.
+              <p className="text-sm font-semibold text-[#1677D2]">What it could become</p>
+              <h2 className="mt-4 max-w-[58rem] text-[clamp(3rem,7vw,7rem)] font-semibold leading-[0.92] tracking-[-0.07em] text-[#111A2E]">
+                The foundation for multi-asset systematic research.
               </h2>
-              <p className="mt-8 max-w-[46rem] text-xl leading-8 text-[#657189] sm:text-2xl sm:leading-9">
-                The Multi-Asset Research Lab builds asset-neutral contracts and a
-                verifiable market-data lifecycle before experiment execution. The BTC
-                futures freezer remains a separate research system with its own evidence,
-                operational history, and strict no-execution boundary.
+              <p className="mt-8 max-w-[48rem] text-xl leading-8 text-[#657189] sm:text-2xl sm:leading-9">
+                The current system does not produce returns. Its value is creating a reliable
+                base for future proprietary strategies, quantitative research tools, and
+                institutional research workflows without pretending that infrastructure is
+                already a profitable product.
               </p>
             </div>
 
             <div className="glass-panel rounded-[2rem] p-7 sm:p-9">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#758198]">
-                Current architecture
+                Research chain
               </p>
               <ol className="mt-7 divide-y divide-[#7187AB]/14">
                 {pipeline.map((stage, index) => (
@@ -217,11 +244,8 @@ export default function Home() {
                   </li>
                 ))}
               </ol>
-              <Link
-                href="/projects/multi-asset-research-lab#evidence-lifecycle"
-                className={`${primaryButton} mt-9`}
-              >
-                Inspect the research lifecycle
+              <Link href="/projects/multi-asset-research-lab" className={`${primaryButton} mt-9`}>
+                Open the full system
                 <Arrow />
               </Link>
             </div>
@@ -235,7 +259,7 @@ export default function Home() {
             <p className="mx-auto max-w-[68rem] text-[clamp(2.8rem,7.5vw,7.3rem)] font-semibold leading-[0.92] tracking-[-0.07em] text-[#111A2E]">
               No black box.
               <span className="block">No silent repair.</span>
-              <span className="block">No hidden permission.</span>
+              <span className="block">No fake profitability claim.</span>
             </p>
             <div className="mt-12 flex flex-col justify-center gap-3 sm:flex-row">
               <Link href="/research" className={primaryButton}>

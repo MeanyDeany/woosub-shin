@@ -13,8 +13,32 @@ import { PageShell } from "@/components/site-shell";
 export const metadata: Metadata = {
   title: "Multi-Asset Research Lab",
   description:
-    "An asset-neutral quantitative research framework for deterministic contracts, controlled market-data evidence, canonical normalization, persistent run bundles, and offline verification.",
+    "A research and validation platform for systematic trading that turns raw market data into verified datasets, reproducible experiments, and auditable results before capital is put at risk.",
 };
+
+const plainFlow = [
+  {
+    index: "01",
+    label: "Input",
+    title: "Raw market data and a trading idea",
+    detail:
+      "The system starts with the exact data, code, parameters, market session, and assumptions that a research claim depends on.",
+  },
+  {
+    index: "02",
+    label: "Quality control",
+    title: "Verify, reproduce, and preserve",
+    detail:
+      "It checks data identity, locks provenance, reconstructs experiments, and prevents results from being silently changed after the fact.",
+  },
+  {
+    index: "03",
+    label: "Output",
+    title: "Evidence that can be audited",
+    detail:
+      "The result can be reviewed, compared, challenged, or rejected before it is allowed to influence a future trading system.",
+  },
+] as const;
 
 const architecture = [
   {
@@ -123,37 +147,106 @@ export default function MultiAssetResearchLabPage() {
     <PageShell>
       <PageHero
         accent="cyan"
-        eyebrow="Flagship research infrastructure"
-        title="Multi-Asset Research Lab"
-        intro="An asset-neutral framework that defines identity, provenance, failure boundaries, and reproducibility before experiment execution. The current implementation proves one narrow public-data lifecycle from controlled bytes to an independently verifiable research run."
+        eyebrow="Multi-Asset Research Lab"
+        title="Can a trading idea be trusted before money is put at risk?"
+        intro="This is a research and validation platform for systematic trading. It turns raw market data into verified datasets, reproducible experiments, and auditable results so a research claim can be challenged before it becomes a capital decision."
         actions={
           <>
-            <CtaLink href="#architecture" kind="primary">
-              Inspect the architecture
+            <CtaLink href="#what-it-is" kind="primary">
+              See what the system does
             </CtaLink>
-            <CtaLink href="/projects/btc-futures-research" kind="secondary">
-              Open the separate BTC system
+            <CtaLink href="#architecture" kind="secondary">
+              Inspect the technical architecture
             </CtaLink>
           </>
         }
         metadata={[
-          { label: "Phase", value: "Foundation and evidence lifecycle" },
-          { label: "Design", value: "Asset-neutral contracts" },
-          { label: "Concrete source", value: "BTCUSDT 5m public historical bars" },
-          { label: "Execution", value: "Not implemented" },
+          { label: "System", value: "Systematic trading research infrastructure" },
+          { label: "Current phase", value: "Foundation and evidence lifecycle" },
+          { label: "Trades today", value: "No" },
+          { label: "Generates revenue", value: "No" },
         ]}
       />
 
       <CapabilityBand
-        label="Current build"
+        label="What it produces"
         items={[
-          "Immutable contracts",
-          "Canonical identities",
-          "Controlled acquisition",
-          "Persistent evidence",
-          "Offline verification",
+          "Verified datasets",
+          "Reproducible experiments",
+          "Auditable results",
+          "Visible failures",
+          "Controlled decisions",
         ]}
       />
+
+      <EditorialSection
+        id="what-it-is"
+        eyebrow="Plain-English description"
+        title="A quality-control system for quantitative trading research"
+        intro="The lab is designed to stop weak data, irreproducible experiments, and overstated model claims before they reach a trading decision."
+      >
+        <div className="grid gap-5 md:grid-cols-3">
+          {plainFlow.map((step) => (
+            <article key={step.index} className="glass-panel rounded-[2rem] p-6 sm:p-8">
+              <div className="flex items-center justify-between gap-4">
+                <span className="font-mono text-xs text-[#087E9B]">{step.index}</span>
+                <span className="text-[0.67rem] font-semibold uppercase tracking-[0.14em] text-[#77839A]">
+                  {step.label}
+                </span>
+              </div>
+              <h3 className="mt-8 text-2xl font-semibold leading-tight tracking-[-0.03em] text-[#111A2E]">
+                {step.title}
+              </h3>
+              <p className="mt-5 text-base leading-7 text-[#657189]">{step.detail}</p>
+            </article>
+          ))}
+        </div>
+
+        <div className="mt-8 grid gap-5 lg:grid-cols-2">
+          <article className="glass-panel rounded-[2rem] p-6 sm:p-8">
+            <StatusLabel accent="amber">Current commercial status</StatusLabel>
+            <h3 className="mt-7 text-3xl font-semibold tracking-[-0.04em] text-[#111A2E]">
+              Does it make money? Not currently.
+            </h3>
+            <p className="mt-5 text-base leading-7 text-[#657189]">
+              The system does not trade, manage a fund, sell signals, or generate software
+              revenue. No performance result on this site should be read as a claim that the
+              platform is already profitable.
+            </p>
+          </article>
+
+          <article className="glass-panel rounded-[2rem] p-6 sm:p-8">
+            <StatusLabel accent="cyan">Why it is valuable</StatusLabel>
+            <h3 className="mt-7 text-3xl font-semibold tracking-[-0.04em] text-[#111A2E]">
+              It is the wind tunnel, not the aircraft.
+            </h3>
+            <p className="mt-5 text-base leading-7 text-[#657189]">
+              Its job is to reduce the chance that future systematic strategies are built on
+              corrupted data, hidden assumptions, overfit results, or infrastructure that
+              cannot reproduce its own claims.
+            </p>
+          </article>
+        </div>
+      </EditorialSection>
+
+      <EditorialSection
+        id="use-cases"
+        accent="violet"
+        eyebrow="Long-term application"
+        title="What this foundation could support"
+        intro="These are future applications of the infrastructure, not products or revenue streams that exist today."
+        tone="deep"
+      >
+        <EvidenceBand
+          accent="violet"
+          items={[
+            { label: "Proprietary research", value: "Multi-asset systematic strategy development" },
+            { label: "Quant tooling", value: "Reproducible data and experiment workflows" },
+            { label: "Research teams", value: "Evidence lineage, review, and failure controls" },
+            { label: "Portfolio proof", value: "Demonstration of quantitative engineering capability" },
+          ]}
+        />
+      </EditorialSection>
 
       <EditorialSection
         id="architecture"
