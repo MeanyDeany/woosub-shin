@@ -10,29 +10,48 @@ import { PageShell } from "@/components/site-shell";
 export const metadata: Metadata = {
   title: "Research Systems",
   description:
-    "MeanyDeany research systems and academic lineage across volatility infrastructure, financial econometrics, and time-series diagnostics.",
+    "MeanyDeany research systems and academic lineage across reproducible research infrastructure, volatility validation, financial econometrics, and time-series diagnostics.",
 };
 
 const projects = [
   {
     accent: "cyan" as const,
     contribution:
-      "A deterministic BTCUSDT pipeline joining volatility forecasts, forward outcomes, append-only evidence, provenance, and operational integrity checks within a broader academic multi-asset lineage—without crossing into execution.",
-    href: "/projects/btc-futures-research",
+      "An asset-neutral research foundation with immutable contracts, canonical dataset and experiment identity, controlled public-data acquisition, deterministic normalization, persistent run bundles, and offline verification before any experiment runner exists.",
+    href: "/projects/multi-asset-research-lab",
     index: "01",
-    methods: ["GARCH", "EGARCH", "GJR-GARCH", "HAR-RV", "Event ledgers"],
+    methods: [
+      "Immutable contracts",
+      "Canonical hashes",
+      "Controlled HTTPS",
+      "Run bundles",
+      "Offline verification",
+    ],
     question:
-      "How can statistical volatility forecasts become reviewable evidence while remaining strictly separated from strategy permission and trading execution?",
-    status: "Flagship research infrastructure",
-    title: "Multi-Asset Volatility Research System",
+      "How should a multi-asset research framework prove data identity, provenance, reproducibility, and failure boundaries before it is allowed to execute experiments?",
+    status: "Flagship infrastructure build",
+    title: "Multi-Asset Research Lab",
     type: "Research infrastructure",
+  },
+  {
+    accent: "emerald" as const,
+    contribution:
+      "A separate BTCUSDT freezer-validation system joining volatility forecasts, forward outcomes, append-only evidence, provenance, maturity review, and operational integrity checks without crossing into strategy or execution authority.",
+    href: "/projects/btc-futures-research",
+    index: "02",
+    methods: ["GARCH", "EGARCH", "GJR-GARCH", "HAR-RV", "Forward validation"],
+    question:
+      "How can BTCUSDT volatility research accumulate reviewable forward evidence while remaining strictly separated from entry permission, strategy approval, and trading execution?",
+    status: "Freezer validation system",
+    title: "BTC Futures Research System",
+    type: "Operational research evidence",
   },
   {
     accent: "blue" as const,
     contribution:
       "An academic comparison across NQ, ES, and Crude Oil (CL) futures using an EGARCH-conditioned framework with otherwise identical intraday logic, treating volatility regime as a risk and admissibility layer.",
     href: "/projects/volatility-regime-filtering",
-    index: "02",
+    index: "03",
     methods: ["NQ", "ES", "Crude Oil (CL)", "EGARCH", "5-minute data", "Robustness"],
     question:
       "Can volatility-regime filtering improve the discipline of an intraday NQ, ES, and Crude Oil (CL) futures framework without treating EGARCH as a direction predictor?",
@@ -45,7 +64,7 @@ const projects = [
     contribution:
       "A compact time-series study applying right-tailed explosive-root diagnostics to identify and interpret periods of explosive Bitcoin price behavior.",
     href: "/projects/bitcoin-bubble-gsadf",
-    index: "03",
+    index: "04",
     methods: ["Bitcoin", "GSADF", "Explosive roots", "Time series"],
     question:
       "How can GSADF testing identify statistically explosive Bitcoin price episodes while keeping diagnostic evidence separate from market recommendations?",
@@ -61,19 +80,19 @@ export default function ProjectsPage() {
       <PageHero
         eyebrow="MeanyDeany · Research systems"
         title="Research systems and academic lineage"
-        intro="The program connects an earlier diagnostic study, an academic multi-asset financial-econometrics foundation, and a current public BTCUSDT evidence infrastructure."
+        intro="The program now separates an asset-neutral research framework, a dedicated BTC freezer-validation system, and the academic econometric work that shaped both."
         metadata={[
-          { label: "Flagship", value: "Multi-Asset Volatility Research System" },
+          { label: "Flagship", value: "Multi-Asset Research Lab" },
+          { label: "Live research", value: "BTCUSDT freezer validation" },
           { label: "Foundation", value: "MSc thesis · seminar paper" },
-          { label: "Market contexts", value: "BTCUSDT current · NQ · ES · Crude Oil (CL) academic" },
           { label: "Boundary", value: "No execution systems" },
         ]}
       />
 
       <EditorialSection
         eyebrow="Program sequence"
-        title="One research program, three stages"
-        intro="Each system retains its provenance, research question, methods, and bounded contribution."
+        title="One research program, four layers"
+        intro="Each system retains its own repository boundary, provenance, research question, methods, and bounded contribution."
       >
         <div>
           {projects.map((project) => (
