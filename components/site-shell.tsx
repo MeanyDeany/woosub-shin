@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { ActiveNavigation } from "@/components/active-navigation";
+import { ContextualPageEnd } from "@/components/contextual-page-end";
 import { ContextualPageTools } from "@/components/contextual-page-tools";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { VisitorStats } from "@/components/visitor-stats";
@@ -92,6 +93,7 @@ export function PageShell({ children }: { children: ReactNode }) {
       <main id="main-content" className="flex-1">
         {children}
       </main>
+      <ContextualPageEnd />
       <SiteFooter />
     </div>
   );
