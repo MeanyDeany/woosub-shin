@@ -5,7 +5,7 @@ import { PageShell } from "@/components/site-shell";
 export const metadata: Metadata = {
   title: "Quantitative Research Systems",
   description:
-    "MeanyDeany builds quantitative research infrastructure for market data, model validation, and decision control.",
+    "MeanyDeany builds quantitative research infrastructure for market data, reproducible experiments, model validation, and decision control.",
 };
 
 const pillars = [
@@ -19,7 +19,7 @@ const pillars = [
     number: "02",
     title: "Test what the model claims.",
     detail:
-      "Time-respecting validation, forward outcomes, bounded comparisons, and failure states that stay visible.",
+      "Time-respecting validation, deterministic experiment identity, bounded comparisons, and failure states that stay visible.",
   },
   {
     number: "03",
@@ -31,37 +31,38 @@ const pillars = [
 
 const systems = [
   {
-    label: "Market data",
-    title: "Evidence starts before the model.",
+    label: "Research contracts",
+    title: "Identity before execution.",
     detail:
-      "Controlled acquisition, exact-byte verification, canonical normalization, and reproducible dataset identity.",
-    href: "/projects",
-    link: "Explore the systems",
+      "Asset-neutral contracts define datasets, experiments, costs, sessions, and canonical identities before any runner or model is allowed to exist.",
+    href: "/projects/multi-asset-research-lab#architecture",
+    link: "Inspect the architecture",
   },
   {
-    label: "Model validation",
-    title: "Results must survive time.",
+    label: "Evidence lifecycle",
+    title: "Bytes become verifiable runs.",
     detail:
-      "Forward validation, anti-lookahead construction, immutable outcomes, and explicit uncertainty boundaries.",
-    href: "/research",
-    link: "Read the methodology",
+      "Controlled public acquisition, exact-byte evidence, canonical normalization, persistent run bundles, and offline verification form one bounded chain.",
+    href: "/projects/multi-asset-research-lab#evidence-lifecycle",
+    link: "Follow the lifecycle",
   },
   {
     label: "Decision control",
     title: "Failure should be loud.",
     detail:
-      "Stale data, broken lineage, premature conclusions, and operational faults are surfaced instead of silently repaired.",
+      "Stale data, broken lineage, malformed evidence, premature conclusions, and operational faults are surfaced instead of silently repaired.",
     href: "/projects/btc-futures-research#evidence-pipeline",
-    link: "Inspect the pipeline",
+    link: "Inspect the BTC evidence system",
   },
 ] as const;
 
 const pipeline = [
-  "Market data",
-  "Canonical evidence",
-  "Model state",
-  "Forward outcome",
-  "Integrity review",
+  "Research contracts",
+  "Dataset identity",
+  "Controlled acquisition",
+  "Canonical normalization",
+  "Verified run bundles",
+  "Offline verification",
 ] as const;
 
 function Arrow() {
@@ -101,14 +102,14 @@ export default function Home() {
           </p>
 
           <p className="mt-7 max-w-[48rem] text-base leading-7 text-[#657189] sm:text-lg sm:leading-8">
-            Quantitative research infrastructure for market data, model validation,
-            and decision control. Built to expose bad assumptions, stale evidence,
-            and silent failures before they become decisions.
+            Quantitative research infrastructure for market data, reproducible
+            experiments, model validation, and decision control. Built to expose bad
+            assumptions, stale evidence, and silent failures before they become decisions.
           </p>
 
           <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-            <Link href="/projects/btc-futures-research" className={primaryButton}>
-              See the flagship system
+            <Link href="/projects/multi-asset-research-lab" className={primaryButton}>
+              Explore the flagship lab
               <Arrow />
             </Link>
             <Link href="/projects" className={secondaryButton}>
@@ -195,15 +196,16 @@ export default function Home() {
                 A research system should show its work.
               </h2>
               <p className="mt-8 max-w-[46rem] text-xl leading-8 text-[#657189] sm:text-2xl sm:leading-9">
-                The Multi-Asset Volatility Research System uses BTCUSDT for its current
-                public research and operational evidence context. NQ, ES, and Crude Oil
-                (CL) futures remain part of its academic lineage, not the current pipeline.
+                The Multi-Asset Research Lab builds asset-neutral contracts and a
+                verifiable market-data lifecycle before experiment execution. The BTC
+                futures freezer remains a separate research system with its own evidence,
+                operational history, and strict no-execution boundary.
               </p>
             </div>
 
             <div className="glass-panel rounded-[2rem] p-7 sm:p-9">
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#758198]">
-                Evidence pipeline
+                Current architecture
               </p>
               <ol className="mt-7 divide-y divide-[#7187AB]/14">
                 {pipeline.map((stage, index) => (
@@ -216,10 +218,10 @@ export default function Home() {
                 ))}
               </ol>
               <Link
-                href="/projects/btc-futures-research#evidence-pipeline"
+                href="/projects/multi-asset-research-lab#evidence-lifecycle"
                 className={`${primaryButton} mt-9`}
               >
-                Inspect the evidence pipeline
+                Inspect the research lifecycle
                 <Arrow />
               </Link>
             </div>
