@@ -25,6 +25,8 @@ export const navigation = [
     label: "Method",
     children: [
       { href: "/research", label: "Research methodology", detail: "Time, validation, provenance, and boundaries" },
+      { href: "/build-log", label: "Build log", detail: "Verified milestones, changes, and remaining limits" },
+      { href: "/projects/multi-asset-research-lab/claims", label: "Claims ledger", detail: "Public claims matched to evidence and boundaries" },
       { href: "/projects/multi-asset-research-lab#architecture", label: "Lab architecture", detail: "Contracts, evidence, and verification layers" },
       { href: "/projects/btc-futures-research#evidence-pipeline", label: "BTC evidence pipeline", detail: "Follow the freezer evidence chain" },
       { href: "/projects/multi-asset-research-lab#boundaries", label: "Research boundaries", detail: "What the systems cannot authorize" },
