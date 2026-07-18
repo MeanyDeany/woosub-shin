@@ -5,7 +5,8 @@ export const navigation = [
     label: "Systems",
     children: [
       { href: "/projects", label: "All systems", detail: "Research systems and academic lineage" },
-      { href: "/projects/btc-futures-research", label: "Multi-Asset Volatility Research System", detail: "Current BTCUSDT evidence and academic multi-asset lineage" },
+      { href: "/projects/multi-asset-research-lab", label: "Multi-Asset Research Lab", detail: "Asset-neutral contracts and verifiable research infrastructure" },
+      { href: "/projects/btc-futures-research", label: "BTC Futures Research System", detail: "Freezer validation and volatility evidence" },
       { href: "/projects/volatility-regime-filtering", label: "Volatility Regime Filtering", detail: "NQ, ES, and Crude Oil (CL) econometrics" },
       { href: "/projects/bitcoin-bubble-gsadf", label: "Bitcoin Bubble Detection", detail: "GSADF time-series diagnostics" },
     ],
@@ -24,8 +25,9 @@ export const navigation = [
     label: "Method",
     children: [
       { href: "/research", label: "Research methodology", detail: "Time, validation, provenance, and boundaries" },
-      { href: "/projects/btc-futures-research#evidence-pipeline", label: "Evidence pipeline", detail: "Follow the research evidence chain" },
-      { href: "/projects/btc-futures-research#boundaries", label: "Research boundaries", detail: "What the systems cannot authorize" },
+      { href: "/projects/multi-asset-research-lab#architecture", label: "Lab architecture", detail: "Contracts, evidence, and verification layers" },
+      { href: "/projects/btc-futures-research#evidence-pipeline", label: "BTC evidence pipeline", detail: "Follow the freezer evidence chain" },
+      { href: "/projects/multi-asset-research-lab#boundaries", label: "Research boundaries", detail: "What the systems cannot authorize" },
     ],
   },
   { href: "/contact", label: "Contact" },
