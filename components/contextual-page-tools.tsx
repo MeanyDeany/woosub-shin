@@ -10,6 +10,7 @@ const LAB_PATH = "/projects/multi-asset-research-lab";
 const labSections = [
   { href: "#proof", label: "Failures", primary: false },
   { href: "#roadmap", label: "Roadmap", primary: false },
+  { href: "/projects/multi-asset-research-lab/claims", label: "Claims", primary: false },
   { href: "#faq", label: "FAQ", primary: true },
 ] as const;
 
