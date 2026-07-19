@@ -3,23 +3,27 @@ import type { ReactNode } from "react";
 import { ActiveNavigation } from "@/components/active-navigation";
 import { ContextualPageEnd } from "@/components/contextual-page-end";
 import { ContextualPageTools } from "@/components/contextual-page-tools";
+import { LanguageSwitcher, type SiteLocale } from "@/components/language-switcher";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { VisitorStats } from "@/components/visitor-stats";
 
-export function SiteHeader() {
+export function SiteHeader({ locale = "en" }: { locale?: SiteLocale }) {
+  const homeHref = locale === "ko" ? "/ko" : "/";
+
   return (
     <header className="site-header sticky top-0 z-50 backdrop-blur-2xl">
       <div className="site-header__inner mx-auto flex min-h-16 max-w-[1440px] items-center justify-between gap-4 px-5 sm:px-8 lg:px-12">
         <Link
-          href="/"
+          href={homeHref}
           className="site-brand text-sm font-semibold tracking-[-0.02em] transition-colors"
         >
           MeanyDeany
         </Link>
-        <div className="site-header__actions flex min-w-0 items-center gap-3 sm:gap-5">
+        <div className="site-header__actions flex min-w-0 items-center gap-2 sm:gap-4">
           <div className="header-navigation-wrap min-w-0">
-            <ActiveNavigation />
+            <ActiveNavigation locale={locale} />
           </div>
+          <LanguageSwitcher locale={locale} />
           <ThemeToggle />
         </div>
       </div>
@@ -27,8 +31,9 @@ export function SiteHeader() {
   );
 }
 
-export function SiteFooter() {
+export function SiteFooter({ locale = "en" }: { locale?: SiteLocale }) {
   const currentYear = new Date().getUTCFullYear();
+  const korean = locale === "ko";
 
   return (
     <footer className="site-footer backdrop-blur-xl">
@@ -37,25 +42,30 @@ export function SiteFooter() {
           <div>
             <p className="site-strong text-lg font-semibold tracking-[-0.03em]">MeanyDeany</p>
             <p className="site-muted mt-3 max-w-xl text-sm leading-6">
-              Quantitative research infrastructure for market data, model validation,
-              and decision control.
+              {korean
+                ? "시장 데이터, 모델 검증, 의사결정 통제를 위한 정량 연구 인프라."
+                : "Quantitative research infrastructure for market data, model validation, and decision control."}
             </p>
           </div>
           <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium">
-            <Link href="/build-log" className="site-link transition-colors">
-              Build log
+            <Link href={korean ? "/ko/build-log" : "/build-log"} className="site-link transition-colors">
+              {korean ? "빌드 로그" : "Build log"}
             </Link>
             <Link
-              href="/projects/multi-asset-research-lab/claims"
+              href={
+                korean
+                  ? "/ko/projects/multi-asset-research-lab/claims"
+                  : "/projects/multi-asset-research-lab/claims"
+              }
               className="site-link transition-colors"
             >
-              Claims ledger
+              {korean ? "주장 장부" : "Claims ledger"}
             </Link>
             <a
               href="mailto:woosub815@gmail.com"
               className="site-link transition-colors"
             >
-              Email
+              {korean ? "이메일" : "Email"}
             </a>
             <a
               href="https://github.com/MeanyDeany"
@@ -70,31 +80,41 @@ export function SiteFooter() {
         <div className="site-footer-rule site-muted mt-10 grid gap-3 border-t pt-5 text-xs sm:grid-cols-[auto_1fr_auto] sm:items-center">
           <p>© {currentYear} MeanyDeany</p>
           <p className="sm:justify-self-center">
-            <VisitorStats />
+            <VisitorStats locale={locale} />
           </p>
-          <p className="sm:justify-self-end">Research only · No signals · No execution</p>
+          <p className="sm:justify-self-end">
+            {korean ? "연구 전용 · 신호 없음 · 실행 없음" : "Research only · No signals · No execution"}
+          </p>
         </div>
       </div>
     </footer>
   );
 }
 
-export function PageShell({ children }: { children: ReactNode }) {
+export function PageShell({
+  children,
+  locale = "en",
+}: {
+  children: ReactNode;
+  locale?: SiteLocale;
+}) {
+  const korean = locale === "ko";
+
   return (
-    <div className="cosmic-page flex min-h-dvh flex-col">
+    <div className="cosmic-page flex min-h-dvh flex-col" lang={locale}>
       <a
         href="#main-content"
         className="skip-link fixed left-4 top-3 z-[100] -translate-y-24 rounded-full px-4 py-2 text-sm font-semibold shadow-lg transition-transform focus:translate-y-0"
       >
-        Skip to content
+        {korean ? "본문으로 건너뛰기" : "Skip to content"}
       </a>
-      <SiteHeader />
-      <ContextualPageTools />
+      <SiteHeader locale={locale} />
+      <ContextualPageTools locale={locale} />
       <main id="main-content" className="flex-1">
         {children}
       </main>
       <ContextualPageEnd />
-      <SiteFooter />
+      <SiteFooter locale={locale} />
     </div>
   );
 }
