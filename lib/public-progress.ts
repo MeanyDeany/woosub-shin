@@ -4,6 +4,19 @@ export type ClaimTone = "amber" | "cyan" | "emerald" | "violet";
 export const buildLog = [
   {
     date: "19 Jul 2026",
+    phase: "Historical experiments",
+    title: "Verified market-data bytes now reach a deterministic historical result.",
+    summary:
+      "A fixed, bounded, read-only path now materializes verified BTCUSDT five-minute bars from an offline run bundle and produces one fixed descriptive ExperimentResult.",
+    proof: [
+      "Full run-bundle verification before and after materialization",
+      "Descriptor-relative no-follow reads with mutation detection",
+      "Immutable bar dataset and fixed descriptive metrics",
+    ],
+    boundary: "Historical description is not a backtest, strategy result, profitability claim, or trading permission.",
+  },
+  {
+    date: "19 Jul 2026",
     phase: "Public interface",
     title: "Traffic became visible without exposing visitor data.",
     summary:
@@ -130,9 +143,18 @@ export const claimLedger: readonly {
   {
     claim: "Verified historical market-data experiments are operational.",
     evidence:
-      "The bridge from verified persistent market-data evidence to a fixed historical descriptive result is the current build target.",
+      "One fixed read-only pipeline reloads a fully verified BTCUSDT run bundle, materializes immutable five-minute OHLCV rows, reconciles the dataset with the declared run, and produces a deterministic descriptive ExperimentResult.",
     limit:
-      "No completed historical experiment result is claimed until that pipeline is merged and independently verified.",
+      "The result contains descriptive bar statistics only. It is not a return study, backtest, strategy result, profitability claim, or trading approval.",
+    status: "Demonstrated",
+    tone: "emerald",
+  },
+  {
+    claim: "Exact historical close-return evidence is operational.",
+    evidence:
+      "The exact rational close-return transform is the current build target following the verified historical-bar pipeline.",
+    limit:
+      "No completed close-return evidence is claimed until the transform and its independent validation are merged.",
     status: "In progress",
     tone: "cyan",
   },

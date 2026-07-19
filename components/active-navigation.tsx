@@ -3,14 +3,15 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { navigation } from "@/lib/content";
+import { navigation, navigationKo } from "@/lib/content";
+import type { SiteLocale } from "@/components/language-switcher";
 
 function isActiveRoute(pathname: string, href: string) {
-  if (href === "/") return pathname === href;
+  if (href === "/" || href === "/ko") return pathname === href;
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export function ActiveNavigation() {
+export function ActiveNavigation({ locale = "en" }: { locale?: SiteLocale }) {
   const pathname = usePathname();
   const [openMenuState, setOpenMenuState] = useState<{
     href: string;
@@ -18,6 +19,7 @@ export function ActiveNavigation() {
   } | null>(null);
   const navRef = useRef<HTMLElement>(null);
   const openMenu = openMenuState?.pathname === pathname ? openMenuState.href : null;
+  const items = locale === "ko" ? navigationKo : navigation;
 
   useEffect(() => {
     function handlePointerDown(event: PointerEvent) {
@@ -49,9 +51,13 @@ export function ActiveNavigation() {
   }, []);
 
   return (
-    <nav ref={navRef} aria-label="Primary navigation" className="min-w-0">
+    <nav
+      ref={navRef}
+      aria-label={locale === "ko" ? "주요 탐색" : "Primary navigation"}
+      className="min-w-0"
+    >
       <ul className="scrollbar-none flex min-w-max items-center gap-3 sm:gap-6">
-        {navigation.map((item) => {
+        {items.map((item) => {
           const active = isActiveRoute(pathname, item.href);
           const activeClass = active ? "theme-nav-link--active" : "";
           const hasChildren = "children" in item && item.children.length > 0;
@@ -71,8 +77,8 @@ export function ActiveNavigation() {
           }
 
           const expanded = openMenu === item.href;
-          const panelId = `submenu-${item.label.toLowerCase().replace(/[^a-z0-9]+/g, "-")}`;
-          const alignmentClass = item.href === "/research" ? "header-menu--align-right" : "";
+          const panelId = `submenu-${item.href.replace(/[^a-z0-9]+/gi, "-")}`;
+          const alignmentClass = item.href.endsWith("/research") ? "header-menu--align-right" : "";
 
           return (
             <li
@@ -98,7 +104,11 @@ export function ActiveNavigation() {
                 </Link>
                 <button
                   type="button"
-                  aria-label={`${expanded ? "Close" : "Open"} ${item.label} submenu`}
+                  aria-label={
+                    locale === "ko"
+                      ? `${item.label} 하위 메뉴 ${expanded ? "닫기" : "열기"}`
+                      : `${expanded ? "Close" : "Open"} ${item.label} submenu`
+                  }
                   aria-expanded={expanded}
                   aria-haspopup="menu"
                   aria-controls={panelId}
