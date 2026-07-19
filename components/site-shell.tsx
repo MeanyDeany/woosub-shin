@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { ActiveNavigation } from "@/components/active-navigation";
 import { ContextualPageEnd } from "@/components/contextual-page-end";
 import { ContextualPageTools } from "@/components/contextual-page-tools";
+import { KoreanHonorificCopy } from "@/components/korean-honorific-copy";
 import { LanguageSwitcher, type SiteLocale } from "@/components/language-switcher";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { VisitorStats } from "@/components/visitor-stats";
@@ -111,7 +112,7 @@ export function PageShell({
       <SiteHeader locale={locale} />
       <ContextualPageTools locale={locale} />
       <main id="main-content" className="flex-1">
-        {children}
+        {korean ? <KoreanHonorificCopy>{children}</KoreanHonorificCopy> : children}
       </main>
       <ContextualPageEnd />
       <SiteFooter locale={locale} />
