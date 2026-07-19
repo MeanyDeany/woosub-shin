@@ -35,6 +35,43 @@ export const navigation = [
   { href: "/contact", label: "Contact" },
 ] as const;
 
+export const navigationKo = [
+  { href: "/ko", label: "홈" },
+  {
+    href: "/ko/projects",
+    label: "시스템",
+    children: [
+      { href: "/ko/projects", label: "전체 시스템", detail: "연구 시스템과 학술 연구의 연결" },
+      { href: "/ko/projects/multi-asset-research-lab", label: "멀티애셋 연구소", detail: "자산 중립 계약과 검증 가능한 연구 인프라" },
+      { href: "/ko/projects/btc-futures-research", label: "BTC 선물 연구 시스템", detail: "Freezer 검증과 변동성 증거" },
+      { href: "/ko/projects/volatility-regime-filtering", label: "변동성 국면 필터링", detail: "NQ·ES·원유 선물 금융계량 연구" },
+      { href: "/ko/projects/bitcoin-bubble-gsadf", label: "비트코인 버블 탐지", detail: "GSADF 시계열 진단" },
+    ],
+  },
+  {
+    href: "/ko/papers",
+    label: "논문",
+    children: [
+      { href: "/ko/papers", label: "논문 목록", detail: "원문 PDF와 프로젝트 설명" },
+      { href: "/papers/volatility-regime-filtering-thesis.pdf", label: "석사 논문 원문", detail: "선물시장 변동성 국면 필터링" },
+      { href: "/papers/bitcoin-bubble-gsadf-seminar-paper.pdf", label: "세미나 페이퍼 원문", detail: "GSADF 기반 비트코인 버블 탐지" },
+    ],
+  },
+  {
+    href: "/ko/research",
+    label: "방법론",
+    children: [
+      { href: "/ko/research", label: "연구 방법론", detail: "시간 정합성·검증·출처·경계" },
+      { href: "/ko/build-log", label: "빌드 로그", detail: "검증된 이정표와 남아 있는 한계" },
+      { href: "/ko/projects/multi-asset-research-lab/claims", label: "주장 장부", detail: "공개 주장과 증거·경계의 대응" },
+      { href: "/ko/projects/multi-asset-research-lab#architecture", label: "연구소 구조", detail: "계약·증거·검증 계층" },
+      { href: "/ko/projects/btc-futures-research#evidence-pipeline", label: "BTC 증거 파이프라인", detail: "Freezer 증거 흐름" },
+      { href: "/ko/projects/multi-asset-research-lab#boundaries", label: "연구 경계", detail: "시스템이 허가할 수 없는 것" },
+    ],
+  },
+  { href: "/ko/contact", label: "연락" },
+] as const;
+
 export const shadowModels = [
   {
     name: "GARCH(1,1)-t",
