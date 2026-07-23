@@ -3,6 +3,48 @@ export type ClaimTone = "amber" | "cyan" | "emerald" | "violet";
 
 export const buildLog = [
   {
+    date: "23 Jul 2026",
+    phase: "Prospective evidence operations",
+    title: "A separate baseline evidence pipeline now runs prospectively.",
+    summary:
+      "The BTC research system now schedules immutable hourly-RV inputs, two simple baseline forecast states, and one-hour forward outcomes as a separate three-job research pipeline.",
+    proof: [
+      "Exact :31, :34, and :36 UTC slots",
+      "Latest-due slot only, with no historical backfill or automatic retry",
+      "Manual adoption and unattended natural-cycle validation",
+    ],
+    boundary:
+      "Prospective evidence scheduling is operational infrastructure, not model selection, strategy approval, or execution authority.",
+  },
+  {
+    date: "23 Jul 2026",
+    phase: "Operational health",
+    title: "Baseline evidence health is measured without grading the forecasts.",
+    summary:
+      "A manual read-only diagnostic now validates complete input, state, and outcome stores, cross-layer lineage, scheduler status, cron identity, freshness, and bounded maturity coverage.",
+    proof: [
+      "PR90 managed cron block reported exact",
+      "Three latest scheduler statuses were valid, fresh, and JOB_COMPLETE",
+      "Initial 23 Jul snapshot: WATCH / BOOTSTRAP, 15 of 21 matured scheduled lineages, zero failing checks",
+    ],
+    boundary:
+      "Health and operational maturity measure evidence flow and integrity. They do not assess forecast usefulness or authorize comparison, paper trading, or live trading.",
+  },
+  {
+    date: "22 Jul 2026",
+    phase: "Model-free baselines",
+    title: "Two simple volatility baselines gained immutable forecast and outcome evidence.",
+    summary:
+      "Naive last-hour realized variance and a 24-hour rolling mean remain outside the model registry while receiving separate immutable input, forecast-state, and forward-outcome evidence.",
+    proof: [
+      "Frozen two-baseline contracts and deterministic identities",
+      "Atomic two-event state and outcome batches",
+      "Exact manifest-to-state-to-outcome lineage",
+    ],
+    boundary:
+      "Simple baselines are research comparators under accumulation. Their presence is not ranking, promotion, strategy approval, or trading permission.",
+  },
+  {
     date: "19 Jul 2026",
     phase: "Historical experiments",
     title: "Verified market-data bytes now reach a deterministic historical result.",
@@ -104,6 +146,33 @@ export const claimLedger: readonly {
   status: ClaimStatus;
   tone: ClaimTone;
 }[] = [
+  {
+    claim: "The separate BTC baseline evidence pipeline is operational.",
+    evidence:
+      "A frozen three-job scheduler creates immutable hourly-RV input manifests, two-baseline forecast-state batches, and one-hour forward-outcome batches with exact lineage and idempotent append behavior.",
+    limit:
+      "Operational evidence production does not establish forecast quality, model superiority, strategy value, or execution readiness.",
+    status: "Demonstrated",
+    tone: "emerald",
+  },
+  {
+    claim: "Baseline pipeline health can be inspected without mutating evidence.",
+    evidence:
+      "A manual read-only health command validates all six evidence stores, cross-layer lineage, the PR90 cron block, three latest scheduler statuses, freshness, and bounded coverage from one captured source snapshot.",
+    limit:
+      "A health PASS or WATCH describes evidence integrity and operations only. It is not predictive evidence or a model-comparison result.",
+    status: "Demonstrated",
+    tone: "emerald",
+  },
+  {
+    claim: "Prospective baseline evidence is mature enough for model comparison.",
+    evidence:
+      "The initial 23 Jul 2026 health snapshot was WATCH / BOOTSTRAP with 15 complete scheduled lineages out of 21 matured expected cycles and zero failing checks.",
+    limit:
+      "Comparison remains deferred until the frozen maturity requirements are met, including at least 168 clean scheduled outcome lineages and coverage thresholds.",
+    status: "Not claimed",
+    tone: "violet",
+  },
   {
     claim: "A fixed BTCUSDT five-minute public-data lifecycle is operational.",
     evidence:

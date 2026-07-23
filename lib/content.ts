@@ -118,12 +118,13 @@ export const schedulerControls = [
 ] as const;
 
 export const operationalSnapshot = [
-  { label: "Shadow models at baseline", value: "4" },
-  { label: "Scheduled jobs at baseline", value: "7" },
-  { label: "Ledger blockers at initial validation", value: "0" },
-  { label: "Semantic duplicates at initial validation", value: "0" },
-  { label: "Initial forward outcome rows", value: "8" },
-  { label: "Baseline outcome maturity", value: "BOOTSTRAP" },
+  { label: "Shadow volatility models", value: "4" },
+  { label: "Simple model-free RV baselines", value: "2" },
+  { label: "Canonical shadow-model scheduler jobs", value: "7" },
+  { label: "Prospective baseline-evidence scheduler jobs", value: "3" },
+  { label: "Initial PR91 health snapshot · 23 Jul 2026", value: "WATCH / BOOTSTRAP" },
+  { label: "Scheduled complete lineages · 23 Jul 2026", value: "15 / 21 matured" },
+  { label: "Health-check failures · 23 Jul 2026", value: "0" },
   { label: "Execution integration", value: "NOT INCLUDED" },
 ] as const;
 
