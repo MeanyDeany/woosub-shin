@@ -136,6 +136,9 @@ function parseStatePoint(value: unknown, index: number): BtcResearchStatePoint {
   if (agreement !== null && (typeof agreement !== "number" || !Number.isFinite(agreement))) {
     throw new Error(`state_points[${index}].filter_agreement_score is invalid`);
   }
+  if (value.authority_classification !== "DESCRIPTIVE_CONTEXT_ONLY") {
+    throw new Error(`state_points[${index}] has an invalid authority classification`);
+  }
   const point = {
     observed_at_utc: exactString(value.observed_at_utc, `state_points[${index}].observed_at_utc`),
     bar_time_ms: exactNumber(value.bar_time_ms, `state_points[${index}].bar_time_ms`),
@@ -153,10 +156,9 @@ function parseStatePoint(value: unknown, index: number): BtcResearchStatePoint {
       value.shadow_filter_regimes,
       `state_points[${index}].shadow_filter_regimes`,
     ),
-    authority_classification: value.authority_classification,
+    authority_classification: "DESCRIPTIVE_CONTEXT_ONLY",
   } satisfies BtcResearchStatePoint;
   if (
-    point.authority_classification !== "DESCRIPTIVE_CONTEXT_ONLY" ||
     !Number.isInteger(point.bar_time_ms) ||
     !stateToken.test(point.direction_state) ||
     !stateToken.test(point.composite_volatility_state) ||
