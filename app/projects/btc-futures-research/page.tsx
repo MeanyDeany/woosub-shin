@@ -6,6 +6,7 @@ import {
   MetricCard,
   PageShell,
 } from "@/components/site-shell";
+import { BtcResearchObservatory } from "@/components/btc-research-observatory";
 import { EvidenceMaturity } from "@/components/evidence-maturity";
 import { EvidencePipelineExplorer } from "@/components/evidence-pipeline-explorer";
 import { FailureModeAtlas } from "@/components/failure-mode-atlas";
@@ -117,6 +118,9 @@ function ResearchSection({
 }
 
 export default function BtcFuturesResearchPage() {
+  const observatoryFeedUrl = process.env.NEXT_PUBLIC_BTC_RESEARCH_OBSERVATORY_URL;
+  const chartingLibraryPath = process.env.NEXT_PUBLIC_TRADINGVIEW_CHARTING_LIBRARY_PATH;
+
   return (
     <PageShell>
       <section id="overview" className="relative isolate overflow-hidden bg-[#07090D]">
@@ -207,6 +211,19 @@ export default function BtcFuturesResearchPage() {
       </section>
 
       <ResearchArchitectureStrip />
+
+      <ResearchSection
+        id="observatory"
+        eyebrow="Server-authoritative visualization"
+        title="BTC Research Observatory"
+        intro="Completed BTCUSDT bars and descriptive research-state transitions are rendered from one sanitized server bundle. The website does not recalculate the research state or expose any strategy, permission, or execution field."
+        tone="elevated"
+      >
+        <BtcResearchObservatory
+          feedUrl={observatoryFeedUrl}
+          chartingLibraryPath={chartingLibraryPath}
+        />
+      </ResearchSection>
 
       <ResearchSection id="purpose" eyebrow="Purpose and contribution" title="Evidence infrastructure, not a strategy layer" tone="base">
         <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
