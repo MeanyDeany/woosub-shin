@@ -215,7 +215,7 @@ export function BtcResearchObservatory({
     }
     try {
       const response = await fetch(feedUrl, {
-        cache: "no-store",
+        cache: "no-cache",
         headers: { Accept: "application/json" },
       });
       if (!response.ok) {
