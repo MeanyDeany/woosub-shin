@@ -4,7 +4,7 @@ import { ActiveNavigation } from "@/components/active-navigation";
 import { ContextualPageEnd } from "@/components/contextual-page-end";
 import { ContextualPageTools } from "@/components/contextual-page-tools";
 import { KoreanHonorificCopy } from "@/components/korean-honorific-copy";
-import { LanguageSwitcher, type SiteLocale } from "@/components/language-switcher";
+import type { SiteLocale } from "@/components/language-switcher";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { VisitorStats } from "@/components/visitor-stats";
 
@@ -24,7 +24,6 @@ export function SiteHeader({ locale = "en" }: { locale?: SiteLocale }) {
           <div className="header-navigation-wrap min-w-0">
             <ActiveNavigation locale={locale} />
           </div>
-          <LanguageSwitcher locale={locale} />
           <ThemeToggle />
         </div>
       </div>
