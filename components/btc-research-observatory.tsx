@@ -13,6 +13,7 @@ import {
   parseBtcResearchObservatoryBundle,
   type BtcResearchMark,
   type BtcResearchObservatoryBundle,
+  type ObservatoryLocale,
 } from "@/lib/btc-research-observatory";
 import { ObservatoryTradingViewDatafeed } from "@/lib/tradingview-observatory-datafeed";
 
@@ -54,10 +55,116 @@ type LibraryStatus = "fallback" | "loading" | "advanced" | "unavailable";
 type BtcResearchObservatoryProps = {
   feedUrl?: string;
   chartingLibraryPath?: string;
+  locale?: ObservatoryLocale;
+};
+
+type Copy = {
+  chartAria: string;
+  fallbackLabel: (bars: number) => string;
+  unconfiguredTitle: string;
+  unconfiguredBody: string;
+  loading: string;
+  unavailableTitle: string;
+  unavailableBody: string;
+  serverAuthoritative: string;
+  researchOnly: string;
+  title: string;
+  freshness: string;
+  sinceState: (age: string) => string;
+  refreshFailed: string;
+  advancedChart: string;
+  fallbackChart: string;
+  polling: string;
+  latestState: string;
+  direction: string;
+  compositeVolatility: string;
+  volOfVol: string;
+  filterAgreement: string;
+  unavailable: string;
+  observedAt: string;
+  latestCompletedBar: string;
+  bundleSha: string;
+  shadowFilters: string;
+  proxyNote: string;
+  boundary: string;
+  feedUnavailable: string;
+  feedHttp: (status: number) => string;
 };
 
 const POLL_INTERVAL_MS = 60_000;
+const CLOCK_INTERVAL_MS = 30_000;
 const FALLBACK_BAR_COUNT = 288;
+
+const copyByLocale: Record<ObservatoryLocale, Copy> = {
+  en: {
+    chartAria: "Recent BTCUSDT close-price path with server state-transition marks",
+    fallbackLabel: (bars) => `Built-in evidence chart · ${bars} bars`,
+    unconfiguredTitle: "Observatory feed not configured",
+    unconfiguredBody:
+      "The website integration is installed, but no public sanitized server bundle URL is configured. No placeholder state or synthetic market value is displayed.",
+    loading: "Loading server evidence…",
+    unavailableTitle: "Server evidence unavailable",
+    unavailableBody: "The public research bundle could not be loaded or validated.",
+    serverAuthoritative: "Server authoritative",
+    researchOnly: "Research context only",
+    title: "BTCUSDT 5-minute Research Observatory",
+    freshness: "Bundle freshness",
+    sinceState: (age) => `${age} since state observation`,
+    refreshFailed: "Refresh failed. The last validated bundle remains visible.",
+    advancedChart: "TradingView Advanced Charts · custom server datafeed",
+    fallbackChart: "Built-in evidence chart · Advanced Charts assets optional",
+    polling: "Polling every 60 seconds",
+    latestState: "Latest descriptive state",
+    direction: "Direction context",
+    compositeVolatility: "Composite volatility",
+    volOfVol: "Vol-of-vol",
+    filterAgreement: "Filter agreement",
+    unavailable: "Unavailable",
+    observedAt: "Observed at",
+    latestCompletedBar: "Latest completed bar",
+    bundleSha: "Bundle SHA-256",
+    shadowFilters: "Shadow proxy filters",
+    proxyNote: "Proxy filter regimes are not the immutable Tier-2 model forecast events.",
+    boundary:
+      "No strategy, entry, short permission, position, sizing, leverage, allocation, order, broker, paper/live, or execution field is included in this public bundle.",
+    feedUnavailable: "Research feed unavailable",
+    feedHttp: (status) => `Research feed returned HTTP ${status}`,
+  },
+  ko: {
+    chartAria: "최근 BTCUSDT 종가 경로와 서버 상태 전환 표시",
+    fallbackLabel: (bars) => `내장 증거 차트 · ${bars}개 봉`,
+    unconfiguredTitle: "Observatory 피드가 설정되지 않았습니다",
+    unconfiguredBody:
+      "웹사이트 연동은 설치되어 있지만 공개 sanitized server bundle URL이 설정되지 않았습니다. 임시 상태나 합성 시장값은 표시하지 않습니다.",
+    loading: "서버 증거를 불러오는 중…",
+    unavailableTitle: "서버 증거를 사용할 수 없습니다",
+    unavailableBody: "공개 연구 bundle을 불러오거나 검증하지 못했습니다.",
+    serverAuthoritative: "서버 원본",
+    researchOnly: "연구 맥락 전용",
+    title: "BTCUSDT 5분봉 연구 Observatory",
+    freshness: "Bundle 신선도",
+    sinceState: (age) => `상태 관측 후 ${age} 경과`,
+    refreshFailed: "새로고침에 실패했습니다. 마지막으로 검증된 bundle을 계속 표시합니다.",
+    advancedChart: "TradingView Advanced Charts · 서버 datafeed",
+    fallbackChart: "내장 증거 차트 · Advanced Charts asset은 선택 사항",
+    polling: "60초마다 확인",
+    latestState: "최신 설명 상태",
+    direction: "방향 맥락",
+    compositeVolatility: "복합 변동성",
+    volOfVol: "변동성의 변동성",
+    filterAgreement: "필터 일치도",
+    unavailable: "사용 불가",
+    observedAt: "관측 시각",
+    latestCompletedBar: "최신 완료 봉",
+    bundleSha: "Bundle SHA-256",
+    shadowFilters: "Shadow proxy 필터",
+    proxyNote: "Proxy filter regime은 불변 Tier-2 모델 forecast event가 아닙니다.",
+    boundary:
+      "이 공개 bundle에는 전략, 진입, 숏 허가, 포지션, 사이징, 레버리지, 배분, 주문, 브로커, 모의·실거래, 실행 필드가 포함되지 않습니다.",
+    feedUnavailable: "연구 피드를 사용할 수 없습니다",
+    feedHttp: (status) => `연구 피드가 HTTP ${status}를 반환했습니다`,
+  },
+};
 
 function normalizedLibraryPath(value: string): string {
   return value.endsWith("/") ? value : `${value}/`;
@@ -90,7 +197,25 @@ function freshnessTone(seconds: number): string {
   return "text-[#FF9AA5]";
 }
 
-function ObservatoryFallbackChart({ bundle }: { bundle: BtcResearchObservatoryBundle }) {
+function markColor(mark: BtcResearchMark): string {
+  if (mark.kind === "direction_change") {
+    return "#42D7F5";
+  }
+  if (mark.kind === "composite_volatility_change") {
+    return "#9B6CFF";
+  }
+  return "#FFB547";
+}
+
+function ObservatoryFallbackChart({
+  bundle,
+  copy,
+  locale,
+}: {
+  bundle: BtcResearchObservatoryBundle;
+  copy: Copy;
+  locale: ObservatoryLocale;
+}) {
   const bars = bundle.bars.slice(-FALLBACK_BAR_COUNT);
   const width = 1_000;
   const height = 310;
@@ -108,8 +233,7 @@ function ObservatoryFallbackChart({ bundle }: { bundle: BtcResearchObservatoryBu
         bars.length === 1
           ? width / 2
           : padding + (index / (bars.length - 1)) * (width - padding * 2);
-      const y =
-        padding + ((maximum - bar.close) / range) * (height - padding * 2);
+      const y = padding + ((maximum - bar.close) / range) * (height - padding * 2);
       return `${x.toFixed(2)},${y.toFixed(2)}`;
     })
     .join(" ");
@@ -124,7 +248,7 @@ function ObservatoryFallbackChart({ bundle }: { bundle: BtcResearchObservatoryBu
         className="absolute inset-0 bg-[linear-gradient(rgba(126,139,157,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(126,139,157,0.05)_1px,transparent_1px)] bg-[size:48px_48px]"
       />
       <svg
-        aria-label="Recent BTCUSDT close-price path with server state-transition marks"
+        aria-label={copy.chartAria}
         className="relative h-full w-full"
         role="img"
         viewBox={`0 0 ${width} ${height}`}
@@ -167,22 +291,14 @@ function ObservatoryFallbackChart({ bundle }: { bundle: BtcResearchObservatoryBu
         })}
       </svg>
       <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between gap-4 text-[10px] uppercase tracking-normal text-[#7E8B9D]">
-        <span>{formatUtcTimestamp(bars[0]?.open_time_utc ?? bundle.generated_at_utc)}</span>
-        <span>Built-in evidence fallback · {bars.length} bars</span>
-        <span>{formatUtcTimestamp(bars.at(-1)?.close_time_utc ?? bundle.generated_at_utc)}</span>
+        <span>{formatUtcTimestamp(bars[0]?.open_time_utc ?? bundle.generated_at_utc, locale)}</span>
+        <span>{copy.fallbackLabel(bars.length)}</span>
+        <span>
+          {formatUtcTimestamp(bars.at(-1)?.close_time_utc ?? bundle.generated_at_utc, locale)}
+        </span>
       </div>
     </div>
   );
-}
-
-function markColor(mark: BtcResearchMark): string {
-  if (mark.kind === "direction_change") {
-    return "#42D7F5";
-  }
-  if (mark.kind === "composite_volatility_change") {
-    return "#9B6CFF";
-  }
-  return "#FFB547";
 }
 
 function StatusField({ label, value }: { label: string; value: string }) {
@@ -196,14 +312,35 @@ function StatusField({ label, value }: { label: string; value: string }) {
   );
 }
 
+function publicErrorMessage(error: unknown, locale: ObservatoryLocale, copy: Copy): string {
+  if (error instanceof Error) {
+    const match = /^Research feed returned HTTP (\d+)$/.exec(error.message);
+    if (match) {
+      return copy.feedHttp(Number(match[1]));
+    }
+    if (locale === "en") {
+      return error.message;
+    }
+  }
+  return copy.feedUnavailable;
+}
+
 export function BtcResearchObservatory({
   feedUrl,
   chartingLibraryPath,
+  locale = "en",
 }: BtcResearchObservatoryProps) {
+  const copy = copyByLocale[locale];
   const [bundle, setBundle] = useState<BtcResearchObservatoryBundle | null>(null);
   const [status, setStatus] = useState<LoadStatus>(feedUrl ? "loading" : "unconfigured");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [libraryStatus, setLibraryStatus] = useState<LibraryStatus>("fallback");
+  const [clockMs, setClockMs] = useState(() => Date.now());
+  const freshnessBaselineRef = useRef<{
+    bundleKey: string;
+    receivedAtMs: number;
+    latestStateAgeSeconds: number;
+  } | null>(null);
   const chartContainerRef = useRef<HTMLDivElement | null>(null);
   const chartRef = useRef<TradingViewWidgetInstance | null>(null);
   const datafeedRef = useRef<ObservatoryTradingViewDatafeed | null>(null);
@@ -222,15 +359,23 @@ export function BtcResearchObservatory({
         throw new Error(`Research feed returned HTTP ${response.status}`);
       }
       const parsed = parseBtcResearchObservatoryBundle(await response.json());
+      const bundleKey = `${parsed.bundle_sha256}:${parsed.generated_at_utc}`;
+      if (freshnessBaselineRef.current?.bundleKey !== bundleKey) {
+        freshnessBaselineRef.current = {
+          bundleKey,
+          receivedAtMs: Date.now(),
+          latestStateAgeSeconds: parsed.freshness.latest_state_age_seconds,
+        };
+      }
       setBundle(parsed);
       setStatus("ready");
       setErrorMessage(null);
       datafeedRef.current?.updateBundle(parsed);
     } catch (error) {
       setStatus("error");
-      setErrorMessage(error instanceof Error ? error.message : "Research feed unavailable");
+      setErrorMessage(publicErrorMessage(error, locale, copy));
     }
-  }, [feedUrl]);
+  }, [copy, feedUrl, locale]);
 
   useEffect(() => {
     void loadBundle();
@@ -240,6 +385,11 @@ export function BtcResearchObservatory({
     const timer = window.setInterval(() => void loadBundle(), POLL_INTERVAL_MS);
     return () => window.clearInterval(timer);
   }, [feedUrl, loadBundle]);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setClockMs(Date.now()), CLOCK_INTERVAL_MS);
+    return () => window.clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     if (!bundle || !chartingLibraryPath || !chartContainerRef.current || chartRef.current) {
@@ -259,7 +409,7 @@ export function BtcResearchObservatory({
         datafeed,
         symbol: "BTCUSDT",
         interval: "5",
-        locale: "en",
+        locale: locale === "ko" ? "ko" : "en",
         timezone: "Etc/UTC",
         autosize: true,
         theme: "dark",
@@ -311,7 +461,7 @@ export function BtcResearchObservatory({
       script.removeEventListener("load", handleLoad);
       script.removeEventListener("error", handleError);
     };
-  }, [bundle, chartingLibraryPath]);
+  }, [bundle, chartingLibraryPath, locale]);
 
   useEffect(
     () => () => {
@@ -331,16 +481,22 @@ export function BtcResearchObservatory({
         : [],
     [latest],
   );
+  const displayedLatestStateAge = useMemo(() => {
+    const baseline = freshnessBaselineRef.current;
+    if (!bundle || !baseline) {
+      return bundle?.freshness.latest_state_age_seconds ?? 0;
+    }
+    return baseline.latestStateAgeSeconds + Math.max(0, clockMs - baseline.receivedAtMs) / 1_000;
+  }, [bundle, clockMs]);
 
   if (status === "unconfigured") {
     return (
       <div className="rounded-lg border border-[#FFB547]/25 bg-[#0D0C0B] p-6">
         <p className="text-xs font-semibold uppercase tracking-normal text-[#FFB547]">
-          Observatory feed not configured
+          {copy.unconfiguredTitle}
         </p>
         <p className="mt-3 max-w-3xl text-sm leading-6 text-[#B6C0CF]">
-          The website integration is installed, but no public sanitized server bundle URL is
-          configured. No placeholder state or synthetic market value is displayed.
+          {copy.unconfiguredBody}
         </p>
       </div>
     );
@@ -350,7 +506,7 @@ export function BtcResearchObservatory({
     return (
       <div className="flex min-h-[420px] items-center justify-center rounded-lg border border-[#7E8B9D]/15 bg-[#07090D]">
         <p className="font-mono text-xs uppercase tracking-normal text-[#42D7F5]">
-          Loading server evidence…
+          {copy.loading}
         </p>
       </div>
     );
@@ -360,10 +516,10 @@ export function BtcResearchObservatory({
     return (
       <div className="rounded-lg border border-[#FF6B7A]/25 bg-[#12090C] p-6">
         <p className="text-xs font-semibold uppercase tracking-normal text-[#FF9AA5]">
-          Server evidence unavailable
+          {copy.unavailableTitle}
         </p>
         <p className="mt-3 text-sm leading-6 text-[#B6C0CF]">
-          {errorMessage ?? "The public research bundle could not be validated."}
+          {errorMessage ?? copy.unavailableBody}
         </p>
       </div>
     );
@@ -375,27 +531,25 @@ export function BtcResearchObservatory({
         <div>
           <div className="flex flex-wrap items-center gap-2">
             <span className="rounded-full border border-[#3DDC97]/30 bg-[#3DDC97]/8 px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-normal text-[#7CF0B9]">
-              Server authoritative
+              {copy.serverAuthoritative}
             </span>
             <span className="rounded-full border border-[#42D7F5]/20 px-3 py-1 font-mono text-[10px] uppercase tracking-normal text-[#8CEBFF]">
-              Research context only
+              {copy.researchOnly}
             </span>
           </div>
-          <h3 className="mt-3 text-xl font-semibold text-[#F4F7FB]">
-            BTCUSDT 5-minute Research Observatory
-          </h3>
+          <h3 className="mt-3 text-xl font-semibold text-[#F4F7FB]">{copy.title}</h3>
         </div>
         <div className="text-left sm:text-right">
-          <p className="text-[10px] uppercase tracking-normal text-[#7E8B9D]">Bundle freshness</p>
-          <p className={`mt-1 font-mono text-sm ${freshnessTone(bundle.freshness.latest_state_age_seconds)}`}>
-            {formatAge(bundle.freshness.latest_state_age_seconds)} since state observation
+          <p className="text-[10px] uppercase tracking-normal text-[#7E8B9D]">{copy.freshness}</p>
+          <p className={`mt-1 font-mono text-sm ${freshnessTone(displayedLatestStateAge)}`}>
+            {copy.sinceState(formatAge(displayedLatestStateAge, locale))}
           </p>
         </div>
       </div>
 
       {status === "error" ? (
         <div className="border-b border-[#FFB547]/20 bg-[#FFB547]/6 px-5 py-3 text-xs leading-5 text-[#FFD08A]">
-          Refresh failed. The last validated bundle remains visible. {errorMessage}
+          {copy.refreshFailed} {errorMessage}
         </div>
       ) : null}
 
@@ -404,54 +558,56 @@ export function BtcResearchObservatory({
           <div className={libraryStatus === "advanced" ? "block h-[560px]" : "hidden"}>
             <div ref={chartContainerRef} className="h-full w-full" />
           </div>
-          {libraryStatus !== "advanced" ? <ObservatoryFallbackChart bundle={bundle} /> : null}
+          {libraryStatus !== "advanced" ? (
+            <ObservatoryFallbackChart bundle={bundle} copy={copy} locale={locale} />
+          ) : null}
           <div className="mt-3 flex flex-wrap items-center justify-between gap-3 text-[10px] uppercase tracking-normal text-[#7E8B9D]">
-            <span>
-              {libraryStatus === "advanced"
-                ? "TradingView Advanced Charts · custom server datafeed"
-                : "Built-in evidence chart · Advanced Charts assets optional"}
-            </span>
-            <span>Polling every 60 seconds</span>
+            <span>{libraryStatus === "advanced" ? copy.advancedChart : copy.fallbackChart}</span>
+            <span>{copy.polling}</span>
           </div>
         </div>
 
         <aside className="min-w-0 bg-[#0B0F16] p-5">
           <p className="text-[10px] font-semibold uppercase tracking-normal text-[#42D7F5]">
-            Latest descriptive state
+            {copy.latestState}
           </p>
           <div className="mt-4 grid gap-2">
-            <StateBadge label="Direction context" value={latest?.direction_state ?? "UNKNOWN"} />
+            <StateBadge label={copy.direction} value={latest?.direction_state ?? "UNKNOWN"} />
             <StateBadge
-              label="Composite volatility"
+              label={copy.compositeVolatility}
               value={latest?.composite_volatility_state ?? "UNKNOWN"}
             />
-            <StateBadge label="Vol-of-vol" value={latest?.vol_of_vol_state ?? "UNKNOWN"} />
+            <StateBadge label={copy.volOfVol} value={latest?.vol_of_vol_state ?? "UNKNOWN"} />
           </div>
 
           <dl className="mt-5 border-y border-[#7E8B9D]/12">
             <StatusField
-              label="Filter agreement"
+              label={copy.filterAgreement}
               value={
-                latest?.filter_agreement_score === null || latest?.filter_agreement_score === undefined
-                  ? "Unavailable"
+                latest?.filter_agreement_score === null ||
+                latest?.filter_agreement_score === undefined
+                  ? copy.unavailable
                   : `${Math.round(latest.filter_agreement_score * 100)}%`
               }
             />
             <StatusField
-              label="Observed at"
-              value={formatUtcTimestamp(latest?.observed_at_utc ?? bundle.generated_at_utc)}
+              label={copy.observedAt}
+              value={formatUtcTimestamp(latest?.observed_at_utc ?? bundle.generated_at_utc, locale)}
             />
             <StatusField
-              label="Latest completed bar"
-              value={formatUtcTimestamp(bundle.bars.at(-1)?.close_time_utc ?? bundle.generated_at_utc)}
+              label={copy.latestCompletedBar}
+              value={formatUtcTimestamp(
+                bundle.bars.at(-1)?.close_time_utc ?? bundle.generated_at_utc,
+                locale,
+              )}
             />
-            <StatusField label="Bundle SHA-256" value={bundle.bundle_sha256.slice(0, 16)} />
+            <StatusField label={copy.bundleSha} value={bundle.bundle_sha256.slice(0, 16)} />
           </dl>
 
           {modelFilters.length > 0 ? (
             <div className="mt-5">
               <p className="text-[10px] font-semibold uppercase tracking-normal text-[#7E8B9D]">
-                Shadow proxy filters
+                {copy.shadowFilters}
               </p>
               <div className="mt-3 space-y-2">
                 {modelFilters.map(([key, value]) => (
@@ -461,17 +617,14 @@ export function BtcResearchObservatory({
                   </div>
                 ))}
               </div>
-              <p className="mt-3 text-[11px] leading-5 text-[#7E8B9D]">
-                Proxy filter regimes are not the immutable Tier-2 model forecast events.
-              </p>
+              <p className="mt-3 text-[11px] leading-5 text-[#7E8B9D]">{copy.proxyNote}</p>
             </div>
           ) : null}
         </aside>
       </div>
 
       <div className="border-t border-[#7E8B9D]/12 px-5 py-4 text-xs leading-5 text-[#7E8B9D]">
-        No strategy, entry, short permission, position, sizing, leverage, allocation, order,
-        broker, paper/live, or execution field is included in this public bundle.
+        {copy.boundary}
       </div>
     </div>
   );

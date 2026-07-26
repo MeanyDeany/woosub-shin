@@ -12,7 +12,7 @@ AWS BTC research server
   -> authoritative descriptive state log
   -> sanitized atomic JSON bundle
   -> static HTTPS + CORS
-  -> portfolio website
+  -> English and Korean portfolio routes
 ```
 
 The public bundle must be produced by the `btc_research_assistant` exporter and
@@ -27,10 +27,38 @@ Configure the deployed website with:
 NEXT_PUBLIC_BTC_RESEARCH_OBSERVATORY_URL=https://<research-host>/public/research/btcusdt-5m.json
 ```
 
-The page polls the validated bundle every 60 seconds. A failed refresh keeps
-the last validated bundle visible with a warning. When no URL is configured,
+The English and Korean BTC project pages use the same validated feed and polling
+behavior. The page polls every 60 seconds. A failed refresh keeps the last
+validated bundle visible with a localized warning. When no URL is configured,
 the page shows an explicit unconfigured state and never invents placeholder
 market or research values.
+
+Freshness continues to age in the browser between successful bundle changes.
+A cache revalidation that returns the same bundle identity does not reset that
+visible age.
+
+## Browser validation boundary
+
+The browser treats the public JSON as untrusted input even though the server is
+the research authority. Before rendering, the parser requires:
+
+- the exact version-one BTCUSDT 5-minute contract and authority classification;
+- bounded arrays of at most 8,640 bars, 8,640 state points, and 25,920 marks;
+- exact safe-integer timestamps and exact five-minute bar timing;
+- positive coherent OHLC, nonnegative volume, and strictly ordered unique bars;
+- timezone-qualified timestamps that match their millisecond values;
+- state points ordered by bar time and attached to exact selected bar timestamps;
+- filter agreement either null or within zero through one;
+- bounded filter maps and uppercase state tokens;
+- ordered unique transition marks attached to retained state observations;
+- exact integer metadata counts matching every parsed array;
+- nonnegative integer freshness ages;
+- a complete latest state matching the final retained state point;
+- lowercase SHA-256 source and bundle identities; and
+- bounded unique omitted-authority declarations.
+
+The client validates the declared hash format but does not replace the server's
+canonical hash authority with a second browser-side research calculation.
 
 ## Chart modes
 
@@ -50,8 +78,8 @@ private static path, configure:
 NEXT_PUBLIC_TRADINGVIEW_CHARTING_LIBRARY_PATH=/charting_library/
 ```
 
-The component then loads `charting_library.standalone.js` and supplies the
-same validated bundle through the custom JavaScript Datafeed API:
+The component then loads `charting_library.standalone.js` and supplies the same
+validated bundle through the custom JavaScript Datafeed API:
 
 - `onReady`;
 - `searchSymbols`;
@@ -63,7 +91,8 @@ same validated bundle through the custom JavaScript Datafeed API:
 - `getServerTime`.
 
 Only `BTCUSDT` and resolution `5` are exposed. State-transition marks are
-limited to direction, composite volatility, and vol-of-vol changes.
+limited to direction, composite volatility, and vol-of-vol changes. The widget
+uses the route locale when licensed assets are present.
 
 If the licensed library asset cannot be loaded, the component remains on the
 built-in evidence chart instead of failing the page.
