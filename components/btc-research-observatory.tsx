@@ -94,6 +94,7 @@ type Copy = {
 const POLL_INTERVAL_MS = 60_000;
 const CLOCK_INTERVAL_MS = 30_000;
 const FALLBACK_BAR_COUNT = 288;
+const FALLBACK_PRICE_TICK_COUNT = 5;
 
 const copyByLocale: Record<ObservatoryLocale, Copy> = {
   en: {
@@ -207,6 +208,13 @@ function markColor(mark: BtcResearchMark): string {
   return "#FFB547";
 }
 
+function formatUsdPrice(value: number, locale: ObservatoryLocale): string {
+  return `$${new Intl.NumberFormat(locale === "ko" ? "ko-KR" : "en-US", {
+    maximumFractionDigits: value >= 1_000 ? 0 : 2,
+    minimumFractionDigits: 0,
+  }).format(value)}`;
+}
+
 function ObservatoryFallbackChart({
   bundle,
   copy,
@@ -219,23 +227,35 @@ function ObservatoryFallbackChart({
   const bars = bundle.bars.slice(-FALLBACK_BAR_COUNT);
   const width = 1_000;
   const height = 310;
-  const padding = 30;
+  const plotTop = 24;
+  const plotBottom = height - 44;
+  const plotLeft = 30;
+  const plotRight = width - 104;
+  const plotWidth = plotRight - plotLeft;
+  const plotHeight = plotBottom - plotTop;
   const closes = bars.map((bar) => bar.close);
-  const minimum = Math.min(...closes);
-  const maximum = Math.max(...closes);
+  const observedMinimum = Math.min(...closes);
+  const observedMaximum = Math.max(...closes);
+  const flatSeriesPadding =
+    observedMaximum === observedMinimum ? Math.max(Math.abs(observedMaximum) * 0.005, 1) : 0;
+  const minimum = observedMinimum - flatSeriesPadding;
+  const maximum = observedMaximum + flatSeriesPadding;
   const range = maximum - minimum || 1;
   const firstTime = bars[0]?.time_ms ?? 0;
   const lastTime = bars.at(-1)?.time_ms ?? firstTime + 1;
   const timeRange = lastTime - firstTime || 1;
+  const priceToY = (price: number) => plotTop + ((maximum - price) / range) * plotHeight;
+  const indexToX = (index: number) =>
+    bars.length === 1 ? plotLeft + plotWidth / 2 : plotLeft + (index / (bars.length - 1)) * plotWidth;
+  const timeToX = (timeMs: number) => plotLeft + ((timeMs - firstTime) / timeRange) * plotWidth;
+  const priceTicks = Array.from({ length: FALLBACK_PRICE_TICK_COUNT }, (_, index) =>
+    maximum - (range * index) / (FALLBACK_PRICE_TICK_COUNT - 1),
+  );
+  const latestClose = bars.at(-1)?.close ?? observedMaximum;
+  const latestY = priceToY(latestClose);
+  const latestBadgeY = Math.min(Math.max(latestY - 11, plotTop), plotBottom - 22);
   const points = bars
-    .map((bar, index) => {
-      const x =
-        bars.length === 1
-          ? width / 2
-          : padding + (index / (bars.length - 1)) * (width - padding * 2);
-      const y = padding + ((maximum - bar.close) / range) * (height - padding * 2);
-      return `${x.toFixed(2)},${y.toFixed(2)}`;
-    })
+    .map((bar, index) => `${indexToX(index).toFixed(2)},${priceToY(bar.close).toFixed(2)}`)
     .join(" ");
   const visibleMarks = bundle.marks.filter(
     (mark) => mark.time_ms >= firstTime && mark.time_ms <= lastTime,
@@ -259,6 +279,46 @@ function ObservatoryFallbackChart({
             <stop offset="100%" stopColor="#9B6CFF" />
           </linearGradient>
         </defs>
+        {priceTicks.map((price) => {
+          const y = priceToY(price);
+          return (
+            <g key={price.toFixed(8)}>
+              <line
+                x1={plotLeft}
+                x2={plotRight}
+                y1={y}
+                y2={y}
+                stroke="rgba(126,139,157,0.12)"
+                strokeWidth="1"
+              />
+              <line
+                x1={plotRight}
+                x2={plotRight + 6}
+                y1={y}
+                y2={y}
+                stroke="rgba(126,139,157,0.35)"
+                strokeWidth="1"
+              />
+              <text
+                x={plotRight + 12}
+                y={y + 4}
+                fill="#7E8B9D"
+                fontFamily="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
+                fontSize="10"
+              >
+                {formatUsdPrice(price, locale)}
+              </text>
+            </g>
+          );
+        })}
+        <line
+          x1={plotRight}
+          x2={plotRight}
+          y1={plotTop}
+          y2={plotBottom}
+          stroke="rgba(126,139,157,0.35)"
+          strokeWidth="1"
+        />
         <polyline
           fill="none"
           points={points}
@@ -268,13 +328,13 @@ function ObservatoryFallbackChart({
           strokeWidth="3"
         />
         {visibleMarks.map((mark) => {
-          const x = padding + ((mark.time_ms - firstTime) / timeRange) * (width - padding * 2);
+          const x = timeToX(mark.time_ms);
           const relatedBar = bars.reduce((nearest, bar) =>
             Math.abs(bar.time_ms - mark.time_ms) < Math.abs(nearest.time_ms - mark.time_ms)
               ? bar
               : nearest,
           );
-          const y = padding + ((maximum - relatedBar.close) / range) * (height - padding * 2);
+          const y = priceToY(relatedBar.close);
           return (
             <g key={mark.id}>
               <circle
@@ -289,6 +349,37 @@ function ObservatoryFallbackChart({
             </g>
           );
         })}
+        <line
+          x1={plotLeft}
+          x2={plotRight}
+          y1={latestY}
+          y2={latestY}
+          stroke="#42D7F5"
+          strokeDasharray="5 5"
+          strokeOpacity="0.55"
+          strokeWidth="1"
+        />
+        <g>
+          <rect
+            x={plotRight + 7}
+            y={latestBadgeY}
+            width="92"
+            height="22"
+            rx="4"
+            fill="#42D7F5"
+          />
+          <text
+            x={plotRight + 53}
+            y={latestBadgeY + 15}
+            fill="#050608"
+            fontFamily="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace"
+            fontSize="10"
+            fontWeight="700"
+            textAnchor="middle"
+          >
+            {formatUsdPrice(latestClose, locale)}
+          </text>
+        </g>
       </svg>
       <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between gap-4 text-[10px] uppercase tracking-normal text-[#7E8B9D]">
         <span>{formatUtcTimestamp(bars[0]?.open_time_utc ?? bundle.generated_at_utc, locale)}</span>
