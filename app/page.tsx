@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { MarketShockIntro } from "@/components/market-shock-intro";
 import { PageShell } from "@/components/site-shell";
 
 export const metadata: Metadata = {
@@ -80,7 +81,12 @@ const secondaryButton =
 export default function Home() {
   return (
     <PageShell>
-      <section className="relative isolate overflow-hidden border-b border-[#6880A8]/12 bg-white/10">
+      <MarketShockIntro />
+
+      <section
+        id="research-intro"
+        className="relative isolate scroll-mt-16 overflow-hidden border-b border-[#6880A8]/12 bg-white/10"
+      >
         <div
           aria-hidden="true"
           className="pointer-events-none absolute -left-40 -top-48 -z-10 h-[44rem] w-[44rem] rounded-full bg-[#6DC1FF]/24 blur-3xl"
@@ -95,10 +101,10 @@ export default function Home() {
               Research infrastructure for systematic trading
             </p>
 
-            <h1 className="mt-8 max-w-[72rem] text-[clamp(3.5rem,9vw,8rem)] font-semibold leading-[0.9] tracking-[-0.075em] text-[#111A2E]">
+            <h2 className="mt-8 max-w-[72rem] text-[clamp(3.5rem,9vw,8rem)] font-semibold leading-[0.9] tracking-[-0.075em] text-[#111A2E]">
               Check the trading idea
               <span className="block">before risking capital.</span>
-            </h1>
+            </h2>
 
             <p className="mt-9 max-w-[55rem] text-[clamp(1.35rem,2.7vw,2.45rem)] font-medium leading-[1.15] tracking-[-0.035em] text-[#27364F]">
               I build systems that turn raw market data into verified datasets,
