@@ -21,6 +21,7 @@ type ScenarioBar = CandlestickData<UTCTimestamp> & {
 type Quote = Pick<ScenarioBar, "open" | "high" | "low" | "close">;
 
 type MarketShockTerminalProps = {
+  onCrashStart: () => void;
   onCrashComplete: () => void;
 };
 
@@ -35,9 +36,10 @@ const FIVE_MINUTES = 5 * 60;
 const CRASH_BAR_COUNT = 7;
 const PRELOAD_COUNT = 58;
 const PRE_CRASH_INTERVAL_MS = 115;
-const CRASH_INTERVAL_MS = 285;
 const OPENING_HOLD_MS = 900;
-const PRE_CRASH_HOLD_MS = 480;
+const PRE_CRASH_HOLD_MS = 720;
+const FINAL_IMPACT_HOLD_MS = 560;
+const CRASH_STEP_DELAYS_MS = [420, 330, 260, 205, 160, 125] as const;
 
 function roundPrice(value: number): number {
   return Math.round(value * 10) / 10;
@@ -174,8 +176,8 @@ function buildScenario(): ScenarioBar[] {
     { move: -1_180, upperWick: 84, lowerWick: 520, volume: 12_800 },
     { move: -2_260, upperWick: 72, lowerWick: 940, volume: 21_900 },
     { move: 780, upperWick: 690, lowerWick: 430, volume: 18_400 },
-    { move: -3_520, upperWick: 320, lowerWick: 1_260, volume: 31_700 },
-    { move: -4_980, upperWick: 190, lowerWick: 1_820, volume: 47_600 },
+    { move: -3_720, upperWick: 320, lowerWick: 1_340, volume: 34_900 },
+    { move: -5_480, upperWick: 190, lowerWick: 2_080, volume: 56_800 },
   ];
 
   crashShapes.forEach((shape, offset) => {
@@ -209,7 +211,7 @@ function formatPrice(value: number): string {
 function volumePoint(bar: ScenarioBar): HistogramData<UTCTimestamp> {
   const body = Math.abs(bar.close - bar.open);
   const range = Math.max(bar.high - bar.low, 1);
-  const conviction = Math.min(0.62, 0.2 + (body / range) * 0.42);
+  const conviction = Math.min(0.68, 0.2 + (body / range) * 0.48);
 
   return {
     time: bar.time,
@@ -221,13 +223,22 @@ function volumePoint(bar: ScenarioBar): HistogramData<UTCTimestamp> {
   };
 }
 
-export function MarketShockTerminal({ onCrashComplete }: MarketShockTerminalProps) {
+export function MarketShockTerminal({
+  onCrashStart,
+  onCrashComplete,
+}: MarketShockTerminalProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const crashStartRef = useRef(onCrashStart);
   const completeRef = useRef(onCrashComplete);
+  const [crashing, setCrashing] = useState(false);
   const [quote, setQuote] = useState<Quote>(() => {
     const scenario = buildScenario();
     return scenario[PRELOAD_COUNT - 1];
   });
+
+  useEffect(() => {
+    crashStartRef.current = onCrashStart;
+  }, [onCrashStart]);
 
   useEffect(() => {
     completeRef.current = onCrashComplete;
@@ -328,6 +339,8 @@ export function MarketShockTerminal({ onCrashComplete }: MarketShockTerminalProp
     const timers: number[] = [];
 
     if (reducedMotion) {
+      setCrashing(true);
+      crashStartRef.current();
       completeRef.current();
       return () => chart.remove();
     }
@@ -340,26 +353,44 @@ export function MarketShockTerminal({ onCrashComplete }: MarketShockTerminalProp
     };
 
     const appendNext = () => {
-      if (index >= scenario.length) {
-        schedule(() => completeRef.current(), 320);
-        return;
-      }
+      if (index >= scenario.length) return;
 
       const bar = scenario[index];
+      const justReachedCrash = index === crashStart - 1;
+      const inCrash = index >= crashStart;
+      const crashOffset = inCrash ? index - crashStart : -1;
+      const isFirstCrashBar = crashOffset === 0;
+      const isFinalCrashBar = index === scenario.length - 1;
+
+      if (isFirstCrashBar) {
+        setCrashing(true);
+        crashStartRef.current();
+      }
+
       candleSeries.update(bar);
       volumeSeries.update(volumePoint(bar));
       setQuote(bar);
-      chart.timeScale().scrollToPosition(4, true);
+      chart.timeScale().scrollToPosition(inCrash ? 6 : 4, true);
 
-      const justReachedCrash = index === crashStart - 1;
-      const inCrash = index >= crashStart;
       index += 1;
+
+      if (isFinalCrashBar) {
+        schedule(() => completeRef.current(), FINAL_IMPACT_HOLD_MS);
+        return;
+      }
 
       if (justReachedCrash) {
         schedule(appendNext, PRE_CRASH_HOLD_MS);
-      } else {
-        schedule(appendNext, inCrash ? CRASH_INTERVAL_MS : PRE_CRASH_INTERVAL_MS);
+        return;
       }
+
+      if (inCrash) {
+        const nextDelay = CRASH_STEP_DELAYS_MS[crashOffset] ?? CRASH_STEP_DELAYS_MS.at(-1)!;
+        schedule(appendNext, nextDelay);
+        return;
+      }
+
+      schedule(appendNext, PRE_CRASH_INTERVAL_MS);
     };
 
     schedule(appendNext, OPENING_HOLD_MS);
@@ -371,7 +402,7 @@ export function MarketShockTerminal({ onCrashComplete }: MarketShockTerminalProp
   }, []);
 
   return (
-    <div className={styles.shell}>
+    <div className={`${styles.shell} ${crashing ? styles.isCrashing : ""}`}>
       <div className={styles.toolbar} aria-hidden="true">
         <div className={styles.symbolBlock}>
           <span className={styles.symbol}>BTCUSD</span>
@@ -393,6 +424,7 @@ export function MarketShockTerminal({ onCrashComplete }: MarketShockTerminalProp
       </div>
 
       <div ref={containerRef} className={styles.chart} aria-label="Interactive synthetic candlestick stress chart" />
+      <div className={styles.impactWash} aria-hidden="true" />
       <div className={styles.cornerLabel}>SIMULATION · NOT LIVE MARKET DATA</div>
     </div>
   );
