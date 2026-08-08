@@ -6,12 +6,14 @@ import { MarketShockTerminal } from "./market-shock-terminal";
 import styles from "./market-shock-intro.module.css";
 
 export function MarketShockIntro() {
+  const [crashing, setCrashing] = useState(false);
   const [crashed, setCrashed] = useState(false);
+  const handleCrashStart = useCallback(() => setCrashing(true), []);
   const handleCrashComplete = useCallback(() => setCrashed(true), []);
 
   return (
     <section
-      className={`${styles.hero} ${crashed ? styles.isCrashed : ""}`}
+      className={`${styles.hero} ${crashing ? styles.isCrashing : ""} ${crashed ? styles.isCrashed : ""}`}
       aria-labelledby="market-shock-title"
     >
       <div className={styles.noise} aria-hidden="true" />
@@ -22,7 +24,10 @@ export function MarketShockIntro() {
         </div>
 
         <div className={styles.stage}>
-          <MarketShockTerminal onCrashComplete={handleCrashComplete} />
+          <MarketShockTerminal
+            onCrashStart={handleCrashStart}
+            onCrashComplete={handleCrashComplete}
+          />
 
           <p className={styles.prelude}>Orderly markets are temporary</p>
 
