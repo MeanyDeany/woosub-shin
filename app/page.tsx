@@ -91,10 +91,10 @@ function Arrow() {
 }
 
 const darkButton =
-  "inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-white px-6 text-sm font-semibold text-[#0A0E17] transition-transform hover:-translate-y-0.5 hover:bg-[#DFF5FF]";
+  "inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#58D9FF] px-6 text-sm font-semibold text-[#061018] shadow-[0_12px_34px_rgba(88,217,255,0.16)] transition-all hover:-translate-y-0.5 hover:bg-[#86E6FA]";
 
 const darkSecondaryButton =
-  "inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/14 bg-white/[0.045] px-6 text-sm font-semibold text-white/78 backdrop-blur-xl transition-all hover:-translate-y-0.5 hover:border-[#58D9FF]/40 hover:bg-[#58D9FF]/10 hover:text-white";
+  "inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-6 text-sm font-semibold text-white/76 backdrop-blur-xl transition-all hover:-translate-y-0.5 hover:border-[#58D9FF]/38 hover:bg-[#58D9FF]/8 hover:text-white";
 
 export default function Home() {
   return (
@@ -107,7 +107,7 @@ export default function Home() {
       >
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-52 top-0 -z-10 h-[34rem] w-[34rem] rounded-full bg-[#1E75D6]/14 blur-3xl"
+          className="pointer-events-none absolute -right-52 top-0 -z-10 h-[34rem] w-[34rem] rounded-full bg-[#58D9FF]/8 blur-3xl"
         />
         <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 sm:py-28 lg:px-12 lg:py-32">
           <div className="grid gap-14 lg:grid-cols-[minmax(0,1.25fr)_minmax(20rem,0.75fr)] lg:items-end">
@@ -115,9 +115,9 @@ export default function Home() {
               <p className="font-mono text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-[#58D9FF]">
                 What comes after the drop
               </p>
-              <h2 className="mt-6 max-w-[68rem] text-[clamp(3rem,7.4vw,7.2rem)] font-semibold leading-[0.89] tracking-[-0.07em] text-white">
+              <h2 className="mt-6 max-w-[68rem] text-[clamp(3rem,7.4vw,7.2rem)] font-semibold leading-[0.89] tracking-[-0.07em] text-[#F5F8FC]">
                 Markets break.
-                <span className="block text-white/46">Research should expect that.</span>
+                <span className="block text-[#8D9AAF]">Research should expect that.</span>
               </h2>
               <p className="mt-8 max-w-[52rem] text-[clamp(1.2rem,2.3vw,2rem)] leading-[1.3] tracking-[-0.025em] text-[#C7D2E5]">
                 I build research systems around the assumption that data changes, regimes fail,
@@ -140,14 +140,14 @@ export default function Home() {
               </div>
             </div>
 
-            <aside className="rounded-[1.8rem] border border-white/10 bg-white/[0.035] p-6 backdrop-blur-xl sm:p-8">
-              <p className="font-mono text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-white/38">
+            <aside className="rounded-[1.8rem] border border-white/10 bg-[#0E1522]/86 p-6 shadow-[inset_0_1px_0_rgba(255,255,255,0.035)] backdrop-blur-xl sm:p-8">
+              <p className="font-mono text-[0.65rem] font-semibold uppercase tracking-[0.18em] text-[#58D9FF]/62">
                 Current research frame
               </p>
               <dl className="mt-6 divide-y divide-white/8">
                 {statusRows.map(([label, value]) => (
                   <div key={label} className="grid gap-1.5 py-4 first:pt-0 last:pb-0 sm:grid-cols-[9rem_minmax(0,1fr)]">
-                    <dt className="text-xs uppercase tracking-[0.09em] text-white/35">{label}</dt>
+                    <dt className="text-xs uppercase tracking-[0.09em] text-[#76849A]">{label}</dt>
                     <dd className="text-sm font-semibold leading-6 text-[#D9E3F3]">{value}</dd>
                   </div>
                 ))}
@@ -157,16 +157,16 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="border-b border-[#6880A8]/12 bg-white/38 backdrop-blur-sm">
+      <section className="border-b border-white/8 bg-[#090D15] text-white">
         <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 sm:py-28 lg:px-12 lg:py-32">
           <div className="flex flex-col gap-7 lg:flex-row lg:items-end lg:justify-between">
             <div>
-              <p className="text-sm font-semibold text-[#1677D2]">Selected work</p>
-              <h2 className="mt-3 max-w-[60rem] text-[clamp(2.8rem,6vw,5.6rem)] font-semibold leading-[0.94] tracking-[-0.06em] text-[#111A2E]">
+              <p className="text-sm font-semibold text-[#58D9FF]">Selected work</p>
+              <h2 className="mt-3 max-w-[60rem] text-[clamp(2.8rem,6vw,5.6rem)] font-semibold leading-[0.94] tracking-[-0.06em] text-[#F5F8FC]">
                 Four things worth opening.
               </h2>
             </div>
-            <p className="max-w-[34rem] text-base leading-7 text-[#657189] sm:text-lg sm:leading-8">
+            <p className="max-w-[34rem] text-base leading-7 text-[#93A0B4] sm:text-lg sm:leading-8">
               One research platform, one current implementation, and two academic lineages.
               Everything else on the site should support these, not compete with them.
             </p>
@@ -176,21 +176,21 @@ export default function Home() {
             {featuredSystems.map((system) => (
               <article
                 key={system.number}
-                className={`${system.span} glass-panel group flex min-h-[24rem] flex-col rounded-[1.8rem] p-7 transition-transform duration-300 hover:-translate-y-1 sm:p-9`}
+                className={`${system.span} group flex min-h-[24rem] flex-col rounded-[1.8rem] border border-white/9 bg-[#0E1522]/84 p-7 shadow-[inset_0_1px_0_rgba(255,255,255,0.035),0_24px_70px_rgba(0,0,0,0.16)] transition-all duration-300 hover:-translate-y-1 hover:border-[#58D9FF]/24 hover:bg-[#111A2A] sm:p-9`}
               >
                 <div className="flex items-center justify-between gap-4">
-                  <span className="font-mono text-xs text-[#2563C9]">{system.number}</span>
-                  <span className="text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-[#77839A]">
+                  <span className="font-mono text-xs text-[#58D9FF]">{system.number}</span>
+                  <span className="text-[0.65rem] font-semibold uppercase tracking-[0.14em] text-[#76849A]">
                     {system.eyebrow}
                   </span>
                 </div>
-                <h3 className="mt-10 max-w-[42rem] text-[clamp(2.3rem,4vw,4.2rem)] font-semibold leading-[0.96] tracking-[-0.05em] text-[#111A2E]">
+                <h3 className="mt-10 max-w-[42rem] text-[clamp(2.3rem,4vw,4.2rem)] font-semibold leading-[0.96] tracking-[-0.05em] text-[#F5F8FC]">
                   {system.title}
                 </h3>
-                <p className="mt-6 max-w-[44rem] text-base leading-7 text-[#657189]">{system.detail}</p>
+                <p className="mt-6 max-w-[44rem] text-base leading-7 text-[#93A0B4]">{system.detail}</p>
                 <Link
                   href={system.href}
-                  className="mt-auto inline-flex w-fit items-center gap-2 pt-10 text-sm font-semibold text-[#1677D2] transition-colors group-hover:text-[#0D589C]"
+                  className="mt-auto inline-flex w-fit items-center gap-2 pt-10 text-sm font-semibold text-[#58D9FF] transition-colors group-hover:text-[#86E6FA]"
                 >
                   {system.link}
                   <Arrow />
@@ -201,35 +201,35 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="border-b border-[#6880A8]/12 bg-[#F3F7FD]">
+      <section className="border-b border-white/8 bg-[#0B101A] text-white">
         <div className="mx-auto max-w-[1440px] px-5 py-20 sm:px-8 sm:py-28 lg:px-12 lg:py-32">
           <div className="grid gap-12 lg:grid-cols-[minmax(18rem,0.7fr)_minmax(0,1.3fr)]">
             <div>
-              <p className="text-sm font-semibold text-[#1677D2]">Research operating system</p>
-              <h2 className="mt-3 max-w-[34rem] text-[clamp(2.7rem,5.2vw,5rem)] font-semibold leading-[0.95] tracking-[-0.06em] text-[#111A2E]">
+              <p className="text-sm font-semibold text-[#58D9FF]">Research operating system</p>
+              <h2 className="mt-3 max-w-[34rem] text-[clamp(2.7rem,5.2vw,5rem)] font-semibold leading-[0.95] tracking-[-0.06em] text-[#F5F8FC]">
                 Evidence moves in one direction.
               </h2>
-              <p className="mt-7 max-w-[31rem] text-lg leading-8 text-[#657189]">
+              <p className="mt-7 max-w-[31rem] text-lg leading-8 text-[#93A0B4]">
                 Data can become a claim only after it survives a contract and an experiment.
                 A claim cannot jump directly into execution authority.
               </p>
-              <div className="mt-9 border-l-2 border-[#D68A2A]/45 pl-5 text-sm leading-7 text-[#5F6C82]">
+              <div className="mt-9 border-l-2 border-[#58D9FF]/32 pl-5 text-sm leading-7 text-[#7F8DA3]">
                 No silent repair. No outcome peeking. No evidence-to-order shortcut.
               </div>
             </div>
 
-            <ol className="divide-y divide-[#7187AB]/16 border-y border-[#7187AB]/16">
+            <ol className="divide-y divide-white/9 border-y border-white/9">
               {operatingChain.map((item) => (
                 <li key={item.number} className="grid gap-5 py-7 sm:grid-cols-[3rem_8rem_minmax(0,1fr)] sm:items-start sm:py-8">
-                  <span className="font-mono text-xs text-[#2563C9]">{item.number}</span>
-                  <span className="text-xs font-semibold uppercase tracking-[0.14em] text-[#77839A]">
+                  <span className="font-mono text-xs text-[#58D9FF]">{item.number}</span>
+                  <span className="text-xs font-semibold uppercase tracking-[0.14em] text-[#76849A]">
                     {item.label}
                   </span>
                   <div>
-                    <h3 className="text-xl font-semibold tracking-[-0.025em] text-[#111A2E] sm:text-2xl">
+                    <h3 className="text-xl font-semibold tracking-[-0.025em] text-[#F5F8FC] sm:text-2xl">
                       {item.title}
                     </h3>
-                    <p className="mt-2 max-w-[48rem] text-sm leading-6 text-[#657189] sm:text-base sm:leading-7">
+                    <p className="mt-2 max-w-[48rem] text-sm leading-6 text-[#93A0B4] sm:text-base sm:leading-7">
                       {item.detail}
                     </p>
                   </div>
