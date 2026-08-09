@@ -11,7 +11,13 @@ function isActiveRoute(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export function ActiveNavigation({ locale = "en" }: { locale?: SiteLocale }) {
+export function ActiveNavigation({
+  locale = "en",
+  showcase = false,
+}: {
+  locale?: SiteLocale;
+  showcase?: boolean;
+}) {
   const pathname = usePathname();
   const [openMenuState, setOpenMenuState] = useState<{
     href: string;
@@ -20,6 +26,10 @@ export function ActiveNavigation({ locale = "en" }: { locale?: SiteLocale }) {
   const navRef = useRef<HTMLElement>(null);
   const openMenu = openMenuState?.pathname === pathname ? openMenuState.href : null;
   const items = locale === "ko" ? navigationKo : navigation;
+  const navLinkClass = showcase
+    ? "text-white/55 hover:text-white"
+    : "theme-nav-link";
+  const activeNavLinkClass = showcase ? "text-white" : "theme-nav-link--active";
 
   useEffect(() => {
     function handlePointerDown(event: PointerEvent) {
@@ -59,7 +69,7 @@ export function ActiveNavigation({ locale = "en" }: { locale?: SiteLocale }) {
       <ul className="scrollbar-none flex min-w-max items-center gap-3 sm:gap-6">
         {items.map((item) => {
           const active = isActiveRoute(pathname, item.href);
-          const activeClass = active ? "theme-nav-link--active" : "";
+          const activeClass = active ? activeNavLinkClass : "";
           const hasChildren = "children" in item && item.children.length > 0;
 
           if (!hasChildren) {
@@ -68,7 +78,7 @@ export function ActiveNavigation({ locale = "en" }: { locale?: SiteLocale }) {
                 <Link
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className={`theme-nav-link ${activeClass} inline-flex min-h-10 items-center text-xs font-medium transition-colors sm:text-[0.82rem]`}
+                  className={`${navLinkClass} ${activeClass} inline-flex min-h-10 items-center text-xs font-medium transition-colors sm:text-[0.82rem]`}
                 >
                   {item.label}
                 </Link>
@@ -96,7 +106,7 @@ export function ActiveNavigation({ locale = "en" }: { locale?: SiteLocale }) {
                 <Link
                   href={item.href}
                   aria-current={active ? "page" : undefined}
-                  className={`theme-nav-link ${activeClass} header-menu__parent-link inline-flex min-h-10 items-center text-xs font-medium transition-colors sm:text-[0.82rem]`}
+                  className={`${navLinkClass} ${activeClass} header-menu__parent-link inline-flex min-h-10 items-center text-xs font-medium transition-colors sm:text-[0.82rem]`}
                   onClick={() => setOpenMenuState(null)}
                   onFocus={() => setOpenMenuState({ href: item.href, pathname })}
                 >
@@ -112,7 +122,7 @@ export function ActiveNavigation({ locale = "en" }: { locale?: SiteLocale }) {
                   aria-expanded={expanded}
                   aria-haspopup="menu"
                   aria-controls={panelId}
-                  className="theme-nav-link header-menu__toggle"
+                  className={`${navLinkClass} header-menu__toggle`}
                   onClick={() =>
                     setOpenMenuState(expanded ? null : { href: item.href, pathname })
                   }
