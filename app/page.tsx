@@ -98,7 +98,7 @@ const darkSecondaryButton =
 
 export default function Home() {
   return (
-    <PageShell>
+    <PageShell headerVariant="showcase">
       <MarketShockIntro />
 
       <section
