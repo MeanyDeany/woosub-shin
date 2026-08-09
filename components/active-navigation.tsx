@@ -133,7 +133,7 @@ export function ActiveNavigation({
 
               <div
                 id={panelId}
-                className={`header-menu__panel ${expanded ? "header-menu__panel--open" : ""}`}
+                className={`header-menu__panel ${showcase ? "header-menu__panel--showcase" : ""} ${expanded ? "header-menu__panel--open" : ""}`}
               >
                 <p className="header-menu__eyebrow">{item.label}</p>
                 <ul role="menu" className="header-menu__list">
