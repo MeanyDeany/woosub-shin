@@ -172,6 +172,37 @@ html[data-theme="dark"] .header-menu__link:focus-visible {
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
 }
 
+.header-menu__panel--showcase,
+html[data-theme="dark"] .header-menu__panel--showcase {
+  border-color: rgba(255, 255, 255, 0.09);
+  background: rgba(7, 10, 17, 0.97);
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.header-menu__panel--showcase .header-menu__eyebrow,
+.header-menu__panel--showcase .header-menu__detail {
+  color: #76849a;
+}
+
+.header-menu__panel--showcase .header-menu__link {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(14, 21, 34, 0.88);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
+}
+
+.header-menu__panel--showcase .header-menu__label {
+  color: #f5f8fc;
+}
+
+.header-menu__panel--showcase .header-menu__link:hover,
+.header-menu__panel--showcase .header-menu__link:focus-visible {
+  border-color: rgba(88, 217, 255, 0.28);
+  background: rgba(88, 217, 255, 0.08);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.24);
+}
+
 @media (max-width: 900px) {
   .header-menu__panel {
     width: min(22rem, calc(100vw - 1.5rem));
