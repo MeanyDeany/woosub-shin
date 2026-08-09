@@ -8,21 +8,40 @@ import type { SiteLocale } from "@/components/language-switcher";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { VisitorStats } from "@/components/visitor-stats";
 
-export function SiteHeader({ locale = "en" }: { locale?: SiteLocale }) {
+type HeaderVariant = "default" | "showcase";
+
+export function SiteHeader({
+  locale = "en",
+  variant = "default",
+}: {
+  locale?: SiteLocale;
+  variant?: HeaderVariant;
+}) {
   const homeHref = locale === "ko" ? "/ko" : "/";
+  const showcase = variant === "showcase";
 
   return (
-    <header className="site-header sticky top-0 z-50 backdrop-blur-2xl">
+    <header
+      className={
+        showcase
+          ? "sticky top-0 z-50 border-b border-white/8 bg-[#05070D]/92 text-white shadow-[0_12px_40px_rgba(0,0,0,0.28)] backdrop-blur-2xl"
+          : "site-header sticky top-0 z-50 backdrop-blur-2xl"
+      }
+    >
       <div className="site-header__inner mx-auto flex min-h-16 max-w-[1440px] items-center justify-between gap-4 px-5 sm:px-8 lg:px-12">
         <Link
           href={homeHref}
-          className="site-brand text-sm font-semibold tracking-[-0.02em] transition-colors"
+          className={
+            showcase
+              ? "text-sm font-semibold tracking-[-0.02em] text-white transition-colors hover:text-[#58D9FF]"
+              : "site-brand text-sm font-semibold tracking-[-0.02em] transition-colors"
+          }
         >
           MeanyDeany
         </Link>
         <div className="site-header__actions flex min-w-0 items-center gap-2 sm:gap-4">
           <div className="header-navigation-wrap min-w-0">
-            <ActiveNavigation locale={locale} />
+            <ActiveNavigation locale={locale} showcase={showcase} />
           </div>
           <ThemeToggle />
         </div>
@@ -94,9 +113,11 @@ export function SiteFooter({ locale = "en" }: { locale?: SiteLocale }) {
 export function PageShell({
   children,
   locale = "en",
+  headerVariant = "default",
 }: {
   children: ReactNode;
   locale?: SiteLocale;
+  headerVariant?: HeaderVariant;
 }) {
   const korean = locale === "ko";
 
@@ -108,7 +129,7 @@ export function PageShell({
       >
         {korean ? "본문으로 건너뛰기" : "Skip to content"}
       </a>
-      <SiteHeader locale={locale} />
+      <SiteHeader locale={locale} variant={headerVariant} />
       <ContextualPageTools locale={locale} />
       <main id="main-content" className="flex-1">
         {korean ? <KoreanHonorificCopy>{children}</KoreanHonorificCopy> : children}
