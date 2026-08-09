@@ -219,7 +219,7 @@ export function PageSection({
     <section className={`theme-section border-t backdrop-blur-sm ${className}`}>
       <div className="mx-auto max-w-[1320px] px-5 py-16 sm:py-20 lg:px-8 lg:py-24">
         <div className="mb-10 max-w-4xl">
-          {eyrow ? (
+          {eyebrow ? (
             <p className="site-accent mb-3 text-[0.68rem] font-semibold uppercase tracking-[0.18em]">
               {eyebrow}
             </p>
