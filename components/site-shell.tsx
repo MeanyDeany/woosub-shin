@@ -8,21 +8,40 @@ import type { SiteLocale } from "@/components/language-switcher";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { VisitorStats } from "@/components/visitor-stats";
 
-export function SiteHeader({ locale = "en" }: { locale?: SiteLocale }) {
+type HeaderVariant = "default" | "showcase";
+
+export function SiteHeader({
+  locale = "en",
+  variant = "default",
+}: {
+  locale?: SiteLocale;
+  variant?: HeaderVariant;
+}) {
   const homeHref = locale === "ko" ? "/ko" : "/";
+  const showcase = variant === "showcase";
 
   return (
-    <header className="site-header sticky top-0 z-50 backdrop-blur-2xl">
+    <header
+      className={
+        showcase
+          ? "sticky top-0 z-50 border-b border-white/8 bg-[#05070D]/92 text-white shadow-[0_12px_40px_rgba(0,0,0,0.28)] backdrop-blur-2xl"
+          : "site-header sticky top-0 z-50 backdrop-blur-2xl"
+      }
+    >
       <div className="site-header__inner mx-auto flex min-h-16 max-w-[1440px] items-center justify-between gap-4 px-5 sm:px-8 lg:px-12">
         <Link
           href={homeHref}
-          className="site-brand text-sm font-semibold tracking-[-0.02em] transition-colors"
+          className={
+            showcase
+              ? "text-sm font-semibold tracking-[-0.02em] text-white transition-colors hover:text-[#58D9FF]"
+              : "site-brand text-sm font-semibold tracking-[-0.02em] transition-colors"
+          }
         >
           MeanyDeany
         </Link>
         <div className="site-header__actions flex min-w-0 items-center gap-2 sm:gap-4">
           <div className="header-navigation-wrap min-w-0">
-            <ActiveNavigation locale={locale} />
+            <ActiveNavigation locale={locale} showcase={showcase} />
           </div>
           <ThemeToggle />
         </div>
@@ -31,9 +50,73 @@ export function SiteHeader({ locale = "en" }: { locale?: SiteLocale }) {
   );
 }
 
-export function SiteFooter({ locale = "en" }: { locale?: SiteLocale }) {
+export function SiteFooter({
+  locale = "en",
+  variant = "default",
+}: {
+  locale?: SiteLocale;
+  variant?: HeaderVariant;
+}) {
   const currentYear = new Date().getUTCFullYear();
   const korean = locale === "ko";
+  const showcase = variant === "showcase";
+
+  if (showcase) {
+    return (
+      <footer className="border-t border-white/8 bg-[#05070D] text-white">
+        <div className="mx-auto max-w-[1440px] px-5 py-12 sm:px-8 lg:px-12">
+          <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+            <div>
+              <p className="text-lg font-semibold tracking-[-0.03em] text-[#F5F8FC]">MeanyDeany</p>
+              <p className="mt-3 max-w-xl text-sm leading-6 text-[#8290A8]">
+                {korean
+                  ? "시장 데이터, 모델 검증, 의사결정 통제를 위한 정량 연구 인프라."
+                  : "Quantitative research infrastructure for market data, model validation, and decision control."}
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium">
+              <Link href={korean ? "/ko/build-log" : "/build-log"} className="text-[#AAB6C7] transition-colors hover:text-[#58D9FF]">
+                {korean ? "빌드 로그" : "Build log"}
+              </Link>
+              <Link
+                href={
+                  korean
+                    ? "/ko/projects/multi-asset-research-lab/claims"
+                    : "/projects/multi-asset-research-lab/claims"
+                }
+                className="text-[#AAB6C7] transition-colors hover:text-[#58D9FF]"
+              >
+                {korean ? "주장 장부" : "Claims ledger"}
+              </Link>
+              <a
+                href="mailto:woosub815@gmail.com"
+                className="text-[#AAB6C7] transition-colors hover:text-[#58D9FF]"
+              >
+                {korean ? "이메일" : "Email"}
+              </a>
+              <a
+                href="https://github.com/MeanyDeany"
+                target="_blank"
+                rel="noreferrer"
+                className="text-[#AAB6C7] transition-colors hover:text-[#58D9FF]"
+              >
+                GitHub ↗
+              </a>
+            </div>
+          </div>
+          <div className="mt-10 grid gap-3 border-t border-white/8 pt-5 text-xs text-[#69778D] sm:grid-cols-[auto_1fr_auto] sm:items-center">
+            <p>© {currentYear} MeanyDeany</p>
+            <p className="sm:justify-self-center">
+              <VisitorStats locale={locale} />
+            </p>
+            <p className="sm:justify-self-end">
+              {korean ? "연구 전용 · 신호 없음 · 실행 없음" : "Research only · No signals · No execution"}
+            </p>
+          </div>
+        </div>
+      </footer>
+    );
+  }
 
   return (
     <footer className="site-footer backdrop-blur-xl">
@@ -94,9 +177,11 @@ export function SiteFooter({ locale = "en" }: { locale?: SiteLocale }) {
 export function PageShell({
   children,
   locale = "en",
+  headerVariant = "default",
 }: {
   children: ReactNode;
   locale?: SiteLocale;
+  headerVariant?: HeaderVariant;
 }) {
   const korean = locale === "ko";
 
@@ -108,13 +193,13 @@ export function PageShell({
       >
         {korean ? "본문으로 건너뛰기" : "Skip to content"}
       </a>
-      <SiteHeader locale={locale} />
+      <SiteHeader locale={locale} variant={headerVariant} />
       <ContextualPageTools locale={locale} />
       <main id="main-content" className="flex-1">
         {korean ? <KoreanHonorificCopy>{children}</KoreanHonorificCopy> : children}
       </main>
       <ContextualPageEnd />
-      <SiteFooter locale={locale} />
+      <SiteFooter locale={locale} variant={headerVariant} />
     </div>
   );
 }
