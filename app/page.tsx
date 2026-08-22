@@ -6,7 +6,7 @@ import { PageShell } from "@/components/site-shell";
 export const metadata: Metadata = {
   title: "Systematic Trading Research Infrastructure",
   description:
-    "MeanyDeany builds research and validation infrastructure that turns raw market data into verified datasets, reproducible experiments, and auditable results before capital is put at risk.",
+    "MeanyDeany builds research systems that move from verified market data and deterministic experiments to frozen historical results and prospective forward observation before capital is put at risk.",
 };
 
 const featuredSystems = [
@@ -15,19 +15,19 @@ const featuredSystems = [
     eyebrow: "Flagship · Active",
     title: "Multi-Asset Research Lab",
     detail:
-      "The asset-neutral research layer: source contracts, reproducible experiments, evidence identity, and explicit separation between research and execution authority.",
+      "The asset-neutral research layer: source contracts, reproducible experiments, evidence identity, deterministic replay, and explicit separation between research and execution authority.",
     href: "/projects/multi-asset-research-lab",
     link: "Open the flagship system",
     span: "lg:col-span-7",
   },
   {
     number: "02",
-    eyebrow: "Current implementation",
-    title: "BTC Futures Research System",
+    eyebrow: "Retained system · Forward research",
+    title: "BTC Final Research System V1",
     detail:
-      "The first live research implementation of the broader lab, built around point-in-time data, freezer validation, shadow evidence, and auditable state histories.",
-    href: "/projects/btc-futures-research",
-    link: "Open BTC research",
+      "A frozen BTCUSDT Daily EMA 50/200 long/flat system with +165.9% retrospective FULL return, 0.769 Sharpe, deep-validation gates, and a prospective forward research clock that started on 22 Aug 2026.",
+    href: "/projects/btc-final-system",
+    link: "Open the retained BTC system",
     span: "lg:col-span-5",
   },
   {
@@ -69,21 +69,21 @@ const operatingChain = [
     number: "03",
     label: "Experiment",
     title: "Make the result repeatable.",
-    detail: "Bind code, parameters, datasets, and outputs to exact identities instead of relying on a remembered workflow.",
+    detail: "Bind code, parameters, datasets, accounting, and outputs to exact identities instead of relying on a remembered workflow.",
   },
   {
     number: "04",
-    label: "Evidence",
-    title: "Keep proof in its lane.",
-    detail: "A supported claim remains evidence. It does not silently become a signal, approval, sizing rule, or order.",
+    label: "Forward",
+    title: "Let new time arrive after the freeze.",
+    detail: "A retained research system can cross an explicit historical-to-forward boundary without turning evidence into execution authority.",
   },
 ] as const;
 
 const statusRows = [
   ["Program", "Multi-Asset Research Lab"],
-  ["Current implementation", "BTC futures research"],
-  ["Stage", "Infrastructure · validation · evidence"],
-  ["Execution authority", "None"],
+  ["Current implementation", "BTC Final Research System V1"],
+  ["Stage", "Frozen historical system · prospective observation"],
+  ["Execution authority", "None · research states only"],
 ] as const;
 
 function Arrow() {
@@ -126,15 +126,16 @@ export default function Home() {
               <p className="mt-6 max-w-[48rem] text-base leading-7 text-[#8290A8] sm:text-lg sm:leading-8">
                 The work is less about predicting every market shock and more about making each
                 research claim traceable, reproducible, falsifiable, and difficult to promote
-                beyond the evidence it actually earned.
+                beyond the evidence it actually earned. The current BTC implementation now
+                includes a frozen historical system and a separate prospective forward clock.
               </p>
               <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-                <Link href="/projects/multi-asset-research-lab" className={darkButton}>
-                  Enter the research lab
+                <Link href="/projects/btc-final-system" className={darkButton}>
+                  Open BTC Final System V1
                   <Arrow />
                 </Link>
-                <Link href="/research" className={darkSecondaryButton}>
-                  Read the research method
+                <Link href="/projects/multi-asset-research-lab" className={darkSecondaryButton}>
+                  Enter the research lab
                   <Arrow />
                 </Link>
               </div>
@@ -167,7 +168,7 @@ export default function Home() {
               </h2>
             </div>
             <p className="max-w-[34rem] text-base leading-7 text-[#93A0B4] sm:text-lg sm:leading-8">
-              One research platform, one current implementation, and two academic lineages.
+              One research platform, one retained BTC system, and two academic lineages.
               Everything else on the site should support these, not compete with them.
             </p>
           </div>
@@ -211,10 +212,10 @@ export default function Home() {
               </h2>
               <p className="mt-7 max-w-[31rem] text-lg leading-8 text-[#93A0B4]">
                 Data can become a claim only after it survives a contract and an experiment.
-                A claim cannot jump directly into execution authority.
+                A retained claim can enter a forward observation clock without becoming an order.
               </p>
               <div className="mt-9 border-l-2 border-[#58D9FF]/32 pl-5 text-sm leading-7 text-[#7F8DA3]">
-                No silent repair. No outcome peeking. No evidence-to-order shortcut.
+                No silent repair. No outcome peeking. No historical-to-forward relabeling. No evidence-to-order shortcut.
               </div>
             </div>
 
