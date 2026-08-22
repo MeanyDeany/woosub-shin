@@ -3,6 +3,34 @@ export type ClaimTone = "amber" | "cyan" | "emerald" | "violet";
 
 export const buildLog = [
   {
+    date: "22 Aug 2026",
+    phase: "Final-system validation",
+    title: "One BTC research system survived frozen search and deep validation.",
+    summary:
+      "Three low-turnover long/flat candidates were evaluated under one deterministic replay and funding-adjusted PnL engine. Daily Dual EMA 50/200 was the only search survivor and then passed all thirteen frozen deep-validation gates.",
+    proof: [
+      "FULL 5bp return +165.92%, Sharpe 0.769, MaxDD -29.37%",
+      "10bp stress return +165.12% with Sharpe 0.767",
+      "8/8 neighboring EMA pairs positive in LATER and FULL; 6/8 beat B&H Sharpe in both",
+    ],
+    boundary:
+      "This is retrospective post-selection research evidence. Only three completed primary trades exist, one trend dominates positive trade growth, and paired bootstrap Sharpe-difference intervals cross zero.",
+  },
+  {
+    date: "22 Aug 2026",
+    phase: "Prospective forward handoff",
+    title: "The retained BTC system crossed an explicit historical-to-forward research boundary.",
+    summary:
+      "The exact retained EMA 50/200 strategy state was restored from an immutable historical checkpoint, bridged through public completed BTCUSDT bars, and activated into an append-only forward research runtime without relabeling bootstrap context as prospective evidence.",
+    proof: [
+      "6,626 completed 5m bars bridged as bootstrap context",
+      "Activation at 08:29:51 UTC; first forward decision bar fixed at 08:30 UTC",
+      "First checkpoint-backed retained observation recorded after the 08:30 bar and effective from 08:35 UTC",
+    ],
+    boundary:
+      "Forward observation is research evidence only. One observation is not performance validation, and the runtime has no broker, order, leverage, sizing, or execution authority.",
+  },
+  {
     date: "23 Jul 2026",
     phase: "Prospective evidence operations",
     title: "A separate baseline evidence pipeline now runs prospectively.",
@@ -147,6 +175,33 @@ export const claimLedger: readonly {
   tone: ClaimTone;
 }[] = [
   {
+    claim: "A frozen BTC research system produced positive retrospective historical results under funding-adjusted accounting and cost stress.",
+    evidence:
+      "BTC Daily Dual EMA 50/200 returned +165.92% over the FULL validation period with 0.769 Sharpe and -29.37% MaxDD under 5bp funding-adjusted accounting; 10bp stress returned +165.12% with 0.767 Sharpe.",
+    limit:
+      "The sample is retrospective and post-selection, only three completed primary trades exist, one trend dominates positive trade growth, and paired bootstrap Sharpe-difference intervals cross zero. This is not a live track record or future-profitability claim.",
+    status: "Demonstrated",
+    tone: "emerald",
+  },
+  {
+    claim: "The retained BTC research strategy is now running in an append-only prospective forward observation runtime.",
+    evidence:
+      "An explicit 22 Aug 2026 activation restored the frozen historical state, bridged 6,626 public completed 5m bars as non-forward context, and published the first retained checkpoint-backed observation from the 08:30 UTC bar, effective from 08:35 UTC.",
+    limit:
+      "Forward research-state observation is not a trade, order, entry permission, execution signal, or performance validation. The runtime has no trading authority.",
+    status: "Demonstrated",
+    tone: "emerald",
+  },
+  {
+    claim: "The historical BTC result proves future profitability.",
+    evidence:
+      "The retained system has attractive retrospective metrics and robustness checks, but uncertainty remains material and the independent trend sample is sparse.",
+    limit:
+      "Future profitability is explicitly not claimed. New evidence must arrive prospectively after the frozen historical-to-forward boundary.",
+    status: "Not claimed",
+    tone: "violet",
+  },
+  {
     claim: "The separate BTC baseline evidence pipeline is operational.",
     evidence:
       "A frozen three-job scheduler creates immutable hourly-RV input manifests, two-baseline forecast-state batches, and one-hour forward-outcome batches with exact lineage and idempotent append behavior.",
@@ -201,56 +256,38 @@ export const claimLedger: readonly {
     tone: "emerald",
   },
   {
-    claim: "The repository can execute one bounded synthetic experiment.",
+    claim: "Deterministic historical strategy replay and PnL accounting are operational.",
     evidence:
-      "One fixed, parameter-free Decimal-series summary executes in memory and returns a deterministic ExperimentResult through the reviewed result factory.",
+      "A shared causal strategy contract replays completed BTCUSDT bars with next-exact-5m-open state timing, authenticated Funding, explicit transition friction, deterministic outputs, and independent endpoint reconciliation.",
     limit:
-      "It accepts no arbitrary code and says nothing about historical market performance.",
+      "Historical accounting is a research measurement layer. It does not grant strategy approval, position sizing, leverage, or execution authority.",
     status: "Demonstrated",
     tone: "emerald",
-  },
-  {
-    claim: "Verified historical market-data experiments are operational.",
-    evidence:
-      "One fixed read-only pipeline reloads a fully verified BTCUSDT run bundle, materializes immutable five-minute OHLCV rows, reconciles the dataset with the declared run, and produces a deterministic descriptive ExperimentResult.",
-    limit:
-      "The result contains descriptive bar statistics only. It is not a return study, backtest, strategy result, profitability claim, or trading approval.",
-    status: "Demonstrated",
-    tone: "emerald",
-  },
-  {
-    claim: "Exact historical close-return evidence is operational.",
-    evidence:
-      "The exact rational close-return transform is the current build target following the verified historical-bar pipeline.",
-    limit:
-      "No completed close-return evidence is claimed until the transform and its independent validation are merged.",
-    status: "In progress",
-    tone: "cyan",
   },
   {
     claim: "The Lab currently operates multiple live asset adapters.",
     evidence:
-      "The contracts are asset-neutral, but the only concrete end-to-end public-data adapter currently demonstrated is BTCUSDT five-minute data.",
+      "The contracts are asset-neutral, but the concrete retained research system and public-data runtime currently demonstrated are BTCUSDT-specific.",
     limit:
-      "Multi-asset is an architecture under validation, not a statement that multiple assets are already running.",
+      "Multi-asset remains an architectural direction, not a statement that multiple live asset systems are already running.",
     status: "Not claimed",
     tone: "violet",
   },
   {
-    claim: "The research framework is profitable.",
+    claim: "The research framework has a verified live-profit track record.",
     evidence:
-      "The current outputs are infrastructure, deterministic evidence, and validation boundaries. There is no live strategy, fund, signal service, or software revenue claim.",
+      "One retained BTC strategy has positive retrospective historical metrics and prospective research-state observation has begun, but there is no live trading PnL series.",
     limit:
-      "Research evidence must not be presented as a track record or expected return.",
+      "Retrospective research performance and forward research states must not be presented as realized live trading profit.",
     status: "Not claimed",
     tone: "violet",
   },
   {
     claim: "Paper or live trading is approved.",
     evidence:
-      "There is no broker integration, order routing, position management, entry permission, short permission, or leverage authority in the current system.",
+      "There is no broker integration, order routing, position management, entry permission, short permission, leverage authority, or order API in the retained BTC runtime.",
     limit:
-      "Research progress never automatically unlocks paper or live execution.",
+      "Research retention and forward observation never automatically unlock paper or live execution.",
     status: "Not approved",
     tone: "amber",
   },

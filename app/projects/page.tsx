@@ -10,41 +10,47 @@ import { PageShell } from "@/components/site-shell";
 export const metadata: Metadata = {
   title: "Research Systems",
   description:
-    "MeanyDeany research systems and academic lineage across reproducible research infrastructure, volatility validation, financial econometrics, and time-series diagnostics.",
+    "MeanyDeany research systems and academic lineage across reproducible research infrastructure, frozen BTC strategy research, financial econometrics, and time-series diagnostics.",
 };
 
 const projects = [
   {
     accent: "cyan" as const,
     contribution:
-      "An asset-neutral research foundation with immutable contracts, canonical dataset and experiment identity, controlled public-data acquisition, deterministic normalization, persistent run bundles, and offline verification before any experiment runner exists.",
+      "An asset-neutral research foundation with immutable contracts, canonical evidence identity, deterministic replay and PnL accounting, frozen search, validation, and explicit historical-to-forward boundaries.",
     href: "/projects/multi-asset-research-lab",
     index: "01",
     methods: [
       "Immutable contracts",
-      "Canonical hashes",
-      "Controlled HTTPS",
-      "Run bundles",
-      "Offline verification",
+      "Replay / PnL",
+      "Frozen search",
+      "Deep validation",
+      "Forward evidence",
     ],
     question:
-      "How should a multi-asset research framework prove data identity, provenance, reproducibility, and failure boundaries before it is allowed to execute experiments?",
-    status: "Flagship infrastructure build",
+      "How should a multi-asset systematic research framework move from data provenance to a retained research system without allowing evidence to silently become execution authority?",
+    status: "Flagship research platform",
     title: "Multi-Asset Research Lab",
     type: "Research infrastructure",
   },
   {
     accent: "emerald" as const,
     contribution:
-      "A separate BTCUSDT freezer-validation system joining volatility forecasts, forward outcomes, append-only evidence, provenance, maturity review, and operational integrity checks without crossing into strategy or execution authority.",
-    href: "/projects/btc-futures-research",
+      "A retained BTCUSDT Daily EMA 50/200 long/flat research system with deterministic replay, funding-adjusted accounting, frozen final-system search, thirteen-gate deep validation, and append-only prospective forward observation.",
+    href: "/projects/btc-final-system",
     index: "02",
-    methods: ["GARCH", "EGARCH", "GJR-GARCH", "HAR-RV", "Forward validation"],
+    methods: [
+      "Daily EMA 50/200",
+      "Funding-adjusted PnL",
+      "Cost stress",
+      "Deep validation",
+      "Forward runtime",
+    ],
     question:
-      "How can BTCUSDT volatility research accumulate reviewable forward evidence while remaining strictly separated from entry permission, strategy approval, and trading execution?",
-    status: "Freezer validation system",
-    title: "BTC Futures Research System",
-    type: "Operational research evidence",
+      "Can one simple BTC trend-following research system survive frozen search and deep validation, then cross into a prospective forward clock without turning research state into trading permission?",
+    status: "Retained system · forward research",
+    title: "BTC Final Research System V1",
+    type: "Systematic strategy research",
   },
   {
     accent: "blue" as const,
@@ -80,19 +86,19 @@ export default function ProjectsPage() {
       <PageHero
         eyebrow="MeanyDeany · Research systems"
         title="Research systems and academic lineage"
-        intro="The program now separates an asset-neutral research framework, a dedicated BTC freezer-validation system, and the academic econometric work that shaped both."
+        intro="The program now separates an asset-neutral research framework, one retained BTC research system under prospective observation, and the academic econometric work that shaped both."
         metadata={[
           { label: "Flagship", value: "Multi-Asset Research Lab" },
-          { label: "Live research", value: "BTCUSDT freezer validation" },
-          { label: "Foundation", value: "MSc thesis · seminar paper" },
-          { label: "Boundary", value: "No execution systems" },
+          { label: "Retained system", value: "BTC Final Research System V1" },
+          { label: "Forward stage", value: "Prospective research observation" },
+          { label: "Boundary", value: "No execution authority" },
         ]}
       />
 
       <EditorialSection
         eyebrow="Program sequence"
         title="One research program, four layers"
-        intro="Each system retains its own repository boundary, provenance, research question, methods, and bounded contribution."
+        intro="Each system retains its own provenance, research question, methods, result scope, and boundary. The newest BTC layer is a frozen research system, not a live trading product."
       >
         <div>
           {projects.map((project) => (
@@ -110,9 +116,9 @@ export default function ProjectsPage() {
         <EvidenceBand
           items={[
             { label: "Time", value: "Information is aligned to when it was knowable." },
-            { label: "Models", value: "Model roles are narrower than strategy claims." },
-            { label: "Validation", value: "Comparisons and limitations remain explicit." },
-            { label: "Evidence", value: "Provenance and boundaries travel with results." },
+            { label: "Models", value: "Model roles stay narrower than strategy claims." },
+            { label: "Validation", value: "Search, validation, and forward observation remain separate stages." },
+            { label: "Evidence", value: "Provenance and boundaries travel with every result." },
           ]}
         />
       </EditorialSection>
