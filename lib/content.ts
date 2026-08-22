@@ -5,8 +5,9 @@ export const navigation = [
     label: "Systems",
     children: [
       { href: "/projects", label: "All systems", detail: "Research systems and academic lineage" },
-      { href: "/projects/multi-asset-research-lab", label: "Multi-Asset Research Lab", detail: "Asset-neutral contracts and verifiable research infrastructure" },
-      { href: "/projects/btc-futures-research", label: "BTC Futures Research System", detail: "Freezer validation and volatility evidence" },
+      { href: "/projects/multi-asset-research-lab", label: "Multi-Asset Research Lab", detail: "Contracts, replay, validation, and forward evidence architecture" },
+      { href: "/projects/btc-final-system", label: "BTC Final Research System V1", detail: "Retained EMA 50/200 research system under prospective observation" },
+      { href: "/projects/btc-futures-research", label: "BTC Volatility Research System", detail: "Freezer validation and volatility evidence infrastructure" },
       { href: "/projects/volatility-regime-filtering", label: "Volatility Regime Filtering", detail: "NQ, ES, and Crude Oil (CL) econometrics" },
       { href: "/projects/bitcoin-bubble-gsadf", label: "Bitcoin Bubble Detection", detail: "GSADF time-series diagnostics" },
     ],
@@ -27,6 +28,7 @@ export const navigation = [
       { href: "/research", label: "Research methodology", detail: "Time, validation, provenance, and boundaries" },
       { href: "/build-log", label: "Build log", detail: "Verified milestones, changes, and remaining limits" },
       { href: "/projects/multi-asset-research-lab/claims", label: "Claims ledger", detail: "Public claims matched to evidence and boundaries" },
+      { href: "/projects/btc-final-system#result", label: "BTC final-system result", detail: "Retrospective result, validation, limitations, and forward boundary" },
       { href: "/projects/multi-asset-research-lab#architecture", label: "Lab architecture", detail: "Contracts, evidence, and verification layers" },
       { href: "/projects/btc-futures-research#evidence-pipeline", label: "BTC evidence pipeline", detail: "Follow the freezer evidence chain" },
       { href: "/projects/multi-asset-research-lab#boundaries", label: "Research boundaries", detail: "What the systems cannot authorize" },
@@ -118,13 +120,13 @@ export const schedulerControls = [
 ] as const;
 
 export const operationalSnapshot = [
-  { label: "Shadow volatility models", value: "4" },
-  { label: "Simple model-free RV baselines", value: "2" },
-  { label: "Canonical shadow-model scheduler jobs", value: "7" },
-  { label: "Prospective baseline-evidence scheduler jobs", value: "3" },
-  { label: "Initial PR91 health snapshot · 23 Jul 2026", value: "WATCH / BOOTSTRAP" },
-  { label: "Scheduled complete lineages · 23 Jul 2026", value: "15 / 21 matured" },
-  { label: "Health-check failures · 23 Jul 2026", value: "0" },
+  { label: "Retained BTC research systems", value: "1" },
+  { label: "Frozen final-system candidate", value: "Daily EMA 50/200 long/flat" },
+  { label: "Retrospective FULL return", value: "+165.92%" },
+  { label: "Retrospective FULL Sharpe", value: "0.769" },
+  { label: "Retrospective FULL MaxDD", value: "-29.37%" },
+  { label: "Forward research activation", value: "22 Aug 2026" },
+  { label: "Prospective research state", value: "Append-only observation active" },
   { label: "Execution integration", value: "NOT INCLUDED" },
 ] as const;
 
@@ -134,10 +136,11 @@ export const demonstratedCapabilities = [
   "Anti-lookahead validation",
   "Immutable and append-only event design",
   "Data provenance and content hashing",
-  "Scheduler, lock, and concurrency design",
-  "Failure-state handling",
-  "Operational health monitoring",
-  "Separation of research evidence from execution",
+  "Deterministic strategy replay and funding-adjusted PnL accounting",
+  "Frozen candidate search and deep-validation gates",
+  "Persistent strategy-state checkpointing and historical-to-forward handoff",
+  "Failure-state handling and operational health monitoring",
+  "Separation of research evidence from execution authority",
   "Production-style research operations on constrained infrastructure",
 ] as const;
 
@@ -153,9 +156,10 @@ export const boundaryItems = [
   "No leverage",
   "No position sizing",
   "No automatic veto rule",
-  "Policy state is not entry permission",
-  "Model maturity is not strategy approval",
-  "Lower forecast loss is not trading permission",
+  "Research state is not entry permission",
+  "A retained strategy is not execution approval",
+  "Historical performance is not a live track record",
+  "Forward observation is not trading permission",
   "No investment advice",
 ] as const;
 
@@ -171,8 +175,8 @@ export const researchNotes = [
       "Regime labels are more useful when treated as context, stability evidence, and risk diagnostics rather than direct trading instructions.",
   },
   {
-    title: "Operational monitoring for research systems",
+    title: "Historical-to-forward handoff",
     summary:
-      "Cron cadence, duplicate protection, stale file detection, and process health matter because research conclusions depend on reliable data production.",
+      "A frozen strategy should enter prospective observation through an explicit activation boundary so bootstrap context cannot be relabeled as forward evidence.",
   },
 ];
