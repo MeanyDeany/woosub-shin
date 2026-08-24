@@ -34,15 +34,15 @@ export function MarketShockIntro() {
           <div className={styles.copy}>
             <p className={styles.kicker}>Market reality, first principle</p>
             <h1 id="market-shock-title" className={styles.headline}>
-              SHIT ALWAYS HAPPENS
-              <span>IN THE MARKET.</span>
+              MARKETS CHANGE.
+              <span>RESEARCH MUST HOLD UP.</span>
             </h1>
-            <p className={styles.subhead}>So build systems that assume it will.</p>
+            <p className={styles.subhead}>Build systems that expect assumptions, regimes, and models to fail.</p>
           </div>
         </div>
 
         <a className={styles.scrollCue} href="#research-intro">
-          See what comes after the drop
+          See what comes after the stress test
           <span className={styles.arrow} aria-hidden="true">↓</span>
         </a>
       </div>
