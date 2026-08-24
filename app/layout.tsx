@@ -5,9 +5,9 @@ import "./globals.css";
 import "./navigation.css";
 
 const siteUrl = "https://meanydeany.com";
-const siteTitle = "MeanyDeany | Quantitative Research Systems";
+const siteTitle = "Woosub Shin | Quantitative Research & Systematic Trading";
 const siteDescription =
-  "A public quantitative research program spanning volatility modeling, financial econometrics, time-respecting validation, and auditable research infrastructure.";
+  "Woosub Shin is a quantitative researcher focused on systematic trading, financial econometrics, deterministic backtesting, and auditable research infrastructure.";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
     default: siteTitle,
-    template: "%s | MeanyDeany",
+    template: "%s | Woosub Shin",
   },
   description: siteDescription,
   alternates: {
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: "/",
-    siteName: "MeanyDeany",
+    siteName: "Woosub Shin",
     title: siteTitle,
     description: siteDescription,
   },

@@ -4,7 +4,7 @@ import { ActiveNavigation } from "@/components/active-navigation";
 import { ContextualPageEnd } from "@/components/contextual-page-end";
 import { ContextualPageTools } from "@/components/contextual-page-tools";
 import { KoreanHonorificCopy } from "@/components/korean-honorific-copy";
-import type { SiteLocale } from "@/components/language-switcher";
+import { LanguageSwitcher, type SiteLocale } from "@/components/language-switcher";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { VisitorStats } from "@/components/visitor-stats";
 
@@ -33,16 +33,20 @@ export function SiteHeader({
           href={homeHref}
           className={
             showcase
-              ? "text-sm font-semibold tracking-[-0.02em] text-white transition-colors hover:text-[#58D9FF]"
-              : "site-brand text-sm font-semibold tracking-[-0.02em] transition-colors"
+              ? "inline-flex items-baseline gap-2 text-sm font-semibold tracking-[-0.02em] text-white transition-colors hover:text-[#58D9FF]"
+              : "site-brand inline-flex items-baseline gap-2 text-sm font-semibold tracking-[-0.02em] transition-colors"
           }
         >
-          MeanyDeany
+          <span>Woosub Shin</span>
+          <span className={showcase ? "hidden font-mono text-[0.62rem] font-medium text-white/36 sm:inline" : "site-muted hidden font-mono text-[0.62rem] font-medium sm:inline"}>
+            @MeanyDeany
+          </span>
         </Link>
-        <div className="site-header__actions flex min-w-0 items-center gap-2 sm:gap-4">
+        <div className="site-header__actions flex min-w-0 items-center gap-2 sm:gap-3">
           <div className="header-navigation-wrap min-w-0">
             <ActiveNavigation locale={locale} showcase={showcase} />
           </div>
+          <LanguageSwitcher locale={locale} />
           <ThemeToggle />
         </div>
       </div>
@@ -67,26 +71,19 @@ export function SiteFooter({
         <div className="mx-auto max-w-[1440px] px-5 py-12 sm:px-8 lg:px-12">
           <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
             <div>
-              <p className="text-lg font-semibold tracking-[-0.03em] text-[#F5F8FC]">MeanyDeany</p>
+              <p className="text-lg font-semibold tracking-[-0.03em] text-[#F5F8FC]">Woosub Shin</p>
               <p className="mt-3 max-w-xl text-sm leading-6 text-[#8290A8]">
                 {korean
-                  ? "시장 데이터, 모델 검증, 의사결정 통제를 위한 정량 연구 인프라."
-                  : "Quantitative research infrastructure for market data, model validation, and decision control."}
+                  ? "정량 연구, 시스템 트레이딩, 금융계량경제학, 연구 엔지니어링."
+                  : "Quantitative research, systematic trading, financial econometrics, and research engineering."}
               </p>
             </div>
             <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium">
-              <Link href={korean ? "/ko/build-log" : "/build-log"} className="text-[#AAB6C7] transition-colors hover:text-[#58D9FF]">
-                {korean ? "빌드 로그" : "Build log"}
+              <Link href={korean ? "/ko/projects" : "/projects"} className="text-[#AAB6C7] transition-colors hover:text-[#58D9FF]">
+                {korean ? "프로젝트" : "Selected work"}
               </Link>
-              <Link
-                href={
-                  korean
-                    ? "/ko/projects/multi-asset-research-lab/claims"
-                    : "/projects/multi-asset-research-lab/claims"
-                }
-                className="text-[#AAB6C7] transition-colors hover:text-[#58D9FF]"
-              >
-                {korean ? "주장 장부" : "Claims ledger"}
+              <Link href={korean ? "/ko/papers" : "/papers"} className="text-[#AAB6C7] transition-colors hover:text-[#58D9FF]">
+                {korean ? "논문" : "Papers"}
               </Link>
               <a
                 href="mailto:woosub815@gmail.com"
@@ -105,12 +102,12 @@ export function SiteFooter({
             </div>
           </div>
           <div className="mt-10 grid gap-3 border-t border-white/8 pt-5 text-xs text-[#69778D] sm:grid-cols-[auto_1fr_auto] sm:items-center">
-            <p>© {currentYear} MeanyDeany</p>
+            <p>© {currentYear} Woosub Shin</p>
             <p className="sm:justify-self-center">
               <VisitorStats locale={locale} />
             </p>
             <p className="sm:justify-self-end">
-              {korean ? "연구 전용 · 신호 없음 · 실행 없음" : "Research only · No signals · No execution"}
+              {korean ? "연구 결과는 실거래 실적이 아닙니다" : "Research results are not a live track record"}
             </p>
           </div>
         </div>
@@ -123,26 +120,19 @@ export function SiteFooter({
       <div className="mx-auto max-w-[1440px] px-5 py-12 sm:px-8 lg:px-12">
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
           <div>
-            <p className="site-strong text-lg font-semibold tracking-[-0.03em]">MeanyDeany</p>
+            <p className="site-strong text-lg font-semibold tracking-[-0.03em]">Woosub Shin</p>
             <p className="site-muted mt-3 max-w-xl text-sm leading-6">
               {korean
-                ? "시장 데이터, 모델 검증, 의사결정 통제를 위한 정량 연구 인프라."
-                : "Quantitative research infrastructure for market data, model validation, and decision control."}
+                ? "정량 연구, 시스템 트레이딩, 금융계량경제학, 연구 엔지니어링."
+                : "Quantitative research, systematic trading, financial econometrics, and research engineering."}
             </p>
           </div>
           <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium">
-            <Link href={korean ? "/ko/build-log" : "/build-log"} className="site-link transition-colors">
-              {korean ? "빌드 로그" : "Build log"}
+            <Link href={korean ? "/ko/projects" : "/projects"} className="site-link transition-colors">
+              {korean ? "프로젝트" : "Selected work"}
             </Link>
-            <Link
-              href={
-                korean
-                  ? "/ko/projects/multi-asset-research-lab/claims"
-                  : "/projects/multi-asset-research-lab/claims"
-              }
-              className="site-link transition-colors"
-            >
-              {korean ? "주장 장부" : "Claims ledger"}
+            <Link href={korean ? "/ko/papers" : "/papers"} className="site-link transition-colors">
+              {korean ? "논문" : "Papers"}
             </Link>
             <a
               href="mailto:woosub815@gmail.com"
@@ -161,12 +151,12 @@ export function SiteFooter({
           </div>
         </div>
         <div className="site-footer-rule site-muted mt-10 grid gap-3 border-t pt-5 text-xs sm:grid-cols-[auto_1fr_auto] sm:items-center">
-          <p>© {currentYear} MeanyDeany</p>
+          <p>© {currentYear} Woosub Shin</p>
           <p className="sm:justify-self-center">
             <VisitorStats locale={locale} />
           </p>
           <p className="sm:justify-self-end">
-            {korean ? "연구 전용 · 신호 없음 · 실행 없음" : "Research only · No signals · No execution"}
+            {korean ? "연구 결과는 실거래 실적이 아닙니다" : "Research results are not a live track record"}
           </p>
         </div>
       </div>
