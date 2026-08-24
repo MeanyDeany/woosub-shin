@@ -8,9 +8,9 @@ import {
 import { PageShell } from "@/components/site-shell";
 
 export const metadata: Metadata = {
-  title: "Research Systems",
+  title: "Selected Work",
   description:
-    "MeanyDeany research systems and academic lineage across reproducible research infrastructure, frozen BTC strategy research, financial econometrics, and time-series diagnostics.",
+    "Woosub Shin's quantitative research systems and academic lineage across systematic trading, reproducible research infrastructure, financial econometrics, and time-series diagnostics.",
 };
 
 const projects = [
@@ -48,8 +48,28 @@ const projects = [
     ],
     question:
       "Can one simple BTC trend-following research system survive frozen search and deep validation, then cross into a prospective forward clock without turning research state into trading permission?",
-    status: "Retained system · forward research",
+    status: "Retained baseline · forward research",
     title: "BTC Final Research System V1",
+    type: "Systematic strategy research",
+  },
+  {
+    accent: "cyan" as const,
+    contribution:
+      "A post-selection historical stress audit of a sparse BTC regime router combining Momentum90, EMA 50/180, and RSI2/EMA200 sleeves. C4 returned +182.29% with 1.100 Sharpe at 5bp per transition side across the available regime period, with 88 completed trades.",
+    href: "/projects/btc-regime-challenger",
+    index: "03",
+    methods: [
+      "Regime conditioning",
+      "Momentum90",
+      "EMA 50/180",
+      "RSI2 + EMA200",
+      "20bp cost stress",
+      "Block resampling",
+    ],
+    question:
+      "Can a sparse, mutually exclusive regime-conditioned long/flat system improve historical risk-adjusted performance without hiding concentration, cost sensitivity, or post-selection bias?",
+    status: "Historical challenger · not independent OOS",
+    title: "BTC Selective Regime Challenger C4",
     type: "Systematic strategy research",
   },
   {
@@ -57,7 +77,7 @@ const projects = [
     contribution:
       "An academic comparison across NQ, ES, and Crude Oil (CL) futures using an EGARCH-conditioned framework with otherwise identical intraday logic, treating volatility regime as a risk and admissibility layer.",
     href: "/projects/volatility-regime-filtering",
-    index: "03",
+    index: "04",
     methods: ["NQ", "ES", "Crude Oil (CL)", "EGARCH", "5-minute data", "Robustness"],
     question:
       "Can volatility-regime filtering improve the discipline of an intraday NQ, ES, and Crude Oil (CL) futures framework without treating EGARCH as a direction predictor?",
@@ -70,7 +90,7 @@ const projects = [
     contribution:
       "A compact time-series study applying right-tailed explosive-root diagnostics to identify and interpret periods of explosive Bitcoin price behavior.",
     href: "/projects/bitcoin-bubble-gsadf",
-    index: "04",
+    index: "05",
     methods: ["Bitcoin", "GSADF", "Explosive roots", "Time series"],
     question:
       "How can GSADF testing identify statistically explosive Bitcoin price episodes while keeping diagnostic evidence separate from market recommendations?",
@@ -84,21 +104,21 @@ export default function ProjectsPage() {
   return (
     <PageShell>
       <PageHero
-        eyebrow="MeanyDeany · Research systems"
-        title="Research systems and academic lineage"
-        intro="The program now separates an asset-neutral research framework, one retained BTC research system under prospective observation, and the academic econometric work that shaped both."
+        eyebrow="Woosub Shin · Selected work"
+        title="Systematic research, research infrastructure, and financial econometrics"
+        intro="The portfolio separates platform engineering, retained baseline research, post-selection challengers, and academic work so that each result keeps the evidence label it actually earned."
         metadata={[
           { label: "Flagship", value: "Multi-Asset Research Lab" },
-          { label: "Retained system", value: "BTC Final Research System V1" },
-          { label: "Forward stage", value: "Prospective research observation" },
-          { label: "Boundary", value: "No execution authority" },
+          { label: "Retained baseline", value: "BTC Final Research System V1" },
+          { label: "Current challenger", value: "BTC C4 selective-regime system" },
+          { label: "Boundary", value: "Research evidence is not execution authority" },
         ]}
       />
 
       <EditorialSection
         eyebrow="Program sequence"
-        title="One research program, four layers"
-        intro="Each system retains its own provenance, research question, methods, result scope, and boundary. The newest BTC layer is a frozen research system, not a live trading product."
+        title="One research program, five layers"
+        intro="Each system retains its own provenance, research question, methods, result scope, and limitations. Strong historical performance does not erase the distinction between selection, validation, and prospective evidence."
       >
         <div>
           {projects.map((project) => (
@@ -117,8 +137,8 @@ export default function ProjectsPage() {
           items={[
             { label: "Time", value: "Information is aligned to when it was knowable." },
             { label: "Models", value: "Model roles stay narrower than strategy claims." },
-            { label: "Validation", value: "Search, validation, and forward observation remain separate stages." },
-            { label: "Evidence", value: "Provenance and boundaries travel with every result." },
+            { label: "Validation", value: "Search, stress testing, and prospective observation remain separate stages." },
+            { label: "Evidence", value: "Provenance, cost assumptions, and limitations travel with every result." },
           ]}
         />
       </EditorialSection>
