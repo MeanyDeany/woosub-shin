@@ -1,14 +1,39 @@
-# BTC lifetime performance UI V1
+# BTC live position and lifetime performance UI V1
 
-The live Binance position page may display two cumulative performance fields only:
+This website surface is an outward-only public view. It combines two separately versioned sanitized feeds without creating any trading or execution authority.
+
+## Position scope
+
+The live position panel consumes the PR16-style multi-symbol public telemetry dataset and displays exactly two Binance USD-M contracts in canonical order:
+
+1. `BTCUSDT`
+2. `BTCUSDC`
+
+For each contract, the page may display only:
+
+- position state
+- position mode
+- margin type
+- configured leverage
+- open-order count
+
+It does not display exact position quantity, entry price, mark price, liquidation price, current unrealized PnL, balances, order identifiers, credentials, signatures, or any order authority.
+
+The legacy BTCUSDT-only feed remains supported elsewhere for backward compatibility, but this page is designed to move to the authenticated two-symbol PR16 public projection.
+
+## Lifetime performance scope
+
+The performance panel displays only:
 
 - `Lifetime PnL`
 - `Lifetime Return`
 
-Both metrics are defined from a frozen public-tracking start rather than the entire historical Binance account. This prevents unrelated discretionary account history from being presented as systematic execution performance.
+`Lifetime` means since a frozen public-tracking start, not the historical lifetime of the Binance account. The frontend does not derive these values from wallet balance, current unrealized PnL, or historical discretionary trading.
 
-The frontend contract expects a separately published sanitized feed at `/public/execution/lifetime-performance.json` (or `NEXT_PUBLIC_BTC_LIFETIME_PERFORMANCE_URL`). Until that feed exists and validates, the UI renders `PENDING FEED` and does not synthesize values.
+Until a valid sanitized performance feed exists, the panel fails closed and shows a pending/unavailable state rather than synthesizing zero performance.
 
-The V1 performance UI deliberately does not publish current position size, entry price, mark price, liquidation price, unrealized PnL, balances, orders, credentials, or execution authority.
+## Separation
 
-`Lifetime Return` must be supplied by an audited upstream performance ledger with a frozen tracking start and capital baseline. The website does not derive return from current Binance wallet balance.
+Position telemetry and lifetime performance are deliberately separate datasets. A LONG or SHORT observation is not permission to trade, and a positive or negative lifetime return does not change execution authority.
+
+`external_action_permitted` remains `false` for every public feed consumed by this surface.
