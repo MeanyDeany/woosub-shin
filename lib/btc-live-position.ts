@@ -22,6 +22,9 @@ export type BtcLivePositionTelemetry = {
   telemetry_sha256: string;
 };
 
+export const DEFAULT_BTC_LIVE_POSITION_FEED_URL =
+  "https://btc-data.meanydeany.com/public/execution/btcusdt-position.json";
+
 const sha256 = /^[0-9a-f]{64}$/;
 const diagnostic = /^[A-Z][A-Z0-9_]{0,95}$/;
 const exactKeys = [
@@ -78,6 +81,19 @@ function exactSha(value: unknown, field: string): string {
     throw new Error(`${field} must be a lowercase SHA-256`);
   }
   return value;
+}
+
+function validHttpsUrl(value?: string): string | undefined {
+  if (!value) return undefined;
+  try {
+    const url = new URL(value);
+    if (url.protocol !== "https:") return undefined;
+    url.search = "";
+    url.hash = "";
+    return url.toString();
+  } catch {
+    return undefined;
+  }
 }
 
 export function parseBtcLivePositionTelemetry(value: unknown): BtcLivePositionTelemetry {
@@ -156,22 +172,21 @@ export function parseBtcLivePositionTelemetry(value: unknown): BtcLivePositionTe
   };
 }
 
-export function deriveBtcLivePositionFeedUrl(observatoryFeedUrl?: string): string | undefined {
-  if (!observatoryFeedUrl) {
-    return undefined;
-  }
-  try {
-    const url = new URL(observatoryFeedUrl);
-    if (url.protocol !== "https:") {
-      return undefined;
-    }
+export function deriveBtcLivePositionFeedUrl(
+  observatoryFeedUrl?: string,
+  directFeedUrl?: string,
+): string {
+  const direct = validHttpsUrl(directFeedUrl);
+  if (direct) return direct;
+
+  const observatory = validHttpsUrl(observatoryFeedUrl);
+  if (observatory) {
+    const url = new URL(observatory);
     url.pathname = "/public/execution/btcusdt-position.json";
-    url.search = "";
-    url.hash = "";
     return url.toString();
-  } catch {
-    return undefined;
   }
+
+  return DEFAULT_BTC_LIVE_POSITION_FEED_URL;
 }
 
 export function positionAgeSeconds(telemetry: BtcLivePositionTelemetry, nowMs = Date.now()): number {
