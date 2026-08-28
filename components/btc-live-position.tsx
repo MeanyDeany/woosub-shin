@@ -41,7 +41,7 @@ const copy = {
     noPosition: "No active BTCUSDT futures position",
     configuredNote: "Observed exchange configuration, not a sizing recommendation",
     publicBoundary:
-      "Legacy BTCUSDT-only public read-only telemetry. Exact position size, account balance, credentials, and order authority are intentionally excluded.",
+      "Public read-only telemetry. Exact position size, account balance, credentials, and order authority are intentionally excluded.",
     actionBoundary: "External action permitted: FALSE",
   },
   ko: {
@@ -65,7 +65,7 @@ const copy = {
     noPosition: "활성 BTCUSDT 선물 포지션 없음",
     configuredNote: "거래소에서 관측한 설정값이며 사이징 권고가 아닙니다",
     publicBoundary:
-      "기존 BTCUSDT-only 공개 read-only 텔레메트리입니다. 정확한 포지션 크기, 계정 잔고, 인증정보, 주문 권한은 의도적으로 제외합니다.",
+      "공개 read-only 텔레메트리입니다. 정확한 포지션 크기, 계정 잔고, 인증정보, 주문 권한은 의도적으로 제외합니다.",
     actionBoundary: "External action permitted: FALSE",
   },
 } as const;
