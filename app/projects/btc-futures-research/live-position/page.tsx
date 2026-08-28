@@ -14,6 +14,7 @@ export const metadata: Metadata = {
 export default function LiveBtcPositionPage() {
   const feedUrl = deriveBtcLivePositionFeedUrl(
     process.env.NEXT_PUBLIC_BTC_RESEARCH_OBSERVATORY_URL,
+    process.env.NEXT_PUBLIC_BTC_LIVE_POSITION_URL,
   );
 
   return (
