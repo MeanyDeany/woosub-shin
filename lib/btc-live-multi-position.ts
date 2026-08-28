@@ -29,7 +29,15 @@ export const DEFAULT_BTC_MULTI_POSITION_FEED_URL =
   "https://btc-data.meanydeany.com/public/execution/multi-symbol-position.json";
 
 const sha256 = /^[0-9a-f]{64}$/;
-const diagnostic = /^[A-Z][A-Z0-9_]{0,95}$/;
+const utcTimestampPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?Z$/;
+const canonicalDiagnosticCodes = [
+  "READ_ONLY_OBSERVATION_COMPLETE",
+  "HEDGE_MODE_OBSERVED",
+  "MULTI_ASSET_MODE_OBSERVED",
+  "UNEXPECTED_SHORT_POSITION",
+  "OPEN_ORDERS_PRESENT",
+  "POSITION_AMBIGUOUS",
+] as const;
 const topLevelKeys = [
   "schema_version",
   "dataset_id",
@@ -67,8 +75,12 @@ function exactKeys(value: Record<string, unknown>, expected: readonly string[], 
 }
 
 function utcTimestamp(value: unknown, field: string): string {
-  if (typeof value !== "string" || !value.endsWith("Z") || !Number.isFinite(Date.parse(value))) {
-    throw new Error(`${field} must be a valid UTC timestamp`);
+  if (
+    typeof value !== "string" ||
+    !utcTimestampPattern.test(value) ||
+    !Number.isFinite(Date.parse(value))
+  ) {
+    throw new Error(`${field} must be RFC3339 UTC text`);
   }
   return value;
 }
@@ -115,6 +127,49 @@ function parseSymbol(value: unknown, expectedSymbol: BtcPositionSymbol): BtcLive
   };
 }
 
+function validateDiagnostics(
+  codes: unknown,
+  symbols: [BtcLiveMultiPositionSymbol, BtcLiveMultiPositionSymbol],
+): string[] {
+  if (
+    !Array.isArray(codes) ||
+    codes.length === 0 ||
+    codes.some((code) => typeof code !== "string") ||
+    new Set(codes).size !== codes.length
+  ) {
+    throw new Error("Invalid multi-symbol diagnostic codes");
+  }
+
+  const allowed = new Set<string>(canonicalDiagnosticCodes);
+  if (codes.some((code) => !allowed.has(code))) {
+    throw new Error("Multi-symbol diagnostics contain a non-public code");
+  }
+
+  const canonical = canonicalDiagnosticCodes.filter((code) => codes.includes(code));
+  if (codes.length !== canonical.length || codes.some((code, index) => code !== canonical[index])) {
+    throw new Error("Multi-symbol diagnostics are not in PR16 canonical order");
+  }
+  if (!codes.includes("READ_ONLY_OBSERVATION_COMPLETE")) {
+    throw new Error("Multi-symbol telemetry is incomplete");
+  }
+
+  const states = symbols.map((symbol) => symbol.position_state);
+  const hasOpenOrders = symbols.some((symbol) => symbol.open_order_count > 0);
+  const expectedFacts: Record<string, boolean> = {
+    HEDGE_MODE_OBSERVED: symbols[0].position_mode === "HEDGE",
+    UNEXPECTED_SHORT_POSITION: states.includes("SHORT"),
+    OPEN_ORDERS_PRESENT: hasOpenOrders,
+    POSITION_AMBIGUOUS: states.includes("AMBIGUOUS"),
+  };
+  for (const [code, expected] of Object.entries(expectedFacts)) {
+    if (codes.includes(code) !== expected) {
+      throw new Error("Multi-symbol diagnostics do not match public symbol facts");
+    }
+  }
+
+  return [...codes];
+}
+
 export function parseBtcLiveMultiPositionTelemetry(value: unknown): BtcLiveMultiPositionTelemetry {
   if (!isRecord(value)) throw new Error("Multi-symbol position telemetry must be an object");
   exactKeys(value, topLevelKeys, "Multi-symbol position telemetry");
@@ -129,22 +184,16 @@ export function parseBtcLiveMultiPositionTelemetry(value: unknown): BtcLiveMulti
   if (!Array.isArray(value.symbols) || value.symbols.length !== 2) {
     throw new Error("Multi-symbol telemetry requires exactly BTCUSDT and BTCUSDC");
   }
+
   const symbols: [BtcLiveMultiPositionSymbol, BtcLiveMultiPositionSymbol] = [
     parseSymbol(value.symbols[0], "BTCUSDT"),
     parseSymbol(value.symbols[1], "BTCUSDC"),
   ];
-  const diagnosticCodes = value.diagnostic_codes;
-  if (
-    !Array.isArray(diagnosticCodes) ||
-    diagnosticCodes.length === 0 ||
-    diagnosticCodes.length > 32 ||
-    diagnosticCodes.some((code) => typeof code !== "string" || !diagnostic.test(code)) ||
-    new Set(diagnosticCodes).size !== diagnosticCodes.length ||
-    diagnosticCodes.some((code, index) => index > 0 && code < diagnosticCodes[index - 1]) ||
-    !diagnosticCodes.includes("READ_ONLY_OBSERVATION_COMPLETE")
-  ) {
-    throw new Error("Invalid multi-symbol diagnostic codes");
+  if (symbols[0].position_mode !== symbols[1].position_mode) {
+    throw new Error("Position modes must match shared Binance account state");
   }
+
+  const diagnosticCodes = validateDiagnostics(value.diagnostic_codes, symbols);
   if (
     value.freshness_ttl_seconds !== 180 ||
     value.authority_classification !== "AUTHENTICATED_READ_ONLY_TELEMETRY" ||
@@ -152,6 +201,7 @@ export function parseBtcLiveMultiPositionTelemetry(value: unknown): BtcLiveMulti
   ) {
     throw new Error("Invalid multi-symbol telemetry authority boundary");
   }
+
   return {
     schema_version: 1,
     dataset_id: "binance_usdm_public_multi_symbol_position_v1",
@@ -160,7 +210,7 @@ export function parseBtcLiveMultiPositionTelemetry(value: unknown): BtcLiveMulti
     venue: "BINANCE_USDM",
     environment: "PRODUCTION",
     symbols,
-    diagnostic_codes: [...diagnosticCodes],
+    diagnostic_codes: diagnosticCodes,
     observation_identity_sha256: exactSha(value.observation_identity_sha256, "observation_identity_sha256"),
     freshness_ttl_seconds: 180,
     authority_classification: "AUTHENTICATED_READ_ONLY_TELEMETRY",
