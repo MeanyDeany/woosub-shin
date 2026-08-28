@@ -14,10 +14,11 @@ export const metadata: Metadata = {
 export default function KoreanLiveBtcPositionPage() {
   const feedUrl = deriveBtcLivePositionFeedUrl(
     process.env.NEXT_PUBLIC_BTC_RESEARCH_OBSERVATORY_URL,
+    process.env.NEXT_PUBLIC_BTC_LIVE_POSITION_URL,
   );
 
   return (
-    <PageShell>
+    <PageShell locale="ko">
       <main className="min-h-screen bg-[#050608]">
         <section className="border-b border-[#7E8B9D]/12 bg-[#07090D]">
           <div className="mx-auto max-w-[1180px] px-5 py-12 sm:py-16 lg:px-8">
