@@ -26,6 +26,11 @@ export function ActiveNavigation({
   const navRef = useRef<HTMLElement>(null);
   const openMenu = openMenuState?.pathname === pathname ? openMenuState.href : null;
   const items = locale === "ko" ? navigationKo : navigation;
+  const livePositionHref =
+    locale === "ko"
+      ? "/ko/projects/btc-futures-research/live-position"
+      : "/projects/btc-futures-research/live-position";
+  const livePositionActive = isActiveRoute(pathname, livePositionHref);
   const navLinkClass = showcase
     ? "text-white/55 hover:text-white"
     : "theme-nav-link";
@@ -155,6 +160,22 @@ export function ActiveNavigation({
             </li>
           );
         })}
+        <li>
+          <Link
+            href={livePositionHref}
+            aria-current={livePositionActive ? "page" : undefined}
+            className={`inline-flex min-h-9 items-center gap-1.5 rounded-full border px-2.5 text-[0.68rem] font-semibold transition-colors sm:px-3 sm:text-xs ${
+              livePositionActive
+                ? "border-[#3DDC97]/60 bg-[#3DDC97]/14 text-[#7CF0B9]"
+                : showcase
+                  ? "border-[#3DDC97]/25 bg-[#3DDC97]/8 text-[#7CF0B9] hover:border-[#3DDC97]/55 hover:bg-[#3DDC97]/14"
+                  : "border-[#3DDC97]/30 bg-[#3DDC97]/8 text-[#16875B] hover:border-[#3DDC97]/55 hover:bg-[#3DDC97]/14 dark:text-[#7CF0B9]"
+            }`}
+          >
+            <span className="h-1.5 w-1.5 rounded-full bg-[#3DDC97] shadow-[0_0_8px_rgba(61,220,151,0.7)]" aria-hidden="true" />
+            {locale === "ko" ? "실계정" : "LIVE BTC"}
+          </Link>
+        </li>
       </ul>
     </nav>
   );
