@@ -8,7 +8,7 @@ import { deriveBtcLivePositionFeedUrl } from "@/lib/btc-live-position";
 export const metadata: Metadata = {
   title: "Live BTCUSDT Binance Position",
   description:
-    "Sanitized authenticated read-only telemetry for the BTCUSDT Binance USD-M account position observed by the Systematic Execution Gateway.",
+    "Sanitized authenticated read-only telemetry for the BTCUSDT Binance USD-M contract position observed by the Systematic Execution Gateway.",
 };
 
 export default function LiveBtcPositionPage() {
@@ -32,11 +32,17 @@ export default function LiveBtcPositionPage() {
               Public execution-side observation
             </p>
             <h1 className="mt-4 max-w-4xl text-4xl font-semibold leading-tight tracking-[-0.04em] text-[#F4F7FB] sm:text-5xl">
-              The portfolio can now show what the real Binance account is holding.
+              Live read-only state for the BTCUSDT futures contract.
             </h1>
             <p className="mt-6 max-w-3xl text-base leading-7 text-[#B6C0CF]">
-              This page renders a sanitized read-only projection produced on AWS from authenticated Binance USD-M USER_DATA. It exposes account state, not credentials, account size, or trading authority.
+              This page renders a sanitized read-only projection produced on AWS from authenticated Binance USD-M USER_DATA. It shows the BTCUSDT contract only, not the complete Binance account.
             </p>
+            <div className="mt-6 max-w-3xl rounded-xl border border-[#FFB547]/25 bg-[#FFB547]/8 px-5 py-4">
+              <p className="font-mono text-xs font-semibold text-[#FFD08A]">CONTRACT SCOPE · BTCUSDT ONLY</p>
+              <p className="mt-2 text-sm leading-6 text-[#B6C0CF]">
+                BTCUSDC positions are not included in this V1 public feed yet. A FLAT state here means BTCUSDT is flat; it does not mean the account has no BTC futures exposure elsewhere.
+              </p>
+            </div>
           </div>
         </section>
 
@@ -45,7 +51,7 @@ export default function LiveBtcPositionPage() {
 
           <div className="mt-8 grid gap-4 md:grid-cols-3">
             {[
-              ["Source", "Authenticated Binance USD-M read-only observation"],
+              ["Scope", "BTCUSDT contract only · BTCUSDC not included"],
               ["Refresh", "Public feed polls every 30 seconds"],
               ["Authority", "Observation only · external action disabled"],
             ].map(([label, value]) => (
