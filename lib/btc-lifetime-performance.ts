@@ -127,10 +127,6 @@ export function parseBtcLifetimePerformanceTelemetry(
     "lifetime_return_pct",
   );
 
-  if (lifetimeReturnPct < -100) {
-    throw new Error("Lifetime return cannot be below -100%");
-  }
-
   return {
     schema_version: 1,
     dataset_id: "binance_usdm_public_lifetime_performance_v1",
