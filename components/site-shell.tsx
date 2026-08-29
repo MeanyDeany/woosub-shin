@@ -1,8 +1,9 @@
 import Link from "next/link";
-import type { ReactNode } from "react";
+import { Children, type ReactNode } from "react";
 import { ActiveNavigation } from "@/components/active-navigation";
 import { ContextualPageEnd } from "@/components/contextual-page-end";
 import { ContextualPageTools } from "@/components/contextual-page-tools";
+import { HomeLiveTelemetry } from "@/components/home-live-telemetry";
 import { KoreanHonorificCopy } from "@/components/korean-honorific-copy";
 import { LanguageSwitcher, type SiteLocale } from "@/components/language-switcher";
 import { ThemeToggle } from "@/components/theme-toggle";
@@ -174,6 +175,18 @@ export function PageShell({
   headerVariant?: HeaderVariant;
 }) {
   const korean = locale === "ko";
+  const showcaseChildren =
+    headerVariant === "showcase" ? Children.toArray(children) : [];
+  const pageContent =
+    showcaseChildren.length > 0 ? (
+      <>
+        {showcaseChildren[0]}
+        <HomeLiveTelemetry locale={locale} />
+        {showcaseChildren.slice(1)}
+      </>
+    ) : (
+      children
+    );
 
   return (
     <div className="cosmic-page flex min-h-dvh flex-col" lang={locale}>
@@ -186,7 +199,7 @@ export function PageShell({
       <SiteHeader locale={locale} variant={headerVariant} />
       <ContextualPageTools locale={locale} />
       <main id="main-content" className="flex-1">
-        {korean ? <KoreanHonorificCopy>{children}</KoreanHonorificCopy> : children}
+        {korean ? <KoreanHonorificCopy>{pageContent}</KoreanHonorificCopy> : pageContent}
       </main>
       <ContextualPageEnd />
       <SiteFooter locale={locale} variant={headerVariant} />
