@@ -7,9 +7,9 @@ import { deriveBtcLifetimePerformanceFeedUrl } from "@/lib/btc-lifetime-performa
 import { deriveBtcLiveMultiPositionFeedUrl } from "@/lib/btc-live-multi-position";
 
 export const metadata: Metadata = {
-  title: "Live BTC Binance USD-M Positions",
+  title: "Live Binance USD-M Positions and Performance",
   description:
-    "Sanitized authenticated read-only BTCUSDT and BTCUSDC Binance USD-M position telemetry with tracked lifetime system PnL and return.",
+    "Sanitized authenticated read-only telemetry for every open Binance USD-M position and flow-adjusted account-wide trading performance since August 1, 2026.",
 };
 
 export default function LiveBtcPositionPage() {
@@ -37,15 +37,17 @@ export default function LiveBtcPositionPage() {
               Public execution-side observation
             </p>
             <h1 className="mt-4 max-w-4xl text-4xl font-semibold leading-tight tracking-[-0.04em] text-[#F4F7FB] sm:text-5xl">
-              BTCUSDT and BTCUSDC position state with tracked lifetime performance.
+              Every open Binance USD-M position with flow-adjusted trading performance.
             </h1>
             <p className="mt-6 max-w-3xl text-base leading-7 text-[#B6C0CF]">
-              This page renders sanitized public projections produced from one authenticated Binance USD-M read-only observation. Position telemetry covers exactly BTCUSDT and BTCUSDC. Performance reporting is limited to Lifetime PnL and Lifetime Return since the frozen public-tracking start.
+              This page renders sanitized public projections produced from one authenticated Binance USD-M read-only observation. Position telemetry dynamically covers every non-zero account position. Performance starts at August 1, 2026 and excludes deposits, withdrawals, transfers, and non-trading rewards from trading PnL.
             </p>
             <div className="mt-6 max-w-3xl rounded-xl border border-[#3DDC97]/25 bg-[#3DDC97]/8 px-5 py-4">
-              <p className="font-mono text-xs font-semibold text-[#7CF0B9]">CONTRACT SCOPE · BTCUSDT + BTCUSDC</p>
+              <p className="font-mono text-xs font-semibold text-[#7CF0B9]">
+                ACCOUNT SCOPE · ALL NON-ZERO USD-M POSITIONS
+              </p>
               <p className="mt-2 text-sm leading-6 text-[#B6C0CF]">
-                Both supported BTC USD-M contracts are shown in canonical order. Exact position size, entry price, mark price, liquidation price, current unrealized PnL, account balances, credentials, and order authority remain excluded.
+                New USD-M symbols appear automatically in canonical order. Exact position size, notional, prices, per-position PnL, margin, balances, order identifiers, credentials, and order authority remain excluded. Aggregate current unrealized PnL is published only in the separate performance feed.
               </p>
             </div>
           </div>
@@ -60,7 +62,7 @@ export default function LiveBtcPositionPage() {
 
           <div className="mt-8 grid gap-4 md:grid-cols-3">
             {[
-              ["Scope", "BTCUSDT + BTCUSDC positions · lifetime performance tracked separately"],
+              ["Scope", "All non-zero Binance USD-M positions · account-wide trading performance"],
               ["Refresh", "Public feeds poll every 30 seconds"],
               ["Authority", "Observation/performance only · external action disabled"],
             ].map(([label, value]) => (
