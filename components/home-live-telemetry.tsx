@@ -11,7 +11,7 @@ const copy = {
     eyebrow: "Live system telemetry",
     title: "See the running system before the backtest.",
     description:
-      "Sanitized read-only Binance USD-M telemetry is refreshed every 30 seconds. BTCUSDT and BTCUSDC position states sit beside lifetime performance since the frozen public-tracking start, while size, prices, balances, credentials, and execution authority stay private.",
+      "Sanitized read-only Binance USD-M telemetry is refreshed every 30 seconds. Every non-zero open position sits beside flow-adjusted trading performance since August 1, 2026, while exact size, prices, balances, credentials, and execution authority stay private.",
     link: "Open full telemetry",
     badges: [
       "Read-only public projection",
@@ -24,7 +24,7 @@ const copy = {
     eyebrow: "Live system telemetry",
     title: "백테스트보다 먼저, 지금 시스템이 어떻게 관측되고 있는지 보여드립니다.",
     description:
-      "인증된 read-only Binance USD-M 공개 텔레메트리를 30초마다 갱신합니다. BTCUSDT·BTCUSDC 포지션 상태와 frozen public-tracking 시작 이후 누적 성과만 공개하며, 수량·가격·잔고·인증정보·주문 권한은 공개하지 않습니다.",
+      "인증된 read-only Binance USD-M 공개 텔레메트리를 30초마다 갱신합니다. 모든 non-zero 오픈 포지션과 2026년 8월 1일 이후의 입출금 조정 트레이딩 성과를 공개하며, 정확한 수량·가격·잔고·인증정보·주문 권한은 공개하지 않습니다.",
     link: "전체 텔레메트리 보기",
     badges: [
       "Read-only public projection",
