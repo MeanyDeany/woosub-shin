@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Children, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import { ActiveNavigation } from "@/components/active-navigation";
 import { ContextualPageEnd } from "@/components/contextual-page-end";
 import { ContextualPageTools } from "@/components/contextual-page-tools";
@@ -39,7 +39,13 @@ export function SiteHeader({
           }
         >
           <span>Woosub Shin</span>
-          <span className={showcase ? "hidden font-mono text-[0.62rem] font-medium text-white/36 sm:inline" : "site-muted hidden font-mono text-[0.62rem] font-medium sm:inline"}>
+          <span
+            className={
+              showcase
+                ? "hidden font-mono text-[0.62rem] font-medium text-white/36 sm:inline"
+                : "site-muted hidden font-mono text-[0.62rem] font-medium sm:inline"
+            }
+          >
             @MeanyDeany
           </span>
         </Link>
@@ -80,10 +86,16 @@ export function SiteFooter({
               </p>
             </div>
             <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm font-medium">
-              <Link href={korean ? "/ko/projects" : "/projects"} className="text-[#AAB6C7] transition-colors hover:text-[#58D9FF]">
+              <Link
+                href={korean ? "/ko/projects" : "/projects"}
+                className="text-[#AAB6C7] transition-colors hover:text-[#58D9FF]"
+              >
                 {korean ? "프로젝트" : "Selected work"}
               </Link>
-              <Link href={korean ? "/ko/papers" : "/papers"} className="text-[#AAB6C7] transition-colors hover:text-[#58D9FF]">
+              <Link
+                href={korean ? "/ko/papers" : "/papers"}
+                className="text-[#AAB6C7] transition-colors hover:text-[#58D9FF]"
+              >
                 {korean ? "논문" : "Papers"}
               </Link>
               <a
@@ -135,10 +147,7 @@ export function SiteFooter({
             <Link href={korean ? "/ko/papers" : "/papers"} className="site-link transition-colors">
               {korean ? "논문" : "Papers"}
             </Link>
-            <a
-              href="mailto:woosub815@gmail.com"
-              className="site-link transition-colors"
-            >
+            <a href="mailto:woosub815@gmail.com" className="site-link transition-colors">
               {korean ? "이메일" : "Email"}
             </a>
             <a
@@ -175,14 +184,11 @@ export function PageShell({
   headerVariant?: HeaderVariant;
 }) {
   const korean = locale === "ko";
-  const showcaseChildren =
-    headerVariant === "showcase" ? Children.toArray(children) : [];
   const pageContent =
-    showcaseChildren.length > 0 ? (
+    headerVariant === "showcase" ? (
       <>
-        {showcaseChildren[0]}
+        {children}
         <HomeLiveTelemetry locale={locale} />
-        {showcaseChildren.slice(1)}
       </>
     ) : (
       children
