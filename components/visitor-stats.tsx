@@ -69,9 +69,11 @@ export function VisitorStats({ locale = "en" }: { locale?: SiteLocale }) {
       <span className="inline-flex items-center gap-2" aria-live="polite">
         <span
           aria-hidden="true"
-          className="h-1.5 w-1.5 rounded-full bg-[#1C9A77] shadow-[0_0_10px_rgba(28,154,119,0.55)]"
+          className="h-1 w-1 bg-current"
         />
-        {locale === "ko" ? "방문 통계 수집 중" : "Visitor analytics active"}
+        {state.status === "loading"
+          ? (locale === "ko" ? "방문 통계 불러오는 중" : "Loading visitor counts")
+          : (locale === "ko" ? "방문 통계 이용 불가" : "Visitor counts unavailable")}
       </span>
     );
   }
@@ -92,7 +94,7 @@ export function VisitorStats({ locale = "en" }: { locale?: SiteLocale }) {
       <span className="inline-flex items-center gap-2">
         <span
           aria-hidden="true"
-          className="h-1.5 w-1.5 rounded-full bg-[#1C9A77] shadow-[0_0_10px_rgba(28,154,119,0.55)]"
+          className="h-1 w-1 bg-current"
         />
         {locale === "ko" ? `${visitors}명 방문` : `${visitors} visitors`}
       </span>

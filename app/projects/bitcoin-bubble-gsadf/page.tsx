@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { metadataFor } from "@/lib/site-metadata";
 import {
   CtaLink,
   EditorialSection,
@@ -9,11 +9,11 @@ import {
 } from "@/components/editorial";
 import { PageShell } from "@/components/site-shell";
 
-export const metadata: Metadata = {
-  title: "Bitcoin Bubble Detection with GSADF",
-  description:
-    "A seminar paper applying right-tailed GSADF explosive-root testing to Bitcoin price dynamics as an academic time-series diagnostic.",
-};
+export const metadata = metadataFor(
+  "/projects/bitcoin-bubble-gsadf",
+  "Bitcoin Bubble Detection with GSADF",
+  "A seminar paper applying right-tailed GSADF explosive-root testing to Bitcoin price dynamics as an academic time-series diagnostic.",
+);
 
 const method = [
   {

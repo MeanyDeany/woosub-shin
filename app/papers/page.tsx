@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { metadataFor } from "@/lib/site-metadata";
 import {
   CtaLink,
   EditorialSection,
@@ -8,11 +8,11 @@ import {
 } from "@/components/editorial";
 import { PageShell } from "@/components/site-shell";
 
-export const metadata: Metadata = {
-  title: "Papers",
-  description:
-    "MeanyDeany academic papers on volatility-regime filtering in NQ, ES, and Crude Oil (CL) futures and GSADF-based Bitcoin bubble diagnostics.",
-};
+export const metadata = metadataFor(
+  "/papers",
+  "Papers",
+  "Woosub Shin’s MSc thesis on futures volatility-regime filtering and seminar paper on GSADF-based Bitcoin bubble diagnostics, with original PDF downloads.",
+);
 
 const papers = [
   {

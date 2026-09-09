@@ -1,78 +1,4 @@
-export const navigation = [
-  { href: "/", label: "Home" },
-  {
-    href: "/projects",
-    label: "Systems",
-    children: [
-      { href: "/projects", label: "All systems", detail: "Research systems and academic lineage" },
-      { href: "/projects/multi-asset-research-lab", label: "Multi-Asset Research Lab", detail: "Contracts, replay, validation, and forward evidence architecture" },
-      { href: "/projects/btc-final-system", label: "BTC Final Research System V1", detail: "Retained EMA 50/200 research system under prospective observation" },
-      { href: "/projects/btc-futures-research", label: "BTC Volatility Research System", detail: "Freezer validation and volatility evidence infrastructure" },
-      { href: "/projects/volatility-regime-filtering", label: "Volatility Regime Filtering", detail: "NQ, ES, and Crude Oil (CL) econometrics" },
-      { href: "/projects/bitcoin-bubble-gsadf", label: "Bitcoin Bubble Detection", detail: "GSADF time-series diagnostics" },
-    ],
-  },
-  {
-    href: "/papers",
-    label: "Papers",
-    children: [
-      { href: "/papers", label: "Publication archive", detail: "Original papers and project context" },
-      { href: "/papers/volatility-regime-filtering-thesis.pdf", label: "MSc thesis", detail: "Volatility regime filtering in futures" },
-      { href: "/papers/bitcoin-bubble-gsadf-seminar-paper.pdf", label: "Seminar paper", detail: "Bitcoin bubble detection with GSADF" },
-    ],
-  },
-  {
-    href: "/research",
-    label: "Method",
-    children: [
-      { href: "/research", label: "Research methodology", detail: "Time, validation, provenance, and boundaries" },
-      { href: "/build-log", label: "Build log", detail: "Verified milestones, changes, and remaining limits" },
-      { href: "/projects/multi-asset-research-lab/claims", label: "Claims ledger", detail: "Public claims matched to evidence and boundaries" },
-      { href: "/projects/btc-final-system#result", label: "BTC final-system result", detail: "Retrospective result, validation, limitations, and forward boundary" },
-      { href: "/projects/multi-asset-research-lab#architecture", label: "Lab architecture", detail: "Contracts, evidence, and verification layers" },
-      { href: "/projects/btc-futures-research#evidence-pipeline", label: "BTC evidence pipeline", detail: "Follow the freezer evidence chain" },
-      { href: "/projects/multi-asset-research-lab#boundaries", label: "Research boundaries", detail: "What the systems cannot authorize" },
-    ],
-  },
-  { href: "/contact", label: "Contact" },
-] as const;
-
-export const navigationKo = [
-  { href: "/ko", label: "홈" },
-  {
-    href: "/ko/projects",
-    label: "시스템",
-    children: [
-      { href: "/ko/projects", label: "전체 시스템", detail: "연구 시스템과 학술 연구의 연결" },
-      { href: "/ko/projects/multi-asset-research-lab", label: "멀티애셋 연구소", detail: "자산 중립 계약과 검증 가능한 연구 인프라" },
-      { href: "/ko/projects/btc-futures-research", label: "BTC 선물 연구 시스템", detail: "Freezer 검증과 변동성 증거" },
-      { href: "/ko/projects/volatility-regime-filtering", label: "변동성 국면 필터링", detail: "NQ·ES·원유 선물 금융계량 연구" },
-      { href: "/ko/projects/bitcoin-bubble-gsadf", label: "비트코인 버블 탐지", detail: "GSADF 시계열 진단" },
-    ],
-  },
-  {
-    href: "/ko/papers",
-    label: "논문",
-    children: [
-      { href: "/ko/papers", label: "논문 목록", detail: "원문 PDF와 프로젝트 설명" },
-      { href: "/papers/volatility-regime-filtering-thesis.pdf", label: "석사 논문 원문", detail: "선물시장 변동성 국면 필터링" },
-      { href: "/papers/bitcoin-bubble-gsadf-seminar-paper.pdf", label: "세미나 페이퍼 원문", detail: "GSADF 기반 비트코인 버블 탐지" },
-    ],
-  },
-  {
-    href: "/ko/research",
-    label: "방법론",
-    children: [
-      { href: "/ko/research", label: "연구 방법론", detail: "시간 정합성·검증·출처·경계" },
-      { href: "/ko/build-log", label: "빌드 로그", detail: "검증된 이정표와 남아 있는 한계" },
-      { href: "/ko/projects/multi-asset-research-lab/claims", label: "주장 장부", detail: "공개 주장과 증거·경계의 대응" },
-      { href: "/ko/projects/multi-asset-research-lab#architecture", label: "연구소 구조", detail: "계약·증거·검증 계층" },
-      { href: "/ko/projects/btc-futures-research#evidence-pipeline", label: "BTC 증거 파이프라인", detail: "Freezer 증거 흐름" },
-      { href: "/ko/projects/multi-asset-research-lab#boundaries", label: "연구 경계", detail: "시스템이 허가할 수 없는 것" },
-    ],
-  },
-  { href: "/ko/contact", label: "연락" },
-] as const;
+export { primaryNavigation as navigation } from "@/lib/site-routes";
 
 export const shadowModels = [
   {
@@ -120,13 +46,13 @@ export const schedulerControls = [
 ] as const;
 
 export const operationalSnapshot = [
-  { label: "Retained BTC research systems", value: "1" },
+  { label: "Historical retained BTC research systems", value: "1" },
   { label: "Frozen final-system candidate", value: "Daily EMA 50/200 long/flat" },
   { label: "Retrospective FULL return", value: "+165.92%" },
   { label: "Retrospective FULL Sharpe", value: "0.769" },
   { label: "Retrospective FULL MaxDD", value: "-29.37%" },
   { label: "Forward research activation", value: "22 Aug 2026" },
-  { label: "Prospective research state", value: "Append-only observation active" },
+  { label: "Recorded forward handoff", value: "Append-only research observation" },
   { label: "Execution integration", value: "NOT INCLUDED" },
 ] as const;
 
@@ -146,9 +72,9 @@ export const demonstratedCapabilities = [
 
 export const boundaryItems = [
   "Research-only system",
-  "No live trading",
+  "No live trading in the research runtime",
   "No paper trading approval",
-  "No Binance execution",
+  "No Binance execution in the research runtime",
   "No broker integration",
   "No order routing",
   "No entry permission",

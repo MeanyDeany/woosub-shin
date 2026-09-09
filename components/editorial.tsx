@@ -40,16 +40,8 @@ export function PageHero({
   title: string;
 }) {
   return (
-    <section className="relative overflow-hidden border-b border-[#6880A8]/15 bg-white/22 backdrop-blur-sm">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -left-32 -top-44 h-[32rem] w-[32rem] rounded-full bg-[#70C4FF]/20 blur-3xl"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-36 top-0 h-[28rem] w-[28rem] rounded-full bg-[#B5A0FF]/16 blur-3xl"
-      />
-      <div className="relative mx-auto grid max-w-[1320px] gap-10 px-5 py-16 sm:py-24 lg:grid-cols-[minmax(0,1.35fr)_minmax(18rem,0.65fr)] lg:gap-16 lg:px-8 lg:py-28">
+    <section className="editorial-hero">
+      <div className="editorial-hero__inner">
         <div className="min-w-0">
           <p
             className={`eyebrow-label text-[0.68rem] font-semibold uppercase tracking-[0.18em] ${accentText[accent]}`}
@@ -109,12 +101,7 @@ export function SectionHeading({
   );
 }
 
-const sectionTones = {
-  base: "bg-white/18",
-  deep: "bg-white/38",
-  elevated: "bg-white/54",
-  warm: "bg-[#FFF9F0]/48",
-} as const;
+const sectionTones = { base: "base", deep: "deep", elevated: "elevated", warm: "warm" } as const;
 
 export function EditorialSection({
   accent = "cyan",
@@ -138,9 +125,9 @@ export function EditorialSection({
   return (
     <section
       id={id}
-      className={`border-t border-[#6880A8]/13 backdrop-blur-[2px] ${sectionTones[tone]} ${className}`}
+      className={`editorial-section editorial-section--${sectionTones[tone]} ${className}`}
     >
-      <div className="mx-auto max-w-[1320px] px-5 py-16 sm:py-20 lg:px-8 lg:py-24">
+      <div className="editorial-section__inner">
         {title ? (
           <SectionHeading
             accent={accent}
@@ -191,12 +178,11 @@ export function CtaLink({
   kind?: "primary" | "secondary" | "text";
   newTab?: boolean;
 }) {
-  const className =
-    kind === "primary"
-      ? "inline-flex min-h-11 items-center justify-center rounded-full border border-[#17243D] bg-[#17243D] px-5 py-2.5 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(32,55,94,0.18)] transition-transform hover:-translate-y-0.5 hover:bg-[#22375B]"
-      : kind === "text"
-        ? "inline-flex min-h-10 items-center border-b border-[#2580D8]/35 py-2 text-sm font-semibold text-[#176FC1] transition-colors hover:border-[#176FC1] hover:text-[#0C5798]"
-        : "inline-flex min-h-11 items-center justify-center rounded-full border border-[#7187AB]/24 bg-white/58 px-5 py-2.5 text-sm font-semibold text-[#24324A] shadow-[inset_0_1px_0_rgba(255,255,255,0.95)] backdrop-blur-xl transition-all hover:-translate-y-0.5 hover:border-[#2580D8]/45 hover:bg-white/82";
+  const className = kind === "primary"
+    ? "research-button primary"
+    : kind === "text"
+      ? "research-button research-button--text"
+      : "research-button";
 
   if (newTab) {
     return (

@@ -211,10 +211,10 @@ export const claimLedgerKo: readonly {
   },
   {
     claim: "정확한 과거 close-return evidence가 작동합니다.",
-    evidence: "검증된 historical-bar pipeline 이후 exact rational close-return transform을 현재 구축 중입니다.",
-    limit: "Transform과 독립 검증이 merge되기 전에는 완료된 return evidence를 주장하지 않습니다.",
-    status: "In progress",
-    statusLabel: "진행 중",
+    evidence: "과거 인프라 snapshot에는 verified historical-bar pipeline 이후 exact rational close-return transform을 구축 중인 상태로 기록했습니다. 이 기록은 현재 연구 상태를 뜻하지 않습니다.",
+    limit: "이 과거 snapshot만으로 transform의 완료나 현재 진행 상태를 주장하지 않습니다. 최신 연구 결과는 별도의 ASRA evidence record를 확인해야 합니다.",
+    status: "Not claimed",
+    statusLabel: "과거 진행 기록",
     tone: "cyan",
   },
   {
@@ -229,7 +229,7 @@ export const claimLedgerKo: readonly {
   {
     claim: "연구 프레임워크가 수익을 냅니다.",
     evidence:
-      "현재 산출물은 인프라, 결정론적 증거, 검증 경계입니다. Live strategy, fund, signal service, software revenue 주장이 없습니다.",
+      "이 과거 기록의 산출물은 인프라, 결정론적 증거, 검증 경계입니다. 별도의 계정 텔레메트리는 연구 전략의 실거래 성과 증거가 아닙니다.",
     limit: "연구 증거를 track record나 기대수익으로 표현해서는 안 됩니다.",
     status: "Not claimed",
     statusLabel: "주장하지 않음",

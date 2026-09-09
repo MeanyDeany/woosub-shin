@@ -12,12 +12,12 @@ const models = ["GARCH(1,1)-t", "EGARCH(1,1)-t", "GJR-GARCH(1,1)-t", "HAR-RV"] a
 const evidence = ["Fit Ledger", "State Ledger", "Forward Outcome Ledger"] as const;
 
 const researchPassport = [
-  ["Current program", "BTC Derivatives Context Research v1"],
-  ["Research stage", "Official-source coverage assessment"],
+  ["Historical program", "BTC Derivatives Context Research v1"],
+  ["Recorded stage", "Official-source coverage assessment"],
   ["Evidence class", "Prespecified feasibility scope"],
-  ["Current information set", "Funding · Premium · Mark · Index"],
+  ["Recorded information set", "Funding · Premium · Mark · Index"],
   ["Execution authority", "None"],
-  ["Next gate", "Minimum viable historical set feasible?"],
+  ["Question at that stage", "Minimum viable historical set feasible?"],
 ] as const;
 
 const decisionLedger = [
@@ -94,7 +94,7 @@ export function ResearchArchitectureStrip() {
               From asset context to evidence, verdict, and the next information frontier
             </h2>
             <p className="mt-4 max-w-3xl text-sm leading-7 text-[#7E8B9D] sm:text-base">
-              The public system is organized around explicit provenance and mechanical research decisions.
+              This historical infrastructure snapshot is organized around explicit provenance and mechanical research decisions. ASRA’s current findings are reported separately.
               Unsupported hypotheses are archived instead of cosmetically rescued after results.
             </p>
           </div>
@@ -105,9 +105,9 @@ export function ResearchArchitectureStrip() {
                 <p className="text-[10px] font-semibold uppercase tracking-normal text-[#42D7F5]">
                   Research passport
                 </p>
-                <p className="mt-2 text-sm text-[#B6C0CF]">Current public program identity</p>
+                <p className="mt-2 text-sm text-[#B6C0CF]">Historical program snapshot</p>
               </div>
-              <span className="h-2 w-2 rounded-full bg-[#42D7F5] shadow-[0_0_20px_rgba(66,215,245,0.65)]" aria-hidden="true" />
+              <span className="h-2 w-2 rounded-full bg-[#42D7F5] " aria-hidden="true" />
             </div>
             <dl className="divide-y divide-[#7E8B9D]/12">
               {researchPassport.map(([label, value]) => (
@@ -221,7 +221,7 @@ export function ResearchArchitectureStrip() {
               <div className="flex items-center gap-3">
                 <span className="h-px w-8 bg-[#9B6CFF]" aria-hidden="true" />
                 <p className="text-[11px] font-semibold uppercase tracking-normal text-[#9B6CFF]">
-                  Current research frontier
+                  Research frontier at that stage
                 </p>
               </div>
               <h3 className="mt-4 text-2xl font-semibold leading-tight text-[#F4F7FB] sm:text-3xl">

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { metadataFor } from "@/lib/site-metadata";
 import Link from "next/link";
 import { BtcLifetimePerformance } from "@/components/btc-lifetime-performance";
 import { BtcLiveMultiPosition } from "@/components/btc-live-multi-position";
@@ -6,11 +6,11 @@ import { PageShell } from "@/components/site-shell";
 import { deriveBtcLifetimePerformanceFeedUrl } from "@/lib/btc-lifetime-performance";
 import { deriveBtcLiveMultiPositionFeedUrl } from "@/lib/btc-live-multi-position";
 
-export const metadata: Metadata = {
-  title: "Live Binance USD-M Positions and Performance",
-  description:
-    "Sanitized authenticated read-only telemetry for every open Binance USD-M position and flow-adjusted account-wide trading performance since August 1, 2026.",
-};
+export const metadata = metadataFor(
+  "/projects/btc-futures-research/live-position",
+  "Read-only Positions and Performance",
+  "Read-only operational telemetry for open Binance USD-M positions and flow-adjusted account-wide performance since August 1, 2026. Operational evidence does not confer research or execution authority.",
+);
 
 export default function LiveBtcPositionPage() {
   const positionFeedUrl = deriveBtcLiveMultiPositionFeedUrl(
@@ -24,7 +24,7 @@ export default function LiveBtcPositionPage() {
 
   return (
     <PageShell>
-      <main className="min-h-screen bg-[#050608]">
+      <div className="min-h-screen bg-[#050608]">
         <section className="border-b border-[#7E8B9D]/12 bg-[#07090D]">
           <div className="mx-auto max-w-[1180px] px-5 py-12 sm:py-16 lg:px-8">
             <Link
@@ -34,10 +34,10 @@ export default function LiveBtcPositionPage() {
               ← BTC research system
             </Link>
             <p className="mt-10 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#42D7F5]">
-              Public execution-side observation
+              Systems · Read-only operational evidence
             </p>
             <h1 className="mt-4 max-w-4xl text-4xl font-semibold leading-tight tracking-[-0.04em] text-[#F4F7FB] sm:text-5xl">
-              Every open Binance USD-M position with flow-adjusted trading performance.
+              Read-only execution telemetry
             </h1>
             <p className="mt-6 max-w-3xl text-base leading-7 text-[#B6C0CF]">
               This page renders sanitized public projections produced from one authenticated Binance USD-M read-only observation. Position telemetry dynamically covers every non-zero account position. Performance starts at August 1, 2026 and excludes deposits, withdrawals, transfers, and non-trading rewards from trading PnL.
@@ -73,7 +73,7 @@ export default function LiveBtcPositionPage() {
             ))}
           </div>
         </section>
-      </main>
+      </div>
     </PageShell>
   );
 }

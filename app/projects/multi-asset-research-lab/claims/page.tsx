@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { metadataFor } from "@/lib/site-metadata";
 import {
   CtaLink,
   EditorialSection,
@@ -7,12 +7,14 @@ import {
 } from "@/components/editorial";
 import { PageShell } from "@/components/site-shell";
 import { claimLedger } from "@/lib/public-progress";
+import { researchEvidence } from "@/lib/research-evidence";
+import { ResearchFindingCard } from "@/components/research-ui";
 
-export const metadata: Metadata = {
-  title: "Research Claims Ledger",
-  description:
-    "A public ledger separating demonstrated research capabilities, work in progress, unclaimed outcomes, and explicitly unapproved trading states.",
-};
+export const metadata = metadataFor(
+  "/projects/multi-asset-research-lab/claims",
+  "Research Claims Ledger",
+  "Current ASRA research claims and scoped historical infrastructure evidence, with separate limitations and authority boundaries.",
+);
 
 export default function ResearchClaimsLedgerPage() {
   return (
@@ -21,7 +23,7 @@ export default function ResearchClaimsLedgerPage() {
         accent="violet"
         eyebrow="Research claims ledger"
         title="Every public claim carries its evidence and its limit."
-        intro="The ledger separates what has been demonstrated from what is still being built, what is not claimed, and what remains explicitly unapproved."
+        intro="Current ASRA findings and historical infrastructure records retain separate scopes. A completed study, a preserved artifact, and an operational system answer different questions."
         actions={
           <>
             <CtaLink href="/projects/multi-asset-research-lab" kind="primary">
@@ -31,17 +33,28 @@ export default function ResearchClaimsLedgerPage() {
           </>
         }
         metadata={[
-          { label: "Claims", value: String(claimLedger.length) },
+          { label: "Historical records", value: String(claimLedger.length) },
           { label: "Evidence standard", value: "Narrow and reproducible" },
           { label: "Profitability claim", value: "None" },
-          { label: "Trading approval", value: "None" },
+          { label: "Automatic research authority", value: "None" },
         ]}
       />
 
       <EditorialSection
+        eyebrow="Current ASRA findings"
+        title="Forecast confirmation and policy utility are separate claims"
+        intro="Both studies are completed. The forecast assessment confirms risk information; the policy test did not confirm its preregistered utility claim."
+        className="research-page"
+      >
+        <ResearchFindingCard record={researchEvidence.independentRiskForecast} />
+        <ResearchFindingCard record={researchEvidence.policyUtility} />
+        <div className="research-actions"><CtaLink href="/asra#evidence-protocol">Read the evidence protocol</CtaLink><CtaLink href="/build-log#pr41-boundary-digest">Read the scoped verification blocker</CtaLink></div>
+      </EditorialSection>
+
+      <EditorialSection
         accent="violet"
-        eyebrow="Claim by claim"
-        title="Evidence without the costume jewellery"
+        eyebrow="Historical infrastructure records"
+        title="Claims and their original evidence boundaries"
         intro="Each row answers three questions: what is being said, what supports it, and where the claim stops."
         tone="deep"
       >
@@ -55,9 +68,9 @@ export default function ResearchClaimsLedgerPage() {
 
                 <div>
                   <StatusLabel accent={item.tone}>{item.status}</StatusLabel>
-                  <h2 className="mt-5 text-2xl font-semibold leading-tight tracking-[-0.035em] text-[#111A2E] sm:text-3xl">
+                  <h3 className="mt-5 text-2xl font-semibold leading-tight tracking-[-0.035em] text-[#111A2E] sm:text-3xl">
                     {item.claim}
-                  </h2>
+                  </h3>
                   <div className="mt-6">
                     <p className="text-[0.67rem] font-semibold uppercase tracking-[0.14em] text-[#77839A]">
                       Evidence
@@ -95,7 +108,7 @@ export default function ResearchClaimsLedgerPage() {
           <article className="glass-panel rounded-[2rem] p-6 sm:p-8">
             <StatusLabel accent="amber">Operational state</StatusLabel>
             <p className="mt-6 text-2xl font-semibold leading-tight tracking-[-0.03em] text-[#111A2E]">
-              Paper and live trading remain unapproved until separately reviewed.
+              Research findings do not authorize paper or live trading. Execution systems and read-only account telemetry remain a separate supporting layer.
             </p>
           </article>
         </div>

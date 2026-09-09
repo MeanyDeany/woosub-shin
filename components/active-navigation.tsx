@@ -2,181 +2,80 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
-import { navigation, navigationKo } from "@/lib/content";
-import type { SiteLocale } from "@/components/language-switcher";
+import { useId, useRef, useState } from "react";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { primaryNavigation } from "@/lib/site-routes";
 
 function isActiveRoute(pathname: string, href: string) {
-  if (href === "/" || href === "/ko") return pathname === href;
+  if (href === "/") return pathname === href;
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export function ActiveNavigation({
-  locale = "en",
-  showcase = false,
-}: {
-  locale?: SiteLocale;
-  showcase?: boolean;
-}) {
+export function ActiveNavigation() {
   const pathname = usePathname();
-  const [openMenuState, setOpenMenuState] = useState<{
-    href: string;
-    pathname: string;
-  } | null>(null);
-  const navRef = useRef<HTMLElement>(null);
-  const openMenu = openMenuState?.pathname === pathname ? openMenuState.href : null;
-  const items = locale === "ko" ? navigationKo : navigation;
-  const livePositionHref =
-    locale === "ko"
-      ? "/ko/projects/btc-futures-research/live-position"
-      : "/projects/btc-futures-research/live-position";
-  const livePositionActive = isActiveRoute(pathname, livePositionHref);
-  const navLinkClass = showcase
-    ? "text-white/55 hover:text-white"
-    : "theme-nav-link";
-  const activeNavLinkClass = showcase ? "text-white" : "theme-nav-link--active";
-
-  useEffect(() => {
-    function handlePointerDown(event: PointerEvent) {
-      if (!navRef.current?.contains(event.target as Node)) setOpenMenuState(null);
-    }
-
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key !== "Escape") return;
-
-      const openPanel = navRef.current?.querySelector<HTMLElement>(
-        ".header-menu__panel--open",
-      );
-      if (!openPanel) return;
-
-      const toggle = openPanel
-        .closest(".header-menu")
-        ?.querySelector<HTMLButtonElement>(".header-menu__toggle");
-      event.preventDefault();
-      setOpenMenuState(null);
-      toggle?.focus();
-    }
-
-    document.addEventListener("pointerdown", handlePointerDown);
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("pointerdown", handlePointerDown);
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
+  const [openedForPath, setOpenedForPath] = useState<string | null>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const panelId = useId();
+  const expanded = openedForPath === pathname;
 
   return (
-    <nav
-      ref={navRef}
-      aria-label={locale === "ko" ? "주요 탐색" : "Primary navigation"}
-      className="min-w-0"
+    <div
+      className="primary-navigation"
+      onKeyDown={(event) => {
+        if (event.key === "Escape" && expanded) {
+          event.preventDefault();
+          setOpenedForPath(null);
+          toggleRef.current?.focus();
+        }
+      }}
     >
-      <ul className="scrollbar-none flex min-w-max items-center gap-3 sm:gap-6">
-        {items.map((item) => {
-          const active = isActiveRoute(pathname, item.href);
-          const activeClass = active ? activeNavLinkClass : "";
-          const hasChildren = "children" in item && item.children.length > 0;
-
-          if (!hasChildren) {
-            return (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  aria-current={active ? "page" : undefined}
-                  className={`${navLinkClass} ${activeClass} inline-flex min-h-10 items-center text-xs font-medium transition-colors sm:text-[0.82rem]`}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            );
-          }
-
-          const expanded = openMenu === item.href;
-          const panelId = `submenu-${item.href.replace(/[^a-z0-9]+/gi, "-")}`;
-          const alignmentClass = item.href.endsWith("/research") ? "header-menu--align-right" : "";
-
-          return (
-            <li
-              key={item.href}
-              className={`header-menu ${alignmentClass}`}
-              onMouseEnter={() => setOpenMenuState({ href: item.href, pathname })}
-              onMouseLeave={() => setOpenMenuState(null)}
-              onBlur={(event) => {
-                if (!event.currentTarget.contains(event.relatedTarget as Node | null)) {
-                  setOpenMenuState(null);
-                }
-              }}
-            >
-              <div className="header-menu__top">
-                <Link
-                  href={item.href}
-                  aria-current={active ? "page" : undefined}
-                  className={`${navLinkClass} ${activeClass} header-menu__parent-link inline-flex min-h-10 items-center text-xs font-medium transition-colors sm:text-[0.82rem]`}
-                  onClick={() => setOpenMenuState(null)}
-                  onFocus={() => setOpenMenuState({ href: item.href, pathname })}
-                >
-                  {item.label}
-                </Link>
-                <button
-                  type="button"
-                  aria-label={
-                    locale === "ko"
-                      ? `${item.label} 하위 메뉴 ${expanded ? "닫기" : "열기"}`
-                      : `${expanded ? "Close" : "Open"} ${item.label} submenu`
-                  }
-                  aria-expanded={expanded}
-                  aria-haspopup="menu"
-                  aria-controls={panelId}
-                  className={`${navLinkClass} header-menu__toggle`}
-                  onClick={() =>
-                    setOpenMenuState(expanded ? null : { href: item.href, pathname })
-                  }
-                >
-                  <span aria-hidden="true" className="header-menu__chevron">⌄</span>
-                </button>
-              </div>
-
-              <div
-                id={panelId}
-                className={`header-menu__panel ${showcase ? "header-menu__panel--showcase" : ""} ${expanded ? "header-menu__panel--open" : ""}`}
+      <button
+        ref={toggleRef}
+        type="button"
+        aria-expanded={expanded}
+        aria-controls={panelId}
+        className="navigation-disclosure"
+        onClick={() => setOpenedForPath(expanded ? null : pathname)}
+      >
+        Menu
+        <span aria-hidden="true">{expanded ? "−" : "+"}</span>
+      </button>
+      <nav
+        aria-label="Primary navigation"
+        id={panelId}
+        className={`navigation-panel${expanded ? " navigation-panel--open" : ""}`}
+        onClick={(event) => {
+          if ((event.target as HTMLElement).closest("a")) setOpenedForPath(null);
+        }}
+      >
+        <ul className="navigation-links">
+          <li className="navigation-home">
+            <Link href="/" aria-current={pathname === "/" ? "page" : undefined}>
+              Home
+            </Link>
+          </li>
+          {primaryNavigation.map((item) => (
+            <li key={item.href}>
+              <Link
+                href={item.href}
+                aria-current={pathname === item.href ? "page" : undefined}
+                data-active={isActiveRoute(pathname, item.href) || undefined}
               >
-                <p className="header-menu__eyebrow">{item.label}</p>
-                <ul role="menu" className="header-menu__list">
-                  {item.children.map((child) => (
-                    <li key={child.href} role="none">
-                      <Link
-                        href={child.href}
-                        role="menuitem"
-                        className="header-menu__link"
-                        onClick={() => setOpenMenuState(null)}
-                      >
-                        <span className="header-menu__label">{child.label}</span>
-                        <span className="header-menu__detail">{child.detail}</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                {item.label}
+              </Link>
             </li>
-          );
-        })}
-        <li>
-          <Link
-            href={livePositionHref}
-            aria-current={livePositionActive ? "page" : undefined}
-            className={`inline-flex min-h-9 items-center gap-1.5 rounded-full border px-2.5 text-[0.68rem] font-semibold transition-colors sm:px-3 sm:text-xs ${
-              livePositionActive
-                ? "border-[#3DDC97]/60 bg-[#3DDC97]/14 text-[#7CF0B9]"
-                : showcase
-                  ? "border-[#3DDC97]/25 bg-[#3DDC97]/8 text-[#7CF0B9] hover:border-[#3DDC97]/55 hover:bg-[#3DDC97]/14"
-                  : "border-[#3DDC97]/30 bg-[#3DDC97]/8 text-[#16875B] hover:border-[#3DDC97]/55 hover:bg-[#3DDC97]/14 dark:text-[#7CF0B9]"
-            }`}
-          >
-            <span className="h-1.5 w-1.5 rounded-full bg-[#3DDC97] shadow-[0_0_8px_rgba(61,220,151,0.7)]" aria-hidden="true" />
-            {locale === "ko" ? "실계정" : "LIVE BTC"}
+          ))}
+        </ul>
+        <div className="navigation-utilities">
+          <Link href="/resume" className="navigation-utility">
+            Resume
           </Link>
-        </li>
-      </ul>
-    </nav>
+          <a href="https://github.com/MeanyDeany" target="_blank" rel="noreferrer" className="navigation-utility">
+            GitHub <span aria-hidden="true">↗</span>
+          </a>
+          <ThemeToggle />
+        </div>
+      </nav>
+    </div>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, type KeyboardEvent } from "react";
+import { useId, useRef, useState, type KeyboardEvent } from "react";
 import {
   PIPELINE_STAGES,
   SYNTHETIC_WALKTHROUGH_IDENTIFIERS,
@@ -15,6 +15,7 @@ const statusLabels = {
 } as const;
 
 export function EvidencePipelineExplorer() {
+  const panelId = useId();
   const [activeIndex, setActiveIndex] = useState(0);
   const stageButtonRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const activeStage = PIPELINE_STAGES[activeIndex];
@@ -72,7 +73,7 @@ export function EvidencePipelineExplorer() {
               id={`pipeline-tab-${stage.id}`}
               type="button"
               role="tab"
-              aria-controls={`pipeline-panel-${stage.id}`}
+              aria-controls={panelId}
               aria-selected={status === "active"}
               tabIndex={status === "active" ? 0 : -1}
               onClick={() => selectStage(index)}
@@ -103,7 +104,7 @@ export function EvidencePipelineExplorer() {
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[minmax(0,1.35fr)_minmax(18rem,0.65fr)]">
         <section
-          id={`pipeline-panel-${activeStage.id}`}
+          id={panelId}
           role="tabpanel"
           aria-labelledby={`pipeline-tab-${activeStage.id}`}
           className="min-w-0 border border-[#7E8B9D]/18 bg-[#0B0F16] p-5 sm:p-7"

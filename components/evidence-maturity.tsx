@@ -4,6 +4,7 @@ export function EvidenceMaturity() {
   return (
     <div>
       <ProvenanceBadge provenance="current-static-snapshot" />
+      <p className="site-muted mt-3 text-sm leading-6">Historical baseline snapshot for this evidence pipeline. These maturity counts do not describe the separate ASRA independent risk assessment.</p>
       <div className="mt-5 overflow-hidden rounded-lg border border-[#FFB547]/22 bg-[#0D0C0B] p-5 sm:p-7 lg:p-9">
         <div className="grid gap-4 sm:grid-cols-3">
           {[

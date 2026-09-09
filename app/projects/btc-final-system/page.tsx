@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { metadataFor } from "@/lib/site-metadata";
 import {
   CtaLink,
   EditorialSection,
@@ -9,11 +9,11 @@ import {
 } from "@/components/editorial";
 import { PageShell } from "@/components/site-shell";
 
-export const metadata: Metadata = {
-  title: "BTC Final Research System V1",
-  description:
-    "The retained BTCUSDT Daily Dual EMA 50/200 research system, its retrospective validation result, disclosed limitations, and prospective forward-observation runtime.",
-};
+export const metadata = metadataFor(
+  "/projects/btc-final-system",
+  "Daily EMA Long/Flat — Retained Historical System",
+  "A retained BTC Daily EMA 50/200 historical research study with three completed trades, concentration, cost sensitivity, post-selection limitations, and a separate forward-observation boundary.",
+);
 
 const primaryMetrics = [
   { label: "FULL return", value: "+165.92%" },
@@ -78,17 +78,18 @@ export default function BtcFinalSystemPage() {
     <PageShell>
       <PageHero
         accent="cyan"
-        eyebrow="BTC Final Research System V1"
-        title="A frozen BTC research system now has both a historical result and a forward clock."
-        intro="Daily Dual EMA 50/200 was selected from a frozen search, survived a separate deep-validation contract, and was then handed into an append-only public-data runtime. The historical result is strong enough to study and uncertain enough to keep in its lane."
+        eyebrow="Retained historical system · BTC Final Research System V1"
+        title="Daily EMA long/flat: a retained historical system."
+        intro="Daily Dual EMA 50/200 documents frozen search, historical validation, and a separate forward-observation boundary. Only three completed historical trades underpin the result; concentration, post-selection, and cost sensitivity limit the claim. This is not the strongest current scientific result."
         actions={
           <>
             <CtaLink href="#result" kind="primary">See the historical result</CtaLink>
             <CtaLink href="#forward">See the forward boundary</CtaLink>
+            <CtaLink href="/research/risk-forecasting#independent-assessment">Inspect the strongest confirmed finding</CtaLink>
           </>
         }
         metadata={[
-          { label: "Status", value: "Retained research system" },
+          { label: "Role", value: "RETAINED HISTORICAL SYSTEM" },
           { label: "Forward state", value: "Prospective observation active" },
           { label: "Trading authority", value: "None" },
           { label: "Strategy", value: "Daily Dual EMA 50/200 · long/flat" },
@@ -98,7 +99,7 @@ export default function BtcFinalSystemPage() {
       <EditorialSection
         id="result"
         eyebrow="Retrospective result"
-        title="The research engine finally produced something falsifiable"
+        title="Historical result and its comparison context"
         intro="FULL covers 1 Jan 2022 through 30 Jul 2026 under 5bp per transition side and exact authenticated funding. These are research metrics, not a live track record."
         tone="elevated"
       >
@@ -241,7 +242,7 @@ export default function BtcFinalSystemPage() {
         accent="amber"
         eyebrow="Interpretation"
         title="A retained research system is still not a trading approval"
-        intro="The strongest public claim is narrow: one frozen BTC research system produced an attractive retrospective result and is now accumulating prospective research-state observations under an explicit forward boundary."
+        intro="The claim for this retained historical system is narrow: retrospective evidence with three completed trades, concentrated growth, and post-selection limitations. Prospective research-state observations have a separate explicit forward boundary."
         tone="warm"
       >
         <div className="grid gap-5 md:grid-cols-2">
