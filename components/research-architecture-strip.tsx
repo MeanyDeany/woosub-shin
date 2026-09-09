@@ -94,7 +94,7 @@ export function ResearchArchitectureStrip() {
               From asset context to evidence, verdict, and the next information frontier
             </h2>
             <p className="mt-4 max-w-3xl text-sm leading-7 text-[#7E8B9D] sm:text-base">
-              This historical infrastructure snapshot is organized around explicit provenance and mechanical research decisions. ASTRA’s current findings are reported separately.
+              This historical infrastructure snapshot is organized around explicit provenance and mechanical research decisions. ASRA’s current findings are reported separately.
               Unsupported hypotheses are archived instead of cosmetically rescued after results.
             </p>
           </div>

@@ -212,7 +212,7 @@ export const claimLedgerKo: readonly {
   {
     claim: "정확한 과거 close-return evidence가 작동합니다.",
     evidence: "과거 인프라 snapshot에는 verified historical-bar pipeline 이후 exact rational close-return transform을 구축 중인 상태로 기록했습니다. 이 기록은 현재 연구 상태를 뜻하지 않습니다.",
-    limit: "이 과거 snapshot만으로 transform의 완료나 현재 진행 상태를 주장하지 않습니다. 최신 연구 결과는 별도의 ASTRA evidence record를 확인해야 합니다.",
+    limit: "이 과거 snapshot만으로 transform의 완료나 현재 진행 상태를 주장하지 않습니다. 최신 연구 결과는 별도의 ASRA evidence record를 확인해야 합니다.",
     status: "Not claimed",
     statusLabel: "과거 진행 기록",
     tone: "cyan",

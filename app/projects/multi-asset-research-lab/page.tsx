@@ -124,11 +124,11 @@ export default function MultiAssetResearchLabPage() {
         accent="cyan"
         eyebrow="Multi-Asset Research Lab"
         title="Research infrastructure and its historical lineage."
-        intro="The Lab documents data contracts, deterministic replay, frozen comparisons, validation, and the retained BTC system’s historical-to-forward handoff. ASTRA is the current research program; these records preserve its infrastructure lineage without asserting that every historical component is already integrated."
+        intro="The Lab documents data contracts, deterministic replay, frozen comparisons, validation, and the retained BTC system’s historical-to-forward handoff. ASRA is the current research program; these records preserve its infrastructure lineage without asserting that every historical component is already integrated."
         actions={
           <>
-            <CtaLink href="/astra" kind="primary">
-              Explore ASTRA
+            <CtaLink href="/asra" kind="primary">
+              Explore ASRA
             </CtaLink>
             <CtaLink href="/projects/multi-asset-research-lab/claims">
               Read the claims ledger

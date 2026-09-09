@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { ObservationField } from "@/components/observation-field";
 import {
   evidenceClasses, evidenceClassDescriptions, workStateDescriptions, workStateLabels,
   getMetricGroup, homePipeline, researchPipeline, researchTimelineLanes, researchEvidence,
@@ -21,7 +22,7 @@ export function ResearchSection({ id, eyebrow, title, children }: {
 export function ResearchHero({ eyebrow, title, intro, children }: {
   eyebrow: string; title: string; intro: string; children?: ReactNode;
 }) {
-  return <section className="research-hero"><div className="research-container">
+  return <section className="research-hero"><ObservationField /><div className="research-container">
     <p className="research-kicker">{eyebrow}</p><h1>{title}</h1>
     <p className="research-prose">{intro}</p>{children}
   </div></section>;
@@ -37,7 +38,7 @@ export function EvidenceStatus({ evidenceClass, workState, outcome }: {
   evidenceClass: EvidenceClass | null; workState?: WorkState; outcome?: string;
 }) {
   return <div className="evidence-status-row">
-    {evidenceClass && <a className="evidence-status" data-evidence={evidenceClass.toLowerCase().replaceAll(" ", "_")} href="/astra#evidence-protocol" aria-label={`${evidenceClass}: ${evidenceClassDescriptions[evidenceClass]}`}>{evidenceClass}</a>}
+    {evidenceClass && <a className="evidence-status" data-evidence={evidenceClass.toLowerCase().replaceAll(" ", "_")} href="/asra#evidence-protocol" aria-label={`${evidenceClass}: ${evidenceClassDescriptions[evidenceClass]}`}>{evidenceClass}</a>}
     {workState && <span className="evidence-status" data-evidence={workState}>{workStateLabels[workState]}</span>}
     {outcome && <span className="evidence-status evidence-outcome">{outcome}</span>}
   </div>;
@@ -94,7 +95,9 @@ export function ResearchFindingCard({ record }: { record: ResearchRecord }) {
 
 export function ResearchPipeline({ detailed = false }: { detailed?: boolean }) {
   return <>
-    <ol className="research-pipeline">{homePipeline.map((stage, index) => <li key={stage.title}><span className="pipeline-number">{String(index + 1).padStart(2, "0")}</span><strong className="pipeline-label">{stage.title}</strong>{detailed && <p>{stage.description}</p>}</li>)}</ol>
+    <div className="pipeline-observation"><ObservationField variant="sequence" />
+      <ol className="research-pipeline">{homePipeline.map((stage, index) => <li key={stage.title}><span className="pipeline-number">{String(index + 1).padStart(2, "0")}</span><strong className="pipeline-label">{stage.title}</strong>{detailed && <p>{stage.description}</p>}</li>)}</ol>
+    </div>
     {detailed && <>
       <h3>The full research sequence</h3>
       <ol className="pipeline-deep">{researchPipeline.map(stage => <li key={stage.title}>{stage.title}</li>)}</ol>

@@ -39,6 +39,8 @@ function loadStaticModule(relativeFilename) {
 
 test("public route inventory contains exactly the existing 18 English pages", () => {
   assert.equal(siteRoutes.length, 18);
+  assert.ok(siteRoutes.includes("/asra"));
+  assert.ok(!siteRoutes.includes("/astra"));
   assert.equal(new Set(siteRoutes).size, siteRoutes.length);
   assert.deepEqual([...siteRoutes].sort(), pageRoutes().sort());
   assert.ok(siteRoutes.every((route) => !/^\/ko(?:\/|$)/.test(route)));
@@ -48,6 +50,8 @@ test("sitemap and metadata emit no Korean pages or hreflang alternates", () => {
   const { default: sitemap } = loadStaticModule("app/sitemap.ts");
   const { metadataFor } = loadStaticModule("lib/site-metadata.ts");
   const entries = sitemap();
+  assert.ok(entries.some((entry) => new URL(entry.url).pathname === "/asra"));
+  assert.ok(entries.every((entry) => new URL(entry.url).pathname !== "/astra"));
   assert.deepEqual(entries.map((entry) => new URL(entry.url).pathname).sort(), [...siteRoutes].sort());
   for (const entry of entries) {
     assert.equal(entry.alternates, undefined);
@@ -63,7 +67,7 @@ test("sitemap and metadata emit no Korean pages or hreflang alternates", () => {
 });
 
 test("all 13 retired Korean URLs redirect directly to existing English counterparts", async () => {
-  const redirects = await nextConfig.redirects();
+  const redirects = (await nextConfig.redirects()).filter((entry) => /^\/ko(?:\/|$)/.test(entry.source));
   const historicalSources = [
     "/ko", "/ko/research", "/ko/papers", "/ko/projects",
     "/ko/projects/btc-futures-research", "/ko/projects/btc-futures-research/live-position",
@@ -80,11 +84,24 @@ test("all 13 retired Korean URLs redirect directly to existing English counterpa
   }
 });
 
+test("the former program URL redirects only to the canonical ASRA route", async () => {
+  const redirects = await nextConfig.redirects();
+  assert.equal(redirects.length, 14);
+  assert.equal(new Set(redirects.map((entry) => entry.source)).size, redirects.length);
+  assert.deepEqual(redirects.filter((entry) => !/^\/ko(?:\/|$)/.test(entry.source)), [
+    { source: "/astra", destination: "/asra", permanent: false },
+  ]);
+  for (const redirect of redirects) {
+    assert.ok(siteRoutes.includes(redirect.destination));
+    assert.ok(!redirects.some((entry) => entry.source === redirect.destination), "Legacy redirects must not chain.");
+  }
+});
+
 test("normal navigation exposes no language switch or retired routes", () => {
   const navigation = readFileSync(path.join(root, "components/active-navigation.tsx"), "utf8");
   const shell = readFileSync(path.join(root, "components/site-shell.tsx"), "utf8");
   assert.doesNotMatch(navigation, /LanguageSwitcher|language-switcher|primaryNavigationKo|한국어|English-only|\bEN\b/);
   assert.doesNotMatch(shell, /LanguageSwitcher|한국어|English-only|\/ko(?:\/|["'])/);
-  assert.deepEqual(primaryNavigation.map((item) => item.label), ["ASTRA", "Research", "Papers", "Systems", "About"]);
+  assert.deepEqual(primaryNavigation.map((item) => item.label), ["ASRA", "Research", "Papers", "Systems", "About"]);
   assert.ok(primaryNavigation.every((item) => siteRoutes.includes(item.href)));
 });

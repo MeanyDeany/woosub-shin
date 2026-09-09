@@ -224,7 +224,7 @@ export const claimLedger: readonly {
     evidence:
       "The initial 23 Jul 2026 health snapshot was WATCH / BOOTSTRAP with 15 complete scheduled lineages out of 21 matured expected cycles and zero failing checks.",
     limit:
-      "At that initial snapshot, comparison was deferred until the frozen maturity requirements were met, including at least 168 clean scheduled outcome lineages and coverage thresholds. This historical pipeline snapshot does not describe the separate ASTRA independent assessment.",
+      "At that initial snapshot, comparison was deferred until the frozen maturity requirements were met, including at least 168 clean scheduled outcome lineages and coverage thresholds. This historical pipeline snapshot does not describe the separate ASRA independent assessment.",
     status: "Not claimed",
     tone: "violet",
   },

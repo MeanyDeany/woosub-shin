@@ -69,6 +69,14 @@ test("source availability never creates a placeholder or private repository URL"
   }
 });
 
+test("public research records use ASRA branding and canonical program links", () => {
+  assert.equal(researchEvidence.policyUtility.title, "ASRA Risk Policy Utility V1");
+  assert.equal(researchEvidence.candidateGeneratorV3.title, "ASRA Candidate Generator V3");
+  assert.doesNotMatch(JSON.stringify(researchEvidence), /astra/i);
+  assert.equal(researchEvidence.turnoverDecomposition.detailHref, "/asra#next-question");
+  assert.equal(researchEvidence.smallSignalSensitivity.detailHref, "/asra#small-signal-sensitivity");
+});
+
 test("timeline keeps completed V3 transfer and policy evidence in distinct research lanes", () => {
   assert.equal(researchTimeline.length, 11);
   assert.deepEqual(researchTimeline.slice(-3).map((stage) => stage.id), ["policy-translation-tested", "policy-utility-not-confirmed", "policy-mechanism"]);

@@ -34,7 +34,7 @@ export default function RiskForecastingPage() {
     <PageShell>
       <div className="research-page">
       <ResearchHero
-        eyebrow="ASTRA · Risk research"
+        eyebrow="ASRA · Risk research"
         title="Risk information, independently assessed."
         intro={forecast.question}
       >
@@ -154,7 +154,7 @@ export default function RiskForecastingPage() {
       <ResearchSection id="next-question" eyebrow="Proposed follow-up" title={nextQuestion.title}>
         <ResearchFindingCard record={nextQuestion} />
         <div className="research-actions">
-          <Link href="/astra#timeline" className="finding-link">Follow the full research progression</Link>
+          <Link href="/asra#timeline" className="finding-link">Follow the full research progression</Link>
           <Link href="/research" className="finding-link">All research findings</Link>
         </div>
       </ResearchSection>

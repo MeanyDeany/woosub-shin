@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ObservationField } from "@/components/observation-field";
 import { PageShell } from "@/components/site-shell";
 import { AuthorityBoundary, CurrentResearch, EvidenceMetricGroup, EvidenceStatus, PolicySummary, ResearchFindingCard, ResearchPipeline } from "@/components/research-ui";
 import { historicalResearchPerformance, researchEvidence, researchTimelineLanes } from "@/lib/research-evidence";
@@ -20,15 +21,18 @@ export function PortfolioHome() {
   const forecast = researchEvidence.independentRiskForecast;
   const historical = historicalResearchPerformance;
   return <PageShell><div className="research-page">
-    <section className="research-hero home-hero"><div className="research-container research-split">
+    <section className="research-hero home-hero"><ObservationField /><div className="research-container research-split">
       <div>
         <p className="home-identity">WOOSUB SHIN</p>
         <p className="home-role">Quantitative Researcher</p>
         <h1 lang="en">Quantitative research built to survive falsification.</h1>
-        <p className="home-program"><strong>ASTRA</strong> · <span lang="en">AI-augmented systematic research architecture</span></p>
+        <div className="home-program">
+          <strong className="program-mark">ASRA</strong>
+          <div><p>AI Systematic Research Architecture</p><p className="program-method">Observation / Test / Falsification</p></div>
+        </div>
         <p className="research-prose">I turn market questions into reproducible experiments, challenge the measurement, and explain what survives.</p>
         <div className="research-actions">
-          <Link className="research-button primary" href="/astra">Explore ASTRA<span aria-hidden="true">→</span></Link>
+          <Link className="research-button primary" href="/asra">Explore ASRA<span aria-hidden="true">→</span></Link>
           <Link className="research-button" href="/research">View Research</Link>
           <Link href="/resume">Resume</Link><a href="https://github.com/MeanyDeany" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
         </div>
@@ -67,14 +71,14 @@ export function PortfolioHome() {
       <ul id="historical-performance-caveats" className="historical-performance-caveats">{historical.caveats.map(caveat => <li key={caveat}>{caveat}</li>)}</ul>
       <div className="research-actions"><Link href={historical.detailHref}>Inspect the retained historical system <span aria-hidden="true">→</span></Link></div>
     </div></section>
-    <section className="research-section" lang="en"><div className="research-container">
-      <p className="research-kicker">How ASTRA works</p>
+    <section className="research-section home-measurement" lang="en"><div className="research-container">
+      <p className="research-kicker">How ASRA works</p>
       <div className="research-split"><h2 className="research-heading">A research architecture that makes weak evidence useful.</h2><p className="research-prose">Generate candidates, test the measurement, challenge the result, and repair what failed. AI tools support implementation and review; claims remain tied to explicit tests and human responsibility.</p></div>
       <ResearchPipeline />
-      <div className="research-actions"><Link href="/astra#engine">Explore the research engine <span aria-hidden="true">→</span></Link></div>
+      <div className="research-actions"><Link href="/asra#engine">Explore the research engine <span aria-hidden="true">→</span></Link></div>
     </div></section>
     <section className="research-section" lang="en"><div className="research-container research-split">
-      <div><p className="research-kicker">What changed</p><h2 className="research-heading">Failure changed the measurement.<br />Evidence narrowed the claim.</h2><p className="research-prose">The return and risk lanes ask different questions. Repaired measurement did not demonstrate incremental historical return transfer in V3. Independent risk information survived, while a separate policy test did not confirm utility.</p><div className="research-actions"><Link href="/astra#timeline">Follow the research progression <span aria-hidden="true">→</span></Link></div></div>
+      <div><p className="research-kicker">What changed</p><h2 className="research-heading">Failure changed the measurement.<br />Evidence narrowed the claim.</h2><p className="research-prose">The return and risk lanes ask different questions. Repaired measurement did not demonstrate incremental historical return transfer in V3. Independent risk information survived, while a separate policy test did not confirm utility.</p><div className="research-actions"><Link href="/asra#timeline">Follow the research progression <span aria-hidden="true">→</span></Link></div></div>
       <div className="home-progression-lanes">{researchTimelineLanes.map(lane => <section className="home-progression-lane" key={lane.id} aria-labelledby={`home-lane-${lane.id}`}>
         <h3 id={`home-lane-${lane.id}`}>{lane.title}</h3>
         <ol className="home-progression-stages">{lane.stages.filter(stage => homeProgressionStages.has(stage.id)).map(stage => <li key={stage.id}>{stage.title}</li>)}</ol>

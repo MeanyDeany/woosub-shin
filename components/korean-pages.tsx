@@ -258,8 +258,8 @@ export function KoreanLabPage() {
         accent="cyan"
         eyebrow="멀티애셋 연구소"
         title="연구 인프라와 검증 구조의 이력"
-        intro="검증된 dataset, 재현 가능한 experiment, 감사 가능한 result로 이어지는 과거 인프라 snapshot이다. 현재 ASTRA 연구 결과와 이력의 시점을 구분한다."
-        actions={<><CtaLink href="/astra" kind="primary">현재 ASTRA 연구 (English)</CtaLink><CtaLink href="#what-it-is">인프라 설명</CtaLink><CtaLink href="#proof">검증된 실패 처리</CtaLink></>}
+        intro="검증된 dataset, 재현 가능한 experiment, 감사 가능한 result로 이어지는 과거 인프라 snapshot이다. 현재 ASRA 연구 결과와 이력의 시점을 구분한다."
+        actions={<><CtaLink href="/asra" kind="primary">현재 ASRA 연구 (English)</CtaLink><CtaLink href="#what-it-is">인프라 설명</CtaLink><CtaLink href="#proof">검증된 실패 처리</CtaLink></>}
         metadata={[
           { label: "시스템", value: "시스템 트레이딩 연구 인프라" },
           { label: "기록 당시 단계", value: "검증된 과거 데이터 실험" },
@@ -306,7 +306,7 @@ export function KoreanLabPage() {
           ))}
         </div>
       </EditorialSection>
-      <EditorialSection id="roadmap" accent="blue" eyebrow="과거 인프라 로드맵" title="기록 당시의 완료·진행·미승인을 구분한다" intro="과거 snapshot의 상태이며 현재 연구 진행 상황이 아니다. 최신 연구 결과와 완료된 synthetic scheduler 평가는 ASTRA에서 별도로 확인한다." tone="deep">
+      <EditorialSection id="roadmap" accent="blue" eyebrow="과거 인프라 로드맵" title="기록 당시의 완료·진행·미승인을 구분한다" intro="과거 snapshot의 상태이며 현재 연구 진행 상황이 아니다. 최신 연구 결과와 완료된 synthetic scheduler 평가는 ASRA에서 별도로 확인한다." tone="deep">
         <ol className="overflow-hidden rounded-[2rem] border border-[#7187AB]/15 bg-white/32">
           {roadmap.map(([index, title, status, tone]) => (
             <li key={index} className="grid gap-5 border-b border-[#7187AB]/14 p-6 last:border-b-0 md:grid-cols-[3rem_minmax(0,1fr)_auto] md:items-center">
@@ -468,7 +468,7 @@ export function KoreanResearchPage() {
       <PageHero accent="violet" eyebrow="신우섭 · 방법론" title="연구 방법론" intro="시간 정합성, 좁은 모델 역할, robust comparison, 불변 evidence, 보이는 failure state를 중심에 둔다." metadata={[
         { label: "데이터", value: "시간 정합" }, { label: "모델", value: "비교 대상이지 교리가 아님" }, { label: "증거", value: "감사 가능하고 불변" }, { label: "허가", value: "모델 출력 밖의 별도 상태" },
       ]} />
-      <EditorialSection eyebrow="연구 결과" title="위험 정보 확인과 별도의 policy 검증" intro="독립 평가에서 위험 예측 정보는 확인됐으며, 완료된 policy 검증에서는 사전 등록한 효용 주장이 확인되지 않았다. 영문 연구 기록에 각 평가의 범위와 한계를 명시한다."><div className="research-actions"><CtaLink href="/research">전체 연구 결과 (English)</CtaLink><CtaLink href="/astra#native-scheduler">완료된 synthetic scheduler 연구 (English)</CtaLink><CtaLink href="/astra#next-question">별도의 다음 질문 (English)</CtaLink></div></EditorialSection>
+      <EditorialSection eyebrow="연구 결과" title="위험 정보 확인과 별도의 policy 검증" intro="독립 평가에서 위험 예측 정보는 확인됐으며, 완료된 policy 검증에서는 사전 등록한 효용 주장이 확인되지 않았다. 영문 연구 기록에 각 평가의 범위와 한계를 명시한다."><div className="research-actions"><CtaLink href="/research">전체 연구 결과 (English)</CtaLink><CtaLink href="/asra#native-scheduler">완료된 synthetic scheduler 연구 (English)</CtaLink><CtaLink href="/asra#next-question">별도의 다음 질문 (English)</CtaLink></div></EditorialSection>
       <EditorialSection id="methodology" accent="violet" eyebrow="작업 원칙" title="연구 신뢰도는 누적된다" intro="단일 diagnostic이 시스템 타당성을 확정하지 않는다. 시간 규율, robustness, provenance, 운영 무결성, 좁은 주장이 쌓여 신뢰도를 만든다." tone="deep">
         <ol className="grid gap-5 lg:grid-cols-2">{principles.map(([index, title, text]) => <li key={index} className="glass-panel rounded-[2rem] p-6 sm:p-8"><div className="flex items-center gap-4"><span className="font-mono text-xs text-[#7251C8]">{index}</span><StatusLabel accent="violet">{title}</StatusLabel></div><p className="mt-6 text-base leading-8 text-[#657189]">{text}</p></li>)}</ol>
       </EditorialSection>
@@ -497,10 +497,10 @@ export function KoreanBuildLogPage() {
 export function KoreanClaimsPage() {
   return (
     <PageShell locale="ko">
-      <PageHero accent="violet" eyebrow="연구 주장 장부" title="모든 공개 주장에는 증거와 한계가 따라붙는다." intro="과거 인프라 snapshot의 주장과 한계를 보존한다. 현재 ASTRA 연구 결과와 이 기록의 시점을 구분한다." actions={<><CtaLink href="/ko/projects/multi-asset-research-lab" kind="primary">연구소로 돌아가기</CtaLink><CtaLink href="/ko/build-log">빌드 로그</CtaLink></>} metadata={[
+      <PageHero accent="violet" eyebrow="연구 주장 장부" title="모든 공개 주장에는 증거와 한계가 따라붙는다." intro="과거 인프라 snapshot의 주장과 한계를 보존한다. 현재 ASRA 연구 결과와 이 기록의 시점을 구분한다." actions={<><CtaLink href="/ko/projects/multi-asset-research-lab" kind="primary">연구소로 돌아가기</CtaLink><CtaLink href="/ko/build-log">빌드 로그</CtaLink></>} metadata={[
         { label: "주장", value: String(claimLedgerKo.length) }, { label: "증거 기준", value: "좁고 재현 가능" }, { label: "수익성 주장", value: "없음" }, { label: "거래 승인", value: "없음" },
       ]} />
-      <EditorialSection eyebrow="현재 연구" title="ASTRA 연구 결과와 증거 범위" intro="독립 위험 예측 확인과 완료된 policy 효용 검증은 별도의 평가다. 자세한 결과는 영문 연구 페이지에서 확인할 수 있다."><div className="research-actions"><CtaLink href="/research/risk-forecasting#independent-assessment">위험 예측 독립 평가 (English)</CtaLink><CtaLink href="/research/risk-forecasting#policy-utility">완료된 policy 효용 검증 (English)</CtaLink><CtaLink href="/astra#discoveries">ASTRA 연구 결과 (English)</CtaLink></div></EditorialSection>
+      <EditorialSection eyebrow="현재 연구" title="ASRA 연구 결과와 증거 범위" intro="독립 위험 예측 확인과 완료된 policy 효용 검증은 별도의 평가다. 자세한 결과는 영문 연구 페이지에서 확인할 수 있다."><div className="research-actions"><CtaLink href="/research/risk-forecasting#independent-assessment">위험 예측 독립 평가 (English)</CtaLink><CtaLink href="/research/risk-forecasting#policy-utility">완료된 policy 효용 검증 (English)</CtaLink><CtaLink href="/asra#discoveries">ASRA 연구 결과 (English)</CtaLink></div></EditorialSection>
       <EditorialSection accent="violet" eyebrow="과거 주장별 검토" title="장식 없는 증거" intro="각 행은 무엇을 말하는지, 무엇이 뒷받침하는지, 어디에서 멈추는지 답한다." tone="deep">
         <ol className="space-y-5">{claimLedgerKo.map((item, index) => <li key={item.claim} className="glass-panel rounded-[2rem] p-6 sm:p-8"><article className="grid gap-6 lg:grid-cols-[3rem_minmax(0,1fr)_minmax(18rem,0.9fr)]"><span className="font-mono text-xs text-[#7251C8]">{String(index + 1).padStart(2, "0")}</span><div><StatusLabel accent={item.tone}>{item.statusLabel}</StatusLabel><h2 className="mt-5 text-2xl font-semibold text-[#111A2E] sm:text-3xl">{item.claim}</h2><p className="mt-6 text-xs font-semibold uppercase tracking-[0.14em] text-[#77839A]">증거</p><p className="mt-3 text-base leading-7 text-[#657189]">{item.evidence}</p></div><aside className="rounded-[1.5rem] border border-[#D68A2A]/18 bg-[#FFF9F0]/56 p-5"><p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#A85D08]">주장 경계</p><p className="mt-4 text-sm leading-6 text-[#5F6C82]">{item.limit}</p></aside></article></li>)}</ol>
       </EditorialSection>

@@ -13,7 +13,7 @@ import { ResearchFindingCard } from "@/components/research-ui";
 export const metadata = metadataFor(
   "/projects/multi-asset-research-lab/claims",
   "Research Claims Ledger",
-  "Current ASTRA research claims and scoped historical infrastructure evidence, with separate limitations and authority boundaries.",
+  "Current ASRA research claims and scoped historical infrastructure evidence, with separate limitations and authority boundaries.",
 );
 
 export default function ResearchClaimsLedgerPage() {
@@ -23,7 +23,7 @@ export default function ResearchClaimsLedgerPage() {
         accent="violet"
         eyebrow="Research claims ledger"
         title="Every public claim carries its evidence and its limit."
-        intro="Current ASTRA findings and historical infrastructure records retain separate scopes. A completed study, a preserved artifact, and an operational system answer different questions."
+        intro="Current ASRA findings and historical infrastructure records retain separate scopes. A completed study, a preserved artifact, and an operational system answer different questions."
         actions={
           <>
             <CtaLink href="/projects/multi-asset-research-lab" kind="primary">
@@ -41,14 +41,14 @@ export default function ResearchClaimsLedgerPage() {
       />
 
       <EditorialSection
-        eyebrow="Current ASTRA findings"
+        eyebrow="Current ASRA findings"
         title="Forecast confirmation and policy utility are separate claims"
         intro="Both studies are completed. The forecast assessment confirms risk information; the policy test did not confirm its preregistered utility claim."
         className="research-page"
       >
         <ResearchFindingCard record={researchEvidence.independentRiskForecast} />
         <ResearchFindingCard record={researchEvidence.policyUtility} />
-        <div className="research-actions"><CtaLink href="/astra#evidence-protocol">Read the evidence protocol</CtaLink><CtaLink href="/build-log#pr41-boundary-digest">Read the scoped verification blocker</CtaLink></div>
+        <div className="research-actions"><CtaLink href="/asra#evidence-protocol">Read the evidence protocol</CtaLink><CtaLink href="/build-log#pr41-boundary-digest">Read the scoped verification blocker</CtaLink></div>
       </EditorialSection>
 
       <EditorialSection

@@ -99,6 +99,45 @@ function textContent(markup) {
   return markup.replace(/<[^>]*>/g, " ").replaceAll("&amp;", "&").replace(/\s+/g, " ").trim();
 }
 
+test("Home presents ASRA with its exact expansion and canonical program links", () => {
+  const html = renderHome();
+  const hero = html.match(/<section[^>]+home-hero[\s\S]*?<\/section>/)?.[0];
+  assert.ok(hero, "The human and program identity must remain in the Home hero.");
+  const heroText = textContent(hero);
+  assert.match(heroText, /WOOSUB SHIN/);
+  assert.match(heroText, /Quantitative Researcher/);
+  assert.match(heroText, /Quantitative research built to survive falsification\./);
+  assert.match(heroText, /\bASRA\b/);
+  assert.match(heroText, /AI Systematic Research Architecture/);
+  assert.match(html, /href="\/asra(?:#|")/);
+  assert.doesNotMatch(html, /href="\/astra(?:#|\/|")/i);
+  assert.doesNotMatch(textContent(html), /\bASTRA\b|AI-augmented systematic research architecture/i);
+});
+
+test("Home observation geometry stays decorative and server-rendered", () => {
+  const html = renderHome();
+  const fields = [...html.matchAll(/<div class="observation-field [^"]+" aria-hidden="true">([\s\S]*?)<\/div>/g)];
+  assert.ok(fields.length >= 2, "The hero and pipeline share the static observation field.");
+  for (const [, field] of fields) {
+    assert.match(field, /<svg\b[^>]*focusable="false"/);
+    assert.doesNotMatch(field, /<(?:a|button|input|canvas|video|image|foreignObject)\b|\btabindex=/i);
+    assert.equal(textContent(field), "", "Decorative geometry must not introduce scientific copy or values.");
+  }
+  const pending = [path.join(root, "components/observation-field.tsx")];
+  const inspected = new Set();
+  while (pending.length) {
+    const filename = pending.pop();
+    if (inspected.has(filename)) continue;
+    inspected.add(filename);
+    const source = ts.createSourceFile(filename, fs.readFileSync(filename, "utf8"), ts.ScriptTarget.Latest, true);
+    assert.ok(!source.statements.some(statement => ts.isExpressionStatement(statement) && ts.isStringLiteral(statement.expression) && statement.expression.text === "use client"), `${path.relative(root, filename)} adds decorative client hydration`);
+    for (const specifier of moduleSpecifiers(filename)) {
+      const local = localModule(specifier, filename);
+      if (local) pending.push(local);
+    }
+  }
+});
+
 test("Home renders the frozen historical comparison after independent evidence with visible caveats", () => {
   const html = renderHome();
   const historical = historicalResearchPerformance;
@@ -131,7 +170,7 @@ test("Home renders the frozen historical comparison after independent evidence w
   assert.deepEqual(getMetricGroup(researchEvidence.independentRiskForecast).metrics.map(metric => metric.value), ["+12.58%", "+11.65%", "4 / 4"]);
   assert.deepEqual([...independentSection.matchAll(/<span class="metric-value">([^<]+)<\/span>/g)].map(match => match[1]), ["+12.58%", "+11.65%", "4 / 4"]);
   assert.ok(html.indexOf(independentSection) < html.indexOf('id="historical-research-performance"'));
-  assert.ok(html.indexOf('id="historical-research-performance"') < html.indexOf("How ASTRA works"));
+  assert.ok(html.indexOf('id="historical-research-performance"') < html.indexOf("How ASRA works"));
   assert.ok(html.slice(html.indexOf(independentSection) + independentSection.length).startsWith('<section id="historical-research-performance"'), "Historical performance must immediately follow the independent finding.");
   assert.doesNotMatch(html, /≈0\.9963|0\.050895|0\.007539%|0\.130519%/);
 });

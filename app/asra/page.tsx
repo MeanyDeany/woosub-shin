@@ -18,23 +18,23 @@ import { researchAuthority, researchEvidence } from "@/lib/research-evidence";
 import { metadataFor } from "@/lib/site-metadata";
 
 export const metadata = metadataFor(
-  "/astra",
-  "ASTRA Research Architecture",
-  "Woosub Shin’s AI-augmented research architecture. Independent risk information survived, policy utility was not confirmed, and repaired measurement did not demonstrate incremental historical BTC return transfer.",
+  "/asra",
+  "ASRA — AI Systematic Research Architecture",
+  "ASRA, Woosub Shin’s AI Systematic Research Architecture. Independent risk information survived, policy utility was not confirmed, and repaired measurement did not demonstrate incremental historical BTC return transfer.",
 );
 
 const forecast = researchEvidence.independentRiskForecast;
 const scheduler = researchEvidence.nativeScheduler;
 const historicalTransfer = researchEvidence.candidateGeneratorV3;
 
-export default function AstraPage() {
+export default function AsraPage() {
   return (
     <PageShell>
       <div className="research-page">
         <ResearchHero
           eyebrow="Woosub Shin / Research program"
-          title="ASTRA"
-          intro="AI-augmented systematic research architecture"
+          title="ASRA"
+          intro="AI Systematic Research Architecture"
         >
           <p className="research-prose">Generate hypotheses. Repair measurement. Confirm what survives.</p>
           <div className="research-actions">
@@ -54,7 +54,7 @@ export default function AstraPage() {
         ]} />
 
         <ResearchSection id="engine" eyebrow="Research engine" title="Failure changes the measurement and narrows the claim.">
-          <p className="research-prose">ASTRA organizes research around testable questions, explicit comparisons and visible rejection. A promising candidate can fail a control, survive only within a narrow domain, or remain unresolved.</p>
+          <p className="research-prose">ASRA organizes research around testable questions, explicit comparisons and visible rejection. A promising candidate can fail a control, survive only within a narrow domain, or remain unresolved.</p>
           <ResearchPipeline detailed />
           <AuthorityBoundary>{researchAuthority} Candidate generation, forecast assessment, policy research and operational systems retain separate responsibilities.</AuthorityBoundary>
         </ResearchSection>
@@ -62,7 +62,7 @@ export default function AstraPage() {
         <ResearchSection id="discoveries" eyebrow="Strongest confirmed finding" title={forecast.title}>
           <EvidenceStatus evidenceClass={forecast.evidenceClass} outcome={forecast.outcomeLabel} />
           <p className="research-prose">{forecast.finding}</p>
-          <EvidenceMetricGroup record={forecast} idPrefix="astra-independent" />
+          <EvidenceMetricGroup record={forecast} idPrefix="asra-independent" />
           <div className="research-actions"><Link href={forecast.detailHref}>Inspect the independent assessment <span aria-hidden="true">→</span></Link></div>
         </ResearchSection>
 

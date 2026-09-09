@@ -8,7 +8,7 @@ import "./astra.css";
 const siteUrl = "https://meanydeany.com";
 const siteTitle = "Woosub Shin — Quantitative Researcher";
 const siteDescription =
-  "Woosub Shin researches financial econometrics and systematic markets through ASTRA: falsification, independently assessed risk information, and reproducible research engineering.";
+  "Woosub Shin researches financial econometrics and systematic markets through ASRA: falsification, independently assessed risk information, and reproducible research engineering.";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

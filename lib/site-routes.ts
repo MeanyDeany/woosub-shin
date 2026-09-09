@@ -1,7 +1,7 @@
 /** Canonical public pages for this English-only release; API routes are excluded. */
 export const siteRoutes = [
   "/",
-  "/astra",
+  "/asra",
   "/research",
   "/research/risk-forecasting",
   "/research/nonlinear-measurement",
@@ -33,7 +33,7 @@ export function getRouteAlternates(pathname: SiteRoute) {
 type NavigationLink = { href: SiteRoute; label: string };
 
 export const primaryNavigation: readonly NavigationLink[] = [
-  { href: "/astra", label: "ASTRA" },
+  { href: "/asra", label: "ASRA" },
   { href: "/research", label: "Research" },
   { href: "/papers", label: "Papers" },
   { href: "/projects", label: "Systems" },

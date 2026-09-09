@@ -368,7 +368,7 @@ export const researchEvidence = {
   },
   policyUtility: {
     id: "policy-utility", version: "V1", reviewedAt,
-    title: "ASTRA Risk Policy Utility V1", shortTitle: "Policy translation test",
+    title: "ASRA Risk Policy Utility V1", shortTitle: "Policy translation test",
     question: "Can the frozen primary P3 mapping turn stronger H+C risk information into policy utility under the preregistered rule?",
     evidenceClass: "RETROSPECTIVE", workState: "completed", role: "Policy translation test",
     classification: "FORECAST_INFORMATION_WITHOUT_POLICY_UTILITY", claimOutcome: "not_confirmed", outcomeLabel: "POLICY UTILITY NOT CONFIRMED",
@@ -502,7 +502,7 @@ export const researchEvidence = {
       protocol: "Academic study with pre-evaluation parameter selection, ablation, walk-forward evaluation, bootstrap and robustness checks.",
     },
     metrics: [], method: "EGARCH volatility regimes, intraday research modules, no-filter ablation, alternative filters, walk-forward evaluation and bootstrap checks.",
-    keyCaveat: "Academic evidence is bounded by the study's sample, methods and cost assumptions; it is not independent ASTRA confirmation.",
+    keyCaveat: "Academic evidence is bounded by the study's sample, methods and cost assumptions; it is not independent ASRA confirmation.",
     limitations: ["Threshold choices, sample dependence and market differences limit transferability. The filter does not establish price direction."], observations: [],
     authority: researchAuthority,
     source: { availability: "public", label: "MSc thesis PDF", href: "/papers/volatility-regime-filtering-thesis.pdf", note: "Academic thesis with canonical project context; not presented as a peer-reviewed publication." },
@@ -591,11 +591,11 @@ export const researchEvidence = {
     limitations: ["No causal attribution percentage, outcome metric or expected winner is supplied."],
     authority: researchAuthority, source: privateResearchSource, code: unavailableCode,
     lineage: ["policy-utility"], nextQuestion: "Define a bounded decomposition that separates the observed policy tradeoffs.",
-    detailHref: "/astra#next-question",
+    detailHref: "/asra#next-question",
   },
   candidateGeneratorV3: {
     id: "candidate-generator-v3", version: "V3", reviewedAt,
-    title: "ASTRA Candidate Generator V3", shortTitle: "Candidate Generator V3",
+    title: "ASRA Candidate Generator V3", shortTitle: "Candidate Generator V3",
     question: "Does the repaired fixed-native measurement stack add historical one-hour BTC return information beyond the frozen OHLCV baseline?",
     evidenceClass: "RETROSPECTIVE", workState: "completed", role: "Historical transfer test",
     classification: "MEASUREMENT_REPAIR_DOES_NOT_TRANSFER_TO_HISTORICAL_BTC",
@@ -642,7 +642,7 @@ export const researchEvidence = {
     limitations: ["No design, threshold, result or power value is supplied."],
     authority: researchAuthority, source: privateResearchSource, code: unavailableCode,
     lineage: ["candidate-generator-v3"], nextQuestion: "How small a conditional return effect can the repaired research stack reliably detect under BTC-like historical feature distribution and temporal dependence?",
-    detailHref: "/astra#small-signal-sensitivity",
+    detailHref: "/asra#small-signal-sensitivity",
   },
 } as const satisfies Record<string, ResearchRecord>;
 

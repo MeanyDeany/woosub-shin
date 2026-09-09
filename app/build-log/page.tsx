@@ -22,7 +22,7 @@ export default function BuildLogPage() {
         accent="blue"
         eyebrow="Build log"
         title="What changed, what it proved, and what it still cannot claim."
-        intro="Historical infrastructure milestones and a documented verification constraint. Each record retains its evidence and limitations; research findings are organized separately on ASTRA."
+        intro="Historical infrastructure milestones and a documented verification constraint. Each record retains its evidence and limitations; research findings are organized separately on ASRA."
         actions={
           <>
             <CtaLink href="/projects/multi-asset-research-lab" kind="primary">

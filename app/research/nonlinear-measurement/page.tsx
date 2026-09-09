@@ -34,7 +34,7 @@ export default function NonlinearMeasurementPage() {
     <PageShell>
       <div className="research-page">
       <ResearchHero
-        eyebrow="ASTRA · Measurement methodology"
+        eyebrow="ASRA · Measurement methodology"
         title="A failed control changed the measurement."
         intro="A null result can reflect an absent signal, a blind sensor or a misaligned test. Positive controls made those possibilities separable."
       >
@@ -175,7 +175,7 @@ export default function NonlinearMeasurementPage() {
         </div>
         <AuthorityBoundary>{scheduler.keyCaveat}</AuthorityBoundary>
         <div className="research-actions">
-          <Link href="/astra#timeline" className="finding-link">Follow the complete research progression</Link>
+          <Link href="/asra#timeline" className="finding-link">Follow the complete research progression</Link>
         </div>
       </ResearchSection>
 

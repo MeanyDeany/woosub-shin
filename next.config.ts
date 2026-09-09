@@ -5,6 +5,7 @@ const nextConfig: NextConfig = {
     // Korean pages are retired for this release. Temporary redirects retain
     // the option to restore reviewed translations without cached permanent moves.
     return [
+      { source: "/astra", destination: "/asra", permanent: false },
       { source: "/ko", destination: "/", permanent: false },
       { source: "/ko/research", destination: "/research", permanent: false },
       { source: "/ko/papers", destination: "/papers", permanent: false },

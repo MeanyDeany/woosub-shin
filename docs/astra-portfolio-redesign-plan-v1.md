@@ -4,6 +4,8 @@
 
 > **Later release refinement — 9 September 2026.** The [English-only and visual refinement addendum](#29-post-plan-english-only-and-visual-refinement-addendum-9-september-2026), received after delivery head `42044142c041c23b8215c5ba23c076e2d8efe594`, supersedes earlier instructions to retain the Korean public experience and keep historical performance only at study depth. The earlier locale and presentation passages remain planning history. The completed scientific states and claim boundaries in section 28 remain current.
 
+> **Current public brand and visual refinement — 9 September 2026.** The [ASRA branding and cosmic presentation addendum](#30-post-plan-asra-branding-and-cosmic-presentation-addendum-9-september-2026), received after delivery head `fa561899b0f2d18f8241a8c506d88e66708a619c`, establishes **ASRA — AI Systematic Research Architecture** and the canonical `/asra` route. Earlier ASTRA names and presentation directions remain historical. The scientific states in section 28 and English-only compatibility decisions in section 29 remain binding.
+
 Planning date: 9 September 2026. Status: approved plan, originally frozen before implementation, with binding implementation updates incorporated on 9 September 2026.
 
 Repository: `MeanyDeany/woosub-shin`.
@@ -1308,3 +1310,44 @@ Before publication, rerun evidence/page/route and telemetry tests, production bu
 Responsive review now covers Home, ASTRA, Research, Risk Forecasting, Nonlinear Measurement, Systems, Daily EMA, the operational monitor, Resume and Contact at **1440×900, 1280×800, 768×1024, 390×844 and 320×568**, in dark and light themes. Korean visual QA is no longer a current release requirement. Retain local before/after screenshots when available and report the exact final public route count. This addendum records requirements and does not itself claim those checks passed.
 
 Update the same `codex/astra-portfolio-redesign-v1` branch and existing Draft PR #38. Keep it **OPEN · DRAFT · base main · UNMERGED**. The existing same-branch automatic-preview authorization remains distinct from production publication. Do not create a new PR, merge, or manually deploy production.
+
+
+## 30. Post-plan ASRA branding and cosmic presentation addendum (9 September 2026)
+
+This binding refinement starts from the clean, verified local, remote and Draft PR head `fa561899b0f2d18f8241a8c506d88e66708a619c`. The official public program name is **ASRA**, expanded exactly as **AI Systematic Research Architecture**. It is a branding and presentation refinement, not a new research result. Earlier ASTRA plan text, scientific-history wording and delivery records are retained above as history.
+
+### Public identity and route compatibility
+
+Update current public headings, navigation, accessible labels, metadata, descriptions, program text and the existing Draft PR title to ASRA. The hero retains WOOSUB SHIN, Quantitative Researcher, and “Quantitative research built to survive falsification,” followed by ASRA and its exact expansion. Give the program a distinctive typographic or geometric mark without replacing the human-first hierarchy.
+
+Move the canonical program page from `/astra` to `/asra`. Retain `/astra` as one explicit **HTTP 307** redirect to `/asra`, using the existing `permanent: false` convention and preserving query values. The sitemap and internal navigation contain `/asra`, not the retired route. Preserve all 13 Korean legacy redirects from section 29 unchanged. The public inventory remains **18 English pages**, with **14 explicit compatibility redirects** and no public Korean routes or language alternates. Test the actual local redirect responses and browser query/fragment behavior; avoid wildcard destinations and redirect loops.
+
+Retain the existing branch `codex/astra-portfolio-redesign-v1`. The internal `app/astra.css` filename and its import may remain to avoid unrelated churn. Historical document names and passages, the explicit legacy redirect source, and negative/migration test assertions are also intentional old-name references. Audit tracked ASTRA/Astra/astra occurrences by context: these internal and historical identifiers must not become current rendered branding or canonical metadata.
+
+### Cosmic presentation with static decoration
+
+The visual direction is a deep-space scientific observatory with the restraint of institutional quantitative research. Use midnight navy, low-opacity cyan/indigo/violet illumination, sparse irregular static points, partial orbital arcs, fine circles or coordinates, and readable evidence surfaces. Place the richest atmospheric detail in negative space; keep reading areas quiet. Avoid casino, gaming, cyberpunk, neon SaaS, giant planets and illustrative Bitcoin motifs.
+
+Use CSS, pseudo-elements, gradients, tiny inline SVG or existing React/Next primitives. Add **zero visual dependencies and zero decorative client hydration**. Home stays server-rendered. Do not add Three.js, WebGL, a particle package, canvas animation, full-screen video, raster backgrounds or remote imagery. Decorative layers must be noninteractive and excluded from the accessibility tree. Static treatment is preferred; any optional CSS motion must respect reduced motion and must not create moving stars, shooting objects or infinite particles.
+
+Dark is the showcase theme. Light should use strong off-white or pale blue surfaces, restrained scientific grid detail and black/navy text rather than a simple inversion. Preserve focus visibility, semantic status meaning, readable contrast and mobile reflow. Systems remains visually distinct through muted amber, steel or neutral accents, subordinate to the cyan/indigo research treatment.
+
+### Preserve evidence, hierarchy and authority
+
+Keep the homepage sequence from section 29: human-first hero, strongest independent risk evidence, secondary Historical Research Performance, How ASRA Works, progression, completed policy finding, selected research, current/next questions, Systems, then career/contact. Existing process concepts remain question → measurement → candidate → challenge → falsification/survival → next. Visual microlabels must not invent a methodological stage or finding.
+
+The strongest metrics remain **+12.58% Log-MSE improvement**, **+11.65% QLIKE improvement**, and **4 / 4 chronological segments positive in both primary losses**, with their exact assessment context. Keep them more prominent than the frozen historical comparison in section 29. Preserve all nine table values, retained/reference roles, RETROSPECTIVE status, post-selection caveat, three completed historical trades, 97.4% positive completed-trade log-growth concentration, and the not-untouched-OOS/not-live boundaries. Do not use green profit color to imply scientific confirmation.
+
+The return/methodology and risk timelines remain separate. Candidate Generator V3 remains **COMPLETED · RETROSPECTIVE · NOT CONFIRMED**, with **HISTORICAL TRANSFER NOT DEMONSTRATED**, zero finalists and an unopened holdout. Negative findings remain first-class outcomes. Small-Signal Sensitivity Calibration and turnover/opportunity-cost decomposition remain separate proposed questions; no study is active. Research metrics, dates, classifications, source availability, caveats and authority must not change as a consequence of the rename.
+
+Systems keeps all four links: read-only positions/performance, retained historical system, research infrastructure, and execution engineering. **NO AUTOMATIC EXECUTION AUTHORITY** stays visible. Home must not acquire telemetry imports, fetches, polling or static account data. Preserve APIs, telemetry parsing/math/authority, contact submission behavior, Analytics, package versions, lockfile records and public papers.
+
+### Verification and delivery
+
+Preserve the pre-refinement production asset measurements and protected hashes before rebuilding. The English homepage baseline is **191,259 B JavaScript gzip estimate** and **23,031 B CSS gzip estimate** across nine initial script assets. Compare the final build under the same measurement conditions; report static presentation cost separately from client JavaScript and do not represent local gzip estimates as Core Web Vitals.
+
+Rerun the evidence, page, route and telemetry tests; production build/type checking; scoped lint; whole-repository lint comparison; whitespace checks; 18-route rendered links/fragments/landmarks/ARIA checks; metadata and sitemap checks; all 14 actual legacy redirects; protected-file/lockfile/PDF checks; and the tracked-brand audit. Preserve all existing scientific assertions and add ASRA route/name requirements without weakening previous tests. Report Node loader warnings separately from the existing ESLint debt.
+
+Review Home, ASRA, Research, Risk Forecasting, Nonlinear Measurement, Systems, Daily EMA, the operational monitor, Resume and Contact at **1440×900, 1280×800, 768×1024, 390×844 and 320×568**, in both themes: **100 route/viewport/theme combinations**. Check atmospheric layers for clipping, document overflow and pointer interception; inspect mobile evidence/table readability, visible focus, menu behavior, theme persistence and reduced-motion behavior. Use local unavailable-feed overrides for the monitor without changing application APIs or contacting external research endpoints. Retain before/after screenshots outside the application bundle. This addendum states requirements, not completed validation results.
+
+Use the same branch and existing **OPEN · DRAFT · base main · UNMERGED** PR #38, titled **Redesign portfolio around ASRA research evidence**. Do not create another branch or PR, merge, or manually deploy production. The existing same-branch automatic-preview authorization remains valid. Report the exact previous and final heads, local/remote/PR equality, observed preview status and actual applicable CI; do not call an automatic preview a hosted test run.

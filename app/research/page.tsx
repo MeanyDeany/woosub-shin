@@ -68,7 +68,7 @@ export default function ResearchPage() {
         >
           <p className="research-note">Findings are organized by scientific relevance. Evidence class, work state and claim outcome remain separate.</p>
           <div className="research-actions">
-            <Link className="research-button" href="/astra">Explore ASTRA</Link>
+            <Link className="research-button" href="/asra">Explore ASRA</Link>
             <a className="research-button" href="#methodology">Read the methodology</a>
           </div>
         </ResearchHero>
@@ -102,7 +102,7 @@ export default function ResearchPage() {
         </ResearchSection>
 
         <ResearchSection id="systematic-strategies" eyebrow="Retained historical research" title="Historical systems with their selection limits intact">
-          <p className="research-prose">These records document historical strategy research. Post-selection comparisons and later forward observation remain distinct from independent ASTRA confirmation.</p>
+          <p className="research-prose">These records document historical strategy research. Post-selection comparisons and later forward observation remain distinct from independent ASRA confirmation.</p>
           <div className="finding-list">
             <ResearchFindingCard record={researchEvidence.dailyEma} />
             <ResearchFindingCard record={researchEvidence.c4Challenger} />
@@ -137,7 +137,7 @@ export default function ResearchPage() {
           </div>
           <AuthorityBoundary>{researchAuthority} Evidence, interpretation, policy research and execution systems have distinct responsibilities.</AuthorityBoundary>
           <div className="research-actions">
-            <Link href="/astra#evidence-protocol">Read the evidence taxonomy and source boundaries <span aria-hidden="true">→</span></Link>
+            <Link href="/asra#evidence-protocol">Read the evidence taxonomy and source boundaries <span aria-hidden="true">→</span></Link>
             <Link href="/projects">Inspect the supporting systems <span aria-hidden="true">→</span></Link>
           </div>
         </ResearchSection>
