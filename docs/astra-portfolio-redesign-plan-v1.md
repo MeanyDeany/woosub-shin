@@ -1,27 +1,51 @@
 # ASTRA portfolio redesign plan V1
 
-Planning date: 9 September 2026. Status: approved plan with the binding completed Risk Policy Utility V1 update incorporated; implementation has not started.
+Planning date: 9 September 2026. Status: approved plan, originally frozen before implementation, with binding implementation updates incorporated on 9 September 2026.
 
 Repository: `MeanyDeany/woosub-shin`.
 Audited base: `eafc9680c6f992e78ead3ef775d6c866b602b8fe`.
 Audited branch: `design/astra-portfolio-redesign-v1`.
-The working tree was clean before this document was created. The binding research update changes this document only; the portfolio base and branch above remain unchanged.
+The working tree was clean before the original planning document was created. The audited branch records planning history; implementation is now authorized on `codex/astra-portfolio-redesign-v1` from the same exact approved portfolio base.
 
-Completed research reference: **ASTRA Risk Policy Utility V1**, classification **FORECAST_INFORMATION_WITHOUT_POLICY_UTILITY**, exact completed study branch head **`3f5ebee1d3b002cd3f7f2d4ea65f72d6cf512cdd`**. This identifies the completed policy study, not a new portfolio base or the independent forecast assessment's code head. The update supersedes the original brief's policy-study-in-progress freeze; Native Scheduler Robustness V1 remains SYNTHETIC · IN PROGRESS.
+Completed research reference: **ASTRA Risk Policy Utility V1**, classification **FORECAST_INFORMATION_WITHOUT_POLICY_UTILITY**, exact completed study branch head **`3f5ebee1d3b002cd3f7f2d4ea65f72d6cf512cdd`**. This identifies the completed policy study, not a new portfolio base or the independent forecast assessment's code head. That update superseded the original policy-study freeze. The later binding scheduler completion below supersedes the former scheduler work state.
 
-This is the sole deliverable for this phase. No application code, styles, routes, public APIs, telemetry, dependencies, or existing documents have been changed. No commit, push, or deployment is part of this phase. All proposed files, behavior, copy, and checks below describe a later implementation.
+The original planning phase produced only this document. The current implementation task authorizes application work, focused commits, this branch push, and a Draft PR; no merge or deployment is authorized. This remains the only planning artifact carried into implementation. The research-state changes below are explicit user updates, not a redesign of the approved strategy.
+
+### Binding implementation update — 9 September 2026
+
+**ASTRA Native Scheduler Robustness V1 is COMPLETED · SYNTHETIC.** Preserve exact classification **`NATIVE_FIXED_SELECTION_SUFFICIENT`** and final verified research head **`b45e2a3fa2daf4b51967059d964393536a41f106`**. This head identifies this completed research record only; it is neither the portfolio base nor the forecast or policy study's lineage. Public source availability remains limited to the private research archive, with no private repository URLs or branch links published.
+
+The scientific scope is **SYNTHETIC METHODOLOGY EVIDENCE ONLY**. The registered paired robustness study contains **1,536 trials**, **256 per cell**. For the primary **60 bps** setting:
+
+| Architecture | Raw detections | Adjusted detections |
+| --- | --- | --- |
+| Forced | 242 / 256 | 242 / 256 |
+| S1 adaptive | 237 / 256 | 236 / 256 |
+| S2 fixed | 237 / 256 | 237 / 256 |
+
+S1 minus S2 adjusted is **−0.39 percentage points**, with conservative paired **95% interval [−2.47, +1.69] percentage points**. The interval excludes the registered **+5 percentage point** meaningful adaptive-advantage margin. S2 strong-signal retention relative to forced is **97.93% raw and adjusted**. All registered null guards passed; there were **zero undefined primary tests** and **zero scientific presentation-order effects**.
+
+Native-horizon objective alignment was important. Adaptive question ordering did not demonstrate practically meaningful incremental value over the simpler fixed-native architecture in the registered synthetic robustness domain. This supports simplification. It is **not mathematical equivalence** and **not historical BTC alpha**.
+
+Use the concise finding: **“A 1,536-trial paired robustness study found no practically meaningful adaptive-ordering advantage over the simpler fixed native-horizon architecture.”** Detailed metrics belong at research depth, not in the dominant homepage metric band.
+
+The recommended future **Candidate Generator V3** architecture is **OHLCV_RIDGE → ACTIVITY_RIDGE → NONLINEAR_OHLCV**, with a **frozen native 1h objective**, **R3 product representation**, **ridge alpha 1**, and **canonical tie handling**; adaptive ordering is **diagnostic only**. Candidate Generator V3 is **NEXT QUESTION**, not active work or a new result. Turnover & Opportunity-Cost Decomposition remains a separate **NEXT QUESTION**. No active study remains in the supplied content freeze; do not invent one to populate Current Research.
+
+The methodology timeline branches as **Native-horizon selection repair → Scheduler robustness completed → Fixed-native selection sufficient → Candidate Generator V3 next question**. This does not replace the risk/policy lane or imply that the scheduler study established market alpha.
+
+The implementation brief also binds the completed policy study to **RETROSPECTIVE** evidence and permits the compact homepage comparison **2.070% volatility improvement / 2.016% ES5 improvement / 3.0% preregistered minimum**, with P3 and pooled H+C-vs-HAR context. Detailed accounting stays at research depth. Preserve three distinct conclusions: **forecast information survived; policy utility was not confirmed; fixed-native selection was sufficient in the registered synthetic robustness domain**.
 
 ## 1. Executive recommendation
 
 Make **Woosub Shin, Quantitative Researcher** the unmistakable identity. Present **ASTRA — AI-augmented systematic research architecture** as the principal research program beneath that identity. Lead the evidence hierarchy with the independent one-hour BTC risk assessment, labeled **STRONGEST CONFIRMED FINDING**, then explain how falsification and measurement repairs made that result possible.
 
-The later policy test is completed negative evidence: forecast information survived; the preregistered policy-utility claim did not. Keep it visible in a compact **Policy translation test** module, with its economic detail at `/research/risk-forecasting#policy-utility`. Prioritize +12.58% Log-MSE, +11.65% QLIKE and 4/4 chronological segments on Home; move the approximately 0.9963 actual/forecast variance ratio to risk detail. Current Research contains only Native Scheduler Robustness V1. **Turnover & Opportunity-Cost Decomposition** is a separate NEXT QUESTION, not an active study.
+The later policy test is completed negative evidence: forecast information survived; the preregistered policy-utility claim did not. Keep it visible in a compact **Policy translation test** module, with its economic detail at `/research/risk-forecasting#policy-utility`. Prioritize +12.58% Log-MSE, +11.65% QLIKE and 4/4 chronological segments on Home; move the approximately 0.9963 actual/forecast variance ratio to risk detail. Native Scheduler Robustness V1 is a completed SYNTHETIC finding supporting simpler fixed-native selection within the registered domain. Current Research has no active study in this freeze. **Candidate Generator V3** and **Turnover & Opportunity-Cost Decomposition** are separate NEXT QUESTION records, not active studies.
 
 Keep the current falsification headline. Its supporting story needs the redesign: the present site gives retrospective strategy return and operational telemetry disproportionate attention. Replace that hierarchy with a concise personal introduction, a contextualized independent finding, a research-process explanation, and a failure/repair progression.
 
 Use five navigation destinations beside the home-linked personal wordmark: **ASTRA / Research / Papers / Systems / About**. Preserve `/research`, `/projects`, `/resume`, existing project detail URLs, papers, contact, and monitor URLs. Add only `/astra`, `/research/risk-forecasting`, and `/research/nonlinear-measurement`. ASTRA subsections should be anchors, not four new pages.
 
-Use one evidence language with separate evidence class and work status. A study can be **SYNTHETIC · IN PROGRESS**; independent evidence can support a negative result. Neither scientific status nor telemetry freshness grants policy or execution authority.
+Use one evidence language with separate evidence class and work status. A study can be **SYNTHETIC · COMPLETED** while supporting a bounded negative finding about adaptive advantage; independent evidence can support a negative result. Neither scientific status nor telemetry freshness grants policy or execution authority.
 
 The three reading depths are deliberate:
 
@@ -134,7 +158,8 @@ Repository source/docs searches at the approved portfolio base found no ASTRA as
 | Independent risk assessment and four supplied summary measures | User's supplied completed-research brief | Report URL, immutable code SHA, frozen protocol/manifest, result artifacts, sample count, exact definitions and segment boundaries |
 | Baseline challenge, nonlinear sensor repair, native-horizon selection repair | User's supplied completed progression | Individual reports, quantitative diagnostics if any, dates and lineage |
 | ASTRA Risk Policy Utility V1 | Binding completed user update; FORECAST_INFORMATION_WITHOUT_POLICY_UTILITY; study branch head `3f5ebee1d3b002cd3f7f2d4ea65f72d6cf512cdd` | Public report/repository URL, frozen P3 rule and era definitions, policy window and full accounting detail; do not invent them from the forecast assessment |
-| Native Scheduler Robustness V1 | User's explicit ongoing synthetic-methodology statement | No results authorized; only scope/status may be used |
+| Native Scheduler Robustness V1 | Binding completed user update; NATIVE_FIXED_SELECTION_SUFFICIENT; research head `b45e2a3fa2daf4b51967059d964393536a41f106`; registered synthetic metrics above | Public report, protocol and code links remain unavailable; do not invent them |
+| Candidate Generator V3 | User-designated NEXT QUESTION and recommended future architecture | No active-study status or result supplied |
 | Turnover & Opportunity-Cost Decomposition | User-designated NEXT QUESTION | No active-study status, frozen protocol or new result supplied |
 | PR41 engineering blocker | User's supplied narrow finding | Exact repository/PR link and supported technical note |
 | EMA, C4, academic work, existing infrastructure | Current repository pages and linked academic PDFs | Pinned code/source references remain incomplete |
@@ -206,9 +231,9 @@ Utility: Resume · GitHub · EN/KO · Theme
   #engine                 Generate → Measure → Falsify → Repair → Confirm → Translate
   #discoveries            What survived, with links to full studies
   #timeline               Failure and repair progression
-  #current-research       Native Scheduler Robustness V1 only
-  #native-scheduler       Native Scheduler Robustness V1 scope
-  #next-question          Turnover & Opportunity-Cost Decomposition (not in progress)
+  #current-research       No active study in the supplied content freeze
+  #native-scheduler       Completed synthetic scheduler finding
+  #next-question          Candidate Generator V3 and Turnover & Opportunity-Cost Decomposition; proposed only
   #evidence-protocol      Provenance, independence, authority rules
 /research                 Findings index
   #risk-forecasting       Independent result + development challenge
@@ -303,10 +328,11 @@ Move the strongest finding immediately after the hero. The proposed eight-stage 
 | [View all research findings]                         [Read the papers]  |
 +------------------------------------------------------------------------+
 | CURRENT RESEARCH                                                       |
-| Native Scheduler [SYNTHETIC] [IN PROGRESS]                               |
+| No active study in the supplied content freeze                         |
+| Completed scheduler robustness supports fixed-native simplification      |
 +------------------------------------------------------------------------+
 | NEXT QUESTION                                                          |
-| Turnover & Opportunity-Cost Decomposition                               |
+| Candidate Generator V3 · Turnover & Opportunity-Cost Decomposition       |
 | Proposed follow-up; no active-study claim                              |
 +------------------------------------------------------------------------+
 | SYSTEMS & ENGINEERING                                                  |
@@ -331,8 +357,8 @@ Use nine substantive sections, merging About and Contact and treating the separa
 | Progression | Failed tests changed the method; confirmed forecasts did not validate the tested policy | **Follow the failure and repair timeline** → `/astra#timeline` |
 | Policy translation test | The frozen policy missed its preregistered utility rule; forecast information remains confirmed | **Inspect the policy translation test** → `/research/risk-forecasting#policy-utility` |
 | Supporting research | Breadth spans measurement engineering, historical systems, academic econometrics | **Inspect measurement repairs**, **Read the retained-system study**, **Read the thesis project** → corresponding detail pages |
-| Current Research | Only the synthetic scheduler study is currently in progress | **Read the scheduler study scope** → `/astra#native-scheduler` |
-| Separate NEXT QUESTION | Turnover/opportunity-cost decomposition is a proposed follow-up, not an active study | **Read the next question** → `/astra#next-question` |
+| Current / completed methodology | No active study is supplied; completed scheduler robustness supports simplification | **Read the completed scheduler finding** → `/astra#native-scheduler` |
+| Separate NEXT QUESTION | Candidate Generator V3 and turnover/opportunity-cost decomposition are proposed follow-ups, not active studies | **Read the next questions** → `/astra#next-question` |
 | Systems | Engineering evidence exists separately from research findings | **Explore research infrastructure** → lab; **Inspect the execution boundary** → `/projects#execution-gateway`; **Open read-only telemetry** → existing monitor |
 | Career/contact | Can turn a market question into a reproducible, explainable test | **View resume** → `/resume`; **Contact Woosub** → `/contact` |
 
@@ -417,13 +443,13 @@ COMPLETED · POLICY UTILITY NOT CONFIRMED
 
 Better risk forecasts did not automatically become a better risk policy.
 
-The frozen mapping improved risk modestly but missed the prespecified utility threshold.
+The frozen primary P3 mapping produced pooled H+C-vs-HAR volatility improvement of **2.070%** and ES5 improvement of **2.016%**, both below the preregistered **3.0%** minimum. Only the confirmed-forecast-era diagnostic passed the joint era rule; required multi-era consistency failed.
 
 **Forecast information survived; the preregistered policy-utility claim did not.**
 
 **Inspect the policy translation test**
 
-Keep the pooled economic metrics, era results, mechanism evidence and large negative-return accounting table on the linked research detail page. This homepage module does not introduce another headline metric band or any directional-alpha, sizing, veto, execution or trading-authority claim.
+Show the compact P3 pooled comparison above on Home, with RETROSPECTIVE · COMPLETED and POLICY UTILITY NOT CONFIRMED. Keep detailed economic accounting and mechanism evidence on the linked research detail page. The module remains subordinate to the three independent forecast headline metrics and grants no directional-alpha, sizing, veto, execution or trading authority.
 
 ### Selected research
 
@@ -447,26 +473,26 @@ Financial econometrics applied to volatility-regime filtering in NQ, ES, and WTI
 Related findings: **Risk baseline challenge** · **Nonlinear sensor recovery** · **Native-horizon selection**  
 **View all research findings** · **Read the papers**
 
-### Current Research
+### Current Research and completed methodology
 
-**What is being tested now**
+**No active study is reported in this content freeze.**
 
 **Native Scheduler Robustness V1**  
-SYNTHETIC · IN PROGRESS  
-Does adaptive question ordering add meaningful value beyond a simpler fixed native-horizon selection architecture?  
-Synthetic methodology research in progress. No robustness result is reported.  
-**Read the scheduler study scope**
+SYNTHETIC · COMPLETED  
+A 1,536-trial paired robustness study found no practically meaningful adaptive-ordering advantage over the simpler fixed native-horizon architecture. The registered synthetic evidence supports simplification, not mathematical equivalence or historical BTC alpha.  
+**Read the completed scheduler finding**
 
-### Separate next question
+### Separate next questions
 
-**NEXT QUESTION**  
-**Turnover & Opportunity-Cost Decomposition**
+**NEXT QUESTION — Candidate Generator V3**
 
-How much of the observed policy tradeoff is associated with turnover, fees, and foregone opportunity?
+Proposed architecture: OHLCV_RIDGE → ACTIVITY_RIDGE → NONLINEAR_OHLCV, frozen native 1h objective, R3 product representation, ridge alpha 1, canonical tie handling. Adaptive ordering is diagnostic only. This is a recommended future architecture, not an active study or a new result.
 
-Proposed follow-up question. No active-study status or new result is claimed.
+**NEXT QUESTION — Turnover & Opportunity-Cost Decomposition**
 
-**Read the next question**
+How much of the observed policy tradeoff is associated with turnover, fees, and foregone opportunity? Proposed follow-up question; no active-study status or new result is claimed.
+
+**Read the next questions**
 
 ### Systems and engineering
 
@@ -522,12 +548,17 @@ Eleven ordered stages; confirmation → policy test → utility not confirmed
 → turnover/opportunity-cost mechanism isolated, with source and caveat
 
 #current-research
-Native Scheduler Robustness V1 [SYNTHETIC · IN PROGRESS]
-Scope only; no metrics or implied outcome
+No active study in the supplied content freeze
+
+#native-scheduler
+Native Scheduler Robustness V1 [SYNTHETIC · COMPLETED]
+Fixed-native selection sufficient in the registered synthetic robustness domain
+No practically meaningful adaptive-ordering advantage; supports simplification
 
 #next-question
+Candidate Generator V3 [NEXT QUESTION]
 Turnover & Opportunity-Cost Decomposition [NEXT QUESTION]
-Separate proposed follow-up; no active-study claim
+Separate proposed follow-ups; no active-study claims
 
 #evidence-protocol
 Evidence legend → frozen protocol → source/manifest/code lineage
@@ -541,7 +572,7 @@ The pipeline is a process map, not proof that every candidate completes every st
 
 Explain the relationship to existing infrastructure precisely: ASTRA is the current program framing; existing lab/BTC pages document architectural lineage. Do not assert that every legacy component is already an integrated ASTRA module without a supporting source. The evidence graph connects question → test → artifact → conclusion, with separate links to code.
 
-The full timeline, current scheduler scope and separate next question are canonical on ASTRA. The completed policy result is canonical at `/research/risk-forecasting#policy-utility`; ASTRA and Home render summaries from the same completed record. Keep a small in-page contents list on desktop and an ordinary collapsible contents block on mobile. Static anchors and native disclosure are sufficient for V1.
+The full timeline, completed scheduler summary and separate next questions are canonical on ASTRA. Detailed scheduler metrics are on `/research/nonlinear-measurement`; the ASTRA summary links there. The completed policy result is canonical at `/research/risk-forecasting#policy-utility`; ASTRA and Home render summaries from the same completed record. Keep a small in-page contents list on desktop and an ordinary collapsible contents block on mobile. Static anchors and native disclosure are sufficient for V1.
 
 ## 12. Research page architecture
 
@@ -552,10 +583,11 @@ Use anchored topic sections and a visible evidence legend. With fewer than a doz
 | Record | Class / state | One-line finding or scope | Canonical destination |
 | --- | --- | --- | --- |
 | Independent Risk Forecast Confirmation | INDEPENDENT; completed | H+C improves both primary risk losses against HAR-basis on the frozen assessment | `/research/risk-forecasting#independent-assessment` |
-| ASTRA Risk Policy Utility V1 / Policy translation test | COMPLETED · POLICY UTILITY NOT CONFIRMED; FORECAST_INFORMATION_WITHOUT_POLICY_UTILITY | Frozen P3 policy missed the preregistered utility rule; independently confirmed forecast information survived | `/research/risk-forecasting#policy-utility` |
+| ASTRA Risk Policy Utility V1 / Policy translation test | RETROSPECTIVE · COMPLETED · POLICY UTILITY NOT CONFIRMED; FORECAST_INFORMATION_WITHOUT_POLICY_UTILITY | Frozen P3 policy missed the preregistered utility rule; independently confirmed forecast information survived | `/research/risk-forecasting#policy-utility` |
 | Risk Baseline Challenge | DEVELOPMENT; completed | Risk candidate passed the strong-baseline challenge described in the brief; no extra numbers supplied | `/research/risk-forecasting#baseline-challenge` |
 | Nonlinear Sensor Recovery | SYNTHETIC; completed | Repaired sensor recovered positive-control detection within tested settings | `/research/nonlinear-measurement#sensor-recovery` |
 | Native-Horizon Selection | Completed repair; evidence class unresolved pending artifact review | Native-horizon target/selection repair recovered power in the supplied research progression | `/research/nonlinear-measurement#native-horizon-selection` |
+| Native Scheduler Robustness V1 | SYNTHETIC; completed; NATIVE_FIXED_SELECTION_SUFFICIENT | The registered 1,536-trial study found no practically meaningful adaptive-ordering advantage over simpler fixed-native selection | `/research/nonlinear-measurement` |
 | Daily EMA Long/Flat | RETROSPECTIVE; retained historical system | Lifecycle evidence with three-trade/concentration limits; forward observation separately described | `/projects/btc-final-system` |
 | MSc Futures Volatility Thesis | RETROSPECTIVE; academic thesis | EGARCH-conditioned futures study with ablation and chronological evaluation | `/projects/volatility-regime-filtering` |
 | Bitcoin Bubble GSADF | RETROSPECTIVE; academic seminar paper | Explosive-root diagnostics, not actionable bubble-trading permission | `/projects/bitcoin-bubble-gsadf` |
@@ -563,7 +595,7 @@ Use anchored topic sections and a visible evidence legend. With fewer than a doz
 
 Sensor recovery is explicitly synthetic in the supplied brief. The completed native-horizon repair's data domain is not established there; do not infer its evidence class from the separate synthetic scheduler study. Preserve the supplied power-recovery finding, keep its class unresolved in authoring, and bind the correct class from the artifact before showing a scientific badge. Until then, use a neutral “Measurement repair” role label and disclose the missing evidence scope at depth. Any real-market extension is a separate evidence record. Academic pre-OOS protocols remain explicit at depth; the broad RETROSPECTIVE archive label must not erase chronological study design or turn it into independent ASTRA confirmation.
 
-End the index with one Current Research link to Native Scheduler Robustness V1 and a separately labeled NEXT QUESTION link to Turnover & Opportunity-Cost Decomposition. Preserve the existing six methodology principles at `#methodology`. Do not fabricate primary metrics for records whose briefs supply only qualitative findings. Their cards say what was learned and link to the source/method instead.
+Include Native Scheduler Robustness V1 among completed synthetic findings. End the index with separately labeled NEXT QUESTION links to Candidate Generator V3 and Turnover & Opportunity-Cost Decomposition. Current Research reports no active study in this supplied freeze. Preserve the existing six methodology principles at `#methodology`. Do not fabricate primary metrics for records whose briefs supply only qualitative findings. Their cards say what was learned and link to the source/method instead.
 
 Risk detail order: question → independent finding → shared forecast-assessment context → both primary losses → chronological consistency → approximately 0.9963 actual/forecast variance ratio and its definition → interpretation → limits → prior development challenge → completed policy translation test at `#policy-utility` → mechanism evidence → separate next-question link → sources/code/manifest. Preserve `INDEPENDENT_RISK_FORECAST_CONFIRMATION` for the forecast record and `FORECAST_INFORMATION_WITHOUT_POLICY_UTILITY` for the policy record. Development, independent forecast assessment and policy evaluation have separate contexts; the forecast window, independence label or code lineage must not automatically transfer to the policy study.
 
@@ -573,7 +605,7 @@ Follow with mechanism evidence: H+C retains better realized-risk ranking and mat
 
 Keep the large negative-return accounting table and detailed economic results at research depth only, and only with supplied/verified source values. The binding update supplies no absolute-return table, so neither its values nor missing policy-era boundaries can be reconstructed for the plan. End with the exact interpretation: **forecast information survived; the preregistered policy-utility claim did not.** No directional-alpha, sizing, veto, execution or trading-authority claim follows.
 
-Measurement detail order: failed positive control → decomposition → nonlinear sensor repair → native-horizon target alignment → selection repair → what each repair supports in its documented test domain → what it cannot establish → scheduler question → sources. Sensor recovery and native-horizon repair retain separate evidence contexts even when consolidated on one page.
+Measurement detail order: failed positive control → decomposition → nonlinear sensor repair → native-horizon target alignment → selection repair → what each repair supports in its documented test domain → what it cannot establish → completed scheduler robustness and fixed-native sufficiency → Candidate Generator V3 next question → sources. Sensor recovery and native-horizon repair retain separate evidence contexts even when consolidated on one page.
 
 For every depth page provide “Question,” “Method,” “Finding,” “Limitations,” “Sources and code,” and “Next question” in that order where practical. Source links need specific artifacts; a GitHub profile is labeled “GitHub profile,” never “Reproduce this result.”
 
@@ -596,11 +628,11 @@ Independent means assessment independence, not independent replication by anothe
 
 Show text plus a small distinct marker; never color alone. Each badge has a short definition available through a reachable legend or native disclosure, including keyboard/touch. Do not combine incompatible evidence classes in one undifferentiated claim: historical EMA metrics and later forward records get separate contexts.
 
-Examples: independent forecast record = INDEPENDENT; policy translation record = COMPLETED · POLICY UTILITY NOT CONFIRMED; scheduler scope = SYNTHETIC · IN PROGRESS; PR41 note = BLOCKED; a sensor test can be SYNTHETIC · INVALIDATED with the invalidation scoped to that test. Positive or negative scientific findings use the same evidence colors.
+Examples: independent forecast record = INDEPENDENT; policy translation record = RETROSPECTIVE · COMPLETED · POLICY UTILITY NOT CONFIRMED; scheduler record = SYNTHETIC · COMPLETED; PR41 note = BLOCKED; a sensor test can be SYNTHETIC · INVALIDATED with the invalidation scoped to that test. Positive or negative scientific findings use the same evidence colors.
 
-**POLICY UTILITY NOT CONFIRMED** is a scoped outcome label in the same visual family, not a new evidence class. Use restrained rust text/marker for the policy outcome and neutral text for completed work; this marks a failed preregistered claim, not negative PnL. Store the exact classification `FORECAST_INFORMATION_WITHOUT_POLICY_UTILITY`. Do not assign INDEPENDENT to the policy study merely because its input forecast was independently confirmed; policy evidence class remains unasserted until its own protocol is sourced. Do not mark the forecast INVALIDATED, call the completed policy study BLOCKED, or soften the failed rule into a provisional success.
+**POLICY UTILITY NOT CONFIRMED** is a scoped outcome label in the same visual family, not a new evidence class. Use restrained rust text/marker for the policy outcome and neutral text for completed work; this marks a failed preregistered claim, not negative PnL. Store the exact classification `FORECAST_INFORMATION_WITHOUT_POLICY_UTILITY`. Do not assign INDEPENDENT to the policy study merely because its input forecast was independently confirmed; the implementation brief explicitly assigns RETROSPECTIVE to the policy study while its detailed protocol/source availability remains disclosed. Do not mark the forecast INVALIDATED, call the completed policy study BLOCKED, or soften the failed rule into a provisional success.
 
-**NEXT QUESTION** is a neutral planning marker for Turnover & Opportunity-Cost Decomposition. It carries a proposed work state, not IN PROGRESS, an evidence badge or a completed result. The mechanism evidence belongs to the completed policy record; the next-question card contains the proposed question and a link to that evidence, not new findings.
+**NEXT QUESTION** is a neutral planning marker for Candidate Generator V3 and Turnover & Opportunity-Cost Decomposition. It carries a proposed work state, not IN PROGRESS, an evidence badge or a completed result. The mechanism evidence belongs to the completed policy record; the next-question card contains the proposed question and a link to that evidence, not new findings.
 
 Keep existing `ProvenanceBadge` concepts separate: academic context, conceptual illustration, initial static snapshot, and planned research identify provenance. Existing “Demonstrated” capability status is not a synonym for INDEPENDENT. Runtime LIVE / STALE / UNAVAILABLE remains a separate telemetry vocabulary. No automatic conversion between these systems is permitted.
 
@@ -631,7 +663,7 @@ Create one reviewed content registry, proposed as `lib/research-evidence.ts`, wi
 
 Compact cards show title, class/state, question or finding, a contextual primary metric if supplied, visible caveat, and a specific detail CTA. Expanded detail shows every applicable field. Source/code unavailable is an honest authoring condition; never create `#` placeholder buttons, invented GitHub paths, or an implied reproducibility claim. Published summaries can link to their real detail page; any unresolved primary artifact must be disclosed there. The review pass should resolve source links before presenting the portfolio as fully auditable.
 
-Ongoing cards display question, class if known, IN PROGRESS, supplied scope, and next inspection link. They have no result slot, metric skeleton, forecast confidence, winner badge, or estimated outcome. This applies to Native Scheduler Robustness V1. A state transition requires a newly reviewed result/version and source; merely changing IN PROGRESS to INDEPENDENT is insufficient. Risk Policy Utility V1 has now transitioned to completed work with a not-confirmed utility outcome and the supplied branch head. Proposed NEXT QUESTION cards have no active-study status or outcome metrics and do not appear in Current Research.
+Ongoing cards display question, class if known, IN PROGRESS, supplied scope, and next inspection link. They have no result slot, metric skeleton, forecast confidence, winner badge, or estimated outcome. No active study is supplied in the current freeze. Native Scheduler Robustness V1 has transitioned to SYNTHETIC · COMPLETED under the binding reviewed result above. A state transition requires a newly reviewed result/version and source; merely changing IN PROGRESS to INDEPENDENT is insufficient. Risk Policy Utility V1 has now transitioned to completed work with a not-confirmed utility outcome and the supplied branch head. Proposed NEXT QUESTION cards have no active-study status or outcome metrics and do not appear in Current Research.
 
 ### Metric-card specification
 
@@ -683,14 +715,29 @@ Do not infer confidence intervals, p-values, economic significance, segment samp
 | Primary risk measures / rule | Volatility improvement 2.070%; ES5 improvement 2.016%; preregistered minimum 3.0%. Keep exact precision and labels; do not infer missing metric formulas |
 | Era consistency | Only CONFIRMED_FORECAST_ERA_DIAGNOSTIC passed the joint era rule; required multi-era consistency failed |
 | Mechanism evidence | Better realized-risk ranking and materially lower turnover for H+C than HAR; much of the relative fee-net return advantage is associated with lower turnover |
-| Window / policy evidence class | Not supplied in the binding update; resolve from the policy protocol, without copying the independent forecast interval or badge |
+| Window / policy evidence class | Policy window remains unavailable; RETROSPECTIVE is explicitly assigned in the implementation brief. Do not copy the independent forecast interval or badge |
 | Method | Frozen primary P3 policy evaluation against the preregistered utility threshold and multi-era consistency rule; exact mapping and era definitions to bind from source |
 | Caveat | Better forecasting did not automatically establish validated policy utility. No directional-alpha, sizing, veto, execution or trading-authority claim |
 | Source / code | Binding completed user update plus exact study branch head; public report, repository, mapping specification and detailed accounting references still to bind |
 | Next question | Turnover & Opportunity-Cost Decomposition — NEXT QUESTION only |
 | Canonical detail | `/research/risk-forecasting#policy-utility` |
 
-Keep policy metrics in the completed research-depth record. The homepage variant renders the compact negative finding and exact interpretation without the detailed economic table. The three leading forecast metrics remain attached to their separate independent-assessment context.
+Keep policy metrics in the shared completed record. The homepage variant renders the compact 2.070% / 2.016% / 3.0% pooled comparison, negative finding and exact interpretation without the detailed economic table. The three leading forecast metrics remain attached to their separate independent-assessment context.
+
+**Completed scheduler record seed:**
+
+| Field | Exact content |
+| --- | --- |
+| Title / evidence / work state | ASTRA Native Scheduler Robustness V1 / SYNTHETIC / COMPLETED |
+| Classification / research head | NATIVE_FIXED_SELECTION_SUFFICIENT / `b45e2a3fa2daf4b51967059d964393536a41f106` |
+| Context | Registered synthetic robustness only; 1,536 paired trials, 256 per cell; primary 60 bps setting |
+| Comparison | Forced vs S1 adaptive vs S2 fixed; raw and adjusted counts as the binding table above |
+| Primary interpretation | No practically meaningful incremental adaptive-ordering advantage in the registered domain; paired interval excludes the registered +5 pp margin |
+| Depth metrics | S1 adjusted 236/256; S2 adjusted 237/256; difference −0.39 pp; conservative paired 95% interval [−2.47,+1.69] pp; S2 strong-signal retention 97.93% raw and adjusted |
+| Validity guards | All registered null guards passed; zero undefined primary tests; zero scientific presentation-order effects |
+| Boundary | Simplification supported; no mathematical-equivalence or historical-BTC-alpha claim |
+| Next question | Candidate Generator V3; proposed only, with the frozen native 1h / R3 / ridge alpha 1 / canonical-tie architecture above; adaptive ordering diagnostic only |
+| Source / code availability | Reviewed user update; research record in private archive; no invented public URL or private branch link |
 
 **Other record seeds:**
 
@@ -698,13 +745,13 @@ Keep policy metrics in the completed research-depth record. The homepage variant
 | --- | --- | --- | --- |
 | Risk Baseline Challenge | Does the risk candidate survive comparison with a stronger volatility-persistence alternative? Development baseline comparison | Exact challenge baseline/window to bind from its own report; do not reuse independent-window context | Development selection evidence; next: independent assessment |
 | Nonlinear Sensor Recovery | Can the measurement system detect a controlled nonlinear signal? Positive-control diagnosis and sensor repair | Failed sensor/control setup versus repaired setup; synthetic settings and experiment version pending source | Recovery in controls does not prove market predictability; next: target/selection alignment |
-| Native-Horizon Selection | Does target alignment and selection repair recover detection power? Target/selection repair evaluation; exact protocol pending source | Previous vs repaired architecture; test domain and evidence class pending source | Do not attribute power recovery specifically to adaptive scheduling or infer a synthetic/market scope; next: scheduler robustness |
+| Native-Horizon Selection | Does target alignment and selection repair recover detection power? Target/selection repair evaluation; exact protocol pending source | Previous vs repaired architecture; test domain and evidence class pending source | Do not attribute power recovery specifically to adaptive scheduling or infer a synthetic/market scope; completed follow-up: scheduler robustness; next proposed architecture: Candidate Generator V3 |
 | Daily EMA Long/Flat | What survives the full research lifecycle for a low-turnover BTC system? Frozen backtest, cost stress, concentration analysis, forward observation | Exact-period BTC buy-and-hold/perpetual references; FULL 1 Jan 2022 through 30 Jul 2026 per current page; exact inclusion semantics follow original source | Three completed trades; 97.4% positive log-growth concentration; post-selection. Next: continued observation, not policy approval |
 | Futures volatility thesis | Does volatility-regime filtering change an intraday futures strategy's behavior? EGARCH, ablation, alternatives, walk-forward and bootstrap | No-filter/alternative filters; 2019–2025 evaluation, parameters selected using 2010–2018 per current page | Original paper's assumptions and sample limit transferability; follow-up framed as a question, not a claimed active study |
 | Bitcoin GSADF | Which historical Bitcoin episodes exhibit explosive-root behavior? GSADF diagnostics | Explosive-root test null; exact dates/model choices taken from paper before adding metrics | Diagnostic evidence is not a timing rule; follow-up is robustness to specification, without claiming ongoing work |
 | C4 historical challenger | What does the existing post-selection regime comparison show? Existing historical challenger methodology | Existing route is the source for exact comparator/window | Preserve its selection caveats; no new conclusion or research status invented |
 
-All record seeds require Source and Code fields from the same registry; missing values retain their availability state. The original seven findings, C4 and the completed policy translation result use this one contract rather than one-off cards. The scheduler scope and proposed next question use their explicit non-result variants.
+All record seeds require Source and Code fields from the same registry; missing values retain their availability state. The original seven findings, C4 and the completed policy translation result use this one contract rather than one-off cards. The completed scheduler study uses the completed synthetic record contract with its own assessment context. Candidate Generator V3 and turnover/opportunity-cost decomposition use explicit proposed, non-result variants.
 
 ## 15. Research timeline
 
@@ -720,11 +767,11 @@ Use a static ordered timeline with optional native “Evidence and limitations�
 | 06 Risk candidate discovery | A candidate short-horizon risk information claim emerged | Development discovery needed a demanding comparison | DEVELOPMENT | `/research/risk-forecasting#baseline-challenge` |
 | 07 Strong baseline challenge | Candidate passed the supplied challenge | Passing development comparison did not itself establish independence | DEVELOPMENT | `/research/risk-forecasting#baseline-challenge` |
 | 08 Independent forecast confirmation | Both primary losses improved; all four segments positive | Claim is risk information within the frozen assessment | INDEPENDENT | `/research/risk-forecasting#independent-assessment` |
-| 09 Policy translation tested | ASTRA Risk Policy Utility V1 evaluated the frozen primary P3 mapping | H+C vs HAR pooled improvements: volatility 2.070%, ES5 2.016%, against a 3.0% preregistered minimum; metrics at research depth | COMPLETED; policy evidence class unasserted | `/research/risk-forecasting#policy-utility` |
+| 09 Policy translation tested | ASTRA Risk Policy Utility V1 evaluated the frozen primary P3 mapping | H+C vs HAR pooled improvements: volatility 2.070%, ES5 2.016%, against a 3.0% preregistered minimum; metrics at research depth | RETROSPECTIVE · COMPLETED | `/research/risk-forecasting#policy-utility` |
 | 10 Policy utility not confirmed | The preregistered policy-utility claim did not pass | Only CONFIRMED_FORECAST_ERA_DIAGNOSTIC passed the joint era rule; required multi-era consistency failed. Forecast information remains confirmed | POLICY UTILITY NOT CONFIRMED; exact policy classification retained | `/research/risk-forecasting#policy-utility` |
 | 11 Turnover/opportunity-cost mechanism isolated | H+C retains better realized-risk ranking and materially lower turnover than HAR; much of the relative fee-net return advantage is associated with lower turnover | Association/mechanism evidence does not override the failed P3 rule or establish completed causal decomposition | Mechanism evidence within the completed policy study | `/research/risk-forecasting#policy-utility` |
 
-Also show a small branch from stage 05 to **Native Scheduler Robustness V1 — SYNTHETIC · IN PROGRESS**. This is the sole Current Research study, not a completed prerequisite for stage 08. After stage 11, show **NEXT QUESTION: Turnover & Opportunity-Cost Decomposition** linking to `/astra#next-question`, clearly outside the completed stages and outside Current Research. Mechanism isolation in the completed study does not mean this separate decomposition study is underway or complete.
+Show a methodology branch from stage 05: **Native Scheduler Robustness V1 — SYNTHETIC · COMPLETED → Fixed-native selection sufficient → Candidate Generator V3 — NEXT QUESTION**. Its result supports simplification only in the registered synthetic robustness domain, not mathematical equivalence or market alpha; it is not a prerequisite claimed for stage 08. After stage 11, show **NEXT QUESTION: Turnover & Opportunity-Cost Decomposition** linking to `/astra#next-question`, outside the completed stages. Neither proposed follow-up is active. Current Research has no active study in the supplied freeze; mechanism isolation does not mean decomposition is underway or complete.
 
 Desktop ASTRA layout: narrow ordinal column, outcome column, then “What changed” and source link. Home uses the compressed research progression plus the exact continuation **Independent forecast confirmation → Policy translation tested → Policy utility not confirmed → turnover/opportunity-cost mechanism isolated**. Mobile becomes one vertical ordered list with connectors on the left. Never require dragging, horizontal scrolling, hovering, or a 3D camera to read the story. All current/proposed states have text labels, not pulses. Expanded entries preserve question → test → finding/failure → next change.
 
@@ -788,7 +835,7 @@ Order: concise profile and contact → Copenhagen Economics MSc and relevant bac
 
 Use the international background concretely: University of Copenhagen and Seoul, South Korea. Keep Python / SQL / Git / Linux prominent; AWS and other existing skills may remain at résumé depth. AI-assisted engineering is described through implementation, review, tests and provenance rather than model-brand decoration.
 
-Draft profile: **“I work at the intersection of financial econometrics and research engineering. I formulate market questions, build reproducible tests, challenge the measurement and comparison, and explain what the evidence supports. My work independently confirmed short-horizon BTC risk information and separately tested its policy translation: forecast information survived, while the preregistered policy-utility claim did not. Native Scheduler Robustness V1 remains in progress as synthetic methodology research.”**
+Draft profile: **“I work at the intersection of financial econometrics and research engineering. I formulate market questions, build reproducible tests, challenge the measurement and comparison, and explain what the evidence supports. My work independently confirmed short-horizon BTC risk information and separately tested its policy translation: forecast information survived, while the preregistered policy-utility claim did not. The completed Native Scheduler Robustness V1 synthetic study supports simpler fixed-native selection within its registered robustness domain.”**
 
 Retain KOFIA certification and existing language claims as current résumé content. Avoid treating the phrase “independent quantitative research” as an INDEPENDENT scientific badge for every personal project.
 
@@ -921,8 +968,8 @@ Recommended working order: **A → C → D → B → E → F → G**. Build dest
 | Phase | Files/routes likely affected and primitives | Acceptance criteria | Regression risks | Remains unchanged |
 | --- | --- | --- | --- | --- |
 | A — Tokens and evidence primitives | Global/navigation CSS, editorial/shell primitives; new evidence registry, EvidenceStatus, AssessmentContext, EvidenceMetric, ResearchFindingCard, AuthorityBoundary | Dark/light tokens; all eight taxonomy terms defined; evidence class, work state and claim outcome distinct; completed policy outcome supported; ongoing/proposed records have no new outcome metrics | Global recoloring, duplicate component vocabularies, mislabeled legacy status or completed negative result | Existing page URLs, research facts, API/telemetry logic, dependency versions |
-| B — Homepage restructure | EN homepage, Korean recruiter home as scoped, navigation content, explicit shell composition; reuse finding/metric/timeline summaries | STRONGEST CONFIRMED FINDING leads with three forecast metrics; variance ratio at depth; compact completed policy module; no large negative-return accounting table; scheduler only in Current Research; separate NEXT QUESTION; EMA caveats; working links; no homepage polling | Hidden shell injection, orphaned CTA, translated factual drift, conflating latest completion with strongest confirmation | Monitor and observatory functions, contact/analytics, research assets |
-| C — ASTRA page | New `/astra`; ResearchPipeline and ResearchTimeline; shared registry | Six-stage scan plus eight-stage process; eleven-stage timeline through completed policy test, failed utility rule and mechanism isolation; sole active scheduler study; separate proposed decomposition question; source/authority disclosure | Unsupported integration/causal claims, invented dates, treating completed policy or proposed decomposition as IN PROGRESS | Historical evidence records, existing project URLs, execution authority |
+| B — Homepage restructure | EN homepage, Korean recruiter home as scoped, navigation content, explicit shell composition; reuse finding/metric/timeline summaries | STRONGEST CONFIRMED FINDING leads with three forecast metrics; variance ratio at depth; compact completed policy module; no large negative-return accounting table; scheduler completed and synthetic; no invented active study; two separate NEXT QUESTION records; EMA caveats; working links; no homepage polling | Hidden shell injection, orphaned CTA, translated factual drift, conflating latest completion with strongest confirmation | Monitor and observatory functions, contact/analytics, research assets |
+| C — ASTRA page | New `/astra`; ResearchPipeline and ResearchTimeline; shared registry | Six-stage scan plus eight-stage process; eleven-stage timeline through completed policy test, failed utility rule and mechanism isolation; completed synthetic scheduler branch with fixed-native sufficiency; proposed Candidate Generator V3 and decomposition questions; source/authority disclosure | Unsupported integration/causal claims, invented dates, treating completed policy/scheduler or either proposed follow-up as IN PROGRESS | Historical evidence records, existing project URLs, execution authority |
 | D — Research findings and detail | `/research`; new risk and nonlinear detail routes, including `/research/risk-forecasting#policy-utility`; existing studies and ledger | Original seven findings, C4 and completed policy result discoverable; exact policy classification/head/2.070%/2.016%/3.0%/era result; independent forecast and policy contexts distinct; no extra top-level route | Duplicated metrics, mismatched windows, lost caveats/anchors, overstated mechanism attribution, accidental source replacement | Original paper bytes, API contracts, historical numerical results |
 | E — Systems and telemetry placement | `/projects`, navigation, shell, existing monitor presentation, build log PR41 anchor; current telemetry clients reused | Systems boundary explicit; full EN/KO monitor routes preserved; no operational data presented as research proof; PR41 deep-only; no home polling | Repeated widget mounts, lost last-valid state, stale/fresh mislabeling, accidental parser changes | All telemetry libs/contracts, endpoints, polling/TTL semantics, optional chart fallback, external systems |
 | F — About, résumé and contact | `/resume`, `/contact`, shell/footer utilities, locale counterpart map | Name-first identity, current research order, factual credentials, no nonexistent CV download, functioning contact UI, correct fallback links | Nested main, form field/error changes, false translations, unsupported career claims | Contact POST schema/delivery controls, email/profile links, qualifications, analytics |
@@ -963,7 +1010,7 @@ All paths in this table are relative to the audited repository root `/Users/dean
 
 | Proposed file | Purpose |
 | --- | --- |
-| `lib/research-evidence.ts` | Reviewed records, separate forecast/policy contexts, exact completed policy head/classification, source availability, homepage selection, active/proposed distinctions |
+| `lib/research-evidence.ts` | Reviewed records, separate forecast/policy contexts, exact completed policy and scheduler heads/classifications, source availability, homepage selection, completed/proposed distinctions |
 | `lib/site-routes.ts` | Canonical destinations, legacy anchors, actual locale counterparts; avoid a second routing framework |
 | `components/evidence-status.tsx` | Shared badge/legend vocabulary |
 | `components/evidence-metric.tsx` | AssessmentContext, EvidenceMetric and contextual group |
@@ -997,8 +1044,10 @@ This checklist is for the future implementation. None of these runtime/build che
 - [ ] Completed negative policy module is compact on Home; the large negative-return accounting table and detailed economic results stay at research depth, with no invented source values.
 - [ ] Forecast information survived; the preregistered policy-utility claim did not. Better ranking/lower turnover do not override the failed rule or grant directional-alpha, sizing, veto, execution or trading authority.
 - [ ] Mechanism copy retains “associated with lower turnover” and does not invent causal attribution or completed decomposition results.
-- [ ] Current Research contains only Native Scheduler Robustness V1, SYNTHETIC · IN PROGRESS, without results. Turnover & Opportunity-Cost Decomposition is separately NEXT QUESTION, not IN PROGRESS.
-- [ ] Entire-plan and implemented-copy searches for Risk Policy Utility / IN PROGRESS / ongoing / current policy scope show no stale active-policy state. Timeline continues through policy translation tested, utility not confirmed and turnover/opportunity-cost mechanism isolated.
+- [ ] Native Scheduler Robustness V1 is SYNTHETIC · COMPLETED with exact classification NATIVE_FIXED_SELECTION_SUFFICIENT and research head `b45e2a3fa2daf4b51967059d964393536a41f106`. No active study is invented. Candidate Generator V3 and Turnover & Opportunity-Cost Decomposition are NEXT QUESTION only.
+- [ ] Scheduler depth preserves 1,536 trials / 256 per cell; primary 60 bps raw/adjusted Forced 242/242, S1 237/236, S2 237/237; adjusted S1−S2 −0.39 pp; paired 95% interval [−2.47,+1.69] pp; registered +5 pp margin; S2 retention 97.93% raw/adjusted; null guards passed; zero undefined primary tests and presentation-order effects.
+- [ ] Scheduler interpretation supports simplification in the registered synthetic domain, not mathematical equivalence or historical BTC alpha. Future V3 keeps frozen native 1h objective, R3 product representation, ridge alpha 1, canonical ties, and adaptive ordering diagnostic only.
+- [ ] Entire-plan and implemented-copy searches for Native Scheduler Robustness / IN PROGRESS / adaptive / Candidate Generator V3 / Risk Policy Utility show no stale active-study state. Timeline continues through policy translation tested, utility not confirmed and turnover/opportunity-cost mechanism isolated.
 - [ ] EMA shows three trades, concentration, retrospective selection and no independent-policy claim; forward observation is separate.
 - [ ] Search all EN/KO content for stale “strongest” EMA framing, return-first summaries, unsupported “live alpha,” and contradictory global execution wording.
 - [ ] PR41 appears only in Systems/deep history; no latest-entry injection puts it on Home.
@@ -1040,7 +1089,7 @@ Meaningful additional tests are limited to failure-prone contracts: ongoing/prop
 
 ## 26. Open questions requiring user decision
 
-The plan is approved subject to the binding policy update now incorporated. The design defaults below remain the approved strategy; remaining source/asset questions are inputs for the later implementation phase, not a request to reopen product decisions or implement now.
+The approved plan incorporates the binding completed policy and scheduler updates. The design defaults remain the approved strategy; unresolved source/asset questions do not reopen product decisions or prevent the authorized implementation from using reviewed claims with honest source-availability disclosure.
 
 | Decision / missing input | Recommendation | Effect if unresolved |
 | --- | --- | --- |
@@ -1054,15 +1103,15 @@ The plan is approved subject to the binding policy update now incorporated. The 
 | Public source limitations at initial publication | Prefer linking the completed evidence package before presenting the portfolio as fully auditable | If artifacts cannot be public, show source availability truthfully and agree a narrower public-inspection claim; never manufacture a reproduction link |
 | Résumé download or new portrait | Optional later content; keep web résumé and text-first hero now | No new asset, fake download or identity invention is required |
 
-Native Scheduler Robustness V1 results remain unpublished because that study is in progress. Turnover & Opportunity-Cost Decomposition remains a NEXT QUESTION without an active-study or result claim. Completed Risk Policy Utility V1 findings are included under the binding update, with the failed policy-utility rule preserved. Three.js remains excluded. Although the plan is approved, the user has explicitly kept application implementation out of this phase; no commit, push or deployment follows from this document update.
+Completed Native Scheduler Robustness V1 findings are supplied under the binding update; the underlying public report/code links remain unavailable. Candidate Generator V3 and Turnover & Opportunity-Cost Decomposition remain NEXT QUESTION records without active-study or result claims. The completed policy study retains its failed policy-utility rule. Three.js remains excluded. The current task authorizes implementation, focused commits, this branch push and a Draft PR; no merge or deployment is authorized.
 
 ## 27. Recommended implementation branch strategy
 
-Leave this approved, updated planning document uncommitted on `design/astra-portfolio-redesign-v1`, as requested. Do not switch, create, merge, commit or push branches in this phase. The completed policy study head is a research provenance reference only; do not check it out as the portfolio base.
+Original planning-phase instruction: this document was left uncommitted on `design/astra-portfolio-redesign-v1`. The subsequent implementation task explicitly authorizes freezing this reviewed plan first, then implementing on `codex/astra-portfolio-redesign-v1`. Completed policy and scheduler heads are research provenance references only; neither is a portfolio checkout base.
 
-When implementation is explicitly authorized, create a separate `codex/astra-portfolio-redesign-v1` branch/worktree from the approved base `eafc9680c6f992e78ead3ef775d6c866b602b8fe` (or a newly approved replacement base). Carry the reviewed plan into that work without resetting or discarding the planning working tree. Record any approved plan revisions before coding; do not silently start from current remote main if it has drifted.
+For the now-authorized implementation, use the separate `codex/astra-portfolio-redesign-v1` branch/worktree from the approved base `eafc9680c6f992e78ead3ef775d6c866b602b8fe` (or a newly approved replacement base). Carry the reviewed plan into that work without resetting or discarding the planning working tree. Record any approved plan revisions before coding; do not silently start from current remote main if it has drifted.
 
-Use focused later commits for primitives/content registry, ASTRA/detail pages, homepage/navigation integration, Systems demotion, human pages, and verification. Keep API/telemetry behavioral changes outside the redesign branch. An implementation PR should state the changed user-visible hierarchy, preserved contracts, source availability, and actual validation. Commit/push/merge/deploy actions remain subject to the later task's authorization; none occurs here.
+Use focused later commits for primitives/content registry, ASTRA/detail pages, homepage/navigation integration, Systems demotion, human pages, and verification. Keep API/telemetry behavioral changes outside the redesign branch. An implementation PR should state the changed user-visible hierarchy, preserved contracts, source availability, and actual validation. Follow the current implementation authorization for commits, push and Draft PR; never merge or deploy.
 
 ### Ten highest-impact decisions for review
 
@@ -1071,10 +1120,10 @@ Use focused later commits for primitives/content registry, ASTRA/detail pages, h
 3. The existing falsification headline stays; the strongest finding moves directly after the hero.
 4. The narrative continues through completed policy translation, unconfirmed utility and turnover/opportunity-cost mechanism isolation: forecast information survived; the preregistered policy-utility claim did not.
 5. Navigation becomes ASTRA / Research / Papers / Systems / About, preserving established URLs and adding only three substantive pages.
-6. Forecast confirmation, completed negative policy outcome, the sole active synthetic scheduler study and the proposed decomposition question have distinct states.
+6. Forecast confirmation, completed negative policy outcome, completed synthetic scheduler sufficiency and the two proposed next questions have distinct states.
 7. EMA remains a retained historical system with three-trade, concentration and post-selection caveats.
 8. Telemetry moves out of homepage composition and into Systems while all operational/API contracts remain intact.
 9. The visual system uses readable navy surfaces, restrained evidence colors and provenance nodes; no 3D, ticker or fake chart.
-10. Implement incrementally from the approved portfolio base only when that phase is explicitly started, preserving the completed policy study head separately and using verified sources, locale/link checks and targeted regression testing.
+10. Implement incrementally from the approved portfolio base only when that phase is explicitly started, preserving the completed policy and scheduler study heads separately and using verified sources, locale/link checks and targeted regression testing.
 
 PLANNING_UPDATE_COMPLETE
