@@ -1,51 +1,49 @@
-import type { Metadata } from "next";
-import {
-  EditorialSection,
-  EvidenceBand,
-  PageHero,
-  StatusLabel,
-} from "@/components/editorial";
+import Link from "next/link";
 import { PageShell } from "@/components/site-shell";
+import {
+  AuthorityBoundary,
+  CurrentResearch,
+  ResearchContents,
+  ResearchFindingCard,
+  ResearchHero,
+  ResearchSection,
+} from "@/components/research-ui";
+import { researchAuthority, researchEvidence } from "@/lib/research-evidence";
+import { metadataFor } from "@/lib/site-metadata";
 
-export const metadata: Metadata = {
-  title: "Research Methodology",
-  description:
-    "MeanyDeany research methodology: time-respecting construction, narrow model roles, robust comparison, immutable evidence, and visible failure states.",
-};
+export const metadata = metadataFor(
+  "/research",
+  "Research Findings",
+  "Independent risk forecast assessment, completed policy translation, synthetic measurement and scheduler findings, retained historical systems and academic financial econometrics by Woosub Shin.",
+);
 
 const principles = [
   {
-    accent: "amber" as const,
     index: "01",
     title: "Evidence before permission",
     text: "A model output earns interpretation through validation. It does not become an entry, veto, sizing, or execution instruction by default.",
   },
   {
-    accent: "cyan" as const,
     index: "02",
     title: "Time-respecting data construction",
     text: "Features, states, and outcomes use information available at the evaluated timestamp. Alignment rules are explicit and missing data is not silently repaired.",
   },
   {
-    accent: "violet" as const,
     index: "03",
     title: "Model comparison and robustness",
     text: "Ablation, alternative specifications, walk-forward evaluation, and subperiod checks matter more than a single favorable summary statistic.",
   },
   {
-    accent: "amber" as const,
     index: "04",
     title: "Immutable evidence and provenance",
     text: "Historical research records should remain inspectable as hypotheses evolve. Source identity and transformation history belong beside the result.",
   },
   {
-    accent: "emerald" as const,
     index: "05",
     title: "Operational reliability",
     text: "Duplicate protection, stale-input detection, locking, scheduling, and failure states are part of research validity when systems generate evidence repeatedly.",
   },
   {
-    accent: "blue" as const,
     index: "06",
     title: "Evidence, policy, and execution stay separate",
     text: "Descriptive evidence can inform later policy research, but policy state is not entry permission and neither layer authorizes execution.",
@@ -62,76 +60,87 @@ const notes = [
 export default function ResearchPage() {
   return (
     <PageShell>
-      <PageHero
-        accent="violet"
-        eyebrow="MeanyDeany · Methodology"
-        title="Research methodology"
-        intro="Time-respecting construction, narrow model roles, robust comparison, immutable evidence, and visible failure states."
-        metadata={[
-          { label: "Data", value: "Time-respecting" },
-          { label: "Models", value: "Compared, not canonized" },
-          { label: "Evidence", value: "Auditable and immutable" },
-          { label: "Permission", value: "Outside model output" },
-        ]}
-      />
+      <div className="research-page">
+        <ResearchHero
+          eyebrow="Woosub Shin / Research"
+          title="Research findings and the tests behind them."
+          intro="Independent assessment, development evidence, measurement repairs and historical studies — each with its scope and limitations."
+        >
+          <p className="research-note">Findings are organized by scientific relevance. Evidence class, work state and claim outcome remain separate.</p>
+          <div className="research-actions">
+            <Link className="research-button" href="/astra">Explore ASTRA</Link>
+            <a className="research-button" href="#methodology">Read the methodology</a>
+          </div>
+        </ResearchHero>
 
-      <EditorialSection
-        accent="violet"
-        eyebrow="Working principles"
-        title="Research credibility is cumulative"
-        intro="No single diagnostic establishes a system's validity. Credibility accumulates through temporal discipline, robustness, provenance, operational integrity, and appropriately narrow claims."
-      >
-        <ol className="grid gap-px border-y border-[#7E8B9D]/15 bg-[#7E8B9D]/15 lg:grid-cols-2">
-          {principles.map((principle) => (
-            <li key={principle.title} className="bg-[#0B0F16] p-6 sm:p-8">
-              <div className="flex items-center gap-4">
-                <span className="font-mono text-xs text-[#C3AEFF]">{principle.index}</span>
-                <StatusLabel accent={principle.accent}>{principle.title}</StatusLabel>
-              </div>
-              <p className="mt-6 max-w-2xl text-base leading-8 text-[#A8B3C2]">
-                {principle.text}
-              </p>
-            </li>
-          ))}
-        </ol>
-      </EditorialSection>
+        <ResearchContents items={[
+          { href: "#risk-forecasting", label: "Risk forecasting" },
+          { href: "#measurement", label: "Measurement" },
+          { href: "#systematic-strategies", label: "Historical systems" },
+          { href: "#academic", label: "Academic research" },
+          { href: "#current-research", label: "Current / next" },
+          { href: "#methodology", label: "Methodology" },
+        ]} />
 
-      <EditorialSection
-        accent="amber"
-        eyebrow="Research notes"
-        title="Short rules for difficult decisions"
-        tone="deep"
-      >
-        <dl className="divide-y divide-[#7E8B9D]/15 border-y border-[#7E8B9D]/15">
-          {notes.map(([term, detail], index) => (
-            <div
-              key={term}
-              className="grid gap-3 py-6 sm:grid-cols-[3rem_minmax(10rem,0.7fr)_minmax(0,1.3fr)] sm:gap-6"
-            >
-              <span className="font-mono text-[0.68rem] text-[#FFC56F]">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <dt className="font-semibold text-[#F4F7FB]">{term}</dt>
-              <dd className="text-sm leading-7 text-[#8996A8]">{detail}</dd>
-            </div>
-          ))}
-        </dl>
-      </EditorialSection>
+        <ResearchSection id="risk-forecasting" eyebrow="Risk forecasting" title="Forecast information survived. Policy utility was not confirmed.">
+          <p className="research-prose">Independent forecast assessment, development comparison and the completed policy test answer different questions. Their evidence labels and assessment windows do not transfer between records.</p>
+          <div className="finding-list">
+            <ResearchFindingCard record={researchEvidence.independentRiskForecast} />
+            <ResearchFindingCard record={researchEvidence.policyUtility} />
+            <ResearchFindingCard record={researchEvidence.riskBaselineChallenge} />
+          </div>
+        </ResearchSection>
 
-      <EditorialSection
-        eyebrow="Separation of concerns"
-        title="One pipeline, three distinct responsibilities"
-      >
-        <EvidenceBand
-          accent="cyan"
-          items={[
-            { label: "Evidence", value: "What the data and model record support." },
-            { label: "Interpretation", value: "How the evidence is framed and challenged." },
-            { label: "Policy", value: "A separate research layer with explicit rules." },
-            { label: "Execution", value: "Not part of this public portfolio." },
-          ]}
-        />
-      </EditorialSection>
+        <ResearchSection id="measurement" eyebrow="Measurement and methodology" title="Repair detection, then test the need for complexity.">
+          <p className="research-prose">Positive controls exposed blind spots. Target and selection repairs recovered methodological power. The completed synthetic scheduler study supports simpler fixed-native selection within its registered domain.</p>
+          <div className="finding-list">
+            <ResearchFindingCard record={researchEvidence.nonlinearSensorRecovery} />
+            <ResearchFindingCard record={researchEvidence.nativeHorizonSelection} />
+            <ResearchFindingCard record={researchEvidence.nativeScheduler} />
+          </div>
+        </ResearchSection>
+
+        <ResearchSection id="systematic-strategies" eyebrow="Retained historical research" title="Historical systems with their selection limits intact">
+          <p className="research-prose">These records document historical strategy research. Post-selection comparisons and later forward observation remain distinct from independent ASTRA confirmation.</p>
+          <div className="finding-list">
+            <ResearchFindingCard record={researchEvidence.dailyEma} />
+            <ResearchFindingCard record={researchEvidence.c4Challenger} />
+          </div>
+        </ResearchSection>
+
+        <ResearchSection id="academic" eyebrow="Academic research" title="Financial econometrics and original papers">
+          <div className="finding-list">
+            <ResearchFindingCard record={researchEvidence.futuresVolatilityThesis} />
+            <ResearchFindingCard record={researchEvidence.bitcoinGsadf} />
+          </div>
+          <div className="research-actions"><Link href="/papers">Read the original thesis and seminar paper <span aria-hidden="true">→</span></Link></div>
+        </ResearchSection>
+
+        <ResearchSection id="current-research" eyebrow="Current / next" title="Questions that follow from completed evidence">
+          <CurrentResearch />
+        </ResearchSection>
+
+        <ResearchSection id="methodology" eyebrow="Working principles" title="Research credibility is cumulative.">
+          <p className="research-prose">No single diagnostic establishes a system’s validity. Credibility accumulates through temporal discipline, robustness, provenance, operational integrity and appropriately narrow claims.</p>
+          <ol className="research-grid" style={{ marginTop: 32 }}>
+            {principles.map(principle => <li className="research-card" key={principle.index}>
+              <p className="research-kicker" aria-hidden="true">{principle.index}</p>
+              <h3>{principle.title}</h3><p>{principle.text}</p>
+            </li>)}
+          </ol>
+          <div style={{ marginTop: 40 }}>
+            <h3>Short rules for difficult decisions</h3>
+            <dl>{notes.map(([term, detail]) => <div className="research-card" key={term}>
+              <dt><strong>{term}</strong></dt><dd className="research-note">{detail}</dd>
+            </div>)}</dl>
+          </div>
+          <AuthorityBoundary>{researchAuthority} Evidence, interpretation, policy research and execution systems have distinct responsibilities.</AuthorityBoundary>
+          <div className="research-actions">
+            <Link href="/astra#evidence-protocol">Read the evidence taxonomy and source boundaries <span aria-hidden="true">→</span></Link>
+            <Link href="/projects">Inspect the supporting systems <span aria-hidden="true">→</span></Link>
+          </div>
+        </ResearchSection>
+      </div>
     </PageShell>
   );
 }
