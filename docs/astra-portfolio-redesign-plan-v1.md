@@ -2,6 +2,8 @@
 
 > **Historical plan and current-status boundary — 9 September 2026.** The approved plan and scheduler implementation update below are preserved as the research freeze used for the first validated portfolio implementation. Candidate Generator V3 completed afterward. Earlier descriptions of V3 as NEXT QUESTION, proposed architecture or a future study are historical and are superseded by the [post-plan V3 status addendum](#28-post-plan-research-status-addendum-9-september-2026). That addendum is the current authority for V3, its completed follow-up chain, and the two remaining proposed questions; it does not retroactively change what was known when the plan was reviewed.
 
+> **Later release refinement — 9 September 2026.** The [English-only and visual refinement addendum](#29-post-plan-english-only-and-visual-refinement-addendum-9-september-2026), received after delivery head `42044142c041c23b8215c5ba23c076e2d8efe594`, supersedes earlier instructions to retain the Korean public experience and keep historical performance only at study depth. The earlier locale and presentation passages remain planning history. The completed scientific states and claim boundaries in section 28 remain current.
+
 Planning date: 9 September 2026. Status: approved plan, originally frozen before implementation, with binding implementation updates incorporated on 9 September 2026.
 
 Repository: `MeanyDeany/woosub-shin`.
@@ -1233,3 +1235,76 @@ The earlier plan’s V3 NEXT QUESTION examples and associated assertions are sup
 - Rerun the previously reported redesign validation for the updated implementation. This addendum itself does not assert that those checks have run or passed.
 - Update the existing branch and Draft PR #38; do not create a second PR. Report hosted CI only if an actual applicable exact-head run exists; local validation is not hosted CI.
 - Preserve source-availability disclosure. No private research URLs or branch URLs, no deployment, and no merge.
+
+## 29. Post-plan English-only and visual refinement addendum (9 September 2026)
+
+This binding refinement follows the completed V3 portfolio update at delivery head `42044142c041c23b8215c5ba23c076e2d8efe594`. It changes the release language, visual treatment, and visibility of existing historical evidence. It does not change the completed V3 result, independent risk metrics, research authority, or operational contracts. The earlier bilingual route plan, Korean visual checks, and depth-only placement of the historical performance table are preserved above as historical decisions rather than rewritten as if this refinement had already been approved.
+
+### English-only public release and legacy URLs
+
+The public release contains the existing **18 English page routes**. Remove the Korean public route tree and all Korean entries from the public route registry, sitemap, metadata language alternates, navigation and locale-counterpart registry. Remove language-switcher controls from navigation and footer; normal navigation must contain no Korean-language, `EN`, or English-availability fallback labels. The root document remains English.
+
+Preserve all **13 known legacy Korean URLs** with explicit redirects to their existing English counterparts. The exact installed Next.js 16.2.10 `redirects` guide was read before implementation. It documents `next.config` redirects with `source`, `destination`, and `permanent`; `permanent: false` produces HTTP **307** and passes query values through. Temporary redirects suit the user's instruction to remove Korean **for now**. Avoid wildcard redirects to nonexistent English routes.
+
+| Retired URL | English destination |
+| --- | --- |
+| `/ko` | `/` |
+| `/ko/research` | `/research` |
+| `/ko/papers` | `/papers` |
+| `/ko/projects` | `/projects` |
+| `/ko/projects/btc-futures-research` | `/projects/btc-futures-research` |
+| `/ko/projects/btc-futures-research/live-position` | `/projects/btc-futures-research/live-position` |
+| `/ko/projects/btc-regime-challenger` | `/projects/btc-regime-challenger` |
+| `/ko/projects/multi-asset-research-lab` | `/projects/multi-asset-research-lab` |
+| `/ko/projects/multi-asset-research-lab/claims` | `/projects/multi-asset-research-lab/claims` |
+| `/ko/projects/volatility-regime-filtering` | `/projects/volatility-regime-filtering` |
+| `/ko/projects/bitcoin-bubble-gsadf` | `/projects/bitcoin-bubble-gsadf` |
+| `/ko/contact` | `/contact` |
+| `/ko/build-log` | `/build-log` |
+
+These redirects are compatibility behavior, not public Korean content or sitemap entries. No new English destination or translated experience is invented.
+
+### Richer presentation with the same evidence hierarchy
+
+Keep a restrained palette, dark-first treatment, institutional credibility, small radii and semantic evidence labels. Add depth through alternating surfaces, subtle grid/rule texture, stronger metric hierarchy, denser evidence strips, grouped cards, richer timelines, modest inset borders, intentional spacing contrast, mono metadata labels and restrained hover/focus transitions. Research and Systems should be visibly distinct while Systems remains subordinate.
+
+Do not add Three.js, WebGL, decorative candlesticks, neon, large gradients, or oversized marketing cards. Additional visual density must preserve readable mobile text, clear keyboard focus, and nearby scientific caveats.
+
+The homepage sequence is now:
+
+1. Human-first hero.
+2. Strongest independent risk finding: **+12.58% Log-MSE**, **+11.65% QLIKE**, **4 / 4 chronological segments**.
+3. **Historical Research Performance**, clearly secondary and RETROSPECTIVE.
+4. How ASTRA Works.
+5. Research progression.
+6. Completed policy translation result.
+7. Selected research.
+8. Current / next questions: no active study, with Small-Signal Sensitivity Calibration and the separate turnover/opportunity-cost question proposed only.
+9. Systems and engineering.
+10. Career and contact.
+
+### Restore the frozen historical comparison
+
+Add a compact semantic homepage table immediately after the strongest independent risk finding. Use the frozen historical values only:
+
+| System | Return | Sharpe | MaxDD | Evidence / role |
+| --- | ---: | ---: | ---: | --- |
+| Daily EMA 50/200 | +165.92% | 0.769 | −29.37% | RETROSPECTIVE · retained |
+| BTC price-only buy & hold | +38.33% | 0.394 | −66.94% | RETROSPECTIVE · reference |
+| BTC perpetual long, funding-adjusted | +2.27% | 0.265 | −68.12% | RETROSPECTIVE · reference |
+
+Keep the retained-system caveats visible beside the comparison: **post-selection; 3 completed historical trades; one trade contributed 97.4% of positive completed-trade log growth; not untouched OOS confirmation; not live performance**. Do not label +165.92% as current strategy performance or present it above, or more prominently than, the independent risk finding. Link the table to `/projects/btc-final-system` and preserve the original study's detailed context and historical values.
+
+Use tabular numerals and readable table headings. On narrow screens, use an accessible horizontal scroll container or stacked semantic records without hidden duplicate content. Color may identify retained/reference roles; positive return must not be styled as proof of scientific success.
+
+### Operational and regression boundaries
+
+The read-only positions/performance panel remains at `/projects/btc-futures-research/live-position`. Home links to this operational monitor through Systems and remains free of telemetry imports, fetches and polling; do not copy live account metrics into static homepage content. Systems includes compact references to read-only positions/performance, the retained historical system, research infrastructure and execution engineering, with **NO AUTOMATIC EXECUTION AUTHORITY** visible. Do not restore LIVE BTC to primary navigation.
+
+Preserve the dependency versions and existing installation unless a fresh install is needed. APIs, telemetry parsing/math/authority, the contact submission contract, Analytics integration, public papers, and research source-availability boundaries remain protected.
+
+Before publication, rerun evidence/page/route and telemetry tests, production build/type checking, scoped lint, whole-repository lint comparison, whitespace checks, the English-only rendered route/link/fragment audit, metadata/sitemap checks, all 13 legacy redirects, protected-file integrity, and the homepage asset comparison. Route contracts must reject public Korean routes/hreflang and navigation language controls, and cover the frozen historical table plus unchanged primary metrics and absence of homepage telemetry work.
+
+Responsive review now covers Home, ASTRA, Research, Risk Forecasting, Nonlinear Measurement, Systems, Daily EMA, the operational monitor, Resume and Contact at **1440×900, 1280×800, 768×1024, 390×844 and 320×568**, in dark and light themes. Korean visual QA is no longer a current release requirement. Retain local before/after screenshots when available and report the exact final public route count. This addendum records requirements and does not itself claim those checks passed.
+
+Update the same `codex/astra-portfolio-redesign-v1` branch and existing Draft PR #38. Keep it **OPEN · DRAFT · base main · UNMERGED**. The existing same-branch automatic-preview authorization remains distinct from production publication. Do not create a new PR, merge, or manually deploy production.

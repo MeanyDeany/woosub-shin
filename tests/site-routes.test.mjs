@@ -1,11 +1,16 @@
 import assert from "node:assert/strict";
-import { readdirSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
+import { createRequire } from "node:module";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import test from "node:test";
-import { getLocaleCounterpart, getRouteAlternates, localeCounterpartPairs, siteRoutes } from "../lib/site-routes.ts";
+import ts from "typescript";
+import nextConfig from "../next.config.ts";
+import { getRouteAlternates, primaryNavigation, siteRoutes } from "../lib/site-routes.ts";
 
-const appDirectory = fileURLToPath(new URL("../app", import.meta.url));
+const root = fileURLToPath(new URL("../", import.meta.url));
+const appDirectory = path.join(root, "app");
+const requireDependency = createRequire(import.meta.url);
 
 function pageRoutes(directory = appDirectory) {
   return readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -17,32 +22,69 @@ function pageRoutes(directory = appDirectory) {
   });
 }
 
-test("public route inventory matches existing App Router pages", () => {
+// Execute the actual static metadata/sitemap modules with existing TypeScript.
+function loadStaticModule(relativeFilename) {
+  const filename = path.join(root, relativeFilename);
+  const { outputText } = ts.transpileModule(readFileSync(filename, "utf8"), {
+    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
+    fileName: filename,
+  });
+  const loadedModule = { exports: {} };
+  const localRequire = (specifier) => specifier.startsWith("@/")
+    ? loadStaticModule(`${specifier.slice(2)}.ts`)
+    : requireDependency(specifier);
+  new Function("require", "module", "exports", outputText)(localRequire, loadedModule, loadedModule.exports);
+  return loadedModule.exports;
+}
+
+test("public route inventory contains exactly the existing 18 English pages", () => {
+  assert.equal(siteRoutes.length, 18);
   assert.equal(new Set(siteRoutes).size, siteRoutes.length);
   assert.deepEqual([...siteRoutes].sort(), pageRoutes().sort());
+  assert.ok(siteRoutes.every((route) => !/^\/ko(?:\/|$)/.test(route)));
 });
 
-test("all locale counterparts exist and switch reciprocally", () => {
-  const available = new Set(pageRoutes());
-  const mapped = new Set();
-  for (const pair of localeCounterpartPairs) {
-    for (const route of [pair.en, pair.ko]) {
-      assert.ok(available.has(route), `Missing locale page: ${route}`);
-      assert.ok(!mapped.has(route), `Ambiguous locale page: ${route}`);
-      mapped.add(route);
-      assert.deepEqual(getRouteAlternates(route).languages, pair);
-    }
-    assert.deepEqual(getLocaleCounterpart(pair.en), { href: pair.ko, locale: "ko" });
-    assert.deepEqual(getLocaleCounterpart(pair.ko), { href: pair.en, locale: "en" });
+test("sitemap and metadata emit no Korean pages or hreflang alternates", () => {
+  const { default: sitemap } = loadStaticModule("app/sitemap.ts");
+  const { metadataFor } = loadStaticModule("lib/site-metadata.ts");
+  const entries = sitemap();
+  assert.deepEqual(entries.map((entry) => new URL(entry.url).pathname).sort(), [...siteRoutes].sort());
+  for (const entry of entries) {
+    assert.equal(entry.alternates, undefined);
+    assert.doesNotMatch(new URL(entry.url).pathname, /^\/ko(?:\/|$)/);
   }
-  assert.equal(localeCounterpartPairs.length, 13);
+  for (const route of siteRoutes) {
+    const metadata = metadataFor(route, "Research", "A bounded research finding.");
+    assert.equal(metadata.alternates.canonical, new URL(route, "https://meanydeany.com").href);
+    assert.equal(metadata.alternates.languages, undefined);
+    assert.equal(metadata.openGraph.locale, "en_US");
+    assert.deepEqual(getRouteAlternates(route), { canonical: route });
+  }
 });
 
-test("English-only pages do not advertise fabricated translations", () => {
-  for (const route of ["/astra", "/research/risk-forecasting", "/research/nonlinear-measurement", "/resume", "/projects/btc-final-system"]) {
-    assert.equal(getLocaleCounterpart(route), null);
-    assert.equal(getRouteAlternates(route).languages, undefined);
+test("all 13 retired Korean URLs redirect directly to existing English counterparts", async () => {
+  const redirects = await nextConfig.redirects();
+  const historicalSources = [
+    "/ko", "/ko/research", "/ko/papers", "/ko/projects",
+    "/ko/projects/btc-futures-research", "/ko/projects/btc-futures-research/live-position",
+    "/ko/projects/btc-regime-challenger", "/ko/projects/multi-asset-research-lab",
+    "/ko/projects/multi-asset-research-lab/claims", "/ko/projects/volatility-regime-filtering",
+    "/ko/projects/bitcoin-bubble-gsadf", "/ko/contact", "/ko/build-log",
+  ];
+  assert.deepEqual(redirects.map((entry) => entry.source).sort(), historicalSources.sort());
+  for (const redirect of redirects) {
+    assert.equal(redirect.destination, redirect.source.slice(3) || "/");
+    assert.ok(siteRoutes.includes(redirect.destination), `Missing redirect destination: ${redirect.destination}`);
+    assert.equal(redirect.permanent, false, "Temporary 307 redirects keep this release decision reversible.");
+    assert.ok(!redirects.some((entry) => entry.source === redirect.destination), "Legacy redirects must not chain.");
   }
-  assert.equal(getLocaleCounterpart("/ko/astra"), null);
-  assert.equal(getLocaleCounterpart("/unknown"), null);
+});
+
+test("normal navigation exposes no language switch or retired routes", () => {
+  const navigation = readFileSync(path.join(root, "components/active-navigation.tsx"), "utf8");
+  const shell = readFileSync(path.join(root, "components/site-shell.tsx"), "utf8");
+  assert.doesNotMatch(navigation, /LanguageSwitcher|language-switcher|primaryNavigationKo|한국어|English-only|\bEN\b/);
+  assert.doesNotMatch(shell, /LanguageSwitcher|한국어|English-only|\/ko(?:\/|["'])/);
+  assert.deepEqual(primaryNavigation.map((item) => item.label), ["ASTRA", "Research", "Papers", "Systems", "About"]);
+  assert.ok(primaryNavigation.every((item) => siteRoutes.includes(item.href)));
 });

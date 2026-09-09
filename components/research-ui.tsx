@@ -121,7 +121,7 @@ function TimelineStages({ stages }: { stages: readonly ResearchTimelineEntry[] }
 }
 
 export function ResearchTimeline() {
-  return <div className="mt-8 space-y-14">{researchTimelineLanes.map(lane => <section key={lane.id} aria-labelledby={`timeline-${lane.id}`}>
+  return <div className="research-lanes">{researchTimelineLanes.map(lane => <section key={lane.id} className="research-lane" aria-labelledby={`timeline-${lane.id}`}>
     <h3 id={`timeline-${lane.id}`}>{lane.title}</h3>
     <p className="research-prose mb-8">{lane.description}</p>
     <TimelineStages stages={lane.stages} />

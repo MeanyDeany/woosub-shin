@@ -1,7 +1,6 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import type { SiteLocale } from "@/lib/site-routes";
 
 type Theme = "light" | "dark";
 const THEME_CHANGE_EVENT = "meanydeany-theme-change";
@@ -30,17 +29,15 @@ function subscribeToTheme(onStoreChange: () => void) {
   return () => window.removeEventListener(THEME_CHANGE_EVENT, onStoreChange);
 }
 
-export function ThemeToggle({ locale = "en" }: { locale?: SiteLocale }) {
+export function ThemeToggle() {
   const theme = useSyncExternalStore(subscribeToTheme, getThemeSnapshot, getServerThemeSnapshot);
   const nextTheme: Theme = theme === "light" ? "dark" : "light";
-  const label = locale === "ko"
-    ? `${nextTheme === "light" ? "라이트" : "다크"} 테마로 전환`
-    : `Switch to ${nextTheme} theme`;
+  const label = `Switch to ${nextTheme} theme`;
 
   return (
     <button type="button" aria-label={label} title={label} onClick={() => applyTheme(nextTheme)} className="navigation-theme">
       <span aria-hidden="true">{theme === "dark" ? "◐" : "◑"}</span>
-      <span>{locale === "ko" ? "테마" : "Theme"}</span>
+      <span>Theme</span>
     </button>
   );
 }

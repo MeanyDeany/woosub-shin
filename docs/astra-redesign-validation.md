@@ -1,6 +1,6 @@
 # ASTRA portfolio redesign V1 — validation record
 
-Validation date: 9 September 2026. The original redesign's local implementation, visual review, production build, and regression checks completed at application source `6daa4aa11b55629cbb71385b16e211dbd43324ee`, followed by delivery head `914007e8516398020463754281fa32be109d2972`. Those checks are preserved below as the original validation record. The binding post-implementation Candidate Generator V3 update has passed its production build, 18 regression tests, scoped lint, rendered-page and metadata audits, protected-file rechecks, and responsive visual rerun. After local validation and review, the user explicitly authorized pushing the same branch with its automatic Vercel preview. Final commit, remote-head verification and exact PR state are recorded in the existing Draft PR body.
+Validation date: 9 September 2026. This record preserves the original redesign and completed V3 update checks as historical stages. The latest refinement starts from `42044142c041c23b8215c5ba23c076e2d8efe594`: an English-only public release, richer visual treatment, and a secondary homepage comparison of frozen historical performance. Its 21 regression tests, production build/type checking, scoped lint, rendered-page/metadata audits, legacy redirect responses, protected-file checks and 100 responsive checks pass. The same branch and Draft PR #38 remain in use; the exact delivery head and post-push hosted status are recorded in the PR body. The user's existing automatic-preview authorization is separate from manual production deployment, which remains unauthorized.
 
 ## Source and authorization
 
@@ -13,7 +13,8 @@ Validation date: 9 September 2026. The original redesign's local implementation,
 | Approved narrow lockfile repair | `5902847d9aaabb1d2b3cd83a590165daa83f14ed` |
 | Binding scheduler-completion plan update | `56ca79b3051178d67d2ed2611eeb85cbdc364db9` |
 | Previous delivery head / PR head before V3 update | `914007e8516398020463754281fa32be109d2972` |
-| V3 update delivery head / verified remote head | Recorded in the existing Draft PR body after this document and the update are committed and pushed |
+| Completed V3 delivery / refinement baseline | `42044142c041c23b8215c5ba23c076e2d8efe594` |
+| English-only refinement delivery / verified remote head | Recorded in the existing Draft PR body after the same-branch push, avoiding a self-referential commit identifier in this document |
 | Existing Draft PR | [#38](https://github.com/MeanyDeany/woosub-shin/pull/38), base `main`; open, Draft, unmerged at the pre-update check |
 
 The first commit carried forward only the reviewed planning document. Its historical filesystem review links are preserved as approved documentation; application content does not publish those paths. Later plan edits record the user's binding research update rather than silently changing the original scientific interpretation.
@@ -21,6 +22,92 @@ The first commit carried forward only the reviewed planning document. Its histor
 The implementation brief explicitly assigned the completed policy study a RETROSPECTIVE evidence class and requested compact homepage policy values. Those instructions supersede the earlier plan's unasserted policy class and detail-only numerical presentation. Later binding updates completed Native Scheduler Robustness V1 and, after the original redesign validation, Candidate Generator V3. No study is presented as active within the current supplied research freeze.
 
 No merge or production deployment is authorized or performed by this validation phase. The user separately authorized the automatic Vercel preview caused by pushing this update.
+
+## English-only visual and historical-performance refinement — 9 September 2026
+
+The latest binding refinement follows V3 delivery head `42044142c041c23b8215c5ba23c076e2d8efe594`. At that baseline, the repository was clean and contained 31 public pages: 18 English and 13 Korean. The prior 18-test result and exact 7-error/1-warning lint baseline are retained as history; they are not claimed as reruns of this refinement. Protected hashes and the earlier production asset measurement were preserved before this work.
+
+The production build contains exactly **18 English public pages**. The Korean route tree, language switching, Korean public registry entries, sitemap URLs, and metadata language alternates are retired. All **13 previously valid Korean URLs** receive explicit **HTTP 307** redirects to their existing English counterparts. The root `/ko` maps to `/`; each other known source strips its `/ko` prefix. No wildcard destination is introduced. The full mapping is recorded in the [dated plan addendum](astra-portfolio-redesign-plan-v1.md#29-post-plan-english-only-and-visual-refinement-addendum-9-september-2026). The exact installed Next.js 16.2.10 redirect and sitemap guides were consulted; temporary redirects preserve the option to revisit the user's “for now” language decision. Actual local production responses confirmed all 13 status codes and destinations and preserved both query values in every request. HTTP requests do not transmit fragments; browser fragment behavior is reviewed separately.
+
+The generated public sitemap contains exactly these 18 page routes, with zero language alternates:
+
+```text
+/
+/astra
+/research
+/research/risk-forecasting
+/research/nonlinear-measurement
+/papers
+/projects
+/projects/btc-final-system
+/projects/btc-futures-research
+/projects/btc-futures-research/live-position
+/projects/btc-regime-challenger
+/projects/multi-asset-research-lab
+/projects/multi-asset-research-lab/claims
+/projects/volatility-regime-filtering
+/projects/bitcoin-bubble-gsadf
+/resume
+/contact
+/build-log
+```
+
+Home now places **Historical Research Performance** directly after the strongest independent finding and before How ASTRA Works. The independent **+12.58% Log-MSE / +11.65% QLIKE / 4 / 4** evidence remains the primary proof point. The secondary semantic comparison uses only the frozen historical figures:
+
+| System | Return | Sharpe | MaxDD | Evidence / role |
+| --- | ---: | ---: | ---: | --- |
+| Daily EMA 50/200 | +165.92% | 0.769 | −29.37% | RETROSPECTIVE · retained |
+| BTC price-only buy & hold | +38.33% | 0.394 | −66.94% | RETROSPECTIVE · reference |
+| BTC perpetual long, funding-adjusted | +2.27% | 0.265 | −68.12% | RETROSPECTIVE · reference |
+
+Visible retained-system caveats remain **post-selection; 3 completed historical trades; one trade contributed 97.4% of positive completed-trade log growth; not untouched OOS confirmation; not live performance**. The section links to `/projects/btc-final-system`; neither the return magnitude nor row styling grants a stronger scientific claim. The existing study's detailed assessment context and values remain unchanged.
+
+The visual refinement uses denser evidence strips and card grouping, alternating surfaces, subtle rules/grid texture, stronger metric hierarchy, richer timelines, restrained depth and transitions, and clearer Research/Systems distinction. It adds no Three.js, WebGL, live ticker, decorative candlesticks or new visualization dependency. Systems links compactly to the read-only monitor, retained historical system, research infrastructure and execution engineering while keeping **NO AUTOMATIC EXECUTION AUTHORITY** visible. Operational metrics and polling remain at `/projects/btc-futures-research/live-position`; Home contains no telemetry fetch or polling mount.
+
+| Refinement check | Current status |
+| --- | --- |
+| Evidence/page and English-only route contracts | Passes: 15 tests |
+| Telemetry regression suite | Passes: 6 tests; 21 combined regression tests pass |
+| Production build and TypeScript | Passes with Next.js 16.2.10 Turbopack: compilation 1.633 s, type checking 2.4 s, 23/23 generated outputs including 18 public pages |
+| Scoped lint | Passes: all 47 surviving JavaScript/TypeScript source files changed from the approved base; zero errors or warnings |
+| Whole-repository lint comparison | Exit 1 with exactly 7 errors and 1 warning; rules, severity and source locations match the prior recorded baseline |
+| Rendered routes, links, fragments, landmarks and ARIA references | Passes: 18 English pages, 466 internal links, 184 fragment destinations, 13 explicit redirect contracts, zero issues |
+| Metadata and sitemap | Passes: 18 unique page titles/canonicals/Open Graph URLs, English document language on every page, 18 sitemap entries, zero hreflang or Korean public URLs |
+| Legacy redirect responses | Passes: all 13 HTTP responses return 307 and the expected `Location`, with query values preserved; requests were not followed |
+| Protected file, package/lockfile and paper integrity | Passes: all 14 snapshot files unchanged from the refinement base; only the original approved contact-form and lockfile exceptions differ from the original base |
+| Homepage asset comparison | Refreshed for English Home; exact measurements and comparison conditions below |
+| Responsive and visual review | Passes: 10 required routes × five viewport sizes × both themes (100 combinations), plus targeted screenshots and before/after Home captures |
+| `git diff --check` | Passes after the validation-record update |
+| Commit, exact remote head and Draft PR body/state | Local validation complete; the same-branch push and automatic preview are authorized. Exact post-push verification is recorded in the existing Draft PR body |
+
+The four files responsible for whole-repository lint findings are byte-identical to both the approved base and refinement head: `components/btc-live-position.tsx` (1 error), `components/btc-research-observatory.tsx` (5 errors), `components/market-shock-terminal.tsx` (1 error), and `lib/tradingview-observatory-datafeed.ts` (1 warning). The existing findings are listed in the historical V3 section below; no new ESLint finding or blanket suppression was introduced. Direct test loading emits Node's typeless-package module warning, now also for `next.config.ts`; this loader warning is separate from the ESLint result.
+
+All 14 protected snapshot files match refinement head `42044142c041c23b8215c5ba23c076e2d8efe594`, including the complete contact component, both API handlers, telemetry libraries and contract test, dependency manifest/lockfile, and both public papers. Against the original approved base, all 454 pre-existing non-root lock entries remain unchanged and the only package additions remain the previously approved `lightweight-charts@5.2.0` and `fancy-canvas@2.1.0` repair. Both PDF SHA-256 values below remain unchanged. A repeated syntax-tree comparison confirms the contact submission handler is byte-identical to the original base; Analytics remains mounted once. The refinement needed no dependency upgrade or fresh installation.
+
+The English homepage asset comparison uses the same default production build and unique initial asset inventory as the earlier measurements. Gzip values are local compression estimates; they exclude request headers, runtime prefetch, third-party transfers and interaction work. The previous multilingual measurements remain historical records rather than being overwritten.
+
+| English homepage asset | Refinement base `4204414` | English-only refinement | Change |
+| --- | ---: | ---: | ---: |
+| JavaScript, raw | 644,412 B | 641,939 B | −2,473 B |
+| JavaScript, gzip estimate | 192,006 B | 191,259 B | −747 B |
+| CSS, raw | 108,204 B | 118,080 B | +9,876 B |
+| CSS, gzip estimate | 20,808 B | 23,031 B | +2,223 B |
+| HTML, raw | 56,848 B | 70,205 B | +13,357 B |
+| HTML, gzip estimate | 10,067 B | 13,399 B | +3,332 B |
+
+The homepage still references nine initial JavaScript assets. Against the original approved base, JavaScript is 34,639 B smaller raw and 9,694 B smaller by gzip estimate (−4.82%); CSS is 13,614 B larger raw and 3,259 B larger by gzip estimate. These counts describe the richer static presentation and reduced language-switching client code; they are not Core Web Vitals or a measured interaction-performance improvement.
+
+The completed geometry matrix covers Home, ASTRA, Research, Risk Forecasting, Nonlinear Measurement, Systems, Daily EMA, the read-only operational monitor, Resume and Contact at 1440×900, 1280×800, 768×1024, 390×844 and 320×568 in dark and light. All 100 combinations pass: no unintended document or visible-child overflow/clipping, one main landmark and H1, no Korean navigation links or language-switcher labels, and no framework error overlay. Ninety checks used the production server; the monitor's ten checks used development with process-local endpoint overrides pointed only at an unavailable local address. All ten monitor cases were rechecked after the feed settled to UNAVAILABLE, rather than judging the initial loading state. The existing contact honeypot is intentionally off-screen, aria-hidden and excluded from keyboard focus; it was excluded from visible-content clipping checks.
+
+Targeted screenshot inspection covered each of the ten routes, the historical table and its caveats, both ASTRA progression lanes, the completed V3 detail and Systems grouping. Before/after Home screenshots use 1440×900 dark at the same framing; the before image comes from the frozen production build of `4204414`. Local review artifacts include `astra-before-home.jpg`, `astra-after-home.jpg`, `astra-after-historical-performance.jpg`, and the 100-record `astra-refinement-responsive-qa.json`. They are provided through the implementation conversation rather than added to the application bundle. Primary independent values measure 57.6px versus 18px historical values at 1440px, and 38px versus 18px at narrow mobile widths. The semantic historical table remains one accessible table with a focusable scroll region and a mobile scrolling hint; keyboard ArrowRight visibly advances it at 320px.
+
+The mobile menu passes Escape closure and focus return, and theme choice persists through navigation. Native empty-contact submission marks name, email and message invalid and focuses name without sending email. A browser visit to `/ko/research?source=legacy#methodology` preserves the query and fragment at `/research?source=legacy#methodology`, with English document language and an existing target. The first production Home load reports no browser errors. Viewport overrides were reset after review.
+
+Korean visual QA is no longer a release requirement. The root document remains English, matching every public page, so the earlier Korean subtree/root-language mismatch is historical. These checks do not establish full assistive-technology conformance, real browser zoom behavior, reduced-motion emulation, Core Web Vitals, external feed transitions or contact-delivery availability. No external telemetry service or real email delivery was exercised.
+
+This refinement does not change completed V3 scientific status, zero finalists or its unopened holdout; Small-Signal Sensitivity Calibration and turnover/opportunity-cost decomposition remain separate proposed questions with no active study. API behavior, telemetry parsing/math/authority, contact delivery, Analytics, dependency versions and both public papers remain protected. No new hosted CI or deployment settings are introduced, and no private research URLs are published.
+
+The refinement changes 34 files relative to `4204414`: 19 modified and 15 deleted. The deletions retire the 13 Korean pages, their layout and the unused Korean recruiter homepage component. Modified files cover shared visual styles, Home/Systems presentation, navigation/theme utilities, public routes and metadata, explicit redirects, the shared evidence record/table, focused route/page tests, and these two documents. Across the full redesign relative to the original approved base, 67 files differ: 16 added, 36 modified and 15 deleted. The historical inventory below is retained to document the earlier delivery.
 
 ## Baseline and dependency installation
 
@@ -65,7 +152,7 @@ The completed policy, scheduler, and V3 study identifiers are retained as suppli
 
 Research findings do not create directional-alpha, sizing, veto, trading, or execution authority. Systems presents research infrastructure, execution engineering, and read-only operational evidence as separate responsibilities. PR41 is a bounded, deep-only engineering note; it is excluded from homepage composition and recency injection.
 
-## Post-implementation V3 update — 9 September 2026
+## Completed V3 update — historical validation, 9 September 2026
 
 This update follows previous delivery head `914007e8516398020463754281fa32be109d2972` on the same implementation branch and existing Draft PR #38. The completed V3 study head is `1dc9e529b9729e770691e36a2ad937c0009f6fdb`, retained only as a supplied private-study identifier. The original plan and earlier validation remain historical records; a dated plan addendum records the new research status.
 
@@ -75,7 +162,7 @@ The V3 validation used 13,819 native hourly targets in `[2024-01-01, 2025-07-30)
 
 Home and ASTRA present V3 as a compact completed negative finding or timeline stage. The three dominant homepage metrics remain +12.58% Log-MSE, +11.65% QLIKE, and 4/4 chronological segments. Research adds the completed retrospective finding. The nonlinear page presents a completed historical transfer section at `#historical-transfer-test`; the old proposed-section anchor remains a compatibility destination. The timeline separates nine completed return/methodology stages from six completed risk stages, with future questions outside both timelines. These lanes are not represented as one sequential statistical experiment.
 
-| V3 update check | Current result |
+| V3 update check | Recorded result before the English-only refinement |
 | --- | --- |
 | Evidence, route/locale, and page contracts | Passes: all 12 tests in the final updated run |
 | `npm run test:telemetry` | Passes: all 6 tests |
@@ -144,11 +231,11 @@ All 14 files in the protected snapshot are byte-identical to previous delivery h
 
 The contact form preserves its submission handler, payload fields, browser validation, timing, and server delivery contract. A repeated TypeScript syntax-tree extraction confirms the complete `handleSubmit` source is byte-identical to the approved base. Its permitted changes add feedback associations/error focus, replace handle-first recipient copy with the human name, and adjust presentation. No real test email is sent.
 
-Both monitor routes remain. Their polling, timestamp-derived age, freshness, TTL, fallback/last-good behavior, accounting labels, endpoint contracts, and operational authority stay unchanged. Homepage demotion removes the telemetry mount rather than changing its behavior. Root Vercel Analytics remains mounted once, with no new tracking introduced.
+The English monitor route remains, and its retired Korean counterpart now redirects to it. Polling, timestamp-derived age, freshness, TTL, fallback/last-good behavior, accounting labels, endpoint contracts, and operational authority stay unchanged. Homepage demotion removes the telemetry mount rather than changing its behavior. Root Vercel Analytics remains mounted once, with no new tracking introduced.
 
 Source integrity and local tests do not establish the availability of external telemetry or contact-delivery services.
 
-## Routes, metadata, and accessibility
+## Pre-refinement routes, metadata, and accessibility — historical
 
 The final route inventory contains 31 public page routes: the original 28 plus `/astra`, `/research/risk-forecasting`, and `/research/nonlinear-measurement`. Existing project, monitor, contact, résumé, paper, and Korean URLs are preserved. No duplicate `/systems` or `/about` route is introduced.
 
@@ -204,7 +291,7 @@ The monitor was inspected in its unavailable state using process-local developme
 
 No real browser zoom test, full screen-reader pass, reduced-motion emulation, browser network capture, Lighthouse run, or field Core Web Vitals measurement was performed. Reduced-motion rules, focus treatment, semantic landmarks, text status labels, and source dependency boundaries were checked directly. The root document-language limitation and pre-existing lint failures remain review items.
 
-## Implemented hierarchy and sitemap
+## Pre-refinement implemented hierarchy and sitemap — historical
 
 Home follows human identity → independent risk evidence → six-stage ASTRA process → scientific progression → completed policy translation → restrained selected research → no active study and two next questions → supporting systems → career/contact. The main proof points remain forecast metrics; historical return and scheduler counts do not replace them.
 
@@ -239,9 +326,9 @@ Final public-page sitemap:
 
 The two existing API routes remain `/api/contact` and `/api/traffic`; both paper PDFs remain unchanged public assets. Generated metadata endpoints are `/sitemap.xml` and `/robots.txt`.
 
-## Changed-file inventory
+## Pre-refinement changed-file inventory — historical
 
-The following files differ from the exact approved base, including this validation record. API handlers, telemetry math/validation libraries, dependency manifest, and public paper binaries are absent because they are unchanged.
+The following inventory records the completed V3 delivery before the English-only refinement. API handlers, telemetry math/validation libraries, dependency manifest, and public paper binaries are absent because they were unchanged. Current refinement change counts and scope are recorded in its section above.
 
 65 changed or added files:
 
@@ -317,6 +404,6 @@ tests/site-routes.test.mjs
 
 Only the implementation branch is authorized for push, with a Draft PR against `main`. The original plan commit, binding research update, narrow lock repair, research model/pages, homepage/navigation, supporting systems, career/contact, metadata/accessibility, and final validation remain separate focused commits.
 
-No merge or deployment command was performed. Production hosting, DNS, AWS, research/execution repositories, and trading/account state were not changed. The previous head received an automatic Vercel preview through the existing integration, as disclosed above. The user subsequently authorized the same-branch V3 push and its automatic preview; neither preview is a GitHub Actions test run. The final local head, exact remote-head verification, final PR state and observed hosted status are recorded in the existing Draft PR body.
+No merge or deployment command was performed. Production hosting, DNS, AWS, research/execution repositories, and trading/account state were not changed. The previous head received an automatic Vercel preview through the existing integration, as disclosed above. The user authorized the same-branch push and its automatic preview; this permission also applies to the requested refinement push. Preview feedback is not a GitHub Actions test run. The existing Draft PR body records the English-only refinement's exact local/remote head, PR state and observed hosted status after publication; all test, build, route and browser results in this document are local.
 
-Review items are the documented baseline lint debt, root language limitation, unavailable public source artifacts, and unperformed external-service/assistive-technology/field-performance checks. No active research result, source URL, CV download, institutional experience, or execution authority was invented to fill missing content.
+Review items are the documented baseline lint debt, unavailable public source artifacts, and unperformed external-service/assistive-technology/field-performance checks. The earlier Korean root-language limitation is preserved as history above; the current English-only release verifies English document language on every public page. No active research result, source URL, CV download, institutional experience, or execution authority was invented to fill missing content.

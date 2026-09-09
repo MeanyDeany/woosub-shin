@@ -1,4 +1,4 @@
-export { primaryNavigation as navigation, primaryNavigationKo as navigationKo } from "@/lib/site-routes";
+export { primaryNavigation as navigation } from "@/lib/site-routes";
 
 export const shadowModels = [
   {

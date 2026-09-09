@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { metadataFor } from "@/lib/site-metadata";
 import { CtaLink, EditorialSection, PageHero } from "@/components/editorial";
 import { PageShell } from "@/components/site-shell";
@@ -11,7 +12,7 @@ export const metadata = metadataFor(
 export default function ProjectsPage() {
   return (
     <PageShell>
-      <div className="research-page">
+      <div className="research-page systems-page">
         <PageHero
           eyebrow="Woosub Shin · Systems"
           title="Systems and research infrastructure"
@@ -19,6 +20,13 @@ export default function ProjectsPage() {
           actions={<><CtaLink href="/astra" kind="primary">Explore ASTRA</CtaLink><CtaLink href="/research">Inspect research findings</CtaLink></>}
           metadata={[{ label: "Research", value: "Hypothesis · Evidence · Validation" }, { label: "Execution systems", value: "Transport · Recovery · State consistency" }, { label: "Telemetry", value: "Read-only operational evidence" }]}
         />
+
+        <nav className="systems-directory research-container" aria-label="Systems directory">
+          <Link href="/projects/btc-futures-research/live-position"><span>Operational evidence</span><strong>Read-only positions &amp; performance <span aria-hidden="true">↗</span></strong></Link>
+          <Link href="/projects/btc-final-system"><span>Retained historical system</span><strong>Daily EMA 50/200 <span aria-hidden="true">↗</span></strong></Link>
+          <Link href="#research-infrastructure"><span>Research infrastructure</span><strong>Data, artifacts &amp; replay <span aria-hidden="true">↓</span></strong></Link>
+          <Link href="#execution-gateway"><span>Execution engineering</span><strong>Transport, recovery &amp; state <span aria-hidden="true">↓</span></strong></Link>
+        </nav>
 
         <EditorialSection id="research-infrastructure" eyebrow="01 · Research infrastructure" title="Experiments need an inspectable foundation" intro="ASTRA is the current research program. The existing Lab and BTC evidence system document its architectural lineage; this does not imply that every historical component is already an integrated ASTRA module.">
           <div className="research-grid">

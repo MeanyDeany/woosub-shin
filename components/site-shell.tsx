@@ -2,50 +2,47 @@ import Link from "next/link";
 import { type ReactNode } from "react";
 import { ActiveNavigation } from "@/components/active-navigation";
 import { ContextualPageTools } from "@/components/contextual-page-tools";
-import { KoreanHonorificCopy } from "@/components/korean-honorific-copy";
-import type { SiteLocale } from "@/components/language-switcher";
+import type { SiteLocale } from "@/lib/site-routes";
 import { VisitorStats } from "@/components/visitor-stats";
 
 type HeaderVariant = "default" | "showcase";
-type ShellPresentation = { locale?: SiteLocale; variant?: HeaderVariant };
 
 // Both legacy variants use the same accessible, theme-aware shell.
-export function SiteHeader({ locale = "en" }: ShellPresentation) {
+export function SiteHeader() {
   return (
     <header className="research-header">
       <div className="research-header__inner">
-        <Link href={locale === "ko" ? "/ko" : "/"} className="research-wordmark" aria-label={locale === "ko" ? "Woosub Shin — 홈" : "Woosub Shin — Home"}>
+        <Link href="/" className="research-wordmark" aria-label="Woosub Shin — Home">
           Woosub Shin
         </Link>
-        <ActiveNavigation locale={locale} />
+        <ActiveNavigation />
       </div>
     </header>
   );
 }
 
-export function SiteFooter({ locale = "en" }: ShellPresentation) {
+export function SiteFooter() {
   const currentYear = new Date().getUTCFullYear();
-  const korean = locale === "ko";
 
   return (
     <footer className="research-footer">
       <div className="research-footer__inner">
         <div className="research-footer__identity">
           <p className="research-footer__name">Woosub Shin</p>
-          <p>{korean ? "정량 연구 · 금융계량경제학 · 재현 가능한 연구 엔지니어링" : "Quantitative research · Financial econometrics · Reproducible research engineering"}</p>
+          <p>Quantitative research · Financial econometrics · Reproducible research engineering</p>
         </div>
-        <nav aria-label={korean ? "하단 탐색" : "Footer navigation"} className="research-footer__links">
-          <Link href={korean ? "/ko/research" : "/research"}>{korean ? "연구" : "Research"}</Link>
-          <Link href={korean ? "/ko/projects" : "/projects"}>{korean ? "시스템" : "Systems"}</Link>
-          <Link href="/resume">{korean ? "소개 · 이력서 (English)" : "About / Resume"}</Link>
-          <Link href={korean ? "/ko/contact" : "/contact"}>{korean ? "연락" : "Contact"}</Link>
-          <a href="mailto:woosub815@gmail.com">{korean ? "이메일" : "Email"}</a>
+        <nav aria-label="Footer navigation" className="research-footer__links">
+          <Link href="/research">Research</Link>
+          <Link href="/projects">Systems</Link>
+          <Link href="/resume">About / Resume</Link>
+          <Link href="/contact">Contact</Link>
+          <a href="mailto:woosub815@gmail.com">Email</a>
           <a href="https://github.com/MeanyDeany" target="_blank" rel="noreferrer">GitHub ↗</a>
         </nav>
         <div className="research-footer__record">
           <p>© {currentYear} Woosub Shin</p>
-          <p><VisitorStats locale={locale} /></p>
-          <p>{korean ? "연구 결과는 실거래 실적이 아닙니다" : "Research results are not a live track record"}</p>
+          <p><VisitorStats /></p>
+          <p>Research results are not a live track record</p>
         </div>
       </div>
     </footer>
@@ -54,26 +51,23 @@ export function SiteFooter({ locale = "en" }: ShellPresentation) {
 
 export function PageShell({
   children,
-  locale = "en",
-  headerVariant = "default",
 }: {
   children: ReactNode;
   locale?: SiteLocale;
   headerVariant?: HeaderVariant;
 }) {
-  const korean = locale === "ko";
 
   return (
-    <div className="cosmic-page research-shell flex min-h-dvh flex-col" lang={locale}>
+    <div className="cosmic-page research-shell flex min-h-dvh flex-col" lang="en">
       <a href="#main-content" className="skip-link research-skip-link">
-        {korean ? "본문으로 건너뛰기" : "Skip to content"}
+        Skip to content
       </a>
-      <SiteHeader locale={locale} variant={headerVariant} />
-      <ContextualPageTools locale={locale} />
+      <SiteHeader />
+      <ContextualPageTools />
       <main id="main-content" className="flex-1" tabIndex={-1}>
-        {korean ? <KoreanHonorificCopy>{children}</KoreanHonorificCopy> : children}
+        {children}
       </main>
-      <SiteFooter locale={locale} variant={headerVariant} />
+      <SiteFooter />
     </div>
   );
 }

@@ -646,6 +646,51 @@ export const researchEvidence = {
   },
 } as const satisfies Record<string, ResearchRecord>;
 
+export type HistoricalPerformanceRow = {
+  readonly id: string;
+  readonly name: string;
+  readonly role: "retained" | "reference";
+  readonly roleLabel: string;
+  readonly returnValue: string;
+  readonly sharpe: string;
+  readonly maxDrawdown: string;
+  readonly note: string;
+};
+
+/** Frozen historical comparison. It remains separate from independent forecast evidence. */
+export const historicalResearchPerformance = {
+  id: "historical-research-performance",
+  title: "Historical Research Performance",
+  evidenceClass: "RETROSPECTIVE" as const,
+  assessment: researchEvidence.dailyEma.assessment,
+  source: researchEvidence.dailyEma.source,
+  detailHref: researchEvidence.dailyEma.detailHref,
+  context: "FULL · 1 Jan 2022 through 30 Jul 2026 · retained system: 5bp per transition side with exact funding",
+  rows: [
+    {
+      id: "daily-ema-50-200", name: "Daily EMA 50/200", role: "retained", roleLabel: "Retained",
+      returnValue: "+165.92%", sharpe: "0.769", maxDrawdown: "-29.37%",
+      note: "Frozen long/flat historical research system",
+    },
+    {
+      id: "btc-price-only-buy-hold", name: "BTC price-only buy & hold", role: "reference", roleLabel: "Reference",
+      returnValue: "+38.33%", sharpe: "0.394", maxDrawdown: "-66.94%",
+      note: "Exact-period price-only comparison",
+    },
+    {
+      id: "btc-perpetual-long", name: "BTC perpetual long", role: "reference", roleLabel: "Reference",
+      returnValue: "+2.27%", sharpe: "0.265", maxDrawdown: "-68.12%",
+      note: "Funding-adjusted exact-period comparison",
+    },
+  ] as const satisfies readonly HistoricalPerformanceRow[],
+  caveats: [
+    "RETROSPECTIVE, post-selection research; not untouched OOS confirmation.",
+    "3 completed historical trades underpin the retained system.",
+    "One trade contributed 97.4% of positive completed-trade log growth.",
+    "Historical research results, not live performance.",
+  ],
+} as const;
+
 /** Scientific relevance order, intentionally independent of return or recency. */
 export const completedResearch: readonly CompletedResearchRecord[] = [
   researchEvidence.independentRiskForecast, researchEvidence.policyUtility,
