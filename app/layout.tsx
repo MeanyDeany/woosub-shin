@@ -3,11 +3,12 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import "./navigation.css";
+import "./astra.css";
 
 const siteUrl = "https://meanydeany.com";
-const siteTitle = "Woosub Shin | Quantitative Research & Systematic Trading";
+const siteTitle = "Woosub Shin — Quantitative Researcher";
 const siteDescription =
-  "Woosub Shin is a quantitative researcher focused on systematic trading, financial econometrics, deterministic backtesting, and auditable research infrastructure.";
+  "Woosub Shin researches financial econometrics and systematic markets through ASTRA: falsification, independently assessed risk information, and reproducible research engineering.";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,12 +24,12 @@ const themeScript = `
 (() => {
   try {
     const stored = window.localStorage.getItem("meanydeany-theme");
-    const theme = stored === "dark" ? "dark" : "light";
+    const theme = stored === "light" ? "light" : "dark";
     document.documentElement.dataset.theme = theme;
     document.documentElement.style.colorScheme = theme;
   } catch {
-    document.documentElement.dataset.theme = "light";
-    document.documentElement.style.colorScheme = "light";
+    document.documentElement.dataset.theme = "dark";
+    document.documentElement.style.colorScheme = "dark";
   }
 })();
 `;

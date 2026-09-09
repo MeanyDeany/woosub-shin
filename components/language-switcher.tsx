@@ -2,32 +2,34 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { getLocaleCounterpart, type SiteLocale } from "@/lib/site-routes";
 
-export type SiteLocale = "en" | "ko";
-
-function counterpartPath(pathname: string, locale: SiteLocale) {
-  if (locale === "ko") {
-    const englishPath = pathname.replace(/^\/ko(?=\/|$)/, "");
-    return englishPath || "/";
-  }
-
-  return pathname === "/" ? "/ko" : `/ko${pathname}`;
-}
+export type { SiteLocale } from "@/lib/site-routes";
 
 export function LanguageSwitcher({ locale }: { locale: SiteLocale }) {
   const pathname = usePathname();
-  const targetLocale = locale === "ko" ? "en" : "ko";
-  const label = locale === "ko" ? "EN" : "한국어";
+  const counterpart = getLocaleCounterpart(pathname);
+
+  if (!counterpart) {
+    return (
+      <div className="language-availability">
+        <span className="language-availability__note">This page is available in English.</span>
+        <Link href="/ko" hrefLang="ko" lang="ko" className="navigation-utility">
+          한국어 홈
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <Link
-      href={counterpartPath(pathname, locale)}
-      hrefLang={targetLocale}
-      lang={targetLocale}
+      href={counterpart.href}
+      hrefLang={counterpart.locale}
+      lang={counterpart.locale}
       aria-label={locale === "ko" ? "Switch to English" : "한국어로 전환"}
-      className="theme-nav-link inline-flex min-h-9 shrink-0 items-center rounded-full border border-[#7187AB]/20 px-3 text-[0.68rem] font-semibold transition-colors hover:border-[#2580D8]/45"
+      className="navigation-utility"
     >
-      {label}
+      {counterpart.locale === "en" ? "EN" : "한국어"}
     </Link>
   );
 }
