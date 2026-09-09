@@ -1,5 +1,5 @@
 /**
- * Reviewed portfolio content, frozen 2026-09-09.
+ * Reviewed portfolio content, including the post-implementation V3 update of 2026-09-09.
  * Evidence describes a particular assessment; work state, outcome and authority
  * are independent dimensions. Missing research artifacts remain unavailable.
  */
@@ -14,7 +14,8 @@ export type ResearchRecordId =
   | "independent-risk-forecast" | "policy-utility" | "risk-baseline-challenge"
   | "nonlinear-sensor-recovery" | "native-horizon-selection" | "daily-ema"
   | "futures-volatility-thesis" | "bitcoin-gsadf" | "c4-challenger"
-  | "native-scheduler" | "turnover-decomposition" | "candidate-generator-v3";
+  | "native-scheduler" | "turnover-decomposition" | "candidate-generator-v3"
+  | "small-signal-sensitivity";
 
 export const evidenceClassLabels: Record<EvidenceClass, string> = {
   INDEPENDENT: "INDEPENDENT",
@@ -87,7 +88,7 @@ export type ResearchMetric = {
   readonly assessmentId: string;
   readonly value: string;
   readonly label: string;
-  readonly unit: "percent" | "segments" | "ratio" | "trials" | "percentage_points" | "count";
+  readonly unit: "percent" | "segments" | "ratio" | "trials" | "percentage_points" | "count" | "mse";
   readonly interpretation: string;
   readonly priority: "primary" | "detail";
 };
@@ -122,6 +123,11 @@ export type CompletedResearchRecord = ResearchRecordBase & {
   readonly finding: string;
   readonly metrics: readonly ResearchMetric[];
   readonly observations: readonly string[];
+  readonly holdout?: {
+    readonly workState: "not_opened";
+    readonly label: string;
+    readonly window: AssessmentWindow;
+  };
 };
 
 type NonResultResearchRecord = ResearchRecordBase & {
@@ -132,6 +138,7 @@ type NonResultResearchRecord = ResearchRecordBase & {
   readonly outcomeLabel?: never;
   readonly classification?: never;
   readonly observations?: never;
+  readonly holdout?: never;
 };
 
 export type OngoingResearchRecord = NonResultResearchRecord & { readonly workState: "in_progress" };
@@ -192,6 +199,35 @@ export const policyAssessment: AssessmentContext = {
   },
   protocol: "Frozen primary P3 evaluated against the preregistered minimum and required multi-era consistency. Exact mapping and era definitions are not publicly available.",
 };
+
+export const candidateGeneratorAssessment: AssessmentContext = {
+  id: "candidate-generator-v3-validation",
+  domain: "Historical BTC return validation", horizon: "Native 1 hour",
+  comparison: "P1 ACTIVITY_RIDGE and P2 NONLINEAR_OHLCV vs P0 OHLCV_RIDGE",
+  model: { id: "P1 / P2", label: "Activity / nonlinear challengers" },
+  baseline: { id: "P0", label: "OHLCV_RIDGE" },
+  window: {
+    label: "[2024-01-01, 2025-07-30) · end exclusive · retrospective validation",
+    start: "2024-01-01", end: "2025-07-30", startInclusive: true, endInclusive: false, timezone: null,
+  },
+  protocol: "Frozen fixed-native V3 validation with registered paired bootstrap and Holm gates. The return-lane holdout was not opened; this validation is not independent holdout confirmation.",
+};
+
+const candidateGeneratorMetrics: readonly ResearchMetric[] = [
+  { id: "v3-p1-relative-mse", assessmentId: candidateGeneratorAssessment.id, value: "−0.007539%", label: "P1 relative MSE improvement vs P0", unit: "percent", priority: "primary", interpretation: "ACTIVITY_RIDGE did not lower pooled historical return forecast MSE versus the frozen OHLCV_RIDGE baseline." },
+  { id: "v3-p2-relative-mse", assessmentId: candidateGeneratorAssessment.id, value: "−0.130519%", label: "P2 relative MSE improvement vs P0", unit: "percent", priority: "primary", interpretation: "NONLINEAR_OHLCV did not lower pooled historical return forecast MSE versus the frozen OHLCV_RIDGE baseline." },
+  { id: "v3-finalists", assessmentId: candidateGeneratorAssessment.id, value: "0", label: "Finalists", unit: "count", priority: "primary", interpretation: "Both challengers failed the registered paired bootstrap and Holm gates. The locked return-lane holdout remained unopened." },
+  { id: "v3-validation-targets", assessmentId: candidateGeneratorAssessment.id, value: "13,819", label: "Common native hourly validation targets", unit: "count", priority: "detail", interpretation: "Common sample for the frozen retrospective validation interval; not the locked return holdout." },
+  { id: "v3-p1-positive-folds", assessmentId: candidateGeneratorAssessment.id, value: "3 / 5", label: "P1 positive MSE folds", unit: "segments", priority: "detail", interpretation: "Positive MSE folds versus P0 did not satisfy the registered selection gates." },
+  { id: "v3-p2-positive-folds", assessmentId: candidateGeneratorAssessment.id, value: "2 / 5", label: "P2 positive MSE folds", unit: "segments", priority: "detail", interpretation: "Positive MSE folds versus P0 did not satisfy the registered selection gates." },
+  { id: "v3-p0-rank-ic", assessmentId: candidateGeneratorAssessment.id, value: "≈0.050895", label: "P0 pooled rank IC", unit: "ratio", priority: "detail", interpretation: "The baseline diagnostic was not identically zero. Failure of incremental challenger transfer is not evidence that every BTC return predictor contains no information." },
+  { id: "v3-p1-rank-ic", assessmentId: candidateGeneratorAssessment.id, value: "0.037350", label: "P1 pooled rank IC", unit: "ratio", priority: "detail", interpretation: "ACTIVITY_RIDGE pooled diagnostic in the same retrospective validation sample; no independent confirmation is claimed." },
+  { id: "v3-p2-rank-ic", assessmentId: candidateGeneratorAssessment.id, value: "≈−0.000384", label: "P2 pooled rank IC", unit: "ratio", priority: "detail", interpretation: "NONLINEAR_OHLCV pooled diagnostic in the same retrospective validation sample." },
+  { id: "v3-p0-pooled-mse", assessmentId: candidateGeneratorAssessment.id, value: "2.904736101634281e-05", label: "P0 pooled MSE", unit: "mse", priority: "detail", interpretation: "Frozen OHLCV_RIDGE baseline on the common native hourly validation targets." },
+  { id: "v3-p1-pooled-mse", assessmentId: candidateGeneratorAssessment.id, value: "2.904955089232711e-05", label: "P1 pooled MSE", unit: "mse", priority: "detail", interpretation: "ACTIVITY_RIDGE on the same common native hourly validation targets." },
+  { id: "v3-p2-pooled-mse", assessmentId: candidateGeneratorAssessment.id, value: "2.908527335930493e-05", label: "P2 pooled MSE", unit: "mse", priority: "detail", interpretation: "NONLINEAR_OHLCV on the same common native hourly validation targets." },
+  { id: "v3-p0-sign-accuracy", assessmentId: candidateGeneratorAssessment.id, value: "52.587%", label: "P0 sign accuracy", unit: "percent", priority: "detail", interpretation: "Baseline diagnostic only; not strategy success, policy utility or historical holdout confirmation." },
+];
 
 const forecastMetrics: readonly ResearchMetric[] = [
   {
@@ -530,11 +566,12 @@ export const researchEvidence = {
       "The synthetic result does not establish historical BTC predictability, risk-policy utility or directional alpha.",
       "This assessment is separate from the earlier native-horizon repair, whose data domain and evidence class remain unresolved.",
     ],
-    observations: ["All null guards passed.", "Fixed native-horizon selection retained the reported detection power without meaningful adaptive incremental value.", "Adaptive scheduling remains a diagnostic option in the proposed next architecture, not the primary selector."],
+    observations: ["All null guards passed.", "Fixed native-horizon selection retained the reported detection power without meaningful adaptive incremental value.", "Adaptive scheduling remained diagnostic in the fixed-native architecture subsequently tested by Candidate Generator V3."],
     authority: researchAuthority,
     source: { ...privateResearchSource, label: "Reviewed completed scheduler-study update" },
     code: { ...unavailableCode, commit: "b45e2a3fa2daf4b51967059d964393536a41f106", note: "Verified completed-study identifier supplied with the reviewed result. No public code destination is available." },
-    lineage: ["native-horizon-selection"], nextQuestion: "Candidate Generator V3: evaluate ordered candidate families with frozen native-horizon selection; adaptive scheduling is diagnostic only.",
+    lineage: ["native-horizon-selection"], followUpRecord: "candidate-generator-v3",
+    nextQuestion: "The completed Candidate Generator V3 follow-up tested historical return transfer. Small-Signal Sensitivity Calibration is now the proposed methodology question.",
     detailHref: "/research/nonlinear-measurement#scheduler-robustness",
   },
   turnoverDecomposition: {
@@ -557,23 +594,55 @@ export const researchEvidence = {
     detailHref: "/astra#next-question",
   },
   candidateGeneratorV3: {
-    id: "candidate-generator-v3", version: "V3 proposed", reviewedAt,
-    title: "Candidate Generator V3", shortTitle: "Candidate Generator V3",
-    question: "What can ordered candidate families contribute under a frozen native-horizon selection architecture?",
-    evidenceClass: null, workState: "proposed", role: "Next architecture question",
-    scope: "Proposed architecture: OHLCV_RIDGE → ACTIVITY_RIDGE → NONLINEAR_OHLCV; frozen native 1h selection, R3 product, ridge alpha 1 and canonical ties. Adaptive scheduling is diagnostic only. No active-study or result claim.",
-    assessment: {
-      id: "candidate-generator-v3-proposal", domain: "Proposed candidate-generation architecture", horizon: "Frozen native 1 hour",
-      comparison: "OHLCV_RIDGE → ACTIVITY_RIDGE → NONLINEAR_OHLCV; a proposed family sequence", model: null, baseline: null,
-      window: { label: "Proposed architecture question; no assessment window.", timezone: null },
-      protocol: "R3 product, ridge alpha 1, canonical ties and fixed native-horizon selection; adaptive scheduling retained for diagnostics only.",
+    id: "candidate-generator-v3", version: "V3", reviewedAt,
+    title: "ASTRA Candidate Generator V3", shortTitle: "Candidate Generator V3",
+    question: "Does the repaired fixed-native measurement stack add historical one-hour BTC return information beyond the frozen OHLCV baseline?",
+    evidenceClass: "RETROSPECTIVE", workState: "completed", role: "Historical transfer test",
+    classification: "MEASUREMENT_REPAIR_DOES_NOT_TRANSFER_TO_HISTORICAL_BTC",
+    claimOutcome: "not_confirmed", outcomeLabel: "HISTORICAL TRANSFER NOT DEMONSTRATED",
+    finding: "The repaired fixed-native Activity and nonlinear challengers did not improve historical one-hour BTC return forecasts over the frozen OHLCV baseline. Zero finalists; the locked return holdout remained unopened.",
+    assessment: candidateGeneratorAssessment, metrics: candidateGeneratorMetrics,
+    method: "Frozen native 1h objective: P0 OHLCV_RIDGE → P1 ACTIVITY_RIDGE → P2 NONLINEAR_OHLCV. P2 uses the R3 completed return_1h × return_6h product and ridge alpha 1, with canonical tie handling and adaptive ordering diagnostic only.",
+    keyCaveat: "The repaired Activity / nonlinear challengers did not add historical return information beyond the frozen OHLCV baseline in the tested domain. This does not establish that all BTC return information is absent.",
+    limitations: [
+      "Retrospective validation is not independent assessment or historical holdout confirmation. The locked interval remained unopened for V3; its use outside this study is not established by this record.",
+      "The result is a failed incremental predictive-transfer claim within the frozen V3 domain, not universal BTC return unpredictability or strategy failure.",
+      "Synthetic positive controls remained healthy, but that measurement health did not establish incremental historical return information.",
+    ],
+    observations: [
+      "Both challengers failed the registered paired bootstrap and Holm gates.",
+      "Zero finalists. The locked return-lane holdout was not opened.",
+      "Secondary shadow economics did not rescue the failed predictive gate. They did not determine candidate selection or finalist ranking, did not open the holdout, and do not establish policy utility; market exposure was high.",
+    ],
+    holdout: {
+      workState: "not_opened", label: "NOT OPENED",
+      window: { label: "[2025-07-30, 2026-07-30) · locked return-lane holdout · end exclusive", start: "2025-07-30", end: "2026-07-30", startInclusive: true, endInclusive: false, timezone: null },
     },
-    method: "Proposed ordered candidate-family evaluation with a frozen native-horizon selection architecture.",
-    keyCaveat: "NEXT QUESTION only. No study has started and no candidate-family outcome is reported.",
-    limitations: ["The completed scheduler result supports methodological simplification; it does not establish performance for this proposed candidate generator."],
+    authority: researchAuthority,
+    source: { ...privateResearchSource, label: "Reviewed completed Candidate Generator V3 update" },
+    code: { ...unavailableCode, commit: "1dc9e529b9729e770691e36a2ad937c0009f6fdb", note: "Verified completed-study identifier supplied with the reviewed result. No public code destination is available." },
+    lineage: ["native-scheduler"], followUpRecord: "small-signal-sensitivity",
+    nextQuestion: "How small a conditional return effect can the repaired research stack reliably detect under BTC-like historical feature distribution and temporal dependence?",
+    detailHref: "/research/nonlinear-measurement#historical-transfer-test",
+  },
+  smallSignalSensitivity: {
+    id: "small-signal-sensitivity", version: "Proposed question", reviewedAt,
+    title: "Small-Signal Sensitivity Calibration", shortTitle: "Small-signal sensitivity",
+    question: "How small a conditional return effect can the repaired research stack reliably detect under BTC-like historical feature distribution and temporal dependence?",
+    evidenceClass: null, workState: "proposed", role: "Next methodology question",
+    scope: "NEXT QUESTION only. The study has not started; no design, threshold, result or power value is supplied.",
+    assessment: {
+      id: "small-signal-sensitivity-proposal", domain: "Proposed conditional-return sensitivity question", horizon: null,
+      comparison: "Study design not supplied", model: null, baseline: null,
+      window: { label: "Proposed question; no assessment window.", timezone: null },
+      protocol: "Only the research question is supplied; no active or completed protocol is claimed.",
+    },
+    method: "Research design has not been specified.",
+    keyCaveat: "NEXT QUESTION only. No study has started and no sensitivity result is reported.",
+    limitations: ["No design, threshold, result or power value is supplied."],
     authority: researchAuthority, source: privateResearchSource, code: unavailableCode,
-    lineage: ["native-scheduler"], nextQuestion: "Specify and assess the proposed ordered candidate families without restoring adaptive scheduling as primary selection.",
-    detailHref: "/astra#candidate-generator-v3",
+    lineage: ["candidate-generator-v3"], nextQuestion: "How small a conditional return effect can the repaired research stack reliably detect under BTC-like historical feature distribution and temporal dependence?",
+    detailHref: "/astra#small-signal-sensitivity",
   },
 } as const satisfies Record<string, ResearchRecord>;
 
@@ -581,12 +650,13 @@ export const researchEvidence = {
 export const completedResearch: readonly CompletedResearchRecord[] = [
   researchEvidence.independentRiskForecast, researchEvidence.policyUtility,
   researchEvidence.riskBaselineChallenge, researchEvidence.nonlinearSensorRecovery,
-  researchEvidence.nativeHorizonSelection, researchEvidence.nativeScheduler, researchEvidence.dailyEma,
+  researchEvidence.nativeHorizonSelection, researchEvidence.nativeScheduler,
+  researchEvidence.candidateGeneratorV3, researchEvidence.dailyEma,
   researchEvidence.futuresVolatilityThesis, researchEvidence.bitcoinGsadf,
   researchEvidence.c4Challenger,
 ];
 export const currentResearch: readonly OngoingResearchRecord[] = [];
-export const nextResearchQuestions: readonly ProposedResearchRecord[] = [researchEvidence.candidateGeneratorV3, researchEvidence.turnoverDecomposition];
+export const nextResearchQuestions: readonly ProposedResearchRecord[] = [researchEvidence.smallSignalSensitivity, researchEvidence.turnoverDecomposition];
 
 /** A metric group cannot be constructed without its assessment and visible caveat. */
 export function getMetricGroup(record: CompletedResearchRecord, includeDetail = false): ResearchMetricGroup {
@@ -691,5 +761,31 @@ export const researchTimeline: readonly ResearchTimelineEntry[] = [
 
 export const schedulerBranch = {
   fromStageId: "native-horizon-repair", record: researchEvidence.nativeScheduler,
-  nextQuestion: researchEvidence.candidateGeneratorV3,
+  followUpRecord: researchEvidence.candidateGeneratorV3,
+  nextQuestion: researchEvidence.smallSignalSensitivity,
 } as const;
+
+/** Distinct research lanes; adjacency is historical progression, not one statistical experiment. */
+export const researchTimelineLanes = [
+  {
+    id: "return-methodology", title: "Return / methodology",
+    description: "Measurement repair, synthetic robustness and retrospective historical transfer each retain their own assessment domain.",
+    stages: [
+      ...researchTimeline.slice(0, 5),
+      { id: "scheduler-robustness", title: "Scheduler robustness", finding: researchEvidence.nativeScheduler.finding, limitation: researchEvidence.nativeScheduler.keyCaveat, evidenceClass: "SYNTHETIC", recordId: "native-scheduler", detailHref: researchEvidence.nativeScheduler.detailHref },
+      { id: "fixed-native-sufficient", title: "Fixed-native architecture sufficient", finding: "The completed scheduler study supports simplification within its registered synthetic robustness domain.", limitation: "This architecture decision does not itself establish historical return transfer.", evidenceClass: "SYNTHETIC", recordId: "native-scheduler", detailHref: researchEvidence.nativeScheduler.detailHref },
+      { id: "v3-historical-transfer", title: "V3 historical transfer test", finding: researchEvidence.candidateGeneratorV3.finding, limitation: researchEvidence.candidateGeneratorV3.keyCaveat, evidenceClass: "RETROSPECTIVE", recordId: "candidate-generator-v3", detailHref: researchEvidence.candidateGeneratorV3.detailHref },
+      { id: "v3-no-finalists", title: "No incremental historical transfer demonstrated", finding: "Zero finalists; the locked return-lane holdout remained unopened.", limitation: "No historical holdout confirmation or universal return-unpredictability claim follows.", evidenceClass: "RETROSPECTIVE", recordId: "candidate-generator-v3", detailHref: researchEvidence.candidateGeneratorV3.detailHref },
+    ],
+    nextQuestion: researchEvidence.smallSignalSensitivity,
+  },
+  {
+    id: "risk", title: "Risk",
+    description: "Risk baseline challenge, independent forecast confirmation and retrospective policy translation use separate claim and assessment contexts.",
+    stages: researchTimeline.slice(5),
+    nextQuestion: researchEvidence.turnoverDecomposition,
+  },
+] as const satisfies readonly {
+  id: string; title: string; description: string;
+  stages: readonly ResearchTimelineEntry[]; nextQuestion: ProposedResearchRecord;
+}[];

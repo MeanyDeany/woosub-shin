@@ -20,11 +20,12 @@ import { metadataFor } from "@/lib/site-metadata";
 export const metadata = metadataFor(
   "/astra",
   "ASTRA Research Architecture",
-  "Woosub Shin’s AI-augmented systematic research architecture: generate, measure, falsify, repair, confirm and translate. Independent risk evidence, completed policy tests and synthetic methodology findings remain distinct.",
+  "Woosub Shin’s AI-augmented research architecture. Independent risk information survived, policy utility was not confirmed, and repaired measurement did not demonstrate incremental historical BTC return transfer.",
 );
 
 const forecast = researchEvidence.independentRiskForecast;
 const scheduler = researchEvidence.nativeScheduler;
+const historicalTransfer = researchEvidence.candidateGeneratorV3;
 
 export default function AstraPage() {
   return (
@@ -46,6 +47,7 @@ export default function AstraPage() {
           { href: "#engine", label: "Research engine" },
           { href: "#discoveries", label: "Findings" },
           { href: "#native-scheduler", label: "Completed scheduler study" },
+          { href: "#candidate-generator-v3", label: "Historical transfer test" },
           { href: "#timeline", label: "Timeline" },
           { href: "#current-research", label: "Current / next" },
           { href: "#evidence-protocol", label: "Evidence protocol" },
@@ -84,8 +86,15 @@ export default function AstraPage() {
           <div className="research-actions"><Link href={scheduler.detailHref}>Inspect the registered robustness study <span aria-hidden="true">→</span></Link></div>
         </ResearchSection>
 
+        <ResearchSection id="candidate-generator-v3" eyebrow="Completed retrospective transfer test" title={historicalTransfer.title}>
+          <EvidenceStatus evidenceClass={historicalTransfer.evidenceClass} workState={historicalTransfer.workState} outcome={historicalTransfer.outcomeLabel} />
+          <p className="research-prose">{historicalTransfer.finding}</p>
+          <AuthorityBoundary>{historicalTransfer.keyCaveat}</AuthorityBoundary>
+          <div className="research-actions"><Link href={historicalTransfer.detailHref}>Inspect the historical transfer test <span aria-hidden="true">→</span></Link></div>
+        </ResearchSection>
+
         <ResearchSection id="timeline" eyebrow="Scientific progression" title="The record includes failed claims and simpler methods.">
-          <p className="research-prose">The sequence follows how findings changed the next question. The methodology branch has its own synthetic assessment; it does not inherit the independent risk forecast’s domain or claim.</p>
+          <p className="research-prose">Two research lanes track how findings changed the next question. These are separate studies with distinct validation domains, not one sequential statistical experiment. Synthetic measurement health, historical return transfer, independent risk information and policy utility remain separate claims.</p>
           <ResearchTimeline />
         </ResearchSection>
 

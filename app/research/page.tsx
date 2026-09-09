@@ -14,7 +14,7 @@ import { metadataFor } from "@/lib/site-metadata";
 export const metadata = metadataFor(
   "/research",
   "Research Findings",
-  "Independent risk forecast assessment, completed policy translation, synthetic measurement and scheduler findings, retained historical systems and academic financial econometrics by Woosub Shin.",
+  "Independent risk evidence, completed policy translation and Candidate Generator V3’s unconfirmed historical return transfer, with synthetic methodology and academic research by Woosub Shin.",
 );
 
 const principles = [
@@ -91,12 +91,13 @@ export default function ResearchPage() {
           </div>
         </ResearchSection>
 
-        <ResearchSection id="measurement" eyebrow="Measurement and methodology" title="Repair detection, then test the need for complexity.">
-          <p className="research-prose">Positive controls exposed blind spots. Target and selection repairs recovered methodological power. The completed synthetic scheduler study supports simpler fixed-native selection within its registered domain.</p>
+        <ResearchSection id="measurement" eyebrow="Return / methodology" title="Repair detection, then test historical transfer.">
+          <p className="research-prose">Positive controls exposed blind spots. Target and selection repairs recovered methodological power, and synthetic scheduler robustness supported simpler fixed-native selection. The completed V3 test did not demonstrate incremental historical return transfer within its frozen validation domain.</p>
           <div className="finding-list">
             <ResearchFindingCard record={researchEvidence.nonlinearSensorRecovery} />
             <ResearchFindingCard record={researchEvidence.nativeHorizonSelection} />
             <ResearchFindingCard record={researchEvidence.nativeScheduler} />
+            <div id="candidate-generator-v3"><ResearchFindingCard record={researchEvidence.candidateGeneratorV3} /></div>
           </div>
         </ResearchSection>
 

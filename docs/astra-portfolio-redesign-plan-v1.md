@@ -1,5 +1,7 @@
 # ASTRA portfolio redesign plan V1
 
+> **Historical plan and current-status boundary — 9 September 2026.** The approved plan and scheduler implementation update below are preserved as the research freeze used for the first validated portfolio implementation. Candidate Generator V3 completed afterward. Earlier descriptions of V3 as NEXT QUESTION, proposed architecture or a future study are historical and are superseded by the [post-plan V3 status addendum](#28-post-plan-research-status-addendum-9-september-2026). That addendum is the current authority for V3, its completed follow-up chain, and the two remaining proposed questions; it does not retroactively change what was known when the plan was reviewed.
+
 Planning date: 9 September 2026. Status: approved plan, originally frozen before implementation, with binding implementation updates incorporated on 9 September 2026.
 
 Repository: `MeanyDeany/woosub-shin`.
@@ -12,6 +14,8 @@ Completed research reference: **ASTRA Risk Policy Utility V1**, classification *
 The original planning phase produced only this document. The current implementation task authorizes application work, focused commits, this branch push, and a Draft PR; no merge or deployment is authorized. This remains the only planning artifact carried into implementation. The research-state changes below are explicit user updates, not a redesign of the approved strategy.
 
 ### Binding implementation update — 9 September 2026
+
+> **Historical research-state snapshot.** V3 proposal/next-question references in this section describe the earlier freeze. Apply the [post-plan V3 status addendum](#28-post-plan-research-status-addendum-9-september-2026) for its completed status and current follow-up.
 
 **ASTRA Native Scheduler Robustness V1 is COMPLETED · SYNTHETIC.** Preserve exact classification **`NATIVE_FIXED_SELECTION_SUFFICIENT`** and final verified research head **`b45e2a3fa2daf4b51967059d964393536a41f106`**. This head identifies this completed research record only; it is neither the portfolio base nor the forecast or policy study's lineage. Public source availability remains limited to the private research archive, with no private repository URLs or branch links published.
 
@@ -36,6 +40,8 @@ The methodology timeline branches as **Native-horizon selection repair → Sched
 The implementation brief also binds the completed policy study to **RETROSPECTIVE** evidence and permits the compact homepage comparison **2.070% volatility improvement / 2.016% ES5 improvement / 3.0% preregistered minimum**, with P3 and pooled H+C-vs-HAR context. Detailed accounting stays at research depth. Preserve three distinct conclusions: **forecast information survived; policy utility was not confirmed; fixed-native selection was sufficient in the registered synthetic robustness domain**.
 
 ## 1. Executive recommendation
+
+> **Historical research-state snapshot.** V3 proposal/next-question references in this section describe the earlier freeze. Apply the [post-plan V3 status addendum](#28-post-plan-research-status-addendum-9-september-2026) for its completed status and current follow-up.
 
 Make **Woosub Shin, Quantitative Researcher** the unmistakable identity. Present **ASTRA — AI-augmented systematic research architecture** as the principal research program beneath that identity. Lead the evidence hierarchy with the independent one-hour BTC risk assessment, labeled **STRONGEST CONFIRMED FINDING**, then explain how falsification and measurement repairs made that result possible.
 
@@ -145,6 +151,8 @@ The [package manifest](/Users/deanmac/Documents/woosub_shin_astra_redesign_v1/pa
 
 ### Links, assets, and provenance
 
+> **Historical research-state snapshot.** V3 proposal/next-question references in this section describe the earlier freeze. Apply the [post-plan V3 status addendum](#28-post-plan-research-status-addendum-9-september-2026) for its completed status and current follow-up.
+
 A static check found 35 distinct literal internal href targets resolving to an existing page or public asset. This does not establish fragment correctness, generated-link correctness, deployed reachability, or routing behavior. Preserve existing anchors, especially final-system `#result`/`#forward`, lab `#architecture`/`#boundaries`, and the BTC case study's exhibit anchors.
 
 Public assets comprise two PDFs (approximately 1.6 MB thesis and 1.2 MB seminar paper), five starter SVGs, and the app favicon. There is no portrait, downloadable CV PDF, ASTRA illustration, or independent-assessment report asset. Inventory and references were inspected; PDF numerical results were not independently recomputed or comprehensively audited.
@@ -220,6 +228,8 @@ The header wordmark remains Woosub Shin. ASTRA receives a smaller program headin
 
 ## 8. New sitemap
 
+> **Historical research-state snapshot.** V3 proposal/next-question references in this section describe the earlier freeze. Apply the [post-plan V3 status addendum](#28-post-plan-research-status-addendum-9-september-2026) for its completed status and current follow-up.
+
 ### Recommended final navigation and ownership
 
 ```text
@@ -286,6 +296,8 @@ No redirects are required in the recommended V1. Retaining familiar paths is pre
 Use an explicit locale counterpart registry. Do not generate `/ko/astra` or `/ko/research/risk-forecasting` before those pages exist. On English-only pages show “This page is available in English” with a clearly labeled “한국어 홈” link; do not pretend it is a translation of the current page. Existing bilingual pairs retain direct switching. New English content can be linked from Korean pages with “English” indicated until reviewed translations exist.
 
 ## 9. Homepage wireframe
+
+> **Historical research-state snapshot.** V3 proposal/next-question references in this section describe the earlier freeze. Apply the [post-plan V3 status addendum](#28-post-plan-research-status-addendum-9-september-2026) for its completed status and current follow-up.
 
 Move the strongest finding immediately after the hero. The proposed eight-stage pipeline before evidence would delay the answer a recruiter needs. Compress the hero, move the complete technical pipeline to ASTRA, and show a six-stage orientation on Home. Reduce seven full research cards to three compact supporting features plus related-method links; all seven required findings remain on Research.
 
@@ -484,6 +496,8 @@ A 1,536-trial paired robustness study found no practically meaningful adaptive-o
 
 ### Separate next questions
 
+> **Historical research-state snapshot.** V3 proposal/next-question references in this section describe the earlier freeze. Apply the [post-plan V3 status addendum](#28-post-plan-research-status-addendum-9-september-2026) for its completed status and current follow-up.
+
 **NEXT QUESTION — Candidate Generator V3**
 
 Proposed architecture: OHLCV_RIDGE → ACTIVITY_RIDGE → NONLINEAR_OHLCV, frozen native 1h objective, R3 product representation, ridge alpha 1, canonical tie handling. Adaptive ordering is diagnostic only. This is a recommended future architecture, not an active study or a new result.
@@ -521,6 +535,8 @@ Footer identity: **Woosub Shin — Quantitative research and research engineerin
 Footer boundary: **Research findings do not confer execution authority.**
 
 ## 11. ASTRA page wireframe
+
+> **Historical research-state snapshot.** V3 proposal/next-question references in this section describe the earlier freeze. Apply the [post-plan V3 status addendum](#28-post-plan-research-status-addendum-9-september-2026) for its completed status and current follow-up.
 
 ```text
 PERSONAL SITE HEADER
@@ -576,6 +592,8 @@ The full timeline, completed scheduler summary and separate next questions are c
 
 ## 12. Research page architecture
 
+> **Historical research-state snapshot.** V3 proposal/next-question references in this section describe the earlier freeze. Apply the [post-plan V3 status addendum](#28-post-plan-research-status-addendum-9-september-2026) for its completed status and current follow-up.
+
 Use `/research` as a paper-like findings index. Default order follows scientific relevance, not return, publication recency, or operational activity. Its headline is **“Research findings and the tests behind them.”** Intro: **“Independent assessment, development evidence, measurement repairs, and historical studies — each with its scope and limitations.”**
 
 Use anchored topic sections and a visible evidence legend. With fewer than a dozen entries, search and a complex filter UI are unnecessary. If filters are added later, all records must remain accessible without JavaScript and status must not become a ranking of profitable versus unprofitable work.
@@ -611,6 +629,8 @@ For every depth page provide “Question,” “Method,” “Finding,” “Lim
 
 ## 13. Evidence-status taxonomy
 
+> **Historical research-state snapshot.** V3 proposal/next-question references in this section describe the earlier freeze. Apply the [post-plan V3 status addendum](#28-post-plan-research-status-addendum-9-september-2026) for its completed status and current follow-up.
+
 Use one `EvidenceStatus` family with **two dimensions**, plus separately typed authority/provenance. Evidence class describes where support came from. Work status and its scoped claim outcome describe the condition of the work; store `workState` and `claimOutcome` separately within that dimension so completed work need not imply a confirmed claim. `completed` may be stored without a redundant COMPLETED badge, except where it usefully distinguishes the finished policy test from active research. `retained historical system` is a role label, not another validation level.
 
 | Badge copy | Exact meaning | Color family | May be used when | Must not be used when |
@@ -637,6 +657,8 @@ Examples: independent forecast record = INDEPENDENT; policy translation record =
 Keep existing `ProvenanceBadge` concepts separate: academic context, conceptual illustration, initial static snapshot, and planned research identify provenance. Existing “Demonstrated” capability status is not a synonym for INDEPENDENT. Runtime LIVE / STALE / UNAVAILABLE remains a separate telemetry vocabulary. No automatic conversion between these systems is permitted.
 
 ## 14. Research-card schema
+
+> **Historical research-state snapshot.** V3 proposal/next-question references in this section describe the earlier freeze. Apply the [post-plan V3 status addendum](#28-post-plan-research-status-addendum-9-september-2026) for its completed status and current follow-up.
 
 ### Shared records and presentation
 
@@ -754,6 +776,8 @@ Keep policy metrics in the shared completed record. The homepage variant renders
 All record seeds require Source and Code fields from the same registry; missing values retain their availability state. The original seven findings, C4 and the completed policy translation result use this one contract rather than one-off cards. The completed scheduler study uses the completed synthetic record contract with its own assessment context. Candidate Generator V3 and turnover/opportunity-cost decomposition use explicit proposed, non-result variants.
 
 ## 15. Research timeline
+
+> **Historical research-state snapshot.** V3 proposal/next-question references in this section describe the earlier freeze. Apply the [post-plan V3 status addendum](#28-post-plan-research-status-addendum-9-september-2026) for its completed status and current follow-up.
 
 Use a static ordered timeline with optional native “Evidence and limitations” disclosures. It must remain meaningful without JavaScript. Number the progression; add dates only when sourced. Order conveys scientific sequence, not a claim that every project ran strictly serially or shares one assessment window.
 
@@ -959,6 +983,8 @@ A later static social image should emphasize **Woosub Shin / Quantitative Resear
 
 ## 23. Migration / implementation plan
 
+> **Historical research-state snapshot.** V3 proposal/next-question references in this section describe the earlier freeze. Apply the [post-plan V3 status addendum](#28-post-plan-research-status-addendum-9-september-2026) for its completed status and current follow-up.
+
 ### Prerequisite: freeze content and establish a baseline
 
 After explicit implementation authorization, verify the approved base and working tree again. Install dependencies from the lockfile without upgrades, read installed Next guides, and capture current route/anchor/locale/API inventories and browser behavior. Resolve the primary assessment report/code references and document any remaining public-source limitations. Do not let source-binding work invent new results or expand the frozen scope.
@@ -1029,6 +1055,8 @@ Do not create a component per tiny text block. Reuse existing editorial primitiv
 
 ## 25. Regression checklist
 
+> **Historical research-state snapshot.** V3 proposal/next-question references in this section describe the earlier freeze. Apply the [post-plan V3 status addendum](#28-post-plan-research-status-addendum-9-september-2026) for its completed status and current follow-up.
+
 This checklist is for the future implementation. None of these runtime/build checks is claimed to have passed in this planning phase.
 
 ### Research and content
@@ -1089,6 +1117,8 @@ Meaningful additional tests are limited to failure-prone contracts: ongoing/prop
 
 ## 26. Open questions requiring user decision
 
+> **Historical research-state snapshot.** V3 proposal/next-question references in this section describe the earlier freeze. Apply the [post-plan V3 status addendum](#28-post-plan-research-status-addendum-9-september-2026) for its completed status and current follow-up.
+
 The approved plan incorporates the binding completed policy and scheduler updates. The design defaults remain the approved strategy; unresolved source/asset questions do not reopen product decisions or prevent the authorized implementation from using reviewed claims with honest source-availability disclosure.
 
 | Decision / missing input | Recommendation | Effect if unresolved |
@@ -1115,6 +1145,8 @@ Use focused later commits for primitives/content registry, ASTRA/detail pages, h
 
 ### Ten highest-impact decisions for review
 
+> **Historical research-state snapshot.** V3 proposal/next-question references in this section describe the earlier freeze. Apply the [post-plan V3 status addendum](#28-post-plan-research-status-addendum-9-september-2026) for its completed status and current follow-up.
+
 1. Woosub Shin remains the primary brand; ASTRA is the research architecture.
 2. Independent one-hour BTC risk confirmation remains the strongest confirmed finding, with three headline metrics and the variance ratio at research depth.
 3. The existing falsification headline stays; the strongest finding moves directly after the hero.
@@ -1127,3 +1159,77 @@ Use focused later commits for primitives/content registry, ASTRA/detail pages, h
 10. Implement incrementally from the approved portfolio base only when that phase is explicitly started, preserving the completed policy and scheduler study heads separately and using verified sources, locale/link checks and targeted regression testing.
 
 PLANNING_UPDATE_COMPLETE
+
+
+## 28. Post-plan research-status addendum (9 September 2026)
+
+This binding research-status update was received after the current portfolio implementation had been validated and Draft PR #38 had been opened. It records a later completed study; it does not claim that V3 was already completed during the earlier planning or validation phases. Earlier V3 proposal examples remain above as explicitly marked history. No new validation result is claimed by this addendum.
+
+### Completed V3 record and scientific boundary
+
+**ASTRA Candidate Generator V3** is now **RETROSPECTIVE · COMPLETED**, with claim outcome **NOT CONFIRMED** and the public outcome label **HISTORICAL TRANSFER NOT DEMONSTRATED**. Preserve the exact technical classification:
+
+`MEASUREMENT_REPAIR_DOES_NOT_TRANSFER_TO_HISTORICAL_BTC`
+
+The supplied exact completed research head is `1dc9e529b9729e770691e36a2ad937c0009f6fdb`. It is a plain study identifier under the existing reviewed private-study-identifier policy, not a public code link or a portfolio checkout base. No private research repository URL or branch URL is supplied or authorized for publication.
+
+The repaired fixed-native measurement stack remained healthy in synthetic positive controls, but incremental historical BTC return information was not demonstrated under the frozen V3 validation domain. The completed historical result belongs to its own RETROSPECTIVE record; it does not inherit the scheduler study’s synthetic evidence class or the risk forecast assessment’s independence.
+
+Use this concise public finding:
+
+> The repaired fixed-native Activity and nonlinear challengers did not improve historical one-hour BTC return forecasts over the frozen OHLCV baseline. Zero finalists; the locked return holdout remained unopened.
+
+**Key caveat:** This result says the repaired Activity / nonlinear challengers did not add historical return information beyond the frozen OHLCV baseline in the tested domain. It does not establish that all BTC return information is absent. Do not claim universal BTC return unpredictability, strategy failure or historical holdout confirmation.
+
+### Frozen validation context and supplied primary result
+
+- Validation common sample: **13,819 native hourly targets**.
+- Validation interval: **`[2024-01-01, 2025-07-30)`**, end exclusive.
+- P0 is the frozen **OHLCV_RIDGE** baseline; P1 is **ACTIVITY_RIDGE**; P2 is **NONLINEAR_OHLCV**.
+- P2 uses **R3 completed `return_1h × return_6h`**, with **ridge alpha 1**.
+- Both challengers failed the registered **paired bootstrap and Holm gates**.
+
+| Procedure | Pooled MSE | Relative MSE improvement vs P0 | Positive MSE folds | Pooled rank IC | Sign accuracy |
+| --- | --- | --- | --- | --- | --- |
+| P0 · OHLCV_RIDGE | 2.904736101634281e-05 | Baseline | Not supplied | ≈ 0.050895 | 52.587% |
+| P1 · ACTIVITY_RIDGE | 2.904955089232711e-05 | −0.007539% | 3 / 5 | 0.037350 | Not supplied |
+| P2 · NONLINEAR_OHLCV | 2.908527335930493e-05 | −0.130519% | 2 / 5 | ≈ −0.000384 | Not supplied |
+
+**Finalists: 0. Holdout opened: NO.** The locked return-lane holdout **`[2025-07-30, 2026-07-30)`** was **NOT OPENED**. Do not call the validation interval independent or describe the unopened holdout as globally virgin out-of-sample data. The positive P0 rank IC must not be erased by a summary suggesting that every return predictor was identically zero. Do not invent missing inference, effect thresholds, gate definitions or sample details.
+
+At `/research/nonlinear-measurement#historical-transfer-test`, show the completed transfer result with its own validation context: P1/P2 relative MSE improvements, positive folds, zero finalists and unopened holdout. P0 rank IC may appear as supporting context. Do not publish the full accounting report or emphasize secondary shadow economics.
+
+If secondary shadow LONG/FLAT diagnostics are mentioned at research depth, use the bounded interpretation: **“Secondary shadow economics did not rescue the failed predictive gate.”** They did not determine candidate selection or finalist ranking, did not open the holdout, do not establish policy utility, and had high market exposure. Do not promote a positive shadow result on Home or as a selected-research headline.
+
+### Current records and separate research lanes
+
+The central registry must treat `candidateGeneratorV3` as a `CompletedResearchRecord`, include it in `completedResearch`, and remove it from `nextResearchQuestions`. Its work state is no longer proposed or in progress. Update the scheduler’s follow-up, next-question relationship and methodology branch so V3 is a completed successor study, while preserving separate assessment contexts.
+
+The current public research freeze has **no active study**. Only these proposed follow-ups belong in Current / Next:
+
+| Record | Current state | Supplied question / scope |
+| --- | --- | --- |
+| Small-Signal Sensitivity Calibration | NEXT QUESTION · proposed; not started | How small a conditional return effect can the repaired research stack reliably detect under BTC-like historical feature distribution and temporal dependence? |
+| Turnover & Opportunity-Cost Decomposition | NEXT QUESTION · proposed; not started | Separate risk-lane follow-up on the observed turnover, fees and foregone-opportunity tradeoff; its existing bounded question remains unchanged. |
+
+For Small-Signal Sensitivity Calibration, do not invent a study design, threshold, result or power value. It is a new question motivated by completed evidence, not an active or completed calibration study.
+
+Preserve two distinct lanes in ASTRA and related summaries:
+
+- **RETURN / METHODOLOGY:** positive-control failure → sensor repair → native-horizon repair → scheduler robustness → fixed-native sufficient → Candidate Generator V3 historical transfer test → zero finalists / no incremental historical transfer demonstrated / return holdout remains locked → **Small-Signal Sensitivity Calibration — NEXT QUESTION**.
+- **RISK:** risk baseline challenge → independent forecast confirmation → policy translation tested → policy utility not confirmed → **Turnover & Opportunity-Cost Decomposition — NEXT QUESTION**.
+
+These lanes are not one sequential statistical experiment. Synthetic measurement health, historical predictive transfer, independent risk information and policy utility remain separate claims.
+
+### Presentation and validation consequences
+
+The three dominant homepage metrics remain **+12.58% Log-MSE improvement**, **+11.65% QLIKE improvement**, and **4 / 4 chronological segments positive in both primary losses**, with their existing independent risk-assessment context. V3 appears only as a compact completed negative finding or timeline stage. Research lists it as a completed retrospective finding; the measurement page supplies the historical-transfer depth. Existing anchors should remain valid when the former proposed-architecture section is replaced.
+
+The earlier plan’s V3 NEXT QUESTION examples and associated assertions are superseded for application copy, tests, metadata, the validation record and the existing Draft PR #38 description. The original plan text above is retained as historical context, not a current publishing instruction.
+
+- Verify V3 is completed, RETROSPECTIVE and not confirmed; zero finalists and unopened holdout are represented wherever the public result is summarized.
+- Verify V3 is absent from proposed questions, Small-Signal Sensitivity Calibration is proposed only, turnover decomposition remains separate, and no active study is fabricated.
+- Preserve the independent risk homepage metrics, completed negative policy result, and bounded completed synthetic scheduler result.
+- Rerun the previously reported redesign validation for the updated implementation. This addendum itself does not assert that those checks have run or passed.
+- Update the existing branch and Draft PR #38; do not create a second PR. Report hosted CI only if an actual applicable exact-head run exists; local validation is not hosted CI.
+- Preserve source-availability disclosure. No private research URLs or branch URLs, no deployment, and no merge.

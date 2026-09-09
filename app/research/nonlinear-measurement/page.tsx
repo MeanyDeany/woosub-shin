@@ -18,11 +18,15 @@ const sensor = researchEvidence.nonlinearSensorRecovery;
 const selection = researchEvidence.nativeHorizonSelection;
 const scheduler = researchEvidence.nativeScheduler;
 const candidateGenerator = researchEvidence.candidateGeneratorV3;
+const sensitivity = researchEvidence.smallSignalSensitivity;
+const transferSupportMetrics = candidateGenerator.metrics.filter(metric => [
+  "v3-validation-targets", "v3-p1-positive-folds", "v3-p2-positive-folds", "v3-p0-rank-ic",
+].includes(metric.id));
 
 export const metadata = metadataFor(
   "/research/nonlinear-measurement",
   "Nonlinear Measurement and Selection Repair",
-  "Positive-control and selection repairs led to a completed synthetic test supporting fixed native-horizon selection. Candidate Generator V3 is a proposed next question; no historical BTC alpha is claimed.",
+  "Synthetic measurement repairs remained healthy, but Candidate Generator V3 did not demonstrate incremental historical BTC return transfer. Zero finalists; the locked return holdout remained unopened.",
 );
 
 export default function NonlinearMeasurementPage() {
@@ -36,12 +40,14 @@ export default function NonlinearMeasurementPage() {
       >
         <p className="research-prose">
           The progression moved from detection failure to sensor repair, then to
-          native-horizon target alignment and selection repair. Each step supports
-          a bounded methodological claim.
+          native-horizon target alignment and selection repair. Synthetic controls
+          remained healthy; the completed V3 test did not demonstrate incremental
+          historical return transfer within its frozen validation domain.
         </p>
         <div className="research-actions">
           <Link href="#sensor-recovery" className="finding-link">Inspect sensor recovery</Link>
           <Link href="#native-horizon-selection" className="finding-link">Inspect selection repair</Link>
+          <Link href="#historical-transfer-test" className="finding-link">Inspect historical transfer</Link>
         </div>
       </ResearchHero>
 
@@ -50,7 +56,8 @@ export default function NonlinearMeasurementPage() {
         { href: "#sensor-recovery", label: "Sensor recovery" },
         { href: "#native-horizon-selection", label: "Native-horizon selection" },
         { href: "#scheduler-robustness", label: "Completed scheduler test" },
-        { href: "#candidate-generator", label: "Next architecture question" },
+        { href: "#historical-transfer-test", label: "Historical transfer test" },
+        { href: "#small-signal-sensitivity", label: "Next sensitivity question" },
         { href: "#sources", label: "Sources and code" },
       ]} />
 
@@ -172,17 +179,61 @@ export default function NonlinearMeasurementPage() {
         </div>
       </ResearchSection>
 
-      <ResearchSection id="candidate-generator" eyebrow="Proposed next architecture" title={candidateGenerator.title}>
-        <ResearchFindingCard record={candidateGenerator} />
-        <p className="research-prose">{candidateGenerator.scope}</p>
-        <p className="research-prose">
-          This proposed family sequence follows the completed simplification result.
-          Candidate generation is the next architecture question; it has no active-study
-          status or result claim.
-        </p>
+      <span id="candidate-generator" aria-hidden="true" />
+      <ResearchSection id="historical-transfer-test" eyebrow="Completed retrospective validation" title={candidateGenerator.title}>
+        <div className="research-prose space-y-5">
+          <EvidenceStatus evidenceClass={candidateGenerator.evidenceClass} workState={candidateGenerator.workState} outcome={candidateGenerator.outcomeLabel} />
+          <p className="font-mono text-sm break-words">{candidateGenerator.classification}</p>
+          <h3>Question</h3>
+          <p>{candidateGenerator.question}</p>
+          <h3>Frozen historical comparison</h3>
+          <p>{candidateGenerator.method}</p>
+          <p>{candidateGenerator.assessment.protocol}</p>
+        </div>
+        <EvidenceMetricGroup record={candidateGenerator} idPrefix="v3-validation" />
+        <div className="research-prose mt-8 space-y-5">
+          <h3>Validation sample and supporting diagnostics</h3>
+          <table className="research-table w-full border-collapse text-left text-sm" aria-describedby="v3-validation-context v3-validation-caveat">
+            <caption className="pb-4 text-left">Supporting diagnostics in the same retrospective validation sample</caption>
+            <thead>
+              <tr><th scope="col" className="py-3 pr-4">Measure</th><th scope="col" className="py-3">Observed</th></tr>
+            </thead>
+            <tbody>
+              {transferSupportMetrics.map(metric => (
+                <tr key={metric.id} className="border-t border-[var(--rule)]">
+                  <th scope="row" className="py-3 pr-4 font-normal">{metric.label}</th>
+                  <td className="py-3 font-mono tabular-nums">{metric.value}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <p>{candidateGenerator.metrics.find(metric => metric.id === "v3-p0-rank-ic")?.interpretation}</p>
+          <h3>Locked return-lane holdout</h3>
+          <dl className="research-card">
+            <dt>Holdout access</dt><dd><strong>{candidateGenerator.holdout.label}</strong></dd>
+            <dt>Reserved interval</dt><dd className="font-mono text-sm">{candidateGenerator.holdout.window.label}</dd>
+          </dl>
+          <p>{candidateGenerator.observations[0]}</p>
+          <p>{candidateGenerator.observations[1]}</p>
+          <h3>What the completed test supports</h3>
+          <p>{candidateGenerator.finding}</p>
+          <ul className="research-list">
+            {candidateGenerator.limitations.map(limitation => <li key={limitation}>{limitation}</li>)}
+          </ul>
+          <details>
+            <summary>Secondary diagnostic boundary</summary>
+            <p>{candidateGenerator.observations[2]}</p>
+          </details>
+        </div>
+        <AuthorityBoundary>{candidateGenerator.keyCaveat} {candidateGenerator.authority}</AuthorityBoundary>
       </ResearchSection>
 
-      <ResearchSection id="sources" eyebrow="Source availability" title="Keep the two repair contexts separate.">
+      <ResearchSection id="small-signal-sensitivity" eyebrow="Next question · Return / methodology" title="What effect size can the repaired stack detect?">
+        <ResearchFindingCard record={sensitivity} />
+        <p className="research-prose">{sensitivity.scope}</p>
+      </ResearchSection>
+
+      <ResearchSection id="sources" eyebrow="Source availability" title="Each assessment retains its own context.">
         <div className="research-prose space-y-5">
           <p>
             Research records are maintained in the private research archive.
@@ -196,10 +247,15 @@ export default function NonlinearMeasurementPage() {
             own synthetic context and verified study identifier; its evidence class
             does not transfer to the earlier native-horizon repair.
           </p>
+          <p>
+            Candidate Generator V3 is a separate retrospective historical validation.
+            Its completed-study identifier and validation interval do not establish
+            an independent assessment or access to the locked return-lane holdout.
+          </p>
         </div>
-        <ResearchSources records={[sensor, selection, scheduler]} />
+        <ResearchSources records={[sensor, selection, scheduler, candidateGenerator]} />
         <div className="research-actions">
-          <Link href="/research/risk-forecasting" className="finding-link">Inspect the later risk evidence</Link>
+          <Link href="/research/risk-forecasting" className="finding-link">Inspect the separate risk evidence</Link>
           <Link href="/research#methodology" className="finding-link">Read the research methodology</Link>
         </div>
       </ResearchSection>

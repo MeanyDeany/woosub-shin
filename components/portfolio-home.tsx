@@ -1,16 +1,13 @@
 import Link from "next/link";
 import { PageShell } from "@/components/site-shell";
 import { AuthorityBoundary, CurrentResearch, EvidenceMetricGroup, EvidenceStatus, PolicySummary, ResearchFindingCard, ResearchPipeline } from "@/components/research-ui";
-import { researchEvidence } from "@/lib/research-evidence";
+import { researchEvidence, researchTimelineLanes } from "@/lib/research-evidence";
 
-const progression = [
-  ["Directional hypotheses", "Weak / cost-fragile evidence"],
-  ["Synthetic positive-control failure", "Measurement blind spots discovered"],
-  ["Nonlinear sensor repair", "Detection recovered in controls"],
-  ["Native-horizon selection repair", "Methodological power recovered"],
-  ["Risk baseline challenge", "Development evidence survived"],
-  ["Independent assessment", "Risk information confirmed"],
-] as const;
+const homeProgressionStages = new Set([
+  "positive-control-failure", "nonlinear-sensor-repair", "native-horizon-repair",
+  "fixed-native-sufficient", "v3-historical-transfer", "v3-no-finalists",
+  "strong-baseline-challenge", "independent-confirmation", "policy-translation-tested", "policy-utility-not-confirmed",
+]);
 
 export function PortfolioHome({ locale = "en" }: { locale?: "en" | "ko" }) {
   const ko = locale === "ko";
@@ -51,8 +48,12 @@ export function PortfolioHome({ locale = "en" }: { locale?: "en" | "ko" }) {
       <div className="research-actions"><Link href="/astra#engine">Explore the research engine <span aria-hidden="true">→</span></Link></div>
     </div></section>
     <section className="research-section" lang="en"><div className="research-container research-split">
-      <div><p className="research-kicker">What changed</p><h2 className="research-heading">Failure changed the measurement.<br />Evidence narrowed the claim.</h2><p className="research-prose">The progression led to risk information, followed by a separate policy test. The completed scheduler study also supports a simpler architecture within its synthetic domain.</p><div className="research-actions"><Link href="/astra#timeline">Follow the research progression <span aria-hidden="true">→</span></Link></div></div>
-      <div><ol className="progression-list">{progression.map(([stage, finding]) => <li key={stage}><span>{stage}</span><span aria-hidden="true">→</span><span>{finding}</span></li>)}</ol><p className="progression-continuation">Independent forecast confirmation → policy translation tested → policy utility not confirmed → turnover / opportunity-cost mechanism isolated.</p></div>
+      <div><p className="research-kicker">What changed</p><h2 className="research-heading">Failure changed the measurement.<br />Evidence narrowed the claim.</h2><p className="research-prose">The return and risk lanes ask different questions. Repaired measurement did not demonstrate incremental historical return transfer in V3. Independent risk information survived, while a separate policy test did not confirm utility.</p><div className="research-actions"><Link href="/astra#timeline">Follow the research progression <span aria-hidden="true">→</span></Link></div></div>
+      <div className="space-y-8">{researchTimelineLanes.map(lane => <section key={lane.id} aria-labelledby={`home-lane-${lane.id}`}>
+        <h3 id={`home-lane-${lane.id}`}>{lane.title}</h3>
+        <p className="progression-continuation">{lane.stages.filter(stage => homeProgressionStages.has(stage.id)).map(stage => stage.title).join(" → ")}</p>
+        <p className="research-note">NEXT QUESTION: <Link href={lane.nextQuestion.detailHref}>{lane.nextQuestion.title}</Link></p>
+      </section>)}</div>
     </div></section>
     <section className="research-section research-section--surface" lang="en"><div className="research-container research-split">
       <div><p className="research-kicker">Policy translation test</p><h2 className="research-heading">Forecast information survived.<br />Policy utility was not confirmed.</h2></div>
@@ -60,8 +61,8 @@ export function PortfolioHome({ locale = "en" }: { locale?: "en" | "ko" }) {
     </div></section>
     <section className="research-section" lang="en"><div className="research-container">
       <p className="research-kicker">Selected research</p><h2 className="research-heading">Results, repairs, and retained systems.</h2>
-      <div className="finding-list">{[researchEvidence.nativeScheduler, researchEvidence.dailyEma, researchEvidence.futuresVolatilityThesis].map(record => <ResearchFindingCard key={record.id} record={record} />)}</div>
-      <div className="research-actions"><Link href={researchEvidence.nonlinearSensorRecovery.detailHref}>Nonlinear sensor recovery</Link><Link href={researchEvidence.nativeHorizonSelection.detailHref}>Native-horizon selection</Link><Link href={researchEvidence.riskBaselineChallenge.detailHref}>Risk baseline challenge</Link></div>
+      <div className="finding-list">{[researchEvidence.candidateGeneratorV3, researchEvidence.dailyEma, researchEvidence.futuresVolatilityThesis].map(record => <div key={record.id} id={record.id === "candidate-generator-v3" ? record.id : undefined}><ResearchFindingCard record={record} /></div>)}</div>
+      <div className="research-actions"><Link href={researchEvidence.nonlinearSensorRecovery.detailHref}>Nonlinear sensor recovery</Link><Link href={researchEvidence.nativeHorizonSelection.detailHref}>Native-horizon selection</Link><Link href={researchEvidence.nativeScheduler.detailHref}>Completed scheduler robustness</Link><Link href={researchEvidence.riskBaselineChallenge.detailHref}>Risk baseline challenge</Link></div>
       <div className="research-actions"><Link className="research-button" href="/research">View all research findings <span aria-hidden="true">→</span></Link><Link href={ko ? "/ko/papers" : "/papers"}>Read the papers</Link></div>
     </div></section>
     <section className="research-section" lang="en"><div className="research-container"><p className="research-kicker">Current / next</p><h2 className="research-heading">What the evidence asks next.</h2><CurrentResearch /></div></section>

@@ -9,20 +9,23 @@ import {
   nextResearchQuestions,
   researchEvidence,
   researchTimeline,
+  researchTimelineLanes,
   schedulerBranch,
 } from "../lib/research-evidence.ts";
 
 test("active and proposed research cannot expose a result", () => {
-  assert.equal(completedResearch.length, 10);
+  assert.equal(completedResearch.length, 11);
   assert.deepEqual(currentResearch, []);
-  assert.deepEqual(nextResearchQuestions.map((record) => record.id), ["candidate-generator-v3", "turnover-decomposition"]);
+  assert.deepEqual(nextResearchQuestions.map((record) => record.id), ["small-signal-sensitivity", "turnover-decomposition"]);
   for (const record of [...currentResearch, ...nextResearchQuestions]) {
-    for (const resultField of ["finding", "metrics", "claimOutcome", "classification", "observations"]) {
+    for (const resultField of ["finding", "metrics", "claimOutcome", "classification", "observations", "holdout"]) {
       assert.equal(Object.hasOwn(record, resultField), false, `${record.id}: ${resultField}`);
     }
   }
   assert.equal(researchEvidence.nativeScheduler.evidenceClass, "SYNTHETIC");
   assert.equal(researchEvidence.turnoverDecomposition.workState, "proposed");
+  assert.equal(researchEvidence.smallSignalSensitivity.workState, "proposed");
+  assert.equal(researchEvidence.smallSignalSensitivity.evidenceClass, null);
   assert.equal(researchEvidence.nativeHorizonSelection.evidenceClass, null);
 });
 
@@ -66,12 +69,23 @@ test("source availability never creates a placeholder or private repository URL"
   }
 });
 
-test("timeline separates completed policy evidence from the completed methodology branch", () => {
+test("timeline keeps completed V3 transfer and policy evidence in distinct research lanes", () => {
   assert.equal(researchTimeline.length, 11);
   assert.deepEqual(researchTimeline.slice(-3).map((stage) => stage.id), ["policy-translation-tested", "policy-utility-not-confirmed", "policy-mechanism"]);
   assert.equal(schedulerBranch.fromStageId, "native-horizon-repair");
   assert.equal(schedulerBranch.record.workState, "completed");
+  assert.equal(schedulerBranch.followUpRecord.id, "candidate-generator-v3");
+  assert.equal(schedulerBranch.followUpRecord.workState, "completed");
   assert.equal(schedulerBranch.nextQuestion.workState, "proposed");
+  assert.equal(schedulerBranch.nextQuestion.id, "small-signal-sensitivity");
+  const [methodology, risk] = researchTimelineLanes;
+  assert.equal(methodology.id, "return-methodology");
+  assert.equal(risk.id, "risk");
+  assert.deepEqual(methodology.stages.slice(-4).map((stage) => stage.id), ["scheduler-robustness", "fixed-native-sufficient", "v3-historical-transfer", "v3-no-finalists"]);
+  assert.equal(methodology.stages.some((stage) => stage.recordId === "independent-risk-forecast" || stage.recordId === "policy-utility"), false);
+  assert.equal(risk.stages.some((stage) => stage.recordId === "candidate-generator-v3" || stage.recordId === "native-scheduler"), false);
+  assert.equal(methodology.nextQuestion.id, "small-signal-sensitivity");
+  assert.equal(risk.nextQuestion.id, "turnover-decomposition");
   assert.equal(researchTimeline.some((stage) => stage.recordId === "native-scheduler"), false);
   assert.equal(researchTimeline.some((stage) => stage.recordId === "turnover-decomposition"), false);
 });
@@ -91,14 +105,49 @@ test("scheduler completion supports simplification with registered scope and bou
   assert.equal(values["scheduler-adaptive-adjusted"], "236 / 256");
   assert.equal(values["scheduler-fixed-detection"], "237 / 256");
   assert.match(scheduler.keyCaveat, /not exact equivalence/);
-  assert.equal(researchEvidence.candidateGeneratorV3.workState, "proposed");
+  assert.equal(scheduler.followUpRecord, "candidate-generator-v3");
+});
+
+test("V3 is completed retrospective negative transfer evidence with zero finalists and an unopened return holdout", () => {
+  const v3 = researchEvidence.candidateGeneratorV3;
+  assert.equal(v3.workState, "completed");
+  assert.equal(v3.evidenceClass, "RETROSPECTIVE");
+  assert.equal(v3.claimOutcome, "not_confirmed");
+  assert.equal(v3.outcomeLabel, "HISTORICAL TRANSFER NOT DEMONSTRATED");
+  assert.equal(v3.classification, "MEASUREMENT_REPAIR_DOES_NOT_TRANSFER_TO_HISTORICAL_BTC");
+  assert.equal(v3.code.commit, "1dc9e529b9729e770691e36a2ad937c0009f6fdb");
+  assert.equal(completedResearch.includes(v3), true);
+  assert.equal(nextResearchQuestions.some((record) => record.id === v3.id), false);
+  assert.equal(v3.assessment.window.start, "2024-01-01");
+  assert.equal(v3.assessment.window.end, "2025-07-30");
+  assert.equal(v3.assessment.window.endInclusive, false);
+  assert.equal(v3.assessment.window.timezone, null);
+  const values = Object.fromEntries(v3.metrics.map((metric) => [metric.id, metric.value]));
+  assert.equal(values["v3-finalists"], "0");
+  assert.equal(values["v3-validation-targets"], "13,819");
+  assert.equal(values["v3-p1-relative-mse"], "−0.007539%");
+  assert.equal(values["v3-p2-relative-mse"], "−0.130519%");
+  assert.equal(values["v3-p1-positive-folds"], "3 / 5");
+  assert.equal(values["v3-p2-positive-folds"], "2 / 5");
+  assert.equal(values["v3-p0-rank-ic"], "≈0.050895");
+  assert.match(v3.finding, /Zero finalists/);
+  assert.match(v3.finding, /holdout remained unopened/);
+  assert.equal(v3.holdout.workState, "not_opened");
+  assert.equal(v3.holdout.label, "NOT OPENED");
+  assert.equal(v3.holdout.window.start, "2025-07-30");
+  assert.equal(v3.holdout.window.end, "2026-07-30");
+  assert.equal(v3.holdout.window.endInclusive, false);
+  assert.notEqual(v3.assessment.id, researchEvidence.independentRiskForecast.assessment.id);
+  assert.match(v3.keyCaveat, /does not establish that all BTC return information is absent/);
+  assert.equal(v3.followUpRecord, "small-signal-sensitivity");
 });
 
 test("TypeScript requires assessment context and rejects result fields on non-result records", () => {
   const filename = path.resolve("lib/__research_evidence_type_contract__.ts");
   const fixture = `
     import { researchEvidence } from "./research-evidence";
-    import type { OngoingResearchRecord, ProposedResearchRecord, ResearchMetricGroup } from "./research-evidence";
+    import type { CompletedResearchRecord, OngoingResearchRecord, ProposedResearchRecord, ResearchMetricGroup } from "./research-evidence";
+    const completed: CompletedResearchRecord = researchEvidence.candidateGeneratorV3;
     declare const ongoingBase: OngoingResearchRecord;
     // @ts-expect-error An ongoing study cannot have result metrics.
     const ongoing: OngoingResearchRecord = { ...ongoingBase, metrics: [] };
@@ -108,7 +157,7 @@ test("TypeScript requires assessment context and rejects result fields on non-re
     const classified: ProposedResearchRecord = { ...researchEvidence.turnoverDecomposition, evidenceClass: "SYNTHETIC" };
     // @ts-expect-error A metric group requires its assessment context.
     const group: ResearchMetricGroup = { metrics: [], evidenceClass: null, keyCaveat: "Scope", source: researchEvidence.policyUtility.source, detailHref: "/research" };
-    void [ongoing, proposed, classified, group];
+    void [completed, ongoing, proposed, classified, group];
   `;
   const options = {
     target: ts.ScriptTarget.ES2022, module: ts.ModuleKind.ESNext,

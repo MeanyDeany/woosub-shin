@@ -2,10 +2,10 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import {
   evidenceClasses, evidenceClassDescriptions, workStateDescriptions, workStateLabels,
-  getMetricGroup, homePipeline, researchPipeline, researchTimeline, researchEvidence,
-  schedulerBranch, riskInformationBoundary,
+  getMetricGroup, homePipeline, researchPipeline, researchTimelineLanes, researchEvidence,
+  riskInformationBoundary,
   type AssessmentContext as Assessment, type CompletedResearchRecord,
-  type EvidenceClass, type ResearchRecord, type WorkState,
+  type EvidenceClass, type ResearchRecord, type ResearchTimelineEntry, type WorkState,
 } from "@/lib/research-evidence";
 
 export function ResearchSection({ id, eyebrow, title, children }: {
@@ -106,16 +106,31 @@ export function ResearchPipeline({ detailed = false }: { detailed?: boolean }) {
   </>;
 }
 
-export function ResearchTimeline() {
-  return <ol className="research-timeline">{researchTimeline.map((stage, index) => <li key={stage.id}>
+function TimelineStages({ stages }: { stages: readonly ResearchTimelineEntry[] }) {
+  return <ol className="research-timeline">{stages.map((stage, index) => {
+    const record = Object.values(researchEvidence).find(item => item.id === stage.recordId);
+    return <li key={stage.id}>
     <span className="timeline-ordinal" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
     <div>
-      <EvidenceStatus evidenceClass={stage.evidenceClass} workState={stage.scopedState === "INVALIDATED" ? "invalidated" : undefined} />
-      <h3>{stage.title}</h3><p>{stage.finding}</p><p>{stage.limitation}</p>
+      <EvidenceStatus evidenceClass={stage.evidenceClass} workState={stage.scopedState === "INVALIDATED" ? "invalidated" : record?.workState} outcome={record?.workState === "completed" && record.claimOutcome === "not_confirmed" ? record.outcomeLabel : undefined} />
+      <h4 className="text-lg leading-snug font-semibold">{stage.title}</h4><p>{stage.finding}</p><p>{stage.limitation}</p>
       <Link className="finding-link" href={stage.detailHref}>Inspect this stage <span aria-hidden="true">→</span></Link>
-      {stage.id === schedulerBranch.fromStageId && <div className="timeline-branch"><EvidenceStatus evidenceClass={schedulerBranch.record.evidenceClass} workState={schedulerBranch.record.workState} /><Link href={schedulerBranch.record.detailHref}>{schedulerBranch.record.title}</Link><p>{schedulerBranch.record.finding}</p><p><strong>Fixed-native architecture sufficient within the registered synthetic domain.</strong> {schedulerBranch.record.keyCaveat}</p><p>NEXT QUESTION → <Link href={schedulerBranch.nextQuestion.detailHref}>{schedulerBranch.nextQuestion.title}</Link>. No active study is reported.</p></div>}
     </div>
-  </li>)}</ol>;
+  </li>;
+  })}</ol>;
+}
+
+export function ResearchTimeline() {
+  return <div className="mt-8 space-y-14">{researchTimelineLanes.map(lane => <section key={lane.id} aria-labelledby={`timeline-${lane.id}`}>
+    <h3 id={`timeline-${lane.id}`}>{lane.title}</h3>
+    <p className="research-prose mb-8">{lane.description}</p>
+    <TimelineStages stages={lane.stages} />
+    <div className="research-next">
+      <p className="research-kicker">Next question · {lane.title}</p>
+      <Link className="finding-link" href={lane.nextQuestion.detailHref}>{lane.nextQuestion.title} <span aria-hidden="true">→</span></Link>
+      <p className="research-note">{lane.nextQuestion.keyCaveat}</p>
+    </div>
+  </section>)}</div>;
 }
 
 export function PolicySummary() {
@@ -134,18 +149,18 @@ export function PolicySummary() {
 
 export function CurrentResearch({ detailed = false }: { detailed?: boolean }) {
   const next = researchEvidence.turnoverDecomposition;
-  const generator = researchEvidence.candidateGeneratorV3;
+  const sensitivity = researchEvidence.smallSignalSensitivity;
   return <>
-    <p className="research-prose">No active study is reported in the supplied research freeze. Scheduler Robustness V1 has completed; the following questions have not started.</p>
+    <p className="research-prose">No active study is reported in the supplied research freeze. Candidate Generator V3 has completed; the following questions have not started.</p>
     <div className="research-grid" style={{ marginTop: 32 }}>
-    <article id="candidate-generator-v3" className="research-next">
-      <p className="research-kicker">Next question</p>
-      <h3>{generator.title}</h3><p>{generator.question}</p>
-      <p className="research-note">{detailed ? generator.scope : generator.keyCaveat}</p>
-      {detailed ? <div className="research-actions"><Link href={researchEvidence.nativeScheduler.detailHref}>Inspect the completed scheduler evidence <span aria-hidden="true">→</span></Link></div> : <div className="research-actions"><Link href={generator.detailHref}>Read the proposed architecture <span aria-hidden="true">→</span></Link></div>}
+    <article id="small-signal-sensitivity" className="research-next">
+      <p className="research-kicker">Next question · Return / methodology</p>
+      <h3>{sensitivity.title}</h3><p>{sensitivity.question}</p>
+      <p className="research-note">{detailed ? sensitivity.scope : sensitivity.keyCaveat}</p>
+      <div className="research-actions"><Link href={detailed ? researchEvidence.candidateGeneratorV3.detailHref : sensitivity.detailHref}>{detailed ? "Inspect the completed historical transfer test" : "Read the next methodology question"} <span aria-hidden="true">→</span></Link></div>
     </article>
     <article id="next-question" className="research-next">
-      <p className="research-kicker">Next question</p><h3>{next.title}</h3><p>{next.question}</p><p className="research-note">{next.scope}</p>
+      <p className="research-kicker">Next question · Risk</p><h3>{next.title}</h3><p>{next.question}</p><p className="research-note">{next.scope}</p>
       <div className="research-actions"><Link href={detailed ? researchEvidence.policyUtility.detailHref : next.detailHref}>{detailed ? "Inspect the completed policy evidence" : "Read the next question"} <span aria-hidden="true">→</span></Link></div>
     </article>
     </div>
