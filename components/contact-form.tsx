@@ -1,12 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import type { SiteLocale } from "@/components/language-switcher";
 
 type FormStatus = "idle" | "sending" | "success" | "error";
 
 export function ContactForm({ locale = "en" }: { locale?: SiteLocale }) {
   const formRef = useRef<HTMLFormElement>(null);
+  const feedbackRef = useRef<HTMLParagraphElement>(null);
+  const feedbackId = useId();
   const startedAtRef = useRef(0);
   const [status, setStatus] = useState<FormStatus>("idle");
   const [feedback, setFeedback] = useState("");
@@ -15,6 +17,10 @@ export function ContactForm({ locale = "en" }: { locale?: SiteLocale }) {
   useEffect(() => {
     startedAtRef.current = Date.now();
   }, []);
+
+  useEffect(() => {
+    if (status === "error") feedbackRef.current?.focus();
+  }, [status]);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -70,6 +76,7 @@ export function ContactForm({ locale = "en" }: { locale?: SiteLocale }) {
     <form
       ref={formRef}
       onSubmit={handleSubmit}
+      aria-describedby={feedback ? feedbackId : undefined}
       className="glass-panel rounded-[2rem] p-6 sm:p-8"
     >
       <div className="grid gap-5 sm:grid-cols-2">
@@ -79,6 +86,7 @@ export function ContactForm({ locale = "en" }: { locale?: SiteLocale }) {
             className={inputClass}
             type="text"
             name="name"
+            aria-describedby={status === "error" ? feedbackId : undefined}
             autoComplete="name"
             minLength={2}
             maxLength={80}
@@ -92,6 +100,7 @@ export function ContactForm({ locale = "en" }: { locale?: SiteLocale }) {
             className={inputClass}
             type="tel"
             name="phone"
+            aria-describedby={status === "error" ? feedbackId : undefined}
             autoComplete="tel"
             maxLength={40}
             placeholder={korean ? "선택 사항" : "Optional"}
@@ -104,6 +113,7 @@ export function ContactForm({ locale = "en" }: { locale?: SiteLocale }) {
             className={inputClass}
             type="email"
             name="email"
+            aria-describedby={status === "error" ? feedbackId : undefined}
             autoComplete="email"
             maxLength={254}
             required
@@ -117,6 +127,7 @@ export function ContactForm({ locale = "en" }: { locale?: SiteLocale }) {
           <textarea
             className={`${inputClass} min-h-44 resize-y leading-7`}
             name="message"
+            aria-describedby={status === "error" ? feedbackId : undefined}
             minLength={10}
             maxLength={4000}
             required
@@ -138,13 +149,13 @@ export function ContactForm({ locale = "en" }: { locale?: SiteLocale }) {
       <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="site-muted max-w-xl text-xs leading-5">
           {korean
-            ? "연락처와 메시지는 MeanyDeany에게 비공개 이메일로 전달되며 사이트에 공개되지 않습니다. Vercel 위치 헤더의 대략적인 국가·도시 정보가 첨부될 수 있지만, 원본 IP 주소는 이 폼에 포함되거나 저장되지 않습니다."
-            : "Your contact details and message are emailed privately to MeanyDeany. They are not published on the site. Approximate country and city may be attached from Vercel's geolocation headers; the raw IP address is not included or stored by this form."}
+            ? "연락처와 메시지는 신우섭에게 비공개 이메일로 전달되며 사이트에 공개되지 않습니다. Vercel 위치 헤더의 대략적인 국가·도시 정보가 첨부될 수 있지만, 원본 IP 주소는 이 폼에 포함되거나 저장되지 않습니다."
+            : "Your contact details and message are emailed privately to Woosub Shin. They are not published on the site. Approximate country and city may be attached from Vercel's geolocation headers; the raw IP address is not included or stored by this form."}
         </p>
         <button
           type="submit"
           disabled={status === "sending"}
-          className="inline-flex min-h-12 shrink-0 items-center justify-center rounded-full bg-[#17243D] px-6 text-sm font-semibold text-white shadow-[0_14px_34px_rgba(39,66,109,0.20)] transition hover:-translate-y-0.5 hover:bg-[#22375B] disabled:cursor-wait disabled:opacity-60"
+          className="research-button primary disabled:cursor-wait disabled:opacity-60"
         >
           {status === "sending" ? (korean ? "전송 중..." : "Sending...") : korean ? "메시지 보내기" : "Send message"}
         </button>
@@ -152,6 +163,9 @@ export function ContactForm({ locale = "en" }: { locale?: SiteLocale }) {
 
       {feedback ? (
         <p
+          id={feedbackId}
+          ref={feedbackRef}
+          tabIndex={-1}
           role="status"
           aria-live="polite"
           className={`form-feedback mt-5 rounded-2xl px-4 py-3 text-sm ${

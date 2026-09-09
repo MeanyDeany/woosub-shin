@@ -239,13 +239,13 @@ export function KoreanLabPage() {
     ["04", "Experiment run/result identity", "완료", "emerald" as const],
     ["05", "Synthetic experiment runner", "완료", "emerald" as const],
     ["06", "Verified historical-bar experiment", "완료", "emerald" as const],
-    ["07", "Exact close-return evidence", "진행 중", "cyan" as const],
+    ["07", "Exact close-return evidence", "과거 진행 기록", "cyan" as const],
     ["08", "Paper evaluation", "미승인", "amber" as const],
     ["09", "Live trading", "미승인", "amber" as const],
   ] as const;
   const faq = [
     ["이 시스템은 거래하는가?", "아니다. 주문, 포지션 관리, broker 연결, 진입·숏 허가를 제공하지 않는다."],
-    ["현재 돈을 버는가?", "아니다. Live trading, fund, signal subscription, software revenue가 없다."],
+    ["이 기록이 실거래 성과를 입증하는가?", "아니다. 연구 인프라의 과거 snapshot이며, 별도 계정 텔레메트리를 이 연구의 성과로 해석하지 않는다."],
     ["왜 전략보다 인프라를 먼저 만드는가?", "데이터·코드·가정·결과 이력을 재현할 수 없는 수익성 좋은 backtest는 약한 증거이기 때문이다."],
     ["왜 BTCUSDT부터 시작했는가?", "연속적이고 유동성이 높으며 공개 데이터로 첫 end-to-end lifecycle을 증명하기 좋은 통제 환경이기 때문이다."],
     ["왜 하나의 adapter인데 multi-asset인가?", "Contract와 evidence model이 asset-neutral이기 때문이다. 여러 자산이 이미 운영 중이라는 뜻은 아니다."],
@@ -257,17 +257,17 @@ export function KoreanLabPage() {
       <PageHero
         accent="cyan"
         eyebrow="멀티애셋 연구소"
-        title="돈을 위험에 노출하기 전에 트레이딩 아이디어를 신뢰할 수 있는가?"
-        intro="원시 시장 데이터를 검증된 dataset, 재현 가능한 experiment, 감사 가능한 result로 바꾸는 연구·검증 플랫폼이다."
-        actions={<><CtaLink href="#what-it-is" kind="primary">시스템 설명</CtaLink><CtaLink href="#proof">증명된 내용</CtaLink></>}
+        title="연구 인프라와 검증 구조의 이력"
+        intro="검증된 dataset, 재현 가능한 experiment, 감사 가능한 result로 이어지는 과거 인프라 snapshot이다. 현재 ASTRA 연구 결과와 이력의 시점을 구분한다."
+        actions={<><CtaLink href="/astra" kind="primary">현재 ASTRA 연구 (English)</CtaLink><CtaLink href="#what-it-is">인프라 설명</CtaLink><CtaLink href="#proof">검증된 실패 처리</CtaLink></>}
         metadata={[
           { label: "시스템", value: "시스템 트레이딩 연구 인프라" },
-          { label: "현재 단계", value: "검증된 과거 데이터 실험" },
-          { label: "오늘 거래", value: "없음" },
-          { label: "현재 매출", value: "없음" },
+          { label: "기록 당시 단계", value: "검증된 과거 데이터 실험" },
+          { label: "연구 runtime 거래", value: "없음" },
+          { label: "기록 범위", value: "연구 인프라" },
         ]}
       />
-      <CapabilityBand label="현재 산출물" items={["검증된 dataset", "재현 가능한 experiment", "감사 가능한 result", "보이는 실패", "통제된 의사결정"]} />
+      <CapabilityBand label="기록된 산출물" items={["검증된 dataset", "재현 가능한 experiment", "감사 가능한 result", "보이는 실패", "통제된 의사결정"]} />
       <EditorialSection id="what-it-is" eyebrow="쉽게 설명하면" title="정량 트레이딩 연구의 품질관리 시스템" intro="약한 데이터, 재현 불가능한 실험, 과장된 모델 주장이 거래 의사결정에 닿기 전에 멈추도록 설계됐다.">
         <div className="grid gap-5 md:grid-cols-3">
           {[
@@ -306,7 +306,7 @@ export function KoreanLabPage() {
           ))}
         </div>
       </EditorialSection>
-      <EditorialSection id="roadmap" accent="blue" eyebrow="현재 단계 로드맵" title="완료·진행·미승인을 분리한다" intro="기술 계층의 완료가 다음 운영 상태를 자동으로 허가하지 않는다." tone="deep">
+      <EditorialSection id="roadmap" accent="blue" eyebrow="과거 인프라 로드맵" title="기록 당시의 완료·진행·미승인을 구분한다" intro="과거 snapshot의 상태이며 현재 연구 진행 상황이 아니다. 최신 연구 결과와 완료된 synthetic scheduler 평가는 ASTRA에서 별도로 확인한다." tone="deep">
         <ol className="overflow-hidden rounded-[2rem] border border-[#7187AB]/15 bg-white/32">
           {roadmap.map(([index, title, status, tone]) => (
             <li key={index} className="grid gap-5 border-b border-[#7187AB]/14 p-6 last:border-b-0 md:grid-cols-[3rem_minmax(0,1fr)_auto] md:items-center">
@@ -320,7 +320,7 @@ export function KoreanLabPage() {
           {faq.map(([question, answer]) => <article key={question} className="glass-panel rounded-[1.75rem] p-6 sm:p-7"><h3 className="text-xl font-semibold text-[#111A2E]">{question}</h3><p className="mt-4 text-sm leading-6 text-[#657189]">{answer}</p></article>)}
         </div>
       </EditorialSection>
-      <EditorialSection id="boundaries" accent="amber" eyebrow="강제 경계" title="연구소가 허가할 수 없는 것" intro="실행 계층의 부재는 미완성 기능이 아니라 설계 요구사항이다." tone="warm">
+      <EditorialSection id="boundaries" accent="amber" eyebrow="강제 경계" title="연구소가 허가할 수 없는 것" intro="이 제약은 연구소와 연구 runtime에 적용된다. 별도의 실행 시스템과 읽기 전용 monitor는 연구 결과에 자동 실행 권한을 부여하지 않는다." tone="warm">
         <div className="flex flex-wrap gap-2">{["실거래 없음", "모의매매 승인 없음", "주문 라우팅 없음", "진입·숏 허가 없음", "레버리지·포지션 사이징 없음", "전략 승인 없음", "투자 조언 없음"].map((item) => <ResearchTag key={item}>{item}</ResearchTag>)}</div>
       </EditorialSection>
     </PageShell>
@@ -444,7 +444,7 @@ export function KoreanPapersPage() {
   ] as const;
   return (
     <PageShell locale="ko">
-      <PageHero accent="blue" eyebrow="MeanyDeany · 논문 아카이브" title="논문" intro="연구 프로그램의 학술적 기반인 금융계량경제학과 암호자산 시계열 진단 원문을 제공한다." metadata={[
+      <PageHero accent="blue" eyebrow="신우섭 · 학술 논문" title="논문" intro="연구 프로그램의 학술적 기반인 금융계량경제학과 암호자산 시계열 진단 원문을 제공한다." metadata={[
         { label: "아카이브", value: "학술 논문 2편" }, { label: "방법", value: "EGARCH · GSADF" }, { label: "범위", value: "NQ · ES · Crude Oil · Bitcoin" }, { label: "원문", value: "영문 PDF" },
       ]} />
       <EditorialSection eyebrow="학술 연구" title="논문 기록" intro="한국어 페이지는 연구 맥락을 설명하며 PDF 원문은 영어로 제공한다.">
@@ -465,14 +465,15 @@ export function KoreanResearchPage() {
   ] as const;
   return (
     <PageShell locale="ko">
-      <PageHero accent="violet" eyebrow="MeanyDeany · 방법론" title="연구 방법론" intro="시간 정합성, 좁은 모델 역할, robust comparison, 불변 evidence, 보이는 failure state를 중심에 둔다." metadata={[
+      <PageHero accent="violet" eyebrow="신우섭 · 방법론" title="연구 방법론" intro="시간 정합성, 좁은 모델 역할, robust comparison, 불변 evidence, 보이는 failure state를 중심에 둔다." metadata={[
         { label: "데이터", value: "시간 정합" }, { label: "모델", value: "비교 대상이지 교리가 아님" }, { label: "증거", value: "감사 가능하고 불변" }, { label: "허가", value: "모델 출력 밖의 별도 상태" },
       ]} />
-      <EditorialSection accent="violet" eyebrow="작업 원칙" title="연구 신뢰도는 누적된다" intro="단일 diagnostic이 시스템 타당성을 확정하지 않는다. 시간 규율, robustness, provenance, 운영 무결성, 좁은 주장이 쌓여 신뢰도를 만든다." tone="deep">
+      <EditorialSection eyebrow="연구 결과" title="위험 정보 확인과 별도의 policy 검증" intro="독립 평가에서 위험 예측 정보는 확인됐으며, 완료된 policy 검증에서는 사전 등록한 효용 주장이 확인되지 않았다. 영문 연구 기록에 각 평가의 범위와 한계를 명시한다."><div className="research-actions"><CtaLink href="/research">전체 연구 결과 (English)</CtaLink><CtaLink href="/astra#native-scheduler">완료된 synthetic scheduler 연구 (English)</CtaLink><CtaLink href="/astra#next-question">별도의 다음 질문 (English)</CtaLink></div></EditorialSection>
+      <EditorialSection id="methodology" accent="violet" eyebrow="작업 원칙" title="연구 신뢰도는 누적된다" intro="단일 diagnostic이 시스템 타당성을 확정하지 않는다. 시간 규율, robustness, provenance, 운영 무결성, 좁은 주장이 쌓여 신뢰도를 만든다." tone="deep">
         <ol className="grid gap-5 lg:grid-cols-2">{principles.map(([index, title, text]) => <li key={index} className="glass-panel rounded-[2rem] p-6 sm:p-8"><div className="flex items-center gap-4"><span className="font-mono text-xs text-[#7251C8]">{index}</span><StatusLabel accent="violet">{title}</StatusLabel></div><p className="mt-6 text-base leading-8 text-[#657189]">{text}</p></li>)}</ol>
       </EditorialSection>
       <EditorialSection accent="amber" eyebrow="책임 분리" title="하나의 파이프라인, 네 개의 책임" tone="warm"><EvidenceBand accent="cyan" items={[
-        { label: "Evidence", value: "데이터와 모델 기록이 실제로 지지하는 것" }, { label: "Interpretation", value: "증거를 어떻게 framing하고 반박하는가" }, { label: "Policy", value: "명시적 규칙을 가진 별도 연구 계층" }, { label: "Execution", value: "현재 공개 포트폴리오에 없음" },
+        { label: "Evidence", value: "데이터와 모델 기록이 실제로 지지하는 것" }, { label: "Interpretation", value: "증거를 어떻게 framing하고 반박하는가" }, { label: "Policy", value: "명시적 규칙을 가진 별도 연구 계층" }, { label: "Execution", value: "연구와 분리된 시스템; 자동 권한 없음" },
       ]} /></EditorialSection>
     </PageShell>
   );
@@ -484,6 +485,7 @@ export function KoreanBuildLogPage() {
       <PageHero accent="blue" eyebrow="빌드 로그" title="무엇이 바뀌었고, 무엇을 증명했으며, 무엇을 아직 주장할 수 없는가." intro="마케팅 피드가 아니라 선별된 engineering record다. 각 항목은 완료된 capability, 근거, 계속 유효한 boundary를 함께 기록한다." actions={<><CtaLink href="/ko/projects/multi-asset-research-lab" kind="primary">대표 시스템</CtaLink><CtaLink href="/ko/projects/multi-asset-research-lab/claims">주장 장부</CtaLink></>} metadata={[
         { label: "항목", value: String(buildLogKo.length) }, { label: "출처", value: "검증된 repository milestone" }, { label: "갱신", value: "자동이 아닌 선별 기록" }, { label: "거래 권한", value: "없음" },
       ]} />
+      <EditorialSection eyebrow="검증 제약" title="과거 retained verification의 계약상 제약" intro="PR41의 bounded engineering note는 영문 빌드 로그에서 확인할 수 있다. 연구 성능이나 운영 장애를 나타내는 기록이 아니다."><CtaLink href="/build-log#pr41-boundary-digest">검증 제약과 출처 범위 (English)</CtaLink></EditorialSection>
       <EditorialSection eyebrow="시간순 기록" title="완료된 증분으로 시스템을 보여준다" intro="최신 항목부터 표시하며, 미완성 작업과 지원되지 않는 주장을 분리할 수 있을 때만 공개 기록에 포함한다." tone="deep">
         <ol className="space-y-5">{buildLogKo.map((entry, index) => <li key={`${entry.date}-${entry.title}`} className="glass-panel rounded-[2rem] p-6 sm:p-8"><article className="grid gap-7 lg:grid-cols-[10rem_minmax(0,1fr)]"><div><span className="font-mono text-xs text-[#2563C9]">{String(index + 1).padStart(2, "0")}</span><p className="mt-5 text-sm font-semibold text-[#24324A]">{entry.date}</p><div className="mt-3"><StatusLabel accent="blue">{entry.phase}</StatusLabel></div></div><div><h2 className="text-2xl font-semibold text-[#111A2E] sm:text-3xl">{entry.title}</h2><p className="mt-5 text-base leading-7 text-[#657189]">{entry.summary}</p><div className="mt-7 flex flex-wrap gap-2">{entry.proof.map((item) => <ResearchTag key={item}>{item}</ResearchTag>)}</div><p className="mt-7 border-l-2 border-[#D68A2A]/45 pl-4 text-sm leading-6 text-[#5F6C82]"><strong>경계:</strong> {entry.boundary}</p></div></article></li>)}</ol>
       </EditorialSection>
@@ -495,10 +497,11 @@ export function KoreanBuildLogPage() {
 export function KoreanClaimsPage() {
   return (
     <PageShell locale="ko">
-      <PageHero accent="violet" eyebrow="연구 주장 장부" title="모든 공개 주장에는 증거와 한계가 따라붙는다." intro="검증된 것, 구축 중인 것, 주장하지 않는 것, 명시적으로 승인되지 않은 상태를 분리한다." actions={<><CtaLink href="/ko/projects/multi-asset-research-lab" kind="primary">연구소로 돌아가기</CtaLink><CtaLink href="/ko/build-log">빌드 로그</CtaLink></>} metadata={[
+      <PageHero accent="violet" eyebrow="연구 주장 장부" title="모든 공개 주장에는 증거와 한계가 따라붙는다." intro="과거 인프라 snapshot의 주장과 한계를 보존한다. 현재 ASTRA 연구 결과와 이 기록의 시점을 구분한다." actions={<><CtaLink href="/ko/projects/multi-asset-research-lab" kind="primary">연구소로 돌아가기</CtaLink><CtaLink href="/ko/build-log">빌드 로그</CtaLink></>} metadata={[
         { label: "주장", value: String(claimLedgerKo.length) }, { label: "증거 기준", value: "좁고 재현 가능" }, { label: "수익성 주장", value: "없음" }, { label: "거래 승인", value: "없음" },
       ]} />
-      <EditorialSection accent="violet" eyebrow="주장별 검토" title="장식 없는 증거" intro="각 행은 무엇을 말하는지, 무엇이 뒷받침하는지, 어디에서 멈추는지 답한다." tone="deep">
+      <EditorialSection eyebrow="현재 연구" title="ASTRA 연구 결과와 증거 범위" intro="독립 위험 예측 확인과 완료된 policy 효용 검증은 별도의 평가다. 자세한 결과는 영문 연구 페이지에서 확인할 수 있다."><div className="research-actions"><CtaLink href="/research/risk-forecasting#independent-assessment">위험 예측 독립 평가 (English)</CtaLink><CtaLink href="/research/risk-forecasting#policy-utility">완료된 policy 효용 검증 (English)</CtaLink><CtaLink href="/astra#discoveries">ASTRA 연구 결과 (English)</CtaLink></div></EditorialSection>
+      <EditorialSection accent="violet" eyebrow="과거 주장별 검토" title="장식 없는 증거" intro="각 행은 무엇을 말하는지, 무엇이 뒷받침하는지, 어디에서 멈추는지 답한다." tone="deep">
         <ol className="space-y-5">{claimLedgerKo.map((item, index) => <li key={item.claim} className="glass-panel rounded-[2rem] p-6 sm:p-8"><article className="grid gap-6 lg:grid-cols-[3rem_minmax(0,1fr)_minmax(18rem,0.9fr)]"><span className="font-mono text-xs text-[#7251C8]">{String(index + 1).padStart(2, "0")}</span><div><StatusLabel accent={item.tone}>{item.statusLabel}</StatusLabel><h2 className="mt-5 text-2xl font-semibold text-[#111A2E] sm:text-3xl">{item.claim}</h2><p className="mt-6 text-xs font-semibold uppercase tracking-[0.14em] text-[#77839A]">증거</p><p className="mt-3 text-base leading-7 text-[#657189]">{item.evidence}</p></div><aside className="rounded-[1.5rem] border border-[#D68A2A]/18 bg-[#FFF9F0]/56 p-5"><p className="text-xs font-semibold uppercase tracking-[0.14em] text-[#A85D08]">주장 경계</p><p className="mt-4 text-sm leading-6 text-[#5F6C82]">{item.limit}</p></aside></article></li>)}</ol>
       </EditorialSection>
       <EditorialSection accent="amber" eyebrow="타협 불가 원칙" title="증거는 허가가 아니다" intro="가장 강한 연구 결과도 주문, 포지션, 진입 허가, 숏 허가, 레버리지 결정, 실행 권한을 만들지 않는다." tone="warm" />
@@ -510,11 +513,12 @@ export function KoreanContactPage() {
   const interests = ["정량 연구 인프라", "금융계량경제학", "시장 데이터 검증", "변동성과 risk diagnostics", "재현 가능한 연구 시스템"] as const;
   return (
     <PageShell locale="ko">
-      <PageHero eyebrow="연구 문의" title="기술·학술·커리어 관련 문의" intro="연구 토론, 기술 질문, 학술 연락, 전문적인 제안은 아래 비공개 메시지로 보낼 수 있다." actions={<><a href="#message" className={primaryButton}>메시지 작성 ↓</a><CtaLink href="https://github.com/MeanyDeany" newTab>GitHub 보기</CtaLink></>} metadata={[
+      <PageHero eyebrow="연구 문의" title="신우섭에게 연구·커리어 문의" intro="연구 토론, 기술 질문, 학술 연락, 전문적인 제안은 아래 비공개 메시지로 보낼 수 있다." actions={<><a href="#message" className={primaryButton}>메시지 작성 ↓</a><CtaLink href="https://github.com/MeanyDeany" newTab>GitHub 보기</CtaLink></>} metadata={[
         { label: "관심 분야", value: "Quant research · econometrics" }, { label: "시스템", value: "Market data · validation · evidence" }, { label: "이메일", value: "woosub815@gmail.com" }, { label: "GitHub", value: "MeanyDeany" },
       ]} />
       <EditorialSection id="message" accent="blue" eyebrow="비공개 메시지" title="직접 질문 보내기" intro="폼은 비공개 이메일 알림을 전송한다. 메시지는 공개되거나 웹사이트 database에 저장되지 않는다." tone="elevated">
         <div className="grid gap-8 lg:grid-cols-[minmax(15rem,0.55fr)_minmax(0,1.45fr)]"><aside className="glass-panel rounded-[2rem] p-6"><h2 className="text-xl font-semibold text-[#111A2E]">관련 주제</h2><ul className="mt-5 space-y-3">{interests.map((item, index) => <li key={item} className="flex gap-3 text-sm text-[#657189]"><span className="font-mono text-xs text-[#2563C9]">{String(index + 1).padStart(2, "0")}</span>{item}</li>)}</ul><p className="mt-6 text-xs leading-5 text-[#77839A]">시장 신호나 투자 조언 서비스가 아니다.</p></aside><ContactForm locale="ko" /></div>
+        <p className="site-muted mt-8">폼을 사용할 수 없는 경우 <a className="site-link" href="mailto:woosub815@gmail.com">woosub815@gmail.com</a>으로 직접 연락할 수 있습니다.</p>
       </EditorialSection>
     </PageShell>
   );
