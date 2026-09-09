@@ -439,7 +439,7 @@ Independent forecast confirmation → Policy translation tested → Policy utili
 ### Policy translation test
 
 **Policy translation test**  
-COMPLETED · POLICY UTILITY NOT CONFIRMED
+RETROSPECTIVE · COMPLETED · POLICY UTILITY NOT CONFIRMED
 
 Better risk forecasts did not automatically become a better risk policy.
 
@@ -632,7 +632,7 @@ Examples: independent forecast record = INDEPENDENT; policy translation record =
 
 **POLICY UTILITY NOT CONFIRMED** is a scoped outcome label in the same visual family, not a new evidence class. Use restrained rust text/marker for the policy outcome and neutral text for completed work; this marks a failed preregistered claim, not negative PnL. Store the exact classification `FORECAST_INFORMATION_WITHOUT_POLICY_UTILITY`. Do not assign INDEPENDENT to the policy study merely because its input forecast was independently confirmed; the implementation brief explicitly assigns RETROSPECTIVE to the policy study while its detailed protocol/source availability remains disclosed. Do not mark the forecast INVALIDATED, call the completed policy study BLOCKED, or soften the failed rule into a provisional success.
 
-**NEXT QUESTION** is a neutral planning marker for Candidate Generator V3 and Turnover & Opportunity-Cost Decomposition. It carries a proposed work state, not IN PROGRESS, an evidence badge or a completed result. The mechanism evidence belongs to the completed policy record; the next-question card contains the proposed question and a link to that evidence, not new findings.
+**NEXT QUESTION** is a neutral planning marker for Candidate Generator V3 and Turnover & Opportunity-Cost Decomposition. It carries a proposed work state, not IN PROGRESS, an evidence badge or a completed result. The turnover mechanism evidence belongs to the completed policy record, and the V3 simplification rationale belongs to the completed scheduler record. Each next-question card contains the proposed question and a link to its relevant completed evidence, not new findings.
 
 Keep existing `ProvenanceBadge` concepts separate: academic context, conceptual illustration, initial static snapshot, and planned research identify provenance. Existing “Demonstrated” capability status is not a synonym for INDEPENDENT. Runtime LIVE / STALE / UNAVAILABLE remains a separate telemetry vocabulary. No automatic conversion between these systems is permitted.
 
