@@ -355,7 +355,7 @@ export const researchEvidence = {
     source: { ...privateResearchSource, label: "Reviewed completed policy-study update" },
     code: {
       ...unavailableCode, commit: "3f5ebee1d3b002cd3f7f2d4ea65f72d6cf512cdd",
-      note: "The supplied identifier is the completed policy-study branch head. A public repository or commit URL is not available.",
+      note: "The supplied identifier belongs to the completed policy study. A public repository or commit URL is not available.",
     },
     lineage: ["independent-risk-forecast"],
     nextQuestion: "How much of the observed policy tradeoff is associated with turnover, fees and foregone opportunity?",

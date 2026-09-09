@@ -1,9 +1,10 @@
 "use client";
 
-import { useRef, useState, type KeyboardEvent } from "react";
+import { useId, useRef, useState, type KeyboardEvent } from "react";
 import { FAILURE_CASES } from "@/lib/research-exhibit-data";
 
 export function FailureModeAtlas() {
+  const panelId = useId();
   const [activeIndex, setActiveIndex] = useState(0);
   const caseButtonRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const activeCase = FAILURE_CASES[activeIndex];
@@ -45,7 +46,7 @@ export function FailureModeAtlas() {
               id={`failure-tab-${failureCase.id}`}
               type="button"
               role="tab"
-              aria-controls={`failure-panel-${failureCase.id}`}
+              aria-controls={panelId}
               aria-selected={active}
               tabIndex={active ? 0 : -1}
               onClick={() => selectCase(index)}
@@ -69,7 +70,7 @@ export function FailureModeAtlas() {
       </div>
 
       <section
-        id={`failure-panel-${activeCase.id}`}
+        id={panelId}
         role="tabpanel"
         aria-labelledby={`failure-tab-${activeCase.id}`}
         className="min-w-0 border border-[#7E8B9D]/18 bg-[#0B0F16] p-5 sm:p-7"
