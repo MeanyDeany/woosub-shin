@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { metadataFor } from "@/lib/site-metadata";
 import Link from "next/link";
 import { BtcLifetimePerformance } from "@/components/btc-lifetime-performance";
 import { BtcLiveMultiPosition } from "@/components/btc-live-multi-position";
@@ -6,11 +6,11 @@ import { PageShell } from "@/components/site-shell";
 import { deriveBtcLifetimePerformanceFeedUrl } from "@/lib/btc-lifetime-performance";
 import { deriveBtcLiveMultiPositionFeedUrl } from "@/lib/btc-live-multi-position";
 
-export const metadata: Metadata = {
-  title: "실시간 Binance USD-M 포지션 및 성과",
-  description:
-    "Binance USD-M 전체 오픈 포지션 read-only 텔레메트리와 2026년 8월 1일 이후 계정 전체 입출금 조정 트레이딩 성과.",
-};
+export const metadata = metadataFor(
+  "/ko/projects/btc-futures-research/live-position",
+  "읽기 전용 포지션과 성과",
+  "Binance USD-M 오픈 포지션과 2026년 8월 1일 이후 계정 전체 입출금 조정 성과를 보여주는 읽기 전용 운영 텔레메트리입니다. 연구 증거나 실행 권한을 뜻하지 않습니다.",
+);
 
 export default function KoreanLiveBtcPositionPage() {
   const positionFeedUrl = deriveBtcLiveMultiPositionFeedUrl(
@@ -24,7 +24,7 @@ export default function KoreanLiveBtcPositionPage() {
 
   return (
     <PageShell locale="ko">
-      <main className="min-h-screen bg-[#050608]">
+      <div className="min-h-screen bg-[#050608]">
         <section className="border-b border-[#7E8B9D]/12 bg-[#07090D]">
           <div className="mx-auto max-w-[1180px] px-5 py-12 sm:py-16 lg:px-8">
             <Link
@@ -34,10 +34,10 @@ export default function KoreanLiveBtcPositionPage() {
               ← BTC 연구 시스템
             </Link>
             <p className="mt-10 text-[11px] font-semibold uppercase tracking-[0.12em] text-[#42D7F5]">
-              Public execution-side observation
+              Systems · Read-only operational evidence
             </p>
             <h1 className="mt-4 max-w-4xl text-4xl font-semibold leading-tight tracking-[-0.04em] text-[#F4F7FB] sm:text-5xl">
-              Binance USD-M 전체 오픈 포지션과 입출금 조정 트레이딩 성과를 공개합니다.
+              읽기 전용 실행 텔레메트리
             </h1>
             <p className="mt-6 max-w-3xl text-base leading-7 text-[#B6C0CF]">
               하나의 인증된 Binance USD-M read-only 관측에서 공개 가능한 필드만 표시합니다. 포지션은 계정의 모든 non-zero 종목을 동적으로 포함합니다. 성과는 2026년 8월 1일부터 계산하며 입금·출금·내부이체·비거래 보상을 트레이딩 손익에서 제외합니다.
@@ -73,7 +73,7 @@ export default function KoreanLiveBtcPositionPage() {
             ))}
           </div>
         </section>
-      </main>
+      </div>
     </PageShell>
   );
 }

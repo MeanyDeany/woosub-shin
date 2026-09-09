@@ -11,10 +11,9 @@ const KO_BTC_PATH = "/ko/projects/btc-futures-research";
 const KO_LAB_PATH = "/ko/projects/multi-asset-research-lab";
 
 const labSections = [
-  { href: "#proof", label: "Failures", primary: false },
-  { href: "#roadmap", label: "Roadmap", primary: false },
+  { href: "#architecture", label: "Architecture", primary: false },
+  { href: "#boundaries", label: "Boundaries", primary: false },
   { href: "/projects/multi-asset-research-lab/claims", label: "Claims", primary: false },
-  { href: "#faq", label: "FAQ", primary: true },
 ] as const;
 
 const labSectionsKo = [
@@ -51,17 +50,13 @@ export function ContextualPageTools({ locale = "en" }: { locale?: SiteLocale }) 
   return (
     <nav
       aria-label={korean ? "멀티애셋 연구소 페이지 구역" : "Multi-Asset Research Lab page sections"}
-      className="fixed bottom-4 left-1/2 z-40 flex max-w-[calc(100vw-2rem)] -translate-x-1/2 items-center gap-1 overflow-x-auto rounded-full border border-[#7187AB]/25 bg-white/90 p-1.5 shadow-[0_16px_50px_rgba(36,50,74,0.22)] backdrop-blur-2xl"
+      className="research-contextual-navigation"
     >
       {sections.map((section) => (
         <a
           key={section.href}
           href={section.href}
-          className={
-            section.primary
-              ? "inline-flex min-h-9 shrink-0 items-center rounded-full bg-[#17243D] px-4 text-xs font-semibold text-white transition-transform hover:-translate-y-0.5 hover:bg-[#22375B]"
-              : "inline-flex min-h-9 shrink-0 items-center rounded-full px-4 text-xs font-semibold text-[#4C5A70] transition-colors hover:bg-[#E9F2FF] hover:text-[#176FC1]"
-          }
+          className="research-contextual-navigation__link"
         >
           {section.label}
         </a>

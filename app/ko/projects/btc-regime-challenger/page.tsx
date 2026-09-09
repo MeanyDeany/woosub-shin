@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { metadataFor } from "@/lib/site-metadata";
 import {
   CapabilityBand,
   CtaLink,
@@ -10,15 +10,11 @@ import {
 } from "@/components/editorial";
 import { PageShell } from "@/components/site-shell";
 
-export const metadata: Metadata = {
-  title: "BTC 선택적 국면 Challenger C4",
-  description:
-    "Momentum90, EMA 50/180, RSI2/EMA200 sleeve를 결합한 BTC long/flat 선택적 국면 challenger의 post-selection historical stress audit.",
-  alternates: {
-    canonical: "/ko/projects/btc-regime-challenger",
-    languages: { en: "/projects/btc-regime-challenger", ko: "/ko/projects/btc-regime-challenger" },
-  },
-};
+export const metadata = metadataFor(
+  "/ko/projects/btc-regime-challenger",
+  "BTC 선택적 국면 Challenger C4",
+  "Momentum90, EMA 50/180, RSI2/EMA200 sleeve를 결합한 BTC long/flat 선택적 국면 challenger의 post-selection historical stress audit.",
+);
 
 const tags = [
   "BTCUSDT",

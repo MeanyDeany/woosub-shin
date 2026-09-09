@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { metadataFor } from "@/lib/site-metadata";
 import type { ReactNode } from "react";
 import {
   BoundaryList,
@@ -25,11 +25,11 @@ import {
   shadowModels,
 } from "@/lib/content";
 
-export const metadata: Metadata = {
-  title: "Multi-Asset Volatility Research System",
-  description:
-    "The current public BTCUSDT research and operational evidence context for immutable volatility forecasts, time-respecting forward outcomes, provenance, and integrity monitoring, within an academic NQ, ES, and Crude Oil (CL) lineage.",
-};
+export const metadata = metadataFor(
+  "/projects/btc-futures-research",
+  "Multi-Asset Volatility Research System",
+  "The current public BTCUSDT research and operational evidence context for immutable volatility forecasts, time-respecting forward outcomes, provenance, and integrity monitoring, within an academic NQ, ES, and Crude Oil (CL) lineage.",
+);
 
 const overviewPrinciples = [
   "Not a market-direction predictor or entry-signal generator",

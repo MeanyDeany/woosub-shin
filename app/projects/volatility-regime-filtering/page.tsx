@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { metadataFor } from "@/lib/site-metadata";
 import {
   CapabilityBand,
   CtaLink,
@@ -10,11 +10,11 @@ import {
 } from "@/components/editorial";
 import { PageShell } from "@/components/site-shell";
 
-export const metadata: Metadata = {
-  title: "Volatility Regime Filtering in Futures Markets",
-  description:
-    "MSc thesis on EGARCH volatility-regime filtering as a risk and admissibility layer for intraday NQ, ES, and Crude Oil (CL) futures research.",
-};
+export const metadata = metadataFor(
+  "/projects/volatility-regime-filtering",
+  "Volatility Regime Filtering in Futures Markets",
+  "MSc thesis on EGARCH volatility-regime filtering as a risk and admissibility layer for intraday NQ, ES, and Crude Oil (CL) futures research.",
+);
 
 const tags = [
   "Financial econometrics",

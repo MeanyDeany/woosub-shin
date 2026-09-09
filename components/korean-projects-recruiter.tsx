@@ -1,114 +1,33 @@
-import {
-  EditorialSection,
-  EvidenceBand,
-  PageHero,
-  ProjectIndexRow,
-} from "@/components/editorial";
+import { CtaLink, EditorialSection, PageHero } from "@/components/editorial";
 import { PageShell } from "@/components/site-shell";
-
-const projects = [
-  {
-    accent: "cyan" as const,
-    contribution:
-      "불변 contract, canonical evidence identity, deterministic replay/PnL, frozen search, validation, historical-to-forward boundary를 갖춘 자산 중립 연구 프레임워크입니다.",
-    href: "/ko/projects/multi-asset-research-lab",
-    index: "01",
-    methods: ["Immutable contracts", "Replay / PnL", "Frozen search", "Deep validation", "Forward evidence"],
-    question:
-      "멀티애셋 systematic research framework가 data provenance에서 retained research system까지 이동하면서 evidence를 execution authority로 오해하지 않게 하려면 어떤 구조가 필요한가?",
-    status: "대표 연구 플랫폼",
-    title: "Multi-Asset Research Lab",
-    type: "Research infrastructure",
-  },
-  {
-    accent: "emerald" as const,
-    contribution:
-      "BTCUSDT Daily EMA 50/200 long/flat retained baseline으로 deterministic replay, funding-adjusted accounting, frozen search, deep validation, append-only prospective observation을 포함합니다.",
-    href: "/projects/btc-final-system",
-    index: "02",
-    methods: ["Daily EMA 50/200", "Funding-adjusted PnL", "Cost stress", "Deep validation", "Forward runtime"],
-    question:
-      "단순한 BTC trend-following baseline이 frozen search와 deep validation을 통과한 뒤, research state를 trading permission으로 바꾸지 않고 prospective forward clock으로 넘어갈 수 있는가?",
-    status: "Retained baseline · forward research",
-    title: "BTC Final Research System V1",
-    type: "Systematic strategy research",
-  },
-  {
-    accent: "cyan" as const,
-    contribution:
-      "Momentum90, EMA 50/180, RSI2/EMA200 sleeve를 결합한 sparse BTC regime router의 post-selection historical stress audit입니다. 5bp 기준 +182.29%, Sharpe 1.100, 완료 거래 88건을 기록했습니다.",
-    href: "/ko/projects/btc-regime-challenger",
-    index: "03",
-    methods: ["Regime conditioning", "Momentum90", "EMA 50/180", "RSI2 + EMA200", "20bp cost stress", "Block resampling"],
-    question:
-      "상호 배타적인 selective regime long/flat system이 cost sensitivity, concentration, post-selection bias를 숨기지 않으면서 historical risk-adjusted performance를 개선할 수 있는가?",
-    status: "Historical challenger · 독립 OOS 아님",
-    title: "BTC Selective Regime Challenger C4",
-    type: "Systematic strategy research",
-  },
-  {
-    accent: "blue" as const,
-    contribution:
-      "NQ, ES, Crude Oil (CL) futures를 대상으로 동일한 intraday logic에 EGARCH 조건부 변동성 layer를 추가해 risk/admissibility 기여를 비교한 학술 연구입니다.",
-    href: "/ko/projects/volatility-regime-filtering",
-    index: "04",
-    methods: ["NQ", "ES", "Crude Oil (CL)", "EGARCH", "5-minute data", "Robustness"],
-    question:
-      "EGARCH를 direction predictor로 취급하지 않으면서 volatility-regime filtering이 intraday futures framework의 규율을 개선할 수 있는가?",
-    status: "학술 기반",
-    title: "Volatility Regime Filtering in Futures Markets",
-    type: "Financial econometrics",
-  },
-  {
-    accent: "amber" as const,
-    contribution:
-      "Right-tailed explosive-root diagnostic을 이용해 Bitcoin의 통계적 폭발 구간을 식별하고 해석한 시계열 연구입니다.",
-    href: "/ko/projects/bitcoin-bubble-gsadf",
-    index: "05",
-    methods: ["Bitcoin", "GSADF", "Explosive roots", "Time series"],
-    question:
-      "GSADF 검정으로 통계적 폭발 구간을 식별하면서 diagnostic evidence를 시장 추천과 분리할 수 있는가?",
-    status: "초기 시계열 연구",
-    title: "Bitcoin Bubble Detection with GSADF",
-    type: "Crypto-asset diagnostics",
-  },
-] as const;
 
 export function KoreanRecruiterProjectsPage() {
   return (
     <PageShell locale="ko">
-      <PageHero
-        eyebrow="신우섭 · Selected work"
-        title="Systematic research, research infrastructure, 금융계량경제학"
-        intro="플랫폼 엔지니어링, retained baseline, post-selection challenger, 학술 연구를 분리해 각 결과가 실제로 획득한 evidence label을 그대로 유지합니다."
-        metadata={[
-          { label: "대표 플랫폼", value: "Multi-Asset Research Lab" },
-          { label: "Retained baseline", value: "BTC Final Research System V1" },
-          { label: "현재 challenger", value: "BTC C4 selective-regime system" },
-          { label: "핵심 경계", value: "Research evidence ≠ execution authority" },
-        ]}
-      />
-
-      <EditorialSection
-        eyebrow="연구 프로그램"
-        title="하나의 연구 프로그램, 다섯 개의 계층"
-        intro="각 프로젝트는 provenance, 연구 질문, 방법론, 결과 범위, 한계를 분리합니다. 높은 historical performance도 selection, validation, prospective evidence의 경계를 지우지 않습니다."
-      >
-        <div>
-          {projects.map((project) => (
-            <ProjectIndexRow key={project.href} {...project} />
-          ))}
-        </div>
-      </EditorialSection>
-
-      <EditorialSection accent="amber" eyebrow="공통 기준" title="모든 연구에 공통으로 적용하는 원칙" tone="deep">
-        <EvidenceBand items={[
-          { label: "시간", value: "정보가 실제로 알 수 있었던 시점에 맞춥니다." },
-          { label: "모델", value: "모델의 역할을 strategy claim보다 좁게 유지합니다." },
-          { label: "검증", value: "Search, stress test, prospective observation을 분리합니다." },
-          { label: "증거", value: "Provenance, cost assumption, limitation을 결과와 함께 보존합니다." },
-        ]} />
-      </EditorialSection>
+      <div className="research-page">
+        <PageHero
+          eyebrow="신우섭 · 시스템"
+          title="시스템과 연구 인프라"
+          intro="재현 가능한 연구와 안정적인 운영을 지원하는 엔지니어링입니다. 연구 가설·증거·검증과 실행 시스템의 전송·복구·상태 일관성·운영 안전성을 분리합니다."
+          actions={<><CtaLink href="/astra" kind="primary">ASTRA 연구 구조 (English)</CtaLink><CtaLink href="/research">연구 결과 (English)</CtaLink></>}
+          metadata={[{ label: "연구", value: "가설 · 증거 · 검증" }, { label: "실행 시스템", value: "전송 · 복구 · 상태 일관성" }, { label: "텔레메트리", value: "읽기 전용 운영 증거" }]}
+        />
+        <EditorialSection id="research-infrastructure" eyebrow="01 · 연구 인프라" title="실험의 근거를 확인할 수 있는 구조" intro="ASTRA는 현재 연구 프로그램입니다. 기존 연구소와 BTC 증거 시스템은 구조적 이력을 설명하며, 모든 과거 구성 요소가 이미 ASTRA에 통합됐다는 뜻은 아닙니다.">
+          <div className="research-grid">
+            <article className="research-card"><h3>Multi-Asset Research Lab</h3><p className="research-prose">데이터 contract, provenance, 불변 artifact, 결정론적 replay, 고정된 비교, historical-to-forward 경계를 다룹니다.</p><CtaLink href="/ko/projects/multi-asset-research-lab">연구 인프라 보기</CtaLink></article>
+            <article className="research-card"><h3>BTC 연구 증거 시스템</h3><p className="research-prose">변동성 증거, forward outcome, 실패 처리와 연구 관측 화면을 제공합니다. 개념적 도표와 과거 snapshot은 원래의 출처 범위를 유지합니다.</p><CtaLink href="/ko/projects/btc-futures-research#observatory">연구 관측 화면 보기</CtaLink></article>
+          </div>
+        </EditorialSection>
+        <EditorialSection id="execution-gateway" eyebrow="02 · 별도의 실행 엔지니어링" title="Systematic Execution Gateway" intro="전송, 복구, 상태 일관성, 운영 안전성은 연구 가설이나 forecast loss와 별도로 평가합니다.">
+          <div className="authority-boundary"><p className="research-kicker">RESEARCH — ASTRA</p><p>가설 · 증거 · 검증</p><p><strong>NO AUTOMATIC EXECUTION AUTHORITY · 자동 실행 권한 없음</strong></p><p className="research-kicker">EXECUTION SYSTEMS</p><p>전송 · 복구 · 상태 일관성 · 운영 안전성</p></div>
+          <p className="research-prose">독립 평가에서 확인된 것은 위험 예측 정보입니다. 별도의 고정 policy는 사전 등록된 효용 기준을 충족하지 못했습니다. 연구 결과가 방향성 alpha, sizing, veto, 거래 또는 실행 권한을 부여하지 않습니다.</p>
+          <CtaLink href="/build-log#pr41-boundary-digest">과거 검증 제약 확인 (English)</CtaLink>
+        </EditorialSection>
+        <EditorialSection id="telemetry" eyebrow="03 · 운영 증거" title="읽기 전용 텔레메트리" intro="정제된 실행 계정 포지션과 입출금 조정 성과를 표시합니다. 데이터의 최신 여부는 운영 상태이며 ASTRA나 과거 EMA 연구의 예측 성능이 아닙니다.">
+          <p className="research-prose">Timestamp, stale·unavailable 상태와 성과 계산 방식은 기존 monitor에서 확인할 수 있습니다. 계정 성과를 H_PLUS_C의 성과나 독립적인 policy 확인으로 해석하지 않습니다.</p>
+          <div className="research-actions"><CtaLink href="/ko/projects/btc-futures-research/live-position" kind="primary">읽기 전용 monitor 열기</CtaLink><CtaLink href="/ko/build-log">엔지니어링 이력</CtaLink></div>
+        </EditorialSection>
+      </div>
     </PageShell>
   );
 }

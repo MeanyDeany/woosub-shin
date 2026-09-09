@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { metadataFor } from "@/lib/site-metadata";
 import {
   CapabilityBand,
   CtaLink,
@@ -10,11 +10,11 @@ import {
 } from "@/components/editorial";
 import { PageShell } from "@/components/site-shell";
 
-export const metadata: Metadata = {
-  title: "Multi-Asset Research Lab",
-  description:
-    "A systematic trading research platform spanning evidence contracts, deterministic replay and PnL, frozen strategy search, deep validation, and prospective forward observation before any execution authority exists.",
-};
+export const metadata = metadataFor(
+  "/projects/multi-asset-research-lab",
+  "Multi-Asset Research Lab",
+  "Research-infrastructure lineage: data contracts, deterministic replay, frozen comparisons, historical validation, and explicit research-only authority boundaries.",
+);
 
 const progression = [
   {
@@ -69,7 +69,7 @@ const progression = [
     index: "07",
     title: "Paper or live execution",
     detail:
-      "Not part of the current system. A research result, retained strategy, or forward state never creates broker authority, sizing, leverage, or an order.",
+      "Outside this research system. A research result, retained strategy, or forward state never creates broker authority, sizing, leverage, or an order.",
     status: "Not approved",
     accent: "amber" as const,
   },
@@ -106,7 +106,7 @@ const principles = [
 ] as const;
 
 const boundaries = [
-  "No live trading",
+  "No live trading in the research runtime",
   "No paper trading approval",
   "No private Binance or broker integration",
   "No order submission, cancellation, or routing",
@@ -123,12 +123,12 @@ export default function MultiAssetResearchLabPage() {
       <PageHero
         accent="cyan"
         eyebrow="Multi-Asset Research Lab"
-        title="The proof system now reaches a frozen strategy and a forward clock."
-        intro="The Lab began as research infrastructure: prove the data, freeze the question, and keep evidence separate from execution. It now also contains deterministic replay and PnL, a frozen final-system search, deep validation, one retained BTC research system, and an explicit prospective observation boundary."
+        title="Research infrastructure and its historical lineage."
+        intro="The Lab documents data contracts, deterministic replay, frozen comparisons, validation, and the retained BTC system’s historical-to-forward handoff. ASTRA is the current research program; these records preserve its infrastructure lineage without asserting that every historical component is already integrated."
         actions={
           <>
-            <CtaLink href="/projects/btc-final-system" kind="primary">
-              Open BTC Final System V1
+            <CtaLink href="/astra" kind="primary">
+              Explore ASTRA
             </CtaLink>
             <CtaLink href="/projects/multi-asset-research-lab/claims">
               Read the claims ledger
@@ -136,15 +136,15 @@ export default function MultiAssetResearchLabPage() {
           </>
         }
         metadata={[
-          { label: "Current phase", value: "Retained system · prospective observation" },
+          { label: "Historical scope", value: "Retained system · forward-observation handoff" },
           { label: "Concrete implementation", value: "BTCUSDT 5m / Daily EMA 50/200" },
-          { label: "Multi-asset status", value: "Architecture under expansion" },
+          { label: "Multi-asset scope", value: "Asset-neutral architecture; BTC implementation" },
           { label: "Execution authority", value: "None" },
         ]}
       />
 
       <CapabilityBand
-        label="What the Lab now demonstrates"
+        label="What this infrastructure demonstrates"
         items={[
           "Verified evidence",
           "Deterministic replay",
@@ -155,15 +155,15 @@ export default function MultiAssetResearchLabPage() {
       />
 
       <EditorialSection
-        eyebrow="Current proof"
-        title="Infrastructure is no longer the endpoint"
-        intro="The strongest public result is intentionally narrow: the research stack produced one retained BTC system with an attractive retrospective result, then carried the exact frozen strategy state into a separate prospective runtime."
+        eyebrow="Retained historical system"
+        title="Historical evidence keeps its limitations"
+        intro="The retained BTC system documents the research lifecycle. Its three completed trades, concentrated growth, and post-selection limitations remain material. Independent risk forecast confirmation is the strongest current scientific result and is assessed separately."
         tone="elevated"
       >
         <EvidenceBand accent="emerald" items={proofPoints} />
         <div className="mt-8 glass-panel rounded-[2rem] p-6 sm:p-8">
           <div className="flex flex-wrap items-center gap-3">
-            <StatusLabel accent="emerald">Retained research system</StatusLabel>
+            <StatusLabel accent="blue">RETAINED HISTORICAL SYSTEM</StatusLabel>
             <ResearchTag>Daily EMA 50/200</ResearchTag>
             <ResearchTag>Long / flat</ResearchTag>
             <ResearchTag>Funding-adjusted</ResearchTag>
@@ -174,6 +174,7 @@ export default function MultiAssetResearchLabPage() {
           </p>
           <div className="mt-7">
             <CtaLink href="/projects/btc-final-system" kind="text">See the result, diagnostics, and forward handoff</CtaLink>
+            <div className="mt-4"><CtaLink href="/research/risk-forecasting#independent-assessment">Inspect independent risk forecast confirmation</CtaLink></div>
           </div>
         </div>
       </EditorialSection>
@@ -182,7 +183,7 @@ export default function MultiAssetResearchLabPage() {
         id="architecture"
         accent="violet"
         eyebrow="System progression"
-        title="Seven layers, one-way authority"
+        title="Research progression with a separate execution boundary"
         intro="Each layer can add evidence or operational discipline. None can silently grant the authority of the layer after it."
         tone="deep"
       >
@@ -224,7 +225,7 @@ export default function MultiAssetResearchLabPage() {
         accent="amber"
         eyebrow="Non-negotiable boundary"
         title="Research state is still not execution authority"
-        intro="The program has moved further than the old infrastructure-only phase. The trading boundary has not moved with it."
+        intro="These restrictions apply to the research Lab and retained research runtime. Separate execution-system telemetry does not grant research findings automatic authority."
         tone="warm"
       >
         <div className="grid gap-4 md:grid-cols-3">

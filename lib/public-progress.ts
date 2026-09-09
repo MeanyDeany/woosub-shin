@@ -184,7 +184,7 @@ export const claimLedger: readonly {
     tone: "emerald",
   },
   {
-    claim: "The retained BTC research strategy is now running in an append-only prospective forward observation runtime.",
+    claim: "The retained BTC research strategy crossed into an append-only prospective forward observation runtime on 22 Aug 2026.",
     evidence:
       "An explicit 22 Aug 2026 activation restored the frozen historical state, bridged 6,626 public completed 5m bars as non-forward context, and published the first retained checkpoint-backed observation from the 08:30 UTC bar, effective from 08:35 UTC.",
     limit:
@@ -224,7 +224,7 @@ export const claimLedger: readonly {
     evidence:
       "The initial 23 Jul 2026 health snapshot was WATCH / BOOTSTRAP with 15 complete scheduled lineages out of 21 matured expected cycles and zero failing checks.",
     limit:
-      "Comparison remains deferred until the frozen maturity requirements are met, including at least 168 clean scheduled outcome lineages and coverage thresholds.",
+      "At that initial snapshot, comparison was deferred until the frozen maturity requirements were met, including at least 168 clean scheduled outcome lineages and coverage thresholds. This historical pipeline snapshot does not describe the separate ASTRA independent assessment.",
     status: "Not claimed",
     tone: "violet",
   },
@@ -276,7 +276,7 @@ export const claimLedger: readonly {
   {
     claim: "The research framework has a verified live-profit track record.",
     evidence:
-      "One retained BTC strategy has positive retrospective historical metrics and prospective research-state observation has begun, but there is no live trading PnL series.",
+      "One retained BTC strategy has positive retrospective historical metrics and a recorded forward-observation handoff. Separate account telemetry is not a live trading PnL series attributable to this research strategy.",
     limit:
       "Retrospective research performance and forward research states must not be presented as realized live trading profit.",
     status: "Not claimed",

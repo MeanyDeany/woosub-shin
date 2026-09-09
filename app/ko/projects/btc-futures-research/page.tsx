@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { metadataFor } from "@/lib/site-metadata";
 import { BtcResearchObservatory } from "@/components/btc-research-observatory";
 import {
   CtaLink,
@@ -9,18 +9,11 @@ import {
 } from "@/components/editorial";
 import { PageShell } from "@/components/site-shell";
 
-export const metadata: Metadata = {
-  title: "BTC 선물 연구 시스템",
-  description:
-    "BTCUSDT 변동성 forecast, forward outcome, provenance, 운영 무결성을 축적하는 연구 전용 freezer validation 시스템.",
-  alternates: {
-    canonical: "/ko/projects/btc-futures-research",
-    languages: {
-      en: "/projects/btc-futures-research",
-      ko: "/ko/projects/btc-futures-research",
-    },
-  },
-};
+export const metadata = metadataFor(
+  "/ko/projects/btc-futures-research",
+  "BTC 선물 연구 시스템",
+  "BTCUSDT 변동성 forecast, forward outcome, provenance, 운영 무결성을 축적하는 연구 전용 freezer validation 시스템.",
+);
 
 export default function KoreanBtcResearchPage() {
   const observatoryFeedUrl = process.env.NEXT_PUBLIC_BTC_RESEARCH_OBSERVATORY_URL;

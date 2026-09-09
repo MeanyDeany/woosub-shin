@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import { metadataFor } from "@/lib/site-metadata";
 import {
   CapabilityBand,
   CtaLink,
@@ -10,11 +10,11 @@ import {
 } from "@/components/editorial";
 import { PageShell } from "@/components/site-shell";
 
-export const metadata: Metadata = {
-  title: "BTC Selective Regime Challenger C4",
-  description:
-    "Post-selection historical stress audit of a BTC long/flat selective-regime challenger combining Momentum90, EMA 50/180, and RSI2/EMA200 sleeves.",
-};
+export const metadata = metadataFor(
+  "/projects/btc-regime-challenger",
+  "BTC Selective Regime Challenger C4",
+  "Post-selection historical stress audit of a BTC long/flat selective-regime challenger combining Momentum90, EMA 50/180, and RSI2/EMA200 sleeves.",
+);
 
 const tags = [
   "BTCUSDT",
