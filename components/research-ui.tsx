@@ -151,22 +151,25 @@ export function PolicySummary() {
 }
 
 export function CurrentResearch({ detailed = false }: { detailed?: boolean }) {
-  const next = researchEvidence.turnoverDecomposition;
-  const sensitivity = researchEvidence.smallSignalSensitivity;
   return <>
-    <p className="research-prose">No active study is reported in the supplied research freeze. Candidate Generator V3 has completed; the following questions have not started.</p>
+    <p className="research-prose">The active priority has shifted from extending bar-based strategy search to event-level Bitcoin market microstructure and high-frequency research. Prior ASRA, forecasting and historical strategy studies remain retained as frozen evidence rather than being rewritten around the new direction.</p>
     <div className="research-grid" style={{ marginTop: 32 }}>
-    <article id="small-signal-sensitivity" className="research-next">
-      <p className="research-kicker">Next question · Return / methodology</p>
-      <h3>{sensitivity.title}</h3><p>{sensitivity.question}</p>
-      <p className="research-note">{detailed ? sensitivity.scope : sensitivity.keyCaveat}</p>
-      <div className="research-actions"><Link href={detailed ? researchEvidence.candidateGeneratorV3.detailHref : sensitivity.detailHref}>{detailed ? "Inspect the completed historical transfer test" : "Read the next methodology question"} <span aria-hidden="true">→</span></Link></div>
-    </article>
-    <article id="next-question" className="research-next">
-      <p className="research-kicker">Next question · Risk</p><h3>{next.title}</h3><p>{next.question}</p><p className="research-note">{next.scope}</p>
-      <div className="research-actions"><Link href={detailed ? researchEvidence.policyUtility.detailHref : next.detailHref}>{detailed ? "Inspect the completed policy evidence" : "Read the next question"} <span aria-hidden="true">→</span></Link></div>
-    </article>
+      <article id="microstructure-hft" className="research-next">
+        <p className="research-kicker">Current direction · Market microstructure</p>
+        <h3>BTC Market Microstructure &amp; HFT Research</h3>
+        <p>Do observable order-flow and liquidity states change fill probability and post-fill markouts enough to support robust, cost-aware passive-execution payoff?</p>
+        <p className="research-note">{detailed ? "Planned measurement layer: event-level trades, quotes and order-book updates; local book reconstruction; OFI, microprice, spread, depth and trade imbalance; then 1s, 5s, 10s, 30s and 60s markouts." : "5-minute and 1-minute layers remain as context and benchmarks. The new information layer is event-level market mechanics, not faster bar indicators."}</p>
+        <div className="research-actions"><Link href="/projects">Inspect the supporting research systems <span aria-hidden="true">→</span></Link></div>
+      </article>
+      <article id="cpp-market-data-core" className="research-next">
+        <p className="research-kicker">Current build · Systems engineering</p>
+        <h3>C++ Market-Data &amp; Deterministic Replay Core</h3>
+        <p>Build an event-driven core that captures, validates, reconstructs and replays trades and order-book updates with explicit timestamp and sequence discipline.</p>
+        <p className="research-note">Raw WebSocket capture → sequence validation → local order book → deterministic replay → microstructure features → fill-probability, adverse-selection and markout analysis in Python.</p>
+        <div className="research-actions"><Link href="/projects#execution-gateway">Inspect execution engineering <span aria-hidden="true">→</span></Link></div>
+      </article>
     </div>
+    <AuthorityBoundary>A faster data layer is not evidence of an edge. This work remains research-only until fill, markout, cost and robustness evidence support narrower claims; no research result grants automatic execution authority.</AuthorityBoundary>
   </>;
 }
 
