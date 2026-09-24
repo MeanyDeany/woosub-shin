@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import { calendarDays, emptyJournal, isDateKey, mergeJournal, monthSummary, parseJournal, parseOptionalNumber, shiftMonth, utcDay } from '../lib/trading-journal.ts';
+const entry = (date, pnlUsd = null, note = '') => ({ date, pnlUsd, returnPct: null, note, updatedAt: '2026-09-24T12:00:00Z' });
+const journal = (entries) => ({ version: 1, timezone: 'UTC', entries });
+test('UTC boundary is independent of display timezone', () => assert.equal(utcDay(new Date('2026-09-25T01:00:00+09:00')), '2026-09-24'));
+test('calendar rejects impossible dates and accepts leap day', () => { assert.ok(isDateKey('2028-02-29')); assert.ok(!isDateKey('2026-02-29')); assert.ok(!isDateKey('2026-09-31')); });
+test('calendar is six complete Monday-first weeks', () => { const days = calendarDays('2026-09'); assert.equal(days.length, 42); assert.equal(days[0], '2026-08-31'); assert.equal(days[41], '2026-10-11'); });
+test('month navigation crosses year boundaries', () => { assert.equal(shiftMonth('2026-12', 1), '2027-01'); assert.equal(shiftMonth('2027-01', -1), '2026-12'); });
+test('missing is not zero, negative zero normalizes', () => { assert.equal(parseOptionalNumber(''), null); assert.equal(parseOptionalNumber('0'), 0); assert.ok(!Object.is(parseOptionalNumber('-0'), -0)); assert.equal(parseOptionalNumber('-.25'), -.25); });
+test('rejects currency, exponent, NaN and out-of-range imports', () => { for (const value of ['NaN','Infinity','1e5','$20','1,200','5%','1000000000001']) assert.throws(() => parseOptionalNumber(value)); });
+test('entries are validated and ordered', () => assert.deepEqual(parseJournal(journal([entry('2026-09-03'),entry('2026-09-01')]), '2026-09-24').entries.map(x=>x.date), ['2026-09-01','2026-09-03']));
+test('duplicate, future and before-boundary dates are rejected', () => { for (const entries of [[entry('2026-09-01'),entry('2026-09-01')],[entry('2026-10-01')],[entry('2026-07-31')]]) assert.throws(() => parseJournal(journal(entries), '2026-09-24')); });
+test('invalid numbers, notes, timezone and schema are rejected', () => { assert.throws(()=>parseJournal(journal([entry('2026-09-01', Infinity)]))); assert.throws(()=>parseJournal(journal([entry('2026-09-01', null, 'x'.repeat(3001))]))); assert.throws(()=>parseJournal({...emptyJournal(), timezone:'Asia/Seoul'})); assert.throws(()=>parseJournal({...emptyJournal(), version:2})); });
+test('notes-only months do not fabricate monthly PnL', () => { const summary = monthSummary(journal([entry('2026-09-01',null,'Reviewed')]), '2026-09'); assert.equal(summary.net,null); assert.equal(summary.pnlDays,0); assert.equal(summary.days,1); });
+test('summary counts explicitly recorded flat days', () => { const s=monthSummary(journal([entry('2026-09-01',12),entry('2026-09-02',-4),entry('2026-09-03',0),entry('2026-08-01',90)]),'2026-09'); assert.equal(s.net,8); assert.equal(s.positive,1); assert.equal(s.negative,1); assert.equal(s.flat,1); });
+test('backup merge keeps unrelated days and replaces only imported dates', () => { const merged=mergeJournal(journal([entry('2026-08-01',1),entry('2026-08-02',2)]),journal([entry('2026-08-02',3)])); assert.deepEqual(merged.entries.map(e=>e.pnlUsd),[1,3]); });
+test('unknown entry fields are not retained', () => { const parsed=parseJournal(journal([{...entry('2026-08-01'), secret:'not a journal field'}])); assert.ok(!('secret' in parsed.entries[0])); });
