@@ -114,6 +114,23 @@ test("Home presents ASRA with its exact expansion and canonical program links", 
   assert.doesNotMatch(textContent(html), /\bASTRA\b|AI-augmented systematic research architecture/i);
 });
 
+test("Home surfaces trading evidence and trader-behavior ML with explicit limits", () => {
+  const html = renderHome();
+  const text = textContent(html);
+  assert.match(text, /Futures OOS Sharpe 1\.236/);
+  assert.match(text, /OOS maximum drawdown -3\.27%/);
+  assert.match(text, /14-year walk-forward Sharpe 0\.94/);
+  assert.match(text, /689 episodes · 66\.47% gross win rate/);
+  assert.match(text, /Trader behavior ML · latest research/);
+  assert.match(text, /686 ML-eligible episodes/);
+  assert.match(text, /114 Newest BTCUSDC episodes/);
+  assert.match(text, /71\.05% HGB \+ user-state model/);
+  assert.match(text, /67\.76% Final conditional LONG\/SHORT imitation/);
+  assert.match(text, /worst 1% of episodes accounted for 50\.20% of all losing PnL/);
+  assert.match(text, /do not establish a profitable-entry model or a reliable risk veto/);
+  assert.match(text, /read-only 24\/7 observer now collects forward action/);
+});
+
 test("Home observation geometry stays decorative and server-rendered", () => {
   const html = renderHome();
   const fields = [...html.matchAll(/<div class="observation-field [^"]+" aria-hidden="true">([\s\S]*?)<\/div>/g)];
