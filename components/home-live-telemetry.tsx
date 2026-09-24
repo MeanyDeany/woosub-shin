@@ -1,17 +1,19 @@
 import Link from "next/link";
 import { BtcLifetimePerformance } from "@/components/btc-lifetime-performance";
 import { BtcLiveMultiPosition } from "@/components/btc-live-multi-position";
+import { BtcRollingPerformance } from "@/components/btc-rolling-performance";
 import { deriveBtcLifetimePerformanceFeedUrl } from "@/lib/btc-lifetime-performance";
 import { deriveBtcLiveMultiPositionFeedUrl } from "@/lib/btc-live-multi-position";
+import { deriveBtcRollingPerformanceFeedUrl } from "@/lib/btc-rolling-performance";
 
 type Locale = "en" | "ko";
 
 const copy = {
   en: {
-    eyebrow: "Live system telemetry",
-    title: "Live observation stays separate from research evidence.",
+    eyebrow: "Live Binance USD-M account",
+    title: "Live trading performance and open positions.",
     description:
-      "Sanitized read-only Binance USD-M telemetry is refreshed every 30 seconds. Every non-zero open position sits beside flow-adjusted trading performance since August 1, 2026, while exact size, prices, balances, credentials, and execution authority stay private.",
+      "Read-only Binance USD-M telemetry refreshes every 30 seconds. Recruiters can inspect 7-day and 30-day flow-adjusted returns, lifetime trading PnL since August 1, 2026, and every current non-zero open position; exact size, prices, balances, credentials, and execution authority remain private.",
     link: "Open full telemetry",
     badges: [
       "Read-only public projection",
@@ -44,6 +46,10 @@ export function HomeLiveTelemetry({ locale = "en" }: { locale?: Locale }) {
   const performanceFeedUrl = deriveBtcLifetimePerformanceFeedUrl(
     process.env.NEXT_PUBLIC_BTC_RESEARCH_OBSERVATORY_URL,
     process.env.NEXT_PUBLIC_BTC_LIFETIME_PERFORMANCE_URL,
+  );
+  const rollingFeedUrl = deriveBtcRollingPerformanceFeedUrl(
+    process.env.NEXT_PUBLIC_BTC_RESEARCH_OBSERVATORY_URL,
+    process.env.NEXT_PUBLIC_BTC_ROLLING_PERFORMANCE_URL,
   );
   const detailHref =
     locale === "ko"
@@ -84,7 +90,11 @@ export function HomeLiveTelemetry({ locale = "en" }: { locale?: Locale }) {
           </div>
         </div>
 
-        <div className="mt-10 grid gap-5 xl:grid-cols-2 xl:items-start">
+        <div className="mt-10">
+          <BtcRollingPerformance feedUrl={rollingFeedUrl} locale={locale} />
+        </div>
+
+        <div className="mt-5 grid gap-5 xl:grid-cols-2 xl:items-start">
           <BtcLifetimePerformance feedUrl={performanceFeedUrl} locale={locale} />
           <BtcLiveMultiPosition feedUrl={positionFeedUrl} locale={locale} />
         </div>

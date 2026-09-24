@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ObservationField } from "@/components/observation-field";
+import { HomeLiveTelemetry } from "@/components/home-live-telemetry";
 import { PageShell } from "@/components/site-shell";
 import { AuthorityBoundary, CurrentResearch, EvidenceMetricGroup, EvidenceStatus, PolicySummary, ResearchFindingCard, ResearchPipeline } from "@/components/research-ui";
 import { historicalResearchPerformance, researchEvidence, researchTimelineLanes } from "@/lib/research-evidence";
@@ -30,7 +31,7 @@ export function PortfolioHome() {
           <strong className="program-mark">ASRA</strong>
           <div><p>AI Systematic Research Architecture</p><p className="program-method">Observation / Test / Falsification</p></div>
         </div>
-        <p className="research-prose">I turn market questions into reproducible experiments, challenge the measurement, and explain what survives.</p>
+        <p className="research-prose">I turn market questions into reproducible experiments, challenge the measurement, and explain what survives. My current work connects systematic trading research with a reconstruction of my own discretionary decisions and forward behavior observation.</p>
         <div className="research-actions">
           <Link className="research-button primary" href="/asra">Explore ASRA<span aria-hidden="true">→</span></Link>
           <Link className="research-button" href="/research">View Research</Link>
@@ -43,6 +44,27 @@ export function PortfolioHome() {
         <dt>Research engineering</dt><dd>Python · SQL · Git · Linux</dd>
         <dt>Based in</dt><dd>Seoul, South Korea</dd>
       </dl>
+    </div></section>
+    <HomeLiveTelemetry locale="en" />
+    <section className="research-section research-section--surface" aria-labelledby="trader-behavior-ml-title" lang="en"><div className="research-container">
+      <p className="research-kicker">Trader behavior ML · latest research</p>
+      <div className="research-split">
+        <div>
+          <h2 id="trader-behavior-ml-title" className="research-heading">Can a model recover how I choose LONG versus SHORT?</h2>
+          <p className="research-prose">I reconstructed my own futures trading history, froze pre-entry market and user-state features, and evaluated conditional direction imitation chronologically. The strongest final holdout result is partial imitation, not a claim of profitable alpha.</p>
+        </div>
+        <div>
+          <p className="research-prose"><strong>What matters:</strong> the historical autopsy found a 66.47% gross win rate across 689 complete episodes, but losses were highly concentrated: the worst 1% of episodes accounted for 50.20% of all losing PnL. That is why the research separates entry imitation from deterministic risk control.</p>
+        </div>
+      </div>
+      <div className="home-systems-grid" aria-label="Trader behavior ML evidence">
+        <div className="home-system-card"><p className="research-kicker">Dataset</p><h3>686</h3><p>ML-eligible episodes after public-data coverage checks.</p></div>
+        <div className="home-system-card"><p className="research-kicker">Final holdout</p><h3>114</h3><p>Newest BTCUSDC episodes, kept out of fitting and parameter selection.</p></div>
+        <div className="home-system-card"><p className="research-kicker">Direction accuracy</p><h3>71.05%</h3><p>HGB + user-state model on the final chronological holdout.</p></div>
+        <div className="home-system-card"><p className="research-kicker">Balanced accuracy</p><h3>67.76%</h3><p>Final conditional LONG/SHORT imitation; MCC 0.353.</p></div>
+      </div>
+      <p className="research-note">Boundary: final entry-quality ROC-AUC was 0.5583 and tail-loss PR-AUC was 0.1364. Those results do not establish a profitable-entry model or a reliable risk veto. A read-only 24/7 observer now collects forward action and causal market-state evidence for the next study.</p>
+      <div className="research-actions"><Link href="/research">Inspect the research framework <span aria-hidden="true">→</span></Link><Link href="/projects/volatility-regime-filtering">View the futures thesis</Link></div>
     </div></section>
     <section className="research-section research-section--surface home-primary-finding" aria-labelledby="strongest-finding" lang="en"><div className="research-container">
       <p className="research-kicker">Strongest confirmed finding</p>
