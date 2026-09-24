@@ -2,9 +2,11 @@ import { metadataFor } from "@/lib/site-metadata";
 import Link from "next/link";
 import { BtcLifetimePerformance } from "@/components/btc-lifetime-performance";
 import { BtcLiveMultiPosition } from "@/components/btc-live-multi-position";
+import { BtcRollingPerformance } from "@/components/btc-rolling-performance";
 import { PageShell } from "@/components/site-shell";
 import { deriveBtcLifetimePerformanceFeedUrl } from "@/lib/btc-lifetime-performance";
 import { deriveBtcLiveMultiPositionFeedUrl } from "@/lib/btc-live-multi-position";
+import { deriveBtcRollingPerformanceFeedUrl } from "@/lib/btc-rolling-performance";
 
 export const metadata = metadataFor(
   "/projects/btc-futures-research/live-position",
@@ -20,6 +22,10 @@ export default function LiveBtcPositionPage() {
   const performanceFeedUrl = deriveBtcLifetimePerformanceFeedUrl(
     process.env.NEXT_PUBLIC_BTC_RESEARCH_OBSERVATORY_URL,
     process.env.NEXT_PUBLIC_BTC_LIFETIME_PERFORMANCE_URL,
+  );
+  const rollingFeedUrl = deriveBtcRollingPerformanceFeedUrl(
+    process.env.NEXT_PUBLIC_BTC_RESEARCH_OBSERVATORY_URL,
+    process.env.NEXT_PUBLIC_BTC_ROLLING_PERFORMANCE_URL,
   );
 
   return (
@@ -54,7 +60,11 @@ export default function LiveBtcPositionPage() {
         </section>
 
         <section className="mx-auto max-w-[1180px] px-5 py-10 sm:py-14 lg:px-8">
-          <BtcLiveMultiPosition feedUrl={positionFeedUrl} locale="en" />
+          <BtcRollingPerformance feedUrl={rollingFeedUrl} locale="en" />
+
+          <div className="mt-6">
+            <BtcLiveMultiPosition feedUrl={positionFeedUrl} locale="en" />
+          </div>
 
           <div className="mt-6">
             <BtcLifetimePerformance feedUrl={performanceFeedUrl} locale="en" />
