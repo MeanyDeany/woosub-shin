@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import "./navigation.css";
 import "./astra.css";
+import "./trading-desk.css";
 
 const siteUrl = "https://meanydeany.com";
 const siteTitle = "Woosub Shin — Quantitative Researcher";

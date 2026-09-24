@@ -1,0 +1,45 @@
+name: Trading desk UI
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Review installed framework guidance
+        run: |
+          find node_modules/next/dist/docs -type f -iname '*client*' -o -iname '*css*' | head -10
+      - name: Unit tests and existing regression tests
+        run: node --experimental-strip-types --test tests/*.test.mjs
+      - name: Type check and lint
+        run: |
+          npx tsc --noEmit
+          npx eslint components/btc-trading-desk.tsx components/home-live-telemetry.tsx lib/trading-journal.ts app/projects/btc-futures-research/live-position/page.tsx
+      - run: npm run build
+      - name: Install transient browser QA tools
+        run: |
+          npm install --no-save --package-lock=false playwright@1.58.2
+          npx playwright install --with-deps chromium
+      - name: Browser validation with synthetic public-feed fixtures
+        run: |
+          npm run start >/tmp/desk-server.log 2>&1 &
+          for i in $(seq 1 45); do curl --fail --silent http://localhost:3000 >/dev/null && break; sleep 2; done
+          node tests/trading-desk.browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: trading-desk-qa
+          path: |
+            /tmp/desk-qa/
+            /tmp/desk-server.log
+      - run: git diff --check
