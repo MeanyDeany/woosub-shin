@@ -27,6 +27,11 @@ try {
   await page.goto(url);
   await page.locator('.td-instrument').filter({hasText:'BTCUSDC'}).waitFor();
   await page.locator('#journal-pnl').waitFor({ state:'visible' });
+  const skip = page.locator('.research-skip-link');
+  assert.equal(await skip.evaluate(el => getComputedStyle(el).opacity), '0');
+  await skip.focus();
+  assert.equal(await skip.evaluate(el => getComputedStyle(el).opacity), '1');
+  await skip.evaluate(el => el.blur());
   await page.locator('.td-segmented button').filter({hasText:'Short'}).click();
   assert.equal(await page.locator('.td-instrument').filter({hasText:'BTCUSDC'}).count(), 0);
   await page.locator('.td-segmented button').filter({hasText:'All'}).click();
@@ -47,6 +52,18 @@ try {
   const data = JSON.parse(backup);
   assert.equal(data.entries.at(-1).pnlUsd,125.5);
   assert.equal(data.timezone,'UTC');
+  await page.getByRole('button', {name:'Delete this local record', exact:true}).click();
+  await page.getByText('Local record deleted.', {exact:true}).waitFor();
+  assert.equal(await page.locator('#journal-pnl').inputValue(), '');
+  await page.locator('input[type=file]').setInputFiles({ name:'journal-backup.json', mimeType:'application/json', buffer:Buffer.from(backup) });
+  await page.getByText(/Imported 1 records into this browser/).waitFor();
+  assert.equal(await page.locator('#journal-pnl').inputValue(), '125.5');
+  assert.equal(await page.locator('#journal-note').inputValue(), 'Synthetic QA note. Followed the plan.');
+  const beforeMonth = await page.locator('.td-calendar-toolbar h3').textContent();
+  await page.getByRole('button', {name:'Previous month',exact:true}).click();
+  assert.notEqual(await page.locator('.td-calendar-toolbar h3').textContent(), beforeMonth);
+  await page.getByRole('button', {name:'Today', exact:true}).click();
+  assert.equal(await page.locator('.td-calendar-toolbar h3').textContent(), beforeMonth);
   await fs.mkdir('/tmp/desk-qa', { recursive:true });
   // Seed a few explicitly synthetic daily records solely for visual QA.
   await page.evaluate(() => {
@@ -66,5 +83,5 @@ try {
   empty=false; malformed=true; await page.reload(); await page.getByText('Position feed unavailable',{exact:true}).waitFor();
   assert.equal(await page.getByText('No open positions in this observation',{exact:true}).count(),0);
   assert.deepEqual(issues,[]);
-  console.log('BROWSER_QA_PASS: position filters, local save/reload/export, desktop/mobile, stale feed, flat feed, invalid feed, zero page errors');
+  console.log('BROWSER_QA_PASS: position filters, local save/reload/export/import/delete, month navigation, keyboard skip link, desktop/mobile, stale feed, flat feed, invalid feed, zero page errors');
 } finally { await browser.close(); }

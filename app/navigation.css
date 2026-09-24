@@ -95,12 +95,14 @@
   border-radius: 4px;
   padding: 0.65rem 1rem;
   transform: translateY(-200%);
+  opacity: 0;
+  pointer-events: none;
   background: var(--surface-raised);
   color: var(--text-primary);
   font-size: 0.875rem;
 }
 
-.research-skip-link:focus { transform: translateY(0); }
+.research-skip-link:focus { transform: translateY(0); opacity: 1; pointer-events: auto; }
 .research-header :focus-visible,
 .research-footer :focus-visible,
 .research-contextual-navigation :focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }

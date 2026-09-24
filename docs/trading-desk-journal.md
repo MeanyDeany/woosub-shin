@@ -6,7 +6,7 @@ The home account section and `/projects/btc-futures-research/live-position` shar
 
 The calendar is explicitly a manual UTC journal, not a Binance daily PnL feed. The existing connected feeds provide current and rolling aggregate observations, not daily history. Unknown days stay empty. Monthly net PnL sums only manually recorded amounts, counts those days, and never sums return percentages or reconstructs daily PnL from cumulative-return changes.
 
-Records live in browser localStorage under `meanydeany.trading-journal.v1`. They are private to that browser profile and site origin, not synchronized across devices, not published to visitors, and are removed if site data is cleared. JSON export/import supports backups and explicitly confirms overwrite conflicts. Size, date, duplicate, number and note validation happens before storage writes. Concurrent edits to the same day are rejected. No server storage or automatic browser-closed recording is claimed.
+Records live in browser localStorage under `meanydeany.trading-journal.v1`. They are private to that browser profile and site origin, not synchronized across devices, not published to visitors, and are removed if site data is cleared. JSON export/import supports backups and explicitly confirms overwrite conflicts. Size, date, duplicate, number and note validation happens before storage writes. A saved-version check rejects stale same-day drafts after another tab saves. This is not a transactional multi-user store. No server storage or automatic browser-closed recording is claimed.
 
 ## Freshness and privacy
 
@@ -18,4 +18,4 @@ The source still determines all public financial values, Modified Dietz methodol
 
 `node --experimental-strip-types --test tests/*.test.mjs`
 
-The scoped UI workflow type-checks, lints and builds the real application, then exercises position filters, local daily saving and reload, backup export, desktop/mobile layout, stale feeds, flat feeds and malformed feeds in Chromium. Browser screenshots are marked synthetic QA fixtures and must never be described as actual account performance. No journal or fake account seed data is included in production rendering.
+The scoped UI workflow type-checks, lints and builds the real application, then exercises position filters, local daily saving and reload, backup export/import, delete, month navigation, keyboard access, desktop/mobile layout, stale feeds, flat feeds and malformed feeds in Chromium. Browser screenshots are marked synthetic QA fixtures and must never be described as actual account performance. No journal or fake account seed data is included in production rendering.
