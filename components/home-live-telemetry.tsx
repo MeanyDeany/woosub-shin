@@ -8,10 +8,10 @@ type Locale = "en" | "ko";
 
 const copy = {
   en: {
-    eyebrow: "Live system telemetry",
-    title: "Live observation stays separate from research evidence.",
+    eyebrow: "Live Binance USD-M account",
+    title: "Live trading performance and open positions.",
     description:
-      "Sanitized read-only Binance USD-M telemetry is refreshed every 30 seconds. Every non-zero open position sits beside flow-adjusted trading performance since August 1, 2026, while exact size, prices, balances, credentials, and execution authority stay private.",
+      "Read-only Binance USD-M telemetry refreshes every 30 seconds. Recruiters can inspect current open positions and flow-adjusted account-wide performance since August 1, 2026; exact size, prices, balances, credentials, and execution authority remain private.",
     link: "Open full telemetry",
     badges: [
       "Read-only public projection",
