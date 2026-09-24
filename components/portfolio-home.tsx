@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ObservationField } from "@/components/observation-field";
+import { HomeLiveTelemetry } from "@/components/home-live-telemetry";
 import { PageShell } from "@/components/site-shell";
 import { AuthorityBoundary, CurrentResearch, EvidenceMetricGroup, EvidenceStatus, PolicySummary, ResearchFindingCard, ResearchPipeline } from "@/components/research-ui";
 import { historicalResearchPerformance, researchEvidence, researchTimelineLanes } from "@/lib/research-evidence";
@@ -37,15 +38,14 @@ export function PortfolioHome() {
           <Link href="/resume">Resume</Link><a href="https://github.com/MeanyDeany" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
         </div>
       </div>
-      <dl className="home-background" lang="en" aria-label="Trading and research evidence">
-        <dt>Futures OOS Sharpe</dt><dd><strong>1.236</strong><br />NQ + ES · 2019–2025</dd>
-        <dt>OOS maximum drawdown</dt><dd><strong>-3.27%</strong><br />Same futures evaluation</dd>
-        <dt>14-year walk-forward Sharpe</dt><dd><strong>0.94</strong><br />Chronological robustness study</dd>
-        <dt>Reconstructed trade history</dt><dd><strong>689 episodes · 66.47% gross win rate</strong><br />Historical executed decisions</dd>
+      <dl className="home-background" lang="en">
         <dt>MSc Economics</dt><dd>University of Copenhagen</dd>
+        <dt>Research foundation</dt><dd>Financial econometrics<br />Empirical asset pricing</dd>
         <dt>Research engineering</dt><dd>Python · SQL · Git · Linux</dd>
+        <dt>Based in</dt><dd>Seoul, South Korea</dd>
       </dl>
     </div></section>
+    <HomeLiveTelemetry locale="en" />
     <section className="research-section research-section--surface" aria-labelledby="trader-behavior-ml-title" lang="en"><div className="research-container">
       <p className="research-kicker">Trader behavior ML · latest research</p>
       <div className="research-split">
