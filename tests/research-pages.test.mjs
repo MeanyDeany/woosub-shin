@@ -45,8 +45,10 @@ test("homepage telemetry uses only the reviewed public projection components", (
   const telemetry = fs.readFileSync(path.join(root, "components/home-live-telemetry.tsx"), "utf8");
   assert.match(telemetry, /BtcLifetimePerformance/);
   assert.match(telemetry, /BtcLiveMultiPosition/);
+  assert.match(telemetry, /BtcRollingPerformance/);
   assert.match(telemetry, /deriveBtcLifetimePerformanceFeedUrl/);
   assert.match(telemetry, /deriveBtcLiveMultiPositionFeedUrl/);
+  assert.match(telemetry, /deriveBtcRollingPerformanceFeedUrl/);
   assert.doesNotMatch(telemetry, /WebSocket|EventSource|XMLHttpRequest|axios|useSWR|fapi\.binance/i);
 });
 
