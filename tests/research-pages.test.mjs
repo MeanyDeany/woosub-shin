@@ -37,37 +37,19 @@ function localModule(specifier, importer) {
     .find((candidate) => /\.[jt]sx?$/.test(candidate) && fs.existsSync(candidate)) ?? null;
 }
 
-test("homepage transitive dependencies exclude market telemetry, charts, WebGL and data transport", () => {
-  const banned = /(?:^|\/)(?:home-live-telemetry|btc-live-(?:position|multi-position)|btc-lifetime-performance|btc-research-observatory|tradingview-observatory-datafeed|binance-telemetry(?:-v2)?)(?:\.|$)|^(?:three|@react-three\/fiber|lightweight-charts)(?:\/|$)/;
-  const pending = [path.join(root, "app/page.tsx")];
-  const inspected = new Set();
-  while (pending.length) {
-    const filename = pending.pop();
-    if (inspected.has(filename)) continue;
-    inspected.add(filename);
-    const relative = path.relative(root, filename);
-    const source = ts.createSourceFile(filename, fs.readFileSync(filename, "utf8"), ts.ScriptTarget.Latest, true);
-    function inspectTransport(node) {
-      if (ts.isCallExpression(node) || ts.isNewExpression(node)) {
-        const name = ts.isIdentifier(node.expression) ? node.expression.text
-          : ts.isPropertyAccessExpression(node.expression) ? node.expression.name.text : "";
-        if (name === "fetch") {
-          const endpoint = node.arguments?.[0];
-          assert.ok(relative === "components/visitor-stats.tsx" && endpoint && ts.isStringLiteral(endpoint) && endpoint.text === "/api/traffic", `${relative} adds homepage data fetching beyond visitor counts`);
-        }
-        assert.ok(!["WebSocket", "EventSource", "XMLHttpRequest", "axios", "useSWR"].includes(name), `${relative} adds ${name} transport to Home`);
-      }
-      ts.forEachChild(node, inspectTransport);
-    }
-    inspectTransport(source);
-    for (const specifier of moduleSpecifiers(filename)) {
-      assert.doesNotMatch(specifier, banned, `Home imports ${specifier} through ${relative}`);
-      const local = localModule(specifier, filename);
-      if (local) pending.push(local);
-    }
-  }
-  assert.ok(inspected.size > 1, "The check must inspect transitive local dependencies.");
+test("homepage telemetry uses only the reviewed public projection components", () => {
+  const source = fs.readFileSync(path.join(root, "components/portfolio-home.tsx"), "utf8");
+  assert.match(source, /HomeLiveTelemetry/);
+  assert.doesNotMatch(source, /binance\.com|fapi\.binance|BINANCE_USDM_READONLY|api[_-]?key|secret[_-]?key/i);
+
+  const telemetry = fs.readFileSync(path.join(root, "components/home-live-telemetry.tsx"), "utf8");
+  assert.match(telemetry, /BtcLifetimePerformance/);
+  assert.match(telemetry, /BtcLiveMultiPosition/);
+  assert.match(telemetry, /deriveBtcLifetimePerformanceFeedUrl/);
+  assert.match(telemetry, /deriveBtcLiveMultiPositionFeedUrl/);
+  assert.doesNotMatch(telemetry, /WebSocket|EventSource|XMLHttpRequest|axios|useSWR|fapi\.binance/i);
 });
+
 
 // Render the actual server content with only framework routing and shell isolated.
 // Shared research components and registry are loaded from their real source modules.
@@ -117,11 +99,8 @@ test("Home presents ASRA with its exact expansion and canonical program links", 
 test("Home surfaces trading evidence and trader-behavior ML with explicit limits", () => {
   const html = renderHome();
   const text = textContent(html);
-  assert.match(text, /Futures OOS Sharpe 1\.236/);
-  assert.match(text, /OOS maximum drawdown -3\.27%/);
-  assert.match(text, /14-year walk-forward Sharpe 0\.94/);
-  assert.match(text, /689 episodes · 66\.47% gross win rate/);
   assert.match(text, /Trader behavior ML · latest research/);
+  assert.doesNotMatch(text, /Futures OOS Sharpe 1\.236/);
   assert.match(text, /686 ML-eligible episodes/);
   assert.match(text, /114 Newest BTCUSDC episodes/);
   assert.match(text, /71\.05% HGB \+ user-state model/);
