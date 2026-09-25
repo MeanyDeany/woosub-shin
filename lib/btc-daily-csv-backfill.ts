@@ -5494,7 +5494,6 @@ function csvDay(day: CsvRealizedBackfillDay): CalendarPerformanceDay {
 }
 
 export function applyCsvRealizedBackfill(days: readonly BinanceDailyPerformanceDay[]): CalendarPerformanceDay[] {
-  const ledgerByDate = new Map(days.map(day => [day.date_utc, day]));
   const firstLedgerDate = days[0]?.date_utc ?? "9999-12-31";
   const result: CalendarPerformanceDay[] = [];
 
