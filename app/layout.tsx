@@ -7,9 +7,9 @@ import "./astra.css";
 import "./trading-desk.css";
 
 const siteUrl = "https://meanydeany.com";
-const siteTitle = "Woosub Shin — Quantitative Researcher";
+const siteTitle = "Woosub Shin — Trader / Quantitative Researcher";
 const siteDescription =
-  "Woosub Shin researches financial econometrics and systematic markets through ASRA: falsification, independently assessed risk information, and reproducible research engineering.";
+  "Woosub Shin is a futures trader and quantitative researcher focused on BTC market microstructure, systematic trading, financial econometrics, and research systems.";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
