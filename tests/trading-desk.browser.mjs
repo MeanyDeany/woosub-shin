@@ -64,10 +64,15 @@ try {
   await page.getByRole('button', {name:/2024-11-15/}).click();
   await page.getByText('CSV realized PnL', {exact:true}).first().waitFor();
   assert.match(await page.locator('.td-csv-explain').textContent(), /Stablecoin realized cash PnL/i);
+  await page.getByRole('button', {name:/2024-11-21/}).click();
+  await page.getByText('CSV partial realized PnL', {exact:true}).waitFor();
+  assert.match(await page.locator('.td-csv-explain').textContent(), /BNB commission/i);
   assert.equal(await page.getByRole('button', {name:'Previous month',exact:true}).isDisabled(), true);
   await page.getByRole('button', {name:'Today', exact:true}).click();
   const currentMonth = await page.locator('.td-calendar-toolbar h3').textContent();
   assert.doesNotMatch(currentMonth, /November 2024/);
+  await page.getByRole('button', {name:'Previous month',exact:true}).click();
+  assert.match(await page.locator('.td-calendar-toolbar h3').textContent(), /August 2026/);
   await page.getByRole('button', {name:'2026-08-20, +$177.90 public net PnL'}).click();
   await page.getByText('CSV realized PnL', {exact:true}).first().waitFor();
   assert.match(await page.locator('.td-csv-explain').textContent(), /does not include UTC-boundary unrealized mark-to-market/i);
