@@ -10,9 +10,11 @@ A row is one of:
 
 - `CLOSED`: a completed UTC day with validated backend anchors;
 - `IN_PROGRESS`: the latest UTC day through the latest authenticated observation;
-- `MISSING`: the backend could not support that day from validated boundary evidence.
+- `MISSING`: the backend could not support that day from validated boundary evidence. For dates through 2026-09-22, the UI may replace this display-only gap with a clearly labelled historical CSV realized-PnL fallback.
 
-Missing rows display no fabricated financial value. The current day is visibly incomplete. Month PnL is the sum of published non-null daily PnL rows; daily percentage returns are never summed.
+The CSV fallback comes from the user-provided Binance Futures Transaction History export in UTC+09:00, re-bucketed to UTC days. It sums REALIZED_PNL, FUNDING_FEE and COMMISSION and excludes TRANSFER. Because the CSV does not contain UTC-boundary mark-to-market observations, a CSV fallback is labelled as realized PnL only and shows no daily return. It never overrides a CLOSED or IN_PROGRESS ledger row. Days after the complete export window remain missing rather than inferred.
+
+The current day is visibly incomplete. Monthly summaries keep authenticated ledger-day PnL and CSV realized PnL separate so unlike accounting bases are not silently added together; daily percentage returns are never summed.
 
 The public projection contains no balances, exact position sizes, prices, credentials, order identifiers or personal notes.
 
