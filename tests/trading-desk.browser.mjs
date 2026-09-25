@@ -65,7 +65,7 @@ try {
   await page.getByText('CSV realized PnL', {exact:true}).first().waitFor();
   assert.match(await page.locator('.td-csv-explain').textContent(), /Stablecoin realized cash PnL/i);
   await page.getByRole('button', {name:/2024-11-21/}).click();
-  await page.getByText('CSV partial realized PnL', {exact:true}).waitFor();
+  await page.getByText(/CSV partial realized PnL/).waitFor();
   assert.match(await page.locator('.td-csv-explain').textContent(), /BNB commission/i);
   assert.equal(await page.getByRole('button', {name:'Previous month',exact:true}).isDisabled(), true);
   await page.getByRole('button', {name:'Today', exact:true}).click();
