@@ -13,8 +13,8 @@ import { metadataFor } from "@/lib/site-metadata";
 
 export const metadata = metadataFor(
   "/research",
-  "Research Findings",
-  "Independent risk evidence, completed policy translation and Candidate Generator V3’s unconfirmed historical return transfer, with synthetic methodology and academic research by Woosub Shin.",
+  "Trading Research",
+  "Trading research by Woosub Shin covering risk forecasting, strategy validation, measurement, market microstructure, and academic work with explicit evidence boundaries.",
 );
 
 const principles = [
@@ -63,10 +63,10 @@ export default function ResearchPage() {
       <div className="research-page">
         <ResearchHero
           eyebrow="Woosub Shin / Research"
-          title="Research findings and the tests behind them."
-          intro="Independent assessment, development evidence, measurement repairs and historical studies — each with its scope and limitations."
+          title="Trading research and validation"
+          intro="Risk forecasting, strategy research, measurement, and academic work. Each result keeps its own evidence class, assessment window, and limitations."
         >
-          <p className="research-note">Findings are organized by scientific relevance. Evidence class, work state and claim outcome remain separate.</p>
+          <p className="research-note">Results are grouped by research question. Evidence class, work state, and claim outcome remain separate.</p>
           <div className="research-actions">
             <Link className="research-button" href="/asra">Explore ASRA</Link>
             <a className="research-button" href="#methodology">Read the methodology</a>
@@ -82,7 +82,7 @@ export default function ResearchPage() {
           { href: "#methodology", label: "Methodology" },
         ]} />
 
-        <ResearchSection id="risk-forecasting" eyebrow="Risk forecasting" title="Forecast information survived. Policy utility was not confirmed.">
+        <ResearchSection id="risk-forecasting" eyebrow="Risk forecasting" title="Risk forecasting and policy test">
           <p className="research-prose">Independent forecast assessment, development comparison and the completed policy test answer different questions. Their evidence labels and assessment windows do not transfer between records.</p>
           <div className="finding-list">
             <ResearchFindingCard record={researchEvidence.independentRiskForecast} />
@@ -91,7 +91,7 @@ export default function ResearchPage() {
           </div>
         </ResearchSection>
 
-        <ResearchSection id="measurement" eyebrow="Return / methodology" title="Repair detection, then test historical transfer.">
+        <ResearchSection id="measurement" eyebrow="Return / methodology" title="Measurement repairs and historical transfer">
           <p className="research-prose">Positive controls exposed blind spots. Target and selection repairs recovered methodological power, and synthetic scheduler robustness supported simpler fixed-native selection. The completed V3 test did not demonstrate incremental historical return transfer within its frozen validation domain.</p>
           <div className="finding-list">
             <ResearchFindingCard record={researchEvidence.nonlinearSensorRecovery} />
@@ -101,7 +101,7 @@ export default function ResearchPage() {
           </div>
         </ResearchSection>
 
-        <ResearchSection id="systematic-strategies" eyebrow="Retained historical research" title="Historical systems with their selection limits intact">
+        <ResearchSection id="systematic-strategies" eyebrow="Retained historical research" title="Retained historical systems">
           <p className="research-prose">These records document historical strategy research. Post-selection comparisons and later forward observation remain distinct from independent ASRA confirmation.</p>
           <div className="finding-list">
             <ResearchFindingCard record={researchEvidence.dailyEma} />
@@ -117,12 +117,12 @@ export default function ResearchPage() {
           <div className="research-actions"><Link href="/papers">Read the original thesis and seminar paper <span aria-hidden="true">→</span></Link></div>
         </ResearchSection>
 
-        <ResearchSection id="current-research" eyebrow="Current / next" title="Questions that follow from completed evidence">
+        <ResearchSection id="current-research" eyebrow="Current / next" title="Current market microstructure research">
           <CurrentResearch />
         </ResearchSection>
 
-        <ResearchSection id="methodology" eyebrow="Working principles" title="Research credibility is cumulative.">
-          <p className="research-prose">No single diagnostic establishes a system’s validity. Credibility accumulates through temporal discipline, robustness, provenance, operational integrity and appropriately narrow claims.</p>
+        <ResearchSection id="methodology" eyebrow="Working principles" title="Research standards">
+          <p className="research-prose">No single diagnostic establishes a system’s validity. The standard is point-in-time data, robustness, provenance, operational integrity, and claims that match the evidence.</p>
           <ol className="research-grid" style={{ marginTop: 32 }}>
             {principles.map(principle => <li className="research-card" key={principle.index}>
               <p className="research-kicker" aria-hidden="true">{principle.index}</p>

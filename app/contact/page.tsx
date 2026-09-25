@@ -6,21 +6,21 @@ import { PageShell } from "@/components/site-shell";
 export const metadata = metadataFor(
   "/contact",
   "Contact",
-  "Contact Woosub Shin about quantitative research, financial econometrics, research engineering, or professional opportunities.",
+  "Contact Woosub Shin about trading, market microstructure, quantitative research, or professional opportunities.",
 );
 
-const interests = ["Quantitative research", "Financial econometrics", "Volatility and risk diagnostics", "Reproducible research engineering", "Professional opportunities"] as const;
+const interests = ["Trading", "Market microstructure", "Quantitative research", "Execution and market-data systems", "Professional opportunities"] as const;
 
 export default function ContactPage() {
   return (
     <PageShell>
       <div className="research-page">
         <PageHero
-          eyebrow="Woosub Shin · Contact"
-          title="A market question, a research discussion, or an opportunity."
-          intro="Contact Woosub Shin about quantitative research, financial econometrics, research engineering, or professional opportunities. Messages are private."
+          eyebrow="Woosub Shin / Contact"
+          title="Trading, quantitative research, or professional opportunities."
+          intro="Contact Woosub Shin about trading, market microstructure, quantitative research, execution systems, or related roles. Messages are private."
           actions={<><a href="#message" className="research-button primary">Write a message</a><CtaLink href="mailto:woosub815@gmail.com">Email Woosub</CtaLink><CtaLink href="https://github.com/MeanyDeany" newTab>GitHub profile</CtaLink></>}
-          metadata={[{ label: "Name", value: "Woosub Shin" }, { label: "Role", value: "Quantitative Researcher" }, { label: "Location", value: "Seoul, South Korea" }]}
+          metadata={[{ label: "Name", value: "Woosub Shin" }, { label: "Role", value: "Trader / Quantitative Researcher" }, { label: "Location", value: "Seoul, South Korea" }]}
         />
         <EditorialSection id="message" eyebrow="Private correspondence" title="Get in touch" intro="Use the form below or email woosub815@gmail.com directly.">
           <div className="grid gap-8 lg:grid-cols-[minmax(15rem,0.55fr)_minmax(0,1.45fr)] lg:items-start">

@@ -8,7 +8,7 @@ import { metadataFor } from "@/lib/site-metadata";
 export const metadata = metadataFor(
   "/resume",
   "Resume and Background",
-  "Woosub Shin, Quantitative Researcher. Economics MSc from the University of Copenhagen, financial econometrics, systematic market research, and reproducible research engineering.",
+  "Woosub Shin, Trader and Quantitative Researcher. Economics MSc from the University of Copenhagen, with work in futures trading, market microstructure, financial econometrics, and systematic research.",
 );
 
 const selectedResearch = [
@@ -22,19 +22,19 @@ export default function ResumePage() {
     <PageShell>
       <div className="research-page">
         <PageHero
-          eyebrow="About · Resume"
-          title="Woosub Shin — Quantitative Researcher"
-          intro="Financial econometrics, systematic market research, and reproducible research engineering."
+          eyebrow="About / Resume"
+          title="Woosub Shin — Trader / Quantitative Researcher"
+          intro="Futures trading, market microstructure, financial econometrics, and systematic research."
           actions={<><CtaLink href="mailto:woosub815@gmail.com" kind="primary">Email Woosub</CtaLink><CtaLink href="/contact">Get in touch</CtaLink><CtaLink href="https://github.com/MeanyDeany" newTab>GitHub profile</CtaLink></>}
-          metadata={[{ label: "Location", value: "Seoul, South Korea" }, { label: "Education", value: "MSc Economics · University of Copenhagen" }, { label: "Tools", value: "Python · SQL · Git · Linux" }]}
+          metadata={[{ label: "Location", value: "Seoul, South Korea" }, { label: "Education", value: "MSc Economics / University of Copenhagen" }, { label: "Tools", value: "Python / SQL / Git / Linux" }]}
         />
 
-        <EditorialSection id="background" eyebrow="Background" title="From a market question to an inspectable experiment">
+        <EditorialSection id="background" eyebrow="Background" title="Trading, research, and systems">
           <div className="research-grid">
             <div className="research-prose">
-              <p>I work at the intersection of financial econometrics and research engineering. I formulate market questions, build reproducible tests, challenge the measurement and comparison, and explain what the evidence supports.</p>
-              <p>My work independently confirmed short-horizon BTC risk information and separately tested its policy translation. {researchEvidence.policyUtility.finding}</p>
-              <p>My interests span Sales &amp; Trading, systematic trading, quantitative research, asset management, and research engineering.</p>
+              <p>I approach markets as a trader first. I use financial econometrics, reproducible research, and systems engineering to test hypotheses, measure risk, and make trading decisions more explicit.</p>
+              <p>My current work focuses on BTC market microstructure and low-latency market-data systems. Earlier work independently confirmed short-horizon BTC risk information and separately tested its policy translation. {researchEvidence.policyUtility.finding}</p>
+              <p>My focus is trading, quantitative research, market microstructure, and execution systems.</p>
             </div>
             <article className="research-card">
               <h3>M.Sc. Economics</h3>
@@ -45,12 +45,12 @@ export default function ResumePage() {
           </div>
         </EditorialSection>
 
-        <EditorialSection id="research" eyebrow="Selected research" title="Findings, academic work, and a retained historical system" intro="Each study retains its own evidence class, assessment context, and limitations.">
+        <EditorialSection id="research" eyebrow="Selected research" title="Research supporting trading and risk decisions" intro="Each study keeps its own assessment context, evidence class, and limitations.">
           <div>{selectedResearch.map((record) => <ResearchFindingCard key={record.id} record={record} />)}</div>
           <div className="research-actions"><CtaLink href="/research">View all research findings</CtaLink><CtaLink href="/papers">Read the academic papers</CtaLink></div>
         </EditorialSection>
 
-        <EditorialSection id="skills" eyebrow="Research engineering" title="Build the test and preserve its reasoning">
+        <EditorialSection id="skills" eyebrow="Methods and systems" title="Research methods and technical systems">
           <div className="research-grid">
             <article className="research-card">
               <h3>Methodology and infrastructure</h3>
@@ -74,8 +74,8 @@ export default function ResumePage() {
           </div>
         </EditorialSection>
 
-        <EditorialSection id="contact" eyebrow="Contact" title="Research discussions and professional opportunities">
-          <p className="research-prose">I can turn a market question into a reproducible experiment, challenge the measurement, and explain what survived.</p>
+        <EditorialSection id="contact" eyebrow="Contact" title="Trading, quantitative research, and professional opportunities">
+          <p className="research-prose">I am interested in trading and quantitative roles where market judgment, research, and systems work meet.</p>
           <div className="research-actions"><CtaLink href="mailto:woosub815@gmail.com">woosub815@gmail.com</CtaLink><Link href="/contact" className="research-button">Contact Woosub</Link><CtaLink href="https://github.com/MeanyDeany" newTab>GitHub profile</CtaLink></div>
         </EditorialSection>
       </div>
