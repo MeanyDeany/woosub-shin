@@ -5,8 +5,8 @@ import { PageShell } from "@/components/site-shell";
 
 export const metadata = metadataFor(
   "/projects",
-  "Systems and Research Infrastructure",
-  "Woosub Shin's research infrastructure, separate execution engineering, and read-only operational telemetry. Research findings confer no automatic execution authority.",
+  "Trading Research and Systems",
+  "Trading research infrastructure, market-data systems, execution engineering, and read-only account telemetry by Woosub Shin. Research findings confer no automatic execution authority.",
 );
 
 export default function ProjectsPage() {
@@ -14,11 +14,11 @@ export default function ProjectsPage() {
     <PageShell>
       <div className="research-page systems-page">
         <PageHero
-          eyebrow="Woosub Shin · Systems"
-          title="Systems and research infrastructure"
-          intro="Engineering supports reproducible research and dependable operations. Its evidence concerns transport, recovery, state consistency, and operational safety; scientific findings keep their own assessment and authority boundaries."
+          eyebrow="Woosub Shin / Systems"
+          title="Trading research and systems"
+          intro="Systems supporting market research, market data, execution engineering, and operational telemetry. Research findings and execution authority remain separate."
           actions={<><CtaLink href="/asra" kind="primary">Explore ASRA</CtaLink><CtaLink href="/research">Inspect research findings</CtaLink></>}
-          metadata={[{ label: "Research", value: "Hypothesis · Evidence · Validation" }, { label: "Execution systems", value: "Transport · Recovery · State consistency" }, { label: "Telemetry", value: "Read-only operational evidence" }]}
+          metadata={[{ label: "Research", value: "Hypothesis / Evidence / Validation" }, { label: "Execution systems", value: "Transport / Recovery / State consistency" }, { label: "Telemetry", value: "Read-only operational evidence" }]}
         />
 
         <nav className="systems-directory research-container" aria-label="Systems directory">
@@ -28,7 +28,7 @@ export default function ProjectsPage() {
           <Link href="#execution-gateway"><span>Execution engineering</span><strong>Transport, recovery &amp; state <span aria-hidden="true">↓</span></strong></Link>
         </nav>
 
-        <EditorialSection id="research-infrastructure" eyebrow="01 · Research infrastructure" title="Experiments need an inspectable foundation" intro="ASRA is the current research program. The existing Lab and BTC evidence system document its architectural lineage; this does not imply that every historical component is already an integrated ASRA module.">
+        <EditorialSection id="research-infrastructure" eyebrow="Research infrastructure" title="Reproducible market research" intro="ASRA and the retained BTC research systems provide data contracts, replay, provenance, and frozen evaluation records. Historical components are not presented as fully integrated ASRA modules.">
           <div className="research-grid">
             <article className="research-card">
               <h3>Multi-Asset Research Lab</h3>
@@ -43,7 +43,7 @@ export default function ProjectsPage() {
           </div>
         </EditorialSection>
 
-        <EditorialSection id="execution-gateway" eyebrow="02 · Separate execution engineering" title="Systematic Execution Gateway" intro="Transport, recovery, state consistency, and operational safety are engineering questions. They are assessed separately from hypotheses, forecast losses, and policy utility.">
+        <EditorialSection id="execution-gateway" eyebrow="Execution engineering" title="Systematic Execution Gateway" intro="Transport, recovery, state consistency, and operational safety are assessed separately from trading research and model evidence.">
           <div className="authority-boundary">
             <p className="research-kicker">RESEARCH — ASRA</p>
             <p>Hypothesis · Evidence · Validation</p>
@@ -55,7 +55,7 @@ export default function ProjectsPage() {
           <div className="research-actions"><CtaLink href="/build-log#pr41-boundary-digest">Read the historical verification constraint</CtaLink><CtaLink href="/projects/multi-asset-research-lab/claims">Inspect the claims ledger</CtaLink></div>
         </EditorialSection>
 
-        <EditorialSection id="telemetry" eyebrow="03 · Operational evidence" title="Read-only telemetry" intro="The monitor displays sanitized execution-account positions and flow-adjusted performance. Feed freshness describes operations, not the efficacy of ASRA or the retained EMA study.">
+        <EditorialSection id="telemetry" eyebrow="Operational telemetry" title="Read-only account telemetry" intro="The monitor displays sanitized execution-account positions and flow-adjusted performance. Feed freshness describes operations, not the efficacy of ASRA or the retained EMA study.">
           <p className="research-prose">Position and performance panels retain their existing timestamps, stale and unavailable states, and accounting-method labels. Account performance is not attributed to H_PLUS_C, and operational observation is not independent policy confirmation.</p>
           <div className="research-actions"><CtaLink href="/projects/btc-futures-research/live-position" kind="primary">Open the read-only monitor</CtaLink><CtaLink href="/build-log">Read engineering history</CtaLink></div>
         </EditorialSection>
