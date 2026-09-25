@@ -4,7 +4,7 @@ The home account section and `/projects/btc-futures-research/live-position` shar
 
 ## Public daily calendar
 
-Daily account PnL and return come from `/public/execution/daily-performance.json`. Every visitor sees the same values. The site does not reconstruct daily results from lifetime values and does not let browser-local data override the public feed.
+The calendar begins on 2024-11-15, the first supplied Binance futures transaction date. Historical values through the complete CSV export window are derived from the supplied Binance Futures Transaction History files. Authenticated account PnL and return from 2026-08-01 onward come from `/public/execution/daily-performance.json`. Every visitor sees the same public calendar; browser-local notes never override financial values.
 
 A row is one of:
 
@@ -12,7 +12,7 @@ A row is one of:
 - `IN_PROGRESS`: the latest UTC day through the latest authenticated observation;
 - `MISSING`: the backend could not support that day from validated boundary evidence. For dates through 2026-09-22, the UI may replace this display-only gap with a clearly labelled historical CSV realized-PnL fallback.
 
-The CSV fallback comes from the user-provided Binance Futures Transaction History export in UTC+09:00, re-bucketed to UTC days. It sums REALIZED_PNL, FUNDING_FEE and COMMISSION and excludes TRANSFER. Because the CSV does not contain UTC-boundary mark-to-market observations, a CSV fallback is labelled as realized PnL only and shows no daily return. It never overrides a CLOSED or IN_PROGRESS ledger row. Days after the complete export window remain missing rather than inferred.
+The CSV history uses the two user-provided Binance Futures Transaction History exports in UTC+09:00 and re-buckets every event to UTC days. It sums supported BTCUSDT/BTCUSDC REALIZED_PNL, FUNDING_FEE and USDT/USDC COMMISSION under the same stablecoin-par convention used by the authenticated reporting layer. TRANSFER and COIN_SWAP flows are excluded. BNB-denominated commissions are not assigned a made-up USD value, and ambiguous INSURANCE_CLEAR rows are not silently counted; dates containing those items are labelled partial. CSV history has no UTC-boundary unrealized mark, so it never publishes a daily return. From 2026-08-01 onward CLOSED/IN_PROGRESS ledger rows always override CSV history; CSV is used only when that ledger row is MISSING.
 
 The current day is visibly incomplete. Monthly summaries keep authenticated ledger-day PnL and CSV realized PnL separate so unlike accounting bases are not silently added together; daily percentage returns are never summed.
 
