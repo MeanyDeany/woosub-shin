@@ -19,6 +19,11 @@ await page.route('**/public/execution/*.json', async route => {
   let body;
   if (file === 'open-positions.json') body = { ...common, schema_version: 2, dataset_id: 'binance_usdm_public_open_positions_v2', position_mode: 'ONE_WAY', observation_identity_sha256: sha, authority_classification: 'AUTHENTICATED_READ_ONLY_TELEMETRY', open_position_count: malformed ? 77 : empty ? 0 : 2, positions: empty ? [] : [{ symbol: 'BTCUSDC', position_side: 'BOTH', position_state: 'LONG', ordinary_open_orders_present: false, algo_open_orders_present: true }, { symbol: 'ETHUSDT', position_side: 'BOTH', position_state: 'SHORT', ordinary_open_orders_present: true, algo_open_orders_present: false }] };
   if (file === 'lifetime-performance.json') body = { ...common, schema_version: 2, dataset_id: 'binance_usdm_public_flow_adjusted_performance_v2', tracking_started_at_utc: '2026-08-01T00:00:00Z', scope: 'BINANCE_USDM_ACCOUNT_WIDE_TRADING_V2', reporting_currency: 'USD', realized_net_pnl: 150, current_unrealized_pnl: -9.77, lifetime_net_pnl: 140.23, lifetime_return_pct: 7.01, return_method: 'MODIFIED_DIETZ_FLOW_ADJUSTED_V2', capital_flow_handling: 'EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2', authority_classification: 'PERFORMANCE_TELEMETRY_ONLY' };
+  if (file === 'daily-performance.json') {
+    const last = observed.slice(0,10); const days=[]; let cursor='2026-08-01'; let n=0;
+    while(cursor<=last){ const start=cursor+'T00:00:00Z'; const isLast=cursor===last; const end=isLast?observed:new Date(Date.parse(start)+86400000-1000).toISOString(); days.push({date_utc:cursor,status:isLast?'IN_PROGRESS':'CLOSED',start_observed_at_utc:start,end_observed_at_utc:end,actual_duration_seconds:Math.floor((Date.parse(end)-Date.parse(start))/1000),net_pnl:(n%4===0?-12:18+n),return_pct:(n%4===0?-0.4:0.5+n/100)}); cursor=new Date(Date.parse(start)+86400000).toISOString().slice(0,10); n++; }
+    body={...common,schema_version:1,dataset_id:'binance_usdm_public_daily_performance_v1',tracking_started_at_utc:'2026-08-01T00:00:00Z',scope:'BINANCE_USDM_ACCOUNT_WIDE_DAILY_TRADING_V1',reporting_currency:'USD',days,return_method:'MODIFIED_DIETZ_FLOW_ADJUSTED_V2',capital_flow_handling:'EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2',authority_classification:'PERFORMANCE_TELEMETRY_ONLY'};
+  }
   if (file === 'rolling-performance.json') body = { ...common, schema_version: 1, dataset_id: 'binance_usdm_public_rolling_performance_v1', scope: 'BINANCE_USDM_ACCOUNT_WIDE_ROLLING_TRADING_V1', reporting_currency: 'USD', return_method: 'MODIFIED_DIETZ_FLOW_ADJUSTED_V2', capital_flow_handling: 'EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2', authority_classification: 'PERFORMANCE_TELEMETRY_ONLY', windows: [7,30].map(days=>({ window: `${days}D`, requested_days: days, start_observed_at_utc: new Date(Date.parse(observed)-days*86400000).toISOString(), end_observed_at_utc: observed, actual_duration_seconds: days*86400, net_pnl: days === 7 ? 38 : 95, return_pct: days === 7 ? 1.9 : 4.75 })) };
   await route.fulfill({ status: body ? 200 : 404, contentType: 'application/json', body: JSON.stringify(body ?? {}) });
 });
@@ -26,7 +31,7 @@ const url = 'http://localhost:3000/projects/btc-futures-research/live-position';
 try {
   await page.goto(url);
   await page.locator('.td-instrument').filter({hasText:'BTCUSDC'}).waitFor();
-  await page.locator('#journal-pnl').waitFor({ state:'visible' });
+  await page.locator('#journal-note').waitFor({ state:'visible' });
   const skip = page.locator('.research-skip-link');
   assert.equal(await skip.evaluate(el => getComputedStyle(el).opacity), '0');
   await skip.focus();
@@ -38,26 +43,21 @@ try {
   await page.getByRole('textbox', {name:'Filter symbols'}).fill('ETH');
   assert.equal(await page.locator('.td-instrument').filter({hasText:'BTCUSDC'}).count(), 0);
   await page.getByRole('textbox', {name:'Filter symbols'}).fill('');
-  await page.locator('#journal-pnl').fill('125.50');
-  await page.locator('#journal-return').fill('1.25');
   await page.locator('#journal-note').fill('Synthetic QA note. Followed the plan.');
-  await page.getByRole('button',{ name:/Save daily record/ }).click();
-  await page.getByText(/Saved in this browser\. Export/).waitFor();
+  await page.getByRole('button',{ name:/Save private note/ }).click();
+  await page.getByText(/Private note saved in this browser/).waitFor();
   await page.reload();
   await page.waitForFunction(()=>document.querySelector('#journal-note')?.value === 'Synthetic QA note. Followed the plan.');
-  assert.equal(await page.locator('#journal-pnl').inputValue(), '125.5');
   const exported = page.waitForEvent('download');
-  await page.getByRole('button', {name:/Export backup/}).click();
+  await page.getByRole('button', {name:/Export private notes/}).click();
   const backup = await fs.readFile(await (await exported).path(),'utf8');
   const data = JSON.parse(backup);
-  assert.equal(data.entries.at(-1).pnlUsd,125.5);
+  assert.equal(data.entries.at(-1).note,'Synthetic QA note. Followed the plan.');
   assert.equal(data.timezone,'UTC');
-  await page.getByRole('button', {name:'Delete this local record', exact:true}).click();
-  await page.getByText('Local record deleted.', {exact:true}).waitFor();
-  assert.equal(await page.locator('#journal-pnl').inputValue(), '');
+  await page.getByRole('button', {name:'Delete private note', exact:true}).click();
+  await page.getByText('Private note deleted.', {exact:true}).waitFor();
   await page.locator('input[type=file]').setInputFiles({ name:'journal-backup.json', mimeType:'application/json', buffer:Buffer.from(backup) });
-  await page.getByText(/Imported 1 records into this browser/).waitFor();
-  assert.equal(await page.locator('#journal-pnl').inputValue(), '125.5');
+  await page.getByText(/Imported 1 private records/).waitFor();
   assert.equal(await page.locator('#journal-note').inputValue(), 'Synthetic QA note. Followed the plan.');
   const beforeMonth = await page.locator('.td-calendar-toolbar h3').textContent();
   await page.getByRole('button', {name:'Previous month',exact:true}).click();
@@ -83,5 +83,5 @@ try {
   empty=false; malformed=true; await page.reload(); await page.getByText('Position feed unavailable',{exact:true}).waitFor();
   assert.equal(await page.getByText('No open positions in this observation',{exact:true}).count(),0);
   assert.deepEqual(issues,[]);
-  console.log('BROWSER_QA_PASS: position filters, local save/reload/export/import/delete, month navigation, keyboard skip link, desktop/mobile, stale feed, flat feed, invalid feed, zero page errors');
+  console.log('BROWSER_QA_PASS: public daily calendar, private notes save/reload/export/import/delete, position filters, month navigation, keyboard access, desktop/mobile, stale/flat/invalid feeds');
 } finally { await browser.close(); }
