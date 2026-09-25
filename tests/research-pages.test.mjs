@@ -90,7 +90,7 @@ test("Home presents ASRA with its exact expansion and canonical program links", 
   const heroText = textContent(hero);
   assert.match(heroText, /WOOSUB SHIN/);
   assert.match(heroText, /Quantitative Researcher/);
-  assert.match(heroText, /Quantitative research built to survive falsification\./);
+  assert.match(heroText, /Systematic trading, market microstructure, and quantitative research\./);
   assert.match(heroText, /\bASRA\b/);
   assert.match(heroText, /AI Systematic Research Architecture/);
   assert.match(html, /href="\/asra(?:#|")/);
@@ -101,7 +101,7 @@ test("Home presents ASRA with its exact expansion and canonical program links", 
 test("Home surfaces trading evidence and trader-behavior ML with explicit limits", () => {
   const html = renderHome();
   const text = textContent(html);
-  assert.match(text, /Trader behavior ML · latest research/);
+  assert.match(text, /Trader behavior ML/);
   assert.doesNotMatch(text, /Futures OOS Sharpe 1\.236/);
   assert.match(text, /686 ML-eligible episodes/);
   assert.match(text, /114 Newest BTCUSDC episodes/);
@@ -109,7 +109,7 @@ test("Home surfaces trading evidence and trader-behavior ML with explicit limits
   assert.match(text, /67\.76% Final conditional LONG\/SHORT imitation/);
   assert.match(text, /worst 1% of episodes accounted for 50\.20% of all losing PnL/);
   assert.match(text, /do not establish a profitable-entry model or a reliable risk veto/);
-  assert.match(text, /read-only 24\/7 observer now collects forward action/);
+  assert.match(text, /read-only observer now collects forward action/);
 });
 
 test("Home observation geometry stays decorative and server-rendered", () => {
@@ -168,7 +168,7 @@ test("Home renders the frozen historical comparison after independent evidence w
   assert.deepEqual(getMetricGroup(researchEvidence.independentRiskForecast).metrics.map(metric => metric.value), ["+12.58%", "+11.65%", "4 / 4"]);
   assert.deepEqual([...independentSection.matchAll(/<span class="metric-value">([^<]+)<\/span>/g)].map(match => match[1]), ["+12.58%", "+11.65%", "4 / 4"]);
   assert.ok(html.indexOf(independentSection) < html.indexOf('id="historical-research-performance"'));
-  assert.ok(html.indexOf('id="historical-research-performance"') < html.indexOf("How ASRA works"));
+  assert.ok(html.indexOf('id="historical-research-performance"') < html.indexOf("ASRA research process"));
   assert.ok(html.slice(html.indexOf(independentSection) + independentSection.length).startsWith('<section id="historical-research-performance"'), "Historical performance must immediately follow the independent finding.");
   assert.doesNotMatch(html, /≈0\.9963|0\.050895|0\.007539%|0\.130519%/);
 });
