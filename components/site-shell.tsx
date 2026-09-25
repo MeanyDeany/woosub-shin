@@ -29,7 +29,7 @@ export function SiteFooter() {
       <div className="research-footer__inner">
         <div className="research-footer__identity">
           <p className="research-footer__name">Woosub Shin</p>
-          <p>Quantitative research · Financial econometrics · Reproducible research engineering</p>
+          <p>Trader / Quantitative research / Market microstructure</p>
         </div>
         <nav aria-label="Footer navigation" className="research-footer__links">
           <Link href="/research">Research</Link>
@@ -42,7 +42,7 @@ export function SiteFooter() {
         <div className="research-footer__record">
           <p>© {currentYear} Woosub Shin</p>
           <p><VisitorStats /></p>
-          <p>Research results are not a live track record</p>
+          <p>Research results and account telemetry have separate scopes</p>
         </div>
       </div>
     </footer>
