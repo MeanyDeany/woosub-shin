@@ -133,6 +133,7 @@ function PublicDailyCalendar({ feedUrl }: { feedUrl: string }) {
   const [ready, setReady] = useState(false);
   const [notice, setNotice] = useState("");
   const [problem, setProblem] = useState(false);
+  const [calendarNow, setCalendarNow] = useState(0);
   const fileInput = useRef<HTMLInputElement>(null);
 
   const loadDraft = useCallback((date: string, entry?: JournalEntry) => {
@@ -140,12 +141,12 @@ function PublicDailyCalendar({ feedUrl }: { feedUrl: string }) {
   }, []);
   useEffect(() => {
     const initial = window.setTimeout(() => {
-      const date = utcDay(); setToday(date); setMonth(date.slice(0,7));
+      const date = utcDay(); setToday(date); setMonth(date.slice(0,7)); setCalendarNow(Date.now());
       try { const stored=readJournal(); setJournal(stored); loadDraft(date,stored.entries.find(e=>e.date===date)); setReady(true); }
       catch { setNotice("Private notes could not be read. Public performance remains independent."); setProblem(true); }
     },0);
     const onStorage=(event:StorageEvent)=>{ if(event.key!==JOURNAL_KEY&&event.key!==null)return; try{const stored=readJournal();setJournal(stored);setNotice("Private notes changed in another tab. Unsaved edits are preserved.");}catch{setProblem(true);setReady(false);setNotice("Private note storage could not be read. Public performance remains visible.");}};
-    const midnight=window.setInterval(()=>setToday(utcDay()),60_000);
+    const midnight=window.setInterval(()=>{setToday(utcDay());setCalendarNow(Date.now());},60_000);
     window.addEventListener("storage",onStorage);
     return()=>{window.clearTimeout(initial);window.clearInterval(midnight);window.removeEventListener("storage",onStorage);};
   },[loadDraft]);
@@ -171,7 +172,7 @@ function PublicDailyCalendar({ feedUrl }: { feedUrl: string }) {
 
   const dayLabel=(day?:BinanceDailyPerformanceDay)=>day?.status==="MISSING"?"Missing source":day?.status==="IN_PROGRESS"?"Live / incomplete":day?.status==="CLOSED"?"Closed UTC day":"Not published";
   return <section id="daily-journal" className="td-journal" aria-labelledby="td-journal-heading">
-    <div className="td-section-kicker"><span>04 <strong>PUBLIC DAILY PERFORMANCE</strong></span><Status label={feedState(daily, Date.now())} /></div>
+    <div className="td-section-kicker"><span>04 <strong>PUBLIC DAILY PERFORMANCE</strong></span><Status label={feedState(daily, calendarNow)} /></div>
     <div className="td-journal-intro"><div><h2 id="td-journal-heading">Every day, publicly accounted for.</h2><p>Visitors see the same flow-adjusted daily account results. Your notes remain private to this browser.</p></div><div className="td-actions"><button className="td-button" onClick={()=>void daily.refresh()} disabled={daily.refreshing}>{daily.refreshing?"Updating":"Refresh daily"}</button><button className="td-button" onClick={exportBackup}>Export private notes <span aria-hidden="true">↓</span></button><button className="td-button" disabled={!ready} onClick={()=>fileInput.current?.click()}>Import notes</button><input className="td-sr-only" type="file" accept="application/json,.json" ref={fileInput} tabIndex={-1} aria-label="Import private note backup" onChange={e=>void importBackup(e.target.files?.[0])}/></div></div>
     <div className="td-journal-layout"><div className="td-panel td-calendar-panel"><div className="td-calendar-toolbar"><div><h3>{month?new Intl.DateTimeFormat("en-US",{month:"long",year:"numeric",timeZone:"UTC"}).format(new Date(`${month}-01T00:00:00Z`)):"Daily calendar"}</h3><span className="td-muted td-mono">PUBLIC ACCOUNT PERFORMANCE / UTC</span></div><div className="td-actions"><button className="td-button td-month-arrow" aria-label="Previous month" disabled={!month||month<=TRACKING_START.slice(0,7)} onClick={()=>setMonth(shiftMonth(month,-1))}>‹</button><button className="td-button" onClick={()=>{if(today===selected)setMonth(today.slice(0,7));else choose(today);}} disabled={!ready}>Today</button><button className="td-button td-month-arrow" aria-label="Next month" disabled={!month||month>=today.slice(0,7)} onClick={()=>setMonth(shiftMonth(month,1))}>›</button></div></div>
       <div className="td-month-summary"><SummaryItem label="Published month PnL"><span className={tone(net)}>{money(net)}</span></SummaryItem><SummaryItem label="Positive / negative days"><span className="td-positive">{positive}</span><span className="td-muted"> / </span><span className="td-negative">{negative}</span></SummaryItem><SummaryItem label="Measured days">{measured.length}<span className="td-muted"> public rows</span></SummaryItem></div>
