@@ -14,7 +14,7 @@ export const metadata = metadataFor(
 );
 
 export default function LiveBtcPositionPage() {
-  return <PageShell><div style={{ minHeight: "100vh", background: "#090c10" }}>
+  return <PageShell><div style={{ minHeight: "100vh", background: "#090a0b" }}>
     <Link className="td-page-back" href="/projects/btc-futures-research">← BTC research system</Link>
     <BtcTradingDesk
       positionFeedUrl={deriveBtcLiveMultiPositionFeedUrl(process.env.NEXT_PUBLIC_BTC_RESEARCH_OBSERVATORY_URL, process.env.NEXT_PUBLIC_BTC_MULTI_POSITION_URL)}
