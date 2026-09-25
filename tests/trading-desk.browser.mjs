@@ -59,14 +59,18 @@ try {
   await page.locator('input[type=file]').setInputFiles({ name:'journal-backup.json', mimeType:'application/json', buffer:Buffer.from(backup) });
   await page.getByText(/Imported 1 private records/).waitFor();
   assert.equal(await page.locator('#journal-note').inputValue(), 'Synthetic QA note. Followed the plan.');
-  const beforeMonth = await page.locator('.td-calendar-toolbar h3').textContent();
-  await page.getByRole('button', {name:'Previous month',exact:true}).click();
-  assert.notEqual(await page.locator('.td-calendar-toolbar h3').textContent(), beforeMonth);
+  await page.getByRole('button', {name:'Start', exact:true}).click();
+  assert.match(await page.locator('.td-calendar-toolbar h3').textContent(), /November 2024/);
+  await page.getByRole('button', {name:/2024-11-15/}).click();
+  await page.getByText('CSV realized PnL', {exact:true}).first().waitFor();
+  assert.match(await page.locator('.td-csv-explain').textContent(), /Stablecoin realized cash PnL/i);
+  assert.equal(await page.getByRole('button', {name:'Previous month',exact:true}).isDisabled(), true);
+  await page.getByRole('button', {name:'Today', exact:true}).click();
+  const currentMonth = await page.locator('.td-calendar-toolbar h3').textContent();
+  assert.doesNotMatch(currentMonth, /November 2024/);
   await page.getByRole('button', {name:'2026-08-20, +$177.90 public net PnL'}).click();
   await page.getByText('CSV realized PnL', {exact:true}).first().waitFor();
-  assert.match(await page.locator('.td-csv-explain').textContent(), /does not include unrealized mark-to-market/i);
-  await page.getByRole('button', {name:'Today', exact:true}).click();
-  assert.equal(await page.locator('.td-calendar-toolbar h3').textContent(), beforeMonth);
+  assert.match(await page.locator('.td-csv-explain').textContent(), /does not include UTC-boundary unrealized mark-to-market/i);
   await fs.mkdir('/tmp/desk-qa', { recursive:true });
   // Seed a few explicitly synthetic daily records solely for visual QA.
   await page.evaluate(() => {
@@ -86,5 +90,5 @@ try {
   empty=false; malformed=true; await page.reload(); await page.getByText('Position feed unavailable',{exact:true}).waitFor();
   assert.equal(await page.getByText('No open positions in this observation',{exact:true}).count(),0);
   assert.deepEqual(issues,[]);
-  console.log('BROWSER_QA_PASS: public daily calendar, CSV realized fallback, private notes save/reload/export/import/delete, position filters, month navigation, keyboard access, desktop/mobile, stale/flat/invalid feeds');
+  console.log('BROWSER_QA_PASS: public daily calendar from first trade, CSV realized/partial history, private notes, ledger precedence, position filters, month navigation, keyboard access, desktop/mobile, stale/flat/invalid feeds');
 } finally { await browser.close(); }
