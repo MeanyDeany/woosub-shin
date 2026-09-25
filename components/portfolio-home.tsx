@@ -25,13 +25,13 @@ export function PortfolioHome() {
     <section className="research-hero home-hero"><ObservationField /><div className="research-container research-split">
       <div>
         <p className="home-identity">WOOSUB SHIN</p>
-        <p className="home-role">Quantitative Researcher</p>
-        <h1 lang="en">Quantitative research in market risk, systematic trading, and market microstructure.</h1>
+        <p className="home-role">Trader / Quantitative Researcher</p>
+        <h1 lang="en">Systematic trading, market microstructure, and quantitative research.</h1>
         <div className="home-program">
           <strong className="program-mark">ASRA</strong>
           <div><p>AI Systematic Research Architecture</p><p className="program-method">Observation / Test / Falsification</p></div>
         </div>
-        <p className="research-prose">I build reproducible market studies using financial econometrics and research engineering. Current work focuses on BTC market microstructure, while earlier forecasting and strategy studies remain frozen with their original evidence boundaries.</p>
+        <p className="research-prose">I trade futures and build research systems to test market hypotheses, risk models, and execution ideas. Current work focuses on BTC market microstructure and low-latency systems; earlier forecasting and strategy studies remain frozen with their original evidence boundaries.</p>
         <div className="research-actions">
           <Link className="research-button primary" href="/asra">Explore ASRA<span aria-hidden="true">→</span></Link>
           <Link className="research-button" href="/research">View Research</Link>
@@ -40,7 +40,7 @@ export function PortfolioHome() {
       </div>
       <dl className="home-background" lang="en">
         <dt>MSc Economics</dt><dd>University of Copenhagen</dd>
-        <dt>Research foundation</dt><dd>Financial econometrics<br />Empirical asset pricing</dd>
+        <dt>Trading focus</dt><dd>Futures<br />Market microstructure</dd>
         <dt>Research engineering</dt><dd>Python · SQL · Git · Linux</dd>
         <dt>Based in</dt><dd>Seoul, South Korea</dd>
       </dl>
