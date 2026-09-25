@@ -5,11 +5,12 @@ import { BtcTradingDesk } from "@/components/btc-trading-desk";
 import { deriveBtcLifetimePerformanceFeedUrl } from "@/lib/btc-lifetime-performance";
 import { deriveBtcLiveMultiPositionFeedUrl } from "@/lib/btc-live-multi-position";
 import { deriveBtcRollingPerformanceFeedUrl } from "@/lib/btc-rolling-performance";
+import { deriveBtcDailyPerformanceFeedUrl } from "@/lib/btc-daily-performance";
 
 export const metadata = metadataFor(
   "/projects/btc-futures-research/live-position",
   "Positions, Performance & Daily Journal",
-  "Read-only Binance USD-M positions and flow-adjusted account performance since August 1, 2026, with a private browser-local daily PnL calendar and trading journal.",
+  "Read-only Binance USD-M positions and flow-adjusted account performance since August 1, 2026, including a public UTC daily performance calendar. Personal trading notes remain browser-local.",
 );
 
 export default function LiveBtcPositionPage() {
@@ -19,6 +20,7 @@ export default function LiveBtcPositionPage() {
       positionFeedUrl={deriveBtcLiveMultiPositionFeedUrl(process.env.NEXT_PUBLIC_BTC_RESEARCH_OBSERVATORY_URL, process.env.NEXT_PUBLIC_BTC_MULTI_POSITION_URL)}
       performanceFeedUrl={deriveBtcLifetimePerformanceFeedUrl(process.env.NEXT_PUBLIC_BTC_RESEARCH_OBSERVATORY_URL, process.env.NEXT_PUBLIC_BTC_LIFETIME_PERFORMANCE_URL)}
       rollingFeedUrl={deriveBtcRollingPerformanceFeedUrl(process.env.NEXT_PUBLIC_BTC_RESEARCH_OBSERVATORY_URL, process.env.NEXT_PUBLIC_BTC_ROLLING_PERFORMANCE_URL)}
+      dailyFeedUrl={deriveBtcDailyPerformanceFeedUrl(process.env.NEXT_PUBLIC_BTC_RESEARCH_OBSERVATORY_URL, process.env.NEXT_PUBLIC_BTC_DAILY_PERFORMANCE_URL)}
     />
   </div></PageShell>;
 }

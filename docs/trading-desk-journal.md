@@ -1,21 +1,27 @@
-# Account dashboard and daily journal
+# Public account dashboard and private notes
 
-The home account section and `/projects/btc-futures-research/live-position` share a compact, responsive dashboard. Existing public V2 positions, V2 lifetime performance and V1 rolling performance parsers remain unchanged. No account, exchange, order or strategy APIs were added.
+The home account section and `/projects/btc-futures-research/live-position` share a compact responsive dashboard. Existing public V2 positions, V2 lifetime performance and V1 rolling performance remain read-only. The detail page additionally consumes the public V1 UTC daily-performance projection.
 
-## Daily records
+## Public daily calendar
 
-The calendar is explicitly a manual UTC journal, not a Binance daily PnL feed. The existing connected feeds provide current and rolling aggregate observations, not daily history. Unknown days stay empty. Monthly net PnL sums only manually recorded amounts, counts those days, and never sums return percentages or reconstructs daily PnL from cumulative-return changes.
+Daily account PnL and return come from `/public/execution/daily-performance.json`. Every visitor sees the same values. The site does not reconstruct daily results from lifetime values and does not let browser-local data override the public feed.
 
-Records live in browser localStorage under `meanydeany.trading-journal.v1`. They are private to that browser profile and site origin, not synchronized across devices, not published to visitors, and are removed if site data is cleared. JSON export/import supports backups and explicitly confirms overwrite conflicts. Size, date, duplicate, number and note validation happens before storage writes. A saved-version check rejects stale same-day drafts after another tab saves. This is not a transactional multi-user store. No server storage or automatic browser-closed recording is claimed.
+A row is one of:
 
-## Freshness and privacy
+- `CLOSED`: a completed UTC day with validated backend anchors;
+- `IN_PROGRESS`: the latest UTC day through the latest authenticated observation;
+- `MISSING`: the backend could not support that day from validated boundary evidence.
 
-Each public feed polls at 30 seconds while the page is visible, uses a 10-second request deadline, aborts superseded/unmounted requests and rejects malformed, future-dated or older observations. The last good values remain visible with degraded/stale status; unavailable data never implies a flat account. The source's 180-second freshness TTL remains authoritative. Live labels are data-dependent, not decorative.
+Missing rows display no fabricated financial value. The current day is visibly incomplete. Month PnL is the sum of published non-null daily PnL rows; daily percentage returns are never summed.
 
-The source still determines all public financial values, Modified Dietz methodology, August 1 tracking boundary and canonical positions order. Sizes, exact prices, balances, credentials and per-position PnL remain excluded. Regular/algo order presence is not labelled as protection.
+The public projection contains no balances, exact position sizes, prices, credentials, order identifiers or personal notes.
 
-## Verification
+## Private notes
 
-`node --experimental-strip-types --test tests/*.test.mjs`
+The calendar can hold a private text note for the site owner. Notes remain in browser localStorage under `meanydeany.trading-journal.v1`; they are not uploaded, published or visible to interviewers. JSON export/import remains a browser-local backup mechanism. Historical browser-local PnL/return fields from the earlier journal format may remain in backups for compatibility, but the UI does not treat them as account performance.
 
-The scoped UI workflow type-checks, lints and builds the real application, then exercises position filters, local daily saving and reload, backup export/import, delete, month navigation, keyboard access, desktop/mobile layout, stale feeds, flat feeds and malformed feeds in Chromium. Browser screenshots are marked synthetic QA fixtures and must never be described as actual account performance. No journal or fake account seed data is included in production rendering.
+## Freshness
+
+Public feeds poll every 30 seconds while visible, use a 10-second request deadline and preserve the last validated value on failed refresh. The source's 180-second freshness TTL is authoritative. A failed or malformed feed never implies that the account is flat or that a missing day had zero PnL.
+
+The public daily projection is produced by the execution-gateway reporting layer from the existing authenticated flow-adjusted ledger. The website itself has no Binance credential, private exchange call, order route or execution capability.
