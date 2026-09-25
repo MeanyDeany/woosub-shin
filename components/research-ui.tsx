@@ -152,18 +152,18 @@ export function PolicySummary() {
 
 export function CurrentResearch({ detailed = false }: { detailed?: boolean }) {
   return <>
-    <p className="research-prose">The active priority has shifted from extending bar-based strategy search to event-level Bitcoin market microstructure and high-frequency research. Prior ASRA, forecasting and historical strategy studies remain retained as frozen evidence rather than being rewritten around the new direction.</p>
+    <p className="research-prose">Current work focuses on event-level BTC market microstructure, passive execution, and low-latency market-data systems. Earlier ASRA, forecasting, and historical strategy studies remain frozen under their original evidence boundaries.</p>
     <div className="research-grid" style={{ marginTop: 32 }}>
       <article id="microstructure-hft" className="research-next">
-        <p className="research-kicker">Current direction · Market microstructure</p>
-        <h3>BTC Market Microstructure &amp; HFT Research</h3>
+        <p className="research-kicker">Current direction / Market microstructure</p>
+        <h3>BTC Market Microstructure and HFT</h3>
         <p>Do observable order-flow and liquidity states change fill probability and post-fill markouts enough to support robust, cost-aware passive-execution payoff?</p>
         <p className="research-note">{detailed ? "Planned measurement layer: event-level trades, quotes and order-book updates; local book reconstruction; OFI, microprice, spread, depth and trade imbalance; then 1s, 5s, 10s, 30s and 60s markouts." : "5-minute and 1-minute layers remain as context and benchmarks. The new information layer is event-level market mechanics, not faster bar indicators."}</p>
         <div className="research-actions"><Link href="/projects">Inspect the supporting research systems <span aria-hidden="true">→</span></Link></div>
       </article>
       <article id="cpp-market-data-core" className="research-next">
-        <p className="research-kicker">Current build · Systems engineering</p>
-        <h3>C++ Market-Data &amp; Deterministic Replay Core</h3>
+        <p className="research-kicker">Current build / Systems engineering</p>
+        <h3>C++ market-data and deterministic replay core</h3>
         <p>Build an event-driven core that captures, validates, reconstructs and replays trades and order-book updates with explicit timestamp and sequence discipline.</p>
         <p className="research-note">Raw WebSocket capture → sequence validation → local order book → deterministic replay → microstructure features → fill-probability, adverse-selection and markout analysis in Python.</p>
         <div className="research-actions"><Link href="/projects#execution-gateway">Inspect execution engineering <span aria-hidden="true">→</span></Link></div>
