@@ -10,7 +10,7 @@ import { deriveBtcDailyPerformanceFeedUrl } from "@/lib/btc-daily-performance";
 export const metadata = metadataFor(
   "/projects/btc-futures-research/live-position",
   "Positions, Performance & Daily Journal",
-  "Read-only Binance USD-M positions and flow-adjusted account performance since August 1, 2026, with a private browser-local daily PnL calendar and trading journal.",
+  "Read-only Binance USD-M positions and flow-adjusted account performance since August 1, 2026, including a public UTC daily performance calendar. Personal trading notes remain browser-local.",
 );
 
 export default function LiveBtcPositionPage() {
