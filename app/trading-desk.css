@@ -11,3 +11,5 @@
 @media(prefers-reduced-motion:reduce){.trading-desk *{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 
 .td-public-day-values{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}.td-public-day-values>div{border:1px solid #303946;background:#0b1017;border-radius:7px;padding:12px}.td-public-day-values span{display:block;color:#8f9bad;font-size:9px;margin-bottom:7px}.td-public-day-values strong{font-size:18px;font-weight:550}.td-day-source{margin:-6px 0 19px!important;color:#718096;line-height:1.6}.td-day .td-no-result{font-size:8px;line-height:1.35}
+
+.td-day-csv{border-style:dashed}.td-calendar-legend .td-legend-csv{background:transparent;border:1px dashed #8d9aac}.td-csv-explain{margin:-4px 0 18px!important;padding:10px 11px;border:1px dashed #3a4656;border-radius:7px;color:#9eabbd;font-size:10px;line-height:1.65;background:#0d1218}
