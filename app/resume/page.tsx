@@ -23,8 +23,8 @@ export default function ResumePage() {
       <div className="research-page">
         <PageHero
           eyebrow="About / Resume"
-          title="Woosub Shin — Trader / Quantitative Researcher"
-          intro="Futures trading, market microstructure, financial econometrics, and systematic research."
+          title="Woosub Shin."
+          intro="Futures trader and quantitative researcher. My work connects financial econometrics, market microstructure, and systematic research."
           actions={<><CtaLink href="mailto:woosub815@gmail.com" kind="primary">Email Woosub</CtaLink><CtaLink href="/contact">Get in touch</CtaLink><CtaLink href="https://github.com/MeanyDeany" newTab>GitHub profile</CtaLink></>}
           metadata={[{ label: "Location", value: "Seoul, South Korea" }, { label: "Education", value: "MSc Economics / University of Copenhagen" }, { label: "Tools", value: "Python / SQL / Git / Linux" }]}
         />
@@ -61,15 +61,15 @@ export default function ResumePage() {
             <article className="research-card">
               <h3>Technical tools</h3>
               <ul className="research-prose mt-4 space-y-3">
-                <li>Python · SQL / SQLite · Git / GitHub · Linux</li>
-                <li>AWS · CI · market-data and research pipelines</li>
-                <li>Time-series analysis · backtesting · walk-forward validation · bootstrap</li>
+                <li>Python / SQL / SQLite / Git / GitHub / Linux</li>
+                <li>AWS / CI / market-data and research pipelines</li>
+                <li>Time-series analysis / backtesting / walk-forward validation / bootstrap</li>
               </ul>
               <p className="research-prose mt-5">AI tools support implementation and review. Research claims remain tied to explicit tests, evidence, and human responsibility.</p>
             </article>
           </div>
           <div className="research-grid mt-10">
-            <article className="research-card"><h3>Certification</h3><p className="site-strong mt-4">Certified Investment Manager</p><p className="research-prose mt-2">KOFIA · Korea</p></article>
+            <article className="research-card"><h3>Certification</h3><p className="site-strong mt-4">Certified Investment Manager</p><p className="research-prose mt-2">KOFIA / Korea</p></article>
             <article className="research-card"><h3>Languages</h3><dl className="metadata-list mt-4"><div className="metadata-row flex flex-wrap justify-between gap-4 py-3"><dt>Korean</dt><dd>Native</dd></div><div className="metadata-row flex flex-wrap justify-between gap-4 border-t py-3"><dt>English</dt><dd>Native / bilingual</dd></div></dl></article>
           </div>
         </EditorialSection>

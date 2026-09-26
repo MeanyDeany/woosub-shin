@@ -7,6 +7,7 @@ import "./astra.css";
 import "./trading-desk.css";
 import "./portfolio.css";
 import "./portfolio-shared.css";
+import "./portfolio-compat.css";
 
 const siteUrl = "https://meanydeany.com";
 const siteTitle = "Woosub Shin / Trader / Quantitative Researcher";

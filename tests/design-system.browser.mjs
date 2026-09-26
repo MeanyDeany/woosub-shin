@@ -11,7 +11,6 @@ try {
   for (const theme of ["dark", "light"]) for (const width of [1440, 390]) {
     const context = await browser.newContext({ viewport: { width, height: 1000 }, reducedMotion: "reduce" });
     await context.addInitScript(value => localStorage.setItem("meanydeany-theme", value), theme);
-    // External sources are unavailable in layout QA, not replaced by made-up PnL.
     await context.route("**/*", async route => {
       const url = new URL(route.request().url());
       if (!["localhost", "127.0.0.1"].includes(url.hostname)) return route.fulfill({ status: 503, contentType: "application/json", body: '{"error":"Layout QA: external source disabled"}' });
@@ -29,7 +28,9 @@ try {
         return {
           h1Count: h1s.length, heading: heading?.textContent,
           font: heading ? getComputedStyle(heading).fontFamily : null,
+          headingSize: heading ? parseFloat(getComputedStyle(heading).fontSize) : null,
           ledgerHeading: Boolean(heading?.closest(".trading-desk")),
+          wordmarkX: document.querySelector(".research-wordmark")?.getBoundingClientRect().left,
           theme: document.documentElement.dataset.theme,
           gutter: getComputedStyle(document.documentElement).getPropertyValue("--folio-gutter").trim(),
           bodyBackground: getComputedStyle(document.body).backgroundColor,
@@ -43,6 +44,8 @@ try {
       if (response?.status() !== 200) problems.push("HTTP status");
       if (snapshot.h1Count !== 1) problems.push("primary heading count");
       if (!snapshot.ledgerHeading && !snapshot.font?.includes("Georgia")) problems.push("display font mismatch");
+      if (!snapshot.ledgerHeading && Math.abs(snapshot.headingSize - (width === 390 ? 43 : 82.08)) > 0.1) problems.push("display size mismatch");
+      if (Math.abs(snapshot.wordmarkX - (width === 390 ? 20 : 144)) > 1) problems.push("navigation gutter mismatch");
       if (snapshot.gutter !== (width === 390 ? "20px" : "72px")) problems.push("responsive gutter mismatch");
       if (snapshot.theme !== theme) problems.push("theme mismatch");
       if (snapshot.documentWidth > width + 1) problems.push("document overflow");
@@ -61,7 +64,6 @@ try {
     await page.locator('header a[href="/resume"]').first().click();
     await page.waitForURL("**/resume");
     assert.ok((await page.locator("h1").evaluate(e => getComputedStyle(e).fontFamily)).includes("Georgia"));
-    // Both account routes display the accounting distinction before the dashboard.
     for (const route of ["/trading", "/projects/btc-futures-research/live-position"]) {
       await page.goto(`http://localhost:3000${route}`, { waitUntil: "networkidle" });
       const guide = page.getByRole("complementary", { name: "Calendar accounting guide" });
@@ -76,5 +78,5 @@ try {
   assert.deepEqual(failures, []);
   assert.deepEqual(exceptions, []);
   assert.deepEqual(consoleErrors, []);
-  console.log(`DESIGN_SYSTEM_OK: ${results.length} page/theme/viewport combinations; shared typography, canvas, gutters, navigation and accounting-guide checks passed.`);
+  console.log(`DESIGN_SYSTEM_OK: ${results.length} page/theme/viewport combinations; typography sizes, shared grid, navigation and accounting-guide checks passed.`);
 } finally { await browser.close(); }
