@@ -6,9 +6,10 @@ import "./navigation.css";
 import "./astra.css";
 import "./trading-desk.css";
 import "./portfolio.css";
+import "./portfolio-shared.css";
 
 const siteUrl = "https://meanydeany.com";
-const siteTitle = "Woosub Shin — Trader / Quantitative Researcher";
+const siteTitle = "Woosub Shin / Trader / Quantitative Researcher";
 const siteDescription = "Woosub Shin is a futures trader and quantitative researcher. Explore his personal trading record, academic papers, market research, and systems in development.";
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
