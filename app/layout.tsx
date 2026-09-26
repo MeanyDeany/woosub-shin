@@ -10,8 +10,8 @@ import "./portfolio-shared.css";
 import "./portfolio-compat.css";
 
 const siteUrl = "https://meanydeany.com";
-const siteTitle = "Woosub Shin / Trader / Quantitative Researcher";
-const siteDescription = "Woosub Shin is a futures trader and quantitative researcher. Explore his personal trading record, academic papers, market research, and systems in development.";
+const siteTitle = "meanydeany / Trader / Quantitative Researcher";
+const siteDescription = "meanydeany is a futures trader and quantitative researcher. Explore his personal trading record, academic papers, market research, and systems in development.";
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 const themeScript = `
@@ -29,10 +29,10 @@ const themeScript = `
 `;
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: { default: siteTitle, template: "%s | Woosub Shin" },
+  title: { default: siteTitle, template: "%s | meanydeany" },
   description: siteDescription,
   alternates: { canonical: "/" },
-  openGraph: { type: "website", url: "/", siteName: "Woosub Shin", title: siteTitle, description: siteDescription },
+  openGraph: { type: "website", url: "/", siteName: "meanydeany", title: siteTitle, description: siteDescription },
   twitter: { card: "summary", title: siteTitle, description: siteDescription },
   robots: { index: true, follow: true },
 };

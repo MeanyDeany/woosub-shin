@@ -30,7 +30,7 @@ jobs:
       - name: Type check and lint
         run: |
           npx tsc --noEmit
-          npx eslint components/btc-trading-desk.tsx components/home-live-telemetry.tsx components/portfolio-home.tsx components/portfolio-editorial.tsx components/trading-accounting-guide.tsx lib/portfolio-content.ts lib/trading-journal.ts app/trading/page.tsx app/projects/page.tsx app/papers/page.tsx app/research/trader-behavior/page.tsx app/research/microstructure/page.tsx app/projects/btc-futures-research/live-position/page.tsx
+          npx eslint app/layout.tsx app/page.tsx app/asra/page.tsx app/contact/page.tsx app/resume/page.tsx app/research/page.tsx components/site-shell.tsx components/contact-form.tsx lib/site-metadata.ts components/btc-trading-desk.tsx components/home-live-telemetry.tsx components/portfolio-home.tsx components/portfolio-editorial.tsx components/trading-accounting-guide.tsx lib/portfolio-content.ts lib/trading-journal.ts app/trading/page.tsx app/projects/page.tsx app/papers/page.tsx app/research/trader-behavior/page.tsx app/research/microstructure/page.tsx app/projects/btc-futures-research/live-position/page.tsx
       - run: npm run build
       - name: Install transient browser QA tools
         run: |

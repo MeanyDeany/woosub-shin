@@ -52,7 +52,7 @@ test("Home is personal-first and keeps the exact ASRA identity without legacy br
   const html = renderHome();
   const hero = html.match(/<section[^>]+home-hero[\s\S]*?<\/section>/)?.[0];
   assert.ok(hero);
-  assert.match(textContent(hero), /WOOSUB SHIN/);
+  assert.match(textContent(hero), /meanydeany/);
   assert.match(textContent(hero), /Futures trader\. Quantitative researcher\./);
   assert.match(textContent(html), /AI Systematic Research Architecture/);
   assert.match(html, /href="\/asra(?:#|")/);
@@ -128,4 +128,21 @@ test("all reviewed research and editorial destinations resolve to real pages or 
     const pathname = href.split(/[?#]/, 1)[0];
     assert.ok(fs.existsSync(path.join(root, "app", pathname, "page.tsx")) || fs.existsSync(path.join(root, "public", pathname)), `Missing destination: ${href}`);
   }
+});
+
+
+test("public identity stays meanydeany and the real name appears only once in the resume", () => {
+  const home = textContent(renderHome());
+  assert.doesNotMatch(home, /\b(?:woosub|shin)\b|신우섭/i);
+  assert.match(home, /Quantitative Economics & Econometrics/);
+  assert.match(home, /UC San Diego/);
+  const resume = textContent(renderPage("app/resume/page.tsx"));
+  assert.equal((resume.match(/Woosub Shin/g) ?? []).length, 1);
+  assert.equal((resume.match(/\bWoosub\b/gi) ?? []).length, 1);
+  assert.match(resume, /University of California, San Diego/);
+  assert.match(resume, /Quantitative Economics & Econometrics/);
+  assert.match(resume, /University of Copenhagen/);
+  const shell = fs.readFileSync(path.join(root, "components/site-shell.tsx"), "utf8");
+  assert.match(shell, /aria-label="meanydeany \/ Home"/);
+  assert.doesNotMatch(shell, /woosub shin|\bWoosub\b|신우섭/i);
 });

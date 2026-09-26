@@ -90,7 +90,7 @@ export function BtcTradingDesk({ positionFeedUrl, performanceFeedUrl, rollingFee
   const Heading = compact ? "h2" : "h1";
 
   return <div className={`trading-desk ${compact ? "td-compact" : ""}`}>
-    <div className="td-topline"><span className="td-eyebrow">WOOSUB SHIN</span><span className="td-muted td-mono">BINANCE USD-M • READ ONLY</span></div>
+    <div className="td-topline"><span className="td-eyebrow">meanydeany</span><span className="td-muted td-mono">BINANCE USD-M • READ ONLY</span></div>
     <header className="td-heading"><div><Heading>Account performance</Heading><p>Read-only account results. Flow-adjusted reporting begins 01 Aug 2026.</p></div><div className="td-actions"><button className="td-button" onClick={refresh} disabled={busy} aria-label="Refresh all public account feeds">{busy ? "Updating" : "Refresh"}</button>{compact && <Link className="td-button td-button-primary" href={`${detailHref}#daily-journal`}>Trading history</Link>}</div></header>
     <div className="td-section-kicker"><span>Account performance</span><Status label={feedState(performance, now)} /></div>
     <dl className="td-metrics" aria-label="Public account performance">

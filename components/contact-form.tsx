@@ -125,7 +125,7 @@ export function ContactForm({ locale = "en" }: { locale?: SiteLocale }) {
             {korean ? "질문 또는 메시지" : "Question or message"}
           </span>
           <textarea
-            className={`${inputClass} min-h-44 resize-y leading-7`}
+            className={inputClass + " min-h-44 resize-y leading-7"}
             name="message"
             aria-describedby={status === "error" ? feedbackId : undefined}
             minLength={10}
@@ -149,8 +149,8 @@ export function ContactForm({ locale = "en" }: { locale?: SiteLocale }) {
       <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="site-muted max-w-xl text-xs leading-5">
           {korean
-            ? "연락처와 메시지는 신우섭에게 비공개 이메일로 전달되며 사이트에 공개되지 않습니다. Vercel 위치 헤더의 대략적인 국가·도시 정보가 첨부될 수 있지만, 원본 IP 주소는 이 폼에 포함되거나 저장되지 않습니다."
-            : "Your contact details and message are emailed privately to Woosub Shin. They are not published on the site. Approximate country and city may be attached from Vercel's geolocation headers; the raw IP address is not included or stored by this form."}
+            ? "연락처와 메시지는 meanydeany에게 비공개 이메일로 전달되며 사이트에 공개되지 않습니다. Vercel 위치 헤더의 대략적인 국가·도시 정보가 첨부될 수 있지만, 원본 IP 주소는 이 폼에 포함되거나 저장되지 않습니다."
+            : "Your contact details and message are emailed privately to meanydeany. They are not published on the site. Approximate country and city may be attached from Vercel's geolocation headers; the raw IP address is not included or stored by this form."}
         </p>
         <button
           type="submit"

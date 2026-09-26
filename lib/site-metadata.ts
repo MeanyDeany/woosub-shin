@@ -5,7 +5,7 @@ export const siteUrl = "https://meanydeany.com";
 
 /** Static metadata for the English public release, without language alternates. */
 export function metadataFor(pathname: SiteRoute, title: string, description: string): Metadata {
-  const fullTitle = /woosub shin/i.test(title) ? title : `${title} | Woosub Shin`;
+  const fullTitle = /meanydeany/i.test(title) ? title : `${title} | meanydeany`;
   const canonical = new URL(pathname, siteUrl).href;
 
   return {
@@ -15,7 +15,7 @@ export function metadataFor(pathname: SiteRoute, title: string, description: str
     openGraph: {
       type: "website",
       url: canonical,
-      siteName: "Woosub Shin",
+      siteName: "meanydeany",
       title: fullTitle,
       description,
       locale: "en_US",
