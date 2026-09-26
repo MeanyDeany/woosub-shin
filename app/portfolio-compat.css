@@ -1,0 +1,7 @@
+/* Isolated compatibility with the pre-editorial stylesheet's !important rules.
+   Shared measurements still come from the portfolio's canonical tokens. */
+.research-shell :is(.research-header__inner,.research-footer__inner){box-sizing:border-box;width:min(1296px,100%);max-width:1296px;margin-inline:auto;padding-inline:var(--folio-gutter)}
+.research-shell main :is(.research-hero h1,.editorial-hero h1){font-size:clamp(48px,5.7vw,84px)!important;font-weight:400!important}
+.research-shell :is(.research-kicker,.eyebrow-label){font:400 11px/1.6 var(--font-geist-mono),monospace!important;color:var(--folio-accent)!important;letter-spacing:.07em!important;text-transform:none}
+@media(max-width:800px){.research-shell main :is(.research-hero h1,.editorial-hero h1){font-size:clamp(43px,7.8vw,64px)!important}}
+@media(max-width:520px){.research-shell main :is(.research-hero h1,.editorial-hero h1){font-size:43px!important}}

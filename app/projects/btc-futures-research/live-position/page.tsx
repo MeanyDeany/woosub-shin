@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { metadataFor } from "@/lib/site-metadata";
 import { PageShell } from "@/components/site-shell";
+import { TradingAccountingGuide } from "@/components/trading-accounting-guide";
 import { BtcTradingDesk } from "@/components/btc-trading-desk";
 import { deriveBtcLifetimePerformanceFeedUrl } from "@/lib/btc-lifetime-performance";
 import { deriveBtcLiveMultiPositionFeedUrl } from "@/lib/btc-live-multi-position";
@@ -16,6 +17,7 @@ export const metadata = metadataFor(
 export default function LiveBtcPositionPage() {
   return <PageShell><div style={{ minHeight: "100vh", background: "#090a0b" }}>
     <Link className="td-page-back" href="/projects/btc-futures-research">← BTC research system</Link>
+    <TradingAccountingGuide />
     <BtcTradingDesk
       positionFeedUrl={deriveBtcLiveMultiPositionFeedUrl(process.env.NEXT_PUBLIC_BTC_RESEARCH_OBSERVATORY_URL, process.env.NEXT_PUBLIC_BTC_MULTI_POSITION_URL)}
       performanceFeedUrl={deriveBtcLifetimePerformanceFeedUrl(process.env.NEXT_PUBLIC_BTC_RESEARCH_OBSERVATORY_URL, process.env.NEXT_PUBLIC_BTC_LIFETIME_PERFORMANCE_URL)}

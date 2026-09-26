@@ -8,7 +8,7 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -16,30 +16,47 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
-      - name: Review installed framework guidance
+      - name: Review installed framework guidance and retain reviewed source
         run: |
-          find node_modules/next/dist/docs -type f -iname '*client*' -o -iname '*css*' | head -10
+          mkdir -p /tmp/portfolio-qa
+          git archive HEAD | gzip > /tmp/portfolio-qa/reviewed-source.tar.gz
+          find node_modules/next/dist/docs/01-app -type f \( -path '*/01-getting-started/*css*' -o -path '*/01-getting-started/*server-and-client*' -o -path '*/01-getting-started/*layouts-and-pages*' \) | while read -r guide; do
+            printf '\n--- %s ---\n' "$guide"
+            cat "$guide"
+          done > /tmp/portfolio-qa/framework-guidance.txt
+          cat /tmp/portfolio-qa/framework-guidance.txt
       - name: Unit tests and existing regression tests
         run: node --experimental-strip-types --test tests/*.test.mjs
       - name: Type check and lint
         run: |
           npx tsc --noEmit
-          npx eslint components/btc-trading-desk.tsx components/home-live-telemetry.tsx lib/trading-journal.ts app/projects/btc-futures-research/live-position/page.tsx
+          npx eslint components/btc-trading-desk.tsx components/home-live-telemetry.tsx components/portfolio-home.tsx components/portfolio-editorial.tsx components/trading-accounting-guide.tsx lib/portfolio-content.ts lib/trading-journal.ts app/trading/page.tsx app/projects/page.tsx app/papers/page.tsx app/research/trader-behavior/page.tsx app/research/microstructure/page.tsx app/projects/btc-futures-research/live-position/page.tsx
       - run: npm run build
       - name: Install transient browser QA tools
         run: |
-          npm install --no-save --package-lock=false playwright@1.58.2
+          npm install --no-save --package-lock=false playwright@1.58.2 agent-browser
           npx playwright install --with-deps chromium
-      - name: Browser validation with synthetic public-feed fixtures
+          npx agent-browser install --with-deps
+      - name: Start production build and inspect with agent-browser
         run: |
           npm run start >/tmp/desk-server.log 2>&1 &
           for i in $(seq 1 45); do curl --fail --silent http://localhost:3000 >/dev/null && break; sleep 2; done
-          node tests/trading-desk.browser.mjs
+          npx agent-browser open http://localhost:3000
+          npx agent-browser snapshot -i > /tmp/portfolio-qa/agent-browser-snapshot.txt
+          npx agent-browser screenshot /tmp/portfolio-qa/agent-browser-home.png --full
+          npx agent-browser close
+      - name: Existing account interaction and failure-mode checks
+        run: node tests/trading-desk.browser.mjs
+      - name: Portfolio navigation, themes, mobile layout and artifact checks
+        run: node tests/portfolio.browser.mjs
+      - name: All-page shared design checks
+        run: node --experimental-strip-types tests/design-system.browser.mjs
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: trading-desk-qa
           path: |
             /tmp/desk-qa/
+            /tmp/portfolio-qa/
             /tmp/desk-server.log
       - run: git diff --check
