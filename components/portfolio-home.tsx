@@ -1,134 +1,47 @@
 import Link from "next/link";
-import { ObservationField } from "@/components/observation-field";
 import { HomeLiveTelemetry } from "@/components/home-live-telemetry";
 import { PageShell } from "@/components/site-shell";
-import { AuthorityBoundary, CurrentResearch, EvidenceMetricGroup, EvidenceStatus, PolicySummary, ResearchFindingCard, ResearchPipeline } from "@/components/research-ui";
-import { historicalResearchPerformance, researchEvidence, researchTimelineLanes } from "@/lib/research-evidence";
-
-const homeProgressionStages = new Set([
-  "positive-control-failure", "nonlinear-sensor-repair", "native-horizon-repair",
-  "fixed-native-sufficient", "v3-historical-transfer", "v3-no-finalists",
-  "strong-baseline-challenge", "independent-confirmation", "policy-translation-tested", "policy-utility-not-confirmed",
-]);
-
-const homeSystems = [
-  { title: "Read-only positions & performance", role: "Operational observation", href: "/projects/btc-futures-research/live-position", description: "Inspect the monitor, its observation window and operational boundaries." },
-  { title: "Retained historical system", role: "Historical research", href: "/projects/btc-final-system", description: "Daily EMA rules, frozen historical comparisons and selection caveats." },
-  { title: "Research infrastructure", role: "Reproducible experiments", href: "/projects/multi-asset-research-lab", description: "Experiment records, research controls and reproducible evaluation." },
-  { title: "Execution engineering", role: "Operational systems", href: "/projects#execution-gateway", description: "Transport, recovery, state consistency and operational safety." },
-] as const;
+import { ResearchConnections } from "@/components/portfolio-editorial";
+import { portfolioStudies } from "@/lib/portfolio-content";
 
 export function PortfolioHome() {
-  const forecast = researchEvidence.independentRiskForecast;
-  const historical = historicalResearchPerformance;
-  return <PageShell><div className="research-page">
-    <section className="research-hero home-hero"><ObservationField /><div className="research-container research-split">
-      <div>
-        <p className="home-identity">WOOSUB SHIN</p>
-        <p className="home-role">Trader / Quantitative Researcher</p>
-        <h1 lang="en">Systematic trading, market microstructure, and quantitative research.</h1>
-        <div className="home-program">
-          <strong className="program-mark">ASRA</strong>
-          <div><p>AI Systematic Research Architecture</p><p className="program-method">Observation / Test / Falsification</p></div>
-        </div>
-        <p className="research-prose">I trade futures and build research systems to test market hypotheses, risk models, and execution ideas. Current work focuses on BTC market microstructure and low-latency systems; earlier forecasting and strategy studies remain frozen with their original evidence boundaries.</p>
-        <div className="research-actions">
-          <Link className="research-button primary" href="/asra">Explore ASRA<span aria-hidden="true">→</span></Link>
-          <Link className="research-button" href="/research">View Research</Link>
-          <Link href="/resume">Resume</Link><a href="https://github.com/MeanyDeany" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a>
-        </div>
+  return <PageShell><div className="folio">
+    <section className="folio-hero home-hero folio-wrap" aria-labelledby="portfolio-title">
+      <div className="folio-hero-main">
+        <p className="folio-eyebrow">WOOSUB SHIN / Independent work</p>
+        <h1 id="portfolio-title">Futures trader.<br /><em>Quantitative researcher.</em></h1>
+        <p className="folio-lead">I trade futures and study the decisions behind them. My work connects financial econometrics, trading-behavior analysis, and market microstructure.</p>
+        <div className="folio-links"><Link className="folio-primary" href="/trading">Explore my trading record <span aria-hidden="true">↗</span></Link><Link href="#selected-work">Read selected research <span aria-hidden="true">↓</span></Link></div>
       </div>
-      <dl className="home-background" lang="en">
-        <dt>MSc Economics</dt><dd>University of Copenhagen</dd>
-        <dt>Trading focus</dt><dd>Futures<br />Market microstructure</dd>
-        <dt>Research engineering</dt><dd>Python · SQL · Git · Linux</dd>
-        <dt>Based in</dt><dd>Seoul, South Korea</dd>
-      </dl>
+      <aside className="folio-margin" aria-label="Background and current focus">
+        <p className="folio-eyebrow">Currently building</p><Link className="folio-current-link" href="/research/microstructure">Multi-venue market data<br />and deterministic replay <span aria-hidden="true">↗</span></Link>
+        <p>C++ systems and Python research for short-horizon execution questions.</p>
+        <dl><dt>Background</dt><dd>MSc Economics<br />University of Copenhagen</dd><dt>Based in</dt><dd>Seoul, South Korea</dd></dl>
+        <Link href="/resume">About me and résumé <span aria-hidden="true">↗</span></Link>
+      </aside>
+    </section>
+    <div className="folio-wrap"><ResearchConnections /></div>
+    <section className="folio-account" aria-labelledby="personal-record-title">
+      <div className="folio-wrap folio-section-heading"><div><p className="folio-eyebrow">Personal trading</p><h2 id="personal-record-title">The account record.</h2></div><div><p>Actual account observations, separate from backtests and model evaluations.</p><Link href="/trading">Performance, calendar, and data coverage <span aria-hidden="true">↗</span></Link></div></div>
+      <HomeLiveTelemetry locale="en" />
+    </section>
+    <section id="selected-work" className="folio-wrap folio-section" aria-labelledby="selected-work-title">
+      <div className="folio-section-heading"><div><p className="folio-eyebrow">Selected research</p><h2 id="selected-work-title">Questions behind the trades.</h2></div><p>What I asked, what I built, and what the evidence actually supports.</p></div>
+      <div className="folio-studies">{portfolioStudies.map(study => <article className="folio-study" key={study.id}>
+        <div><p className="folio-eyebrow">{study.category}</p><h3><Link href={study.href}>{study.title}<span aria-hidden="true">↗</span></Link></h3><p>{study.question}</p><p className="folio-study-contribution">{study.contribution}</p><p className="folio-finding">{study.finding}</p><Link className="folio-text-link" href={study.href}>Read the case study <span aria-hidden="true">→</span></Link></div>
+        <aside className="folio-study-aside"><strong>{study.metric}</strong><p>{study.metricLabel}</p><p className="folio-connection-note">{study.connection}</p></aside>
+      </article>)}</div>
+      <div className="folio-related"><p>Earlier strategy studies, measurement repairs, and negative results remain in the research archive. Historical strategy returns are not personal account returns.</p><div className="folio-links"><Link href="/research">Full research archive ↗</Link><Link href="/projects/btc-final-system">Retained historical EMA study ↗</Link></div></div>
+    </section>
+    <section className="folio-build-band" aria-labelledby="current-build-title"><div className="folio-wrap folio-build-grid">
+      <div><p className="folio-eyebrow">Current work / Market microstructure</p><h2 id="current-build-title">From bars to<br /><em>market mechanics.</em></h2><p className="folio-lead">A signal can look useful and still fail at the point of execution. I am studying order flow, fill uncertainty, and what prices do after a hypothetical fill.</p><div className="folio-links"><Link className="folio-primary" href="/research/microstructure">Inside the current research ↗</Link><Link href="/projects">The supporting systems ↗</Link></div></div>
+      <div className="folio-stack" aria-label="Research workflow, not an execution route"><div><span>Observe</span><strong>Public market-data capture</strong><p>Trades and order-book updates from multiple venues.</p></div><div><span>Reconstruct</span><strong>C++ deterministic replay</strong><p>Sequence discipline, state checks, and reproducible event streams.</p></div><div><span>Evaluate</span><strong>Python research and diagnostics</strong><p>Fill proxies, adverse selection, markouts, and cost-aware tests.</p></div></div>
+      <p className="folio-build-note">Research workflow, not a live order route. Local compute benchmarks are not exchange latency, and hypothetical fills are not realized PnL.</p>
     </div></section>
-    <HomeLiveTelemetry locale="en" />
-    <section className="research-section research-section--surface" aria-labelledby="trader-behavior-ml-title" lang="en"><div className="research-container">
-      <p className="research-kicker">Trader behavior ML</p>
-      <div className="research-split">
-        <div>
-          <h2 id="trader-behavior-ml-title" className="research-heading">Can a model reproduce my LONG/SHORT decisions?</h2>
-          <p className="research-prose">I reconstructed my futures trading history, froze pre-entry market and user-state features, and evaluated direction imitation on a chronological holdout. The result supports partial imitation, not profitable alpha.</p>
-        </div>
-        <div>
-          <p className="research-prose">Across 689 complete episodes, gross win rate was 66.47%, but losses were concentrated: the worst 1% of episodes accounted for 50.20% of all losing PnL. Entry imitation and risk control are therefore evaluated separately.</p>
-        </div>
-      </div>
-      <div className="home-systems-grid" aria-label="Trader behavior ML evidence">
-        <div className="home-system-card"><p className="research-kicker">Dataset</p><h3>686</h3><p>ML-eligible episodes after public-data coverage checks.</p></div>
-        <div className="home-system-card"><p className="research-kicker">Final holdout</p><h3>114</h3><p>Newest BTCUSDC episodes, kept out of fitting and parameter selection.</p></div>
-        <div className="home-system-card"><p className="research-kicker">Direction accuracy</p><h3>71.05%</h3><p>HGB + user-state model on the final chronological holdout.</p></div>
-        <div className="home-system-card"><p className="research-kicker">Balanced accuracy</p><h3>67.76%</h3><p>Final conditional LONG/SHORT imitation; MCC 0.353.</p></div>
-      </div>
-      <p className="research-note">Final entry-quality ROC-AUC was 0.5583 and tail-loss PR-AUC was 0.1364. These results do not establish a profitable-entry model or a reliable risk veto. A read-only observer now collects forward action and market-state evidence.</p>
-      <div className="research-actions"><Link href="/research">Inspect the research framework <span aria-hidden="true">→</span></Link><Link href="/projects/volatility-regime-filtering">View the futures thesis</Link></div>
-    </div></section>
-    <section className="research-section research-section--surface home-primary-finding" aria-labelledby="strongest-finding" lang="en"><div className="research-container">
-      <p className="research-kicker">Confirmed risk-forecasting result</p>
-      <div className="evidence-heading"><h2 id="strongest-finding" className="research-heading">{forecast.title}</h2><EvidenceStatus evidenceClass={forecast.evidenceClass} /></div>
-      <p className="research-prose">Context adds short-horizon BTC risk information beyond historical volatility persistence.</p>
-      <EvidenceMetricGroup record={forecast} idPrefix="home-risk" />
-      <div className="research-actions"><Link href={forecast.detailHref}>Inspect the independent assessment <span aria-hidden="true">→</span></Link></div>
-    </div></section>
-    <section id={historical.id} className="research-section home-historical" aria-labelledby="historical-performance-title"><div className="research-container">
-      <div className="historical-performance-header">
-        <div><p className="research-kicker">{historical.title}</p><h2 id="historical-performance-title" className="research-heading">Retained historical system and exact-period references</h2></div>
-        <EvidenceStatus evidenceClass={historical.evidenceClass} />
-      </div>
-      <p id="historical-performance-context" className="historical-performance-context">{historical.context}</p>
-      <p className="historical-scroll-hint">Scroll horizontally to compare all columns.</p>
-      <div className="historical-performance-scroll" role="region" aria-label="Historical research comparison" tabIndex={0}>
-        <table className="historical-performance-table" aria-describedby="historical-performance-context historical-performance-caveats">
-          <caption>Frozen historical research and exact-period BTC references</caption>
-          <thead><tr><th scope="col">System</th><th scope="col">Return</th><th scope="col">Sharpe</th><th scope="col">MaxDD</th><th scope="col">Evidence</th></tr></thead>
-          <tbody>{historical.rows.map(row => <tr key={row.id} data-role={row.role}>
-            <th scope="row"><span className="historical-system-name">{row.name}</span><span className="historical-system-role">{row.roleLabel}</span><span className="historical-system-note">{row.note}</span></th>
-            <td>{row.returnValue}</td><td>{row.sharpe}</td><td>{row.maxDrawdown}</td><td><span className="historical-evidence">{historical.evidenceClass}</span></td>
-          </tr>)}</tbody>
-        </table>
-      </div>
-      <ul id="historical-performance-caveats" className="historical-performance-caveats">{historical.caveats.map(caveat => <li key={caveat}>{caveat}</li>)}</ul>
-      <div className="research-actions"><Link href={historical.detailHref}>Inspect the retained historical system <span aria-hidden="true">→</span></Link></div>
-    </div></section>
-    <section className="research-section home-measurement" lang="en"><div className="research-container">
-      <p className="research-kicker">ASRA research process</p>
-      <div className="research-split"><h2 className="research-heading">Generate, test, challenge, and retain the result.</h2><p className="research-prose">ASRA separates candidate generation, measurement checks, validation, and claim boundaries. AI tools support implementation and review; research claims remain tied to explicit tests.</p></div>
-      <ResearchPipeline />
-      <div className="research-actions"><Link href="/asra#engine">Explore the research engine <span aria-hidden="true">→</span></Link></div>
-    </div></section>
-    <section className="research-section" lang="en"><div className="research-container research-split">
-      <div><p className="research-kicker">Research progression</p><h2 className="research-heading">Measurement repairs changed the result.<br />Validation narrowed the claim.</h2><p className="research-prose">Return and risk studies answer different questions. V3 did not demonstrate incremental historical return transfer. Independent risk information survived, while the separate policy test did not confirm utility.</p><div className="research-actions"><Link href="/asra#timeline">Follow the research progression <span aria-hidden="true">→</span></Link></div></div>
-      <div className="home-progression-lanes">{researchTimelineLanes.map(lane => <section className="home-progression-lane" key={lane.id} aria-labelledby={`home-lane-${lane.id}`}>
-        <h3 id={`home-lane-${lane.id}`}>{lane.title}</h3>
-        <ol className="home-progression-stages">{lane.stages.filter(stage => homeProgressionStages.has(stage.id)).map(stage => <li key={stage.id}>{stage.title}</li>)}</ol>
-        <p className="research-note">NEXT QUESTION: <Link href={lane.nextQuestion.detailHref}>{lane.nextQuestion.title}</Link></p>
-      </section>)}</div>
-    </div></section>
-    <section className="research-section research-section--surface" lang="en"><div className="research-container research-split">
-      <div><p className="research-kicker">Policy translation test</p><h2 className="research-heading">Forecast information survived.<br />Policy utility was not confirmed.</h2></div>
-      <PolicySummary />
-    </div></section>
-    <section className="research-section" lang="en"><div className="research-container">
-      <p className="research-kicker">Selected research</p><h2 className="research-heading">Selected completed and retained research</h2>
-      <div className="finding-list home-selected-list">{[researchEvidence.candidateGeneratorV3, researchEvidence.dailyEma, researchEvidence.futuresVolatilityThesis].map(record => <div key={record.id} id={record.id === "candidate-generator-v3" ? record.id : undefined}><ResearchFindingCard record={record} /></div>)}</div>
-      <div className="research-actions"><Link href={researchEvidence.nonlinearSensorRecovery.detailHref}>Nonlinear sensor recovery</Link><Link href={researchEvidence.nativeHorizonSelection.detailHref}>Native-horizon selection</Link><Link href={researchEvidence.nativeScheduler.detailHref}>Completed scheduler robustness</Link><Link href={researchEvidence.riskBaselineChallenge.detailHref}>Risk baseline challenge</Link></div>
-      <div className="research-actions"><Link className="research-button" href="/research">View all research findings <span aria-hidden="true">→</span></Link><Link href="/papers">Read the papers</Link></div>
-    </div></section>
-    <section className="research-section" lang="en"><div className="research-container"><p className="research-kicker">Current research</p><h2 className="research-heading">BTC market microstructure and low-latency systems</h2><CurrentResearch /></div></section>
-    <section className="research-section home-systems"><div className="research-container">
-      <div className="research-split"><div><p className="research-kicker">Systems & engineering</p><h2 className="research-heading">Research and execution systems are evaluated separately.</h2></div><p className="research-prose">Research infrastructure supports reproducible experiments. Execution systems cover transport, recovery, state consistency, and operational safety. Read-only telemetry reports account state.</p></div>
-      <div className="home-systems-grid">{homeSystems.map(system => <Link key={system.href} href={system.href} className="home-system-card">
-        <p className="research-kicker">{system.role}</p><h3>{system.title}</h3><p>{system.description}</p><span className="home-system-link">Inspect system <span aria-hidden="true">→</span></span>
-      </Link>)}</div>
-      <AuthorityBoundary><strong>NO AUTOMATIC EXECUTION AUTHORITY.</strong> Scientific findings and operational observations answer different questions.</AuthorityBoundary>
-      <div className="research-actions"><Link href="/projects">Explore systems <span aria-hidden="true">→</span></Link></div>
-    </div></section>
-    <section className="research-section research-closing"><div className="research-container research-split">
-      <div><p className="research-kicker">Background</p><h2 className="research-heading">Research background and technical work</h2></div>
-      <div><p className="research-prose">MSc Economics from the University of Copenhagen, with work in financial econometrics, empirical asset pricing, and research engineering using Python, SQL, Git, and Linux.</p><div className="research-actions"><Link className="research-button primary" href="/resume">View resume</Link><Link href="/contact">Contact Woosub <span aria-hidden="true">→</span></Link></div></div>
-    </div></section>
+    <section className="folio-wrap folio-section folio-about-grid" aria-labelledby="working-method-title">
+      <div><p className="folio-eyebrow">How I work</p><h2 id="working-method-title">One researcher.<br />A connected body of work.</h2><p className="folio-lead">My academic training is in economics and financial econometrics. Trading gives me questions; research helps me test them; engineering makes those tests repeatable.</p></div>
+      <div><h3>ASRA</h3><p className="folio-subtitle">AI Systematic Research Architecture</p><p>I use AI-assisted development and review to implement experiments and challenge assumptions. I remain responsible for the question, the validation design, and the interpretation.</p><p>A better forecast, a successful replay, and a profitable trade are different claims. I keep their evidence separate rather than presenting every project as one working trading algorithm.</p><div className="folio-links"><Link href="/asra">Research process ↗</Link><Link href="/papers">Academic papers ↗</Link></div></div>
+    </section>
+    <section className="folio-wrap folio-contact"><div><p className="folio-eyebrow">Get in touch</p><h2>Let’s talk about markets<br />and the systems behind them.</h2></div><div className="folio-links"><Link className="folio-primary" href="/contact">Contact Woosub ↗</Link><Link href="/resume">Résumé ↗</Link><a href="https://github.com/MeanyDeany" target="_blank" rel="noreferrer">GitHub ↗</a></div></section>
   </div></PageShell>;
 }

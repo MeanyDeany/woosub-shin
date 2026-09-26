@@ -1,65 +1,18 @@
 import Link from "next/link";
-import { metadataFor } from "@/lib/site-metadata";
-import { CtaLink, EditorialSection, PageHero } from "@/components/editorial";
 import { PageShell } from "@/components/site-shell";
+import { PortfolioIntro, RelatedWork } from "@/components/portfolio-editorial";
+import { metadataFor } from "@/lib/site-metadata";
 
-export const metadata = metadataFor(
-  "/projects",
-  "Trading Research and Systems",
-  "Trading research infrastructure, market-data systems, execution engineering, and read-only account telemetry by Woosub Shin. Research findings confer no automatic execution authority.",
-);
+export const metadata = metadataFor("/projects", "Research and Trading Systems", "The systems behind Woosub Shin’s work: multi-venue C++ replay, Python research, reproducible experiments, execution engineering, and read-only account reporting.");
 
 export default function ProjectsPage() {
-  return (
-    <PageShell>
-      <div className="research-page systems-page">
-        <PageHero
-          eyebrow="Woosub Shin / Systems"
-          title="Trading research and systems"
-          intro="Systems supporting market research, market data, execution engineering, and operational telemetry. Research findings and execution authority remain separate."
-          actions={<><CtaLink href="/asra" kind="primary">Explore ASRA</CtaLink><CtaLink href="/research">Inspect research findings</CtaLink></>}
-          metadata={[{ label: "Research", value: "Hypothesis / Evidence / Validation" }, { label: "Execution systems", value: "Transport / Recovery / State consistency" }, { label: "Telemetry", value: "Read-only operational evidence" }]}
-        />
-
-        <nav className="systems-directory research-container" aria-label="Systems directory">
-          <Link href="/projects/btc-futures-research/live-position"><span>Operational evidence</span><strong>Read-only positions &amp; performance <span aria-hidden="true">↗</span></strong></Link>
-          <Link href="/projects/btc-final-system"><span>Retained historical system</span><strong>Daily EMA 50/200 <span aria-hidden="true">↗</span></strong></Link>
-          <Link href="#research-infrastructure"><span>Research infrastructure</span><strong>Data, artifacts &amp; replay <span aria-hidden="true">↓</span></strong></Link>
-          <Link href="#execution-gateway"><span>Execution engineering</span><strong>Transport, recovery &amp; state <span aria-hidden="true">↓</span></strong></Link>
-        </nav>
-
-        <EditorialSection id="research-infrastructure" eyebrow="Research infrastructure" title="Reproducible market research" intro="ASRA and the retained BTC research systems provide data contracts, replay, provenance, and frozen evaluation records. Historical components are not presented as fully integrated ASRA modules.">
-          <div className="research-grid">
-            <article className="research-card">
-              <h3>Multi-Asset Research Lab</h3>
-              <p className="research-prose">Data contracts, provenance, immutable artifacts, deterministic replay, frozen comparisons, and explicit historical-to-forward boundaries. The demonstrated BTC implementation remains distinct from the asset-neutral architecture.</p>
-              <CtaLink href="/projects/multi-asset-research-lab">Inspect research infrastructure</CtaLink>
-            </article>
-            <article className="research-card">
-              <h3>BTC research evidence system</h3>
-              <p className="research-prose">Volatility evidence stores, forward outcomes, failure handling, and a descriptive research observatory. Conceptual exhibits and historical snapshots retain their original provenance.</p>
-              <CtaLink href="/projects/btc-futures-research#observatory">Open the research observatory</CtaLink>
-            </article>
-          </div>
-        </EditorialSection>
-
-        <EditorialSection id="execution-gateway" eyebrow="Execution engineering" title="Systematic Execution Gateway" intro="Transport, recovery, state consistency, and operational safety are assessed separately from trading research and model evidence.">
-          <div className="authority-boundary">
-            <p className="research-kicker">RESEARCH — ASRA</p>
-            <p>Hypothesis · Evidence · Validation</p>
-            <p><strong>NO AUTOMATIC EXECUTION AUTHORITY</strong></p>
-            <p className="research-kicker">EXECUTION SYSTEMS</p>
-            <p>Transport · Recovery · State consistency · Operational safety</p>
-          </div>
-          <p className="research-prose">Independent forecast confirmation provides risk information. The separate frozen policy test did not confirm its preregistered utility claim. Neither result grants directional-alpha, sizing, veto, trading, or execution authority.</p>
-          <div className="research-actions"><CtaLink href="/build-log#pr41-boundary-digest">Read the historical verification constraint</CtaLink><CtaLink href="/projects/multi-asset-research-lab/claims">Inspect the claims ledger</CtaLink></div>
-        </EditorialSection>
-
-        <EditorialSection id="telemetry" eyebrow="Operational telemetry" title="Read-only account telemetry" intro="The monitor displays sanitized execution-account positions and flow-adjusted performance. Feed freshness describes operations, not the efficacy of ASRA or the retained EMA study.">
-          <p className="research-prose">Position and performance panels retain their existing timestamps, stale and unavailable states, and accounting-method labels. Account performance is not attributed to H_PLUS_C, and operational observation is not independent policy confirmation.</p>
-          <div className="research-actions"><CtaLink href="/projects/btc-futures-research/live-position" kind="primary">Open the read-only monitor</CtaLink><CtaLink href="/build-log">Read engineering history</CtaLink></div>
-        </EditorialSection>
-      </div>
-    </PageShell>
-  );
+  return <PageShell><div className="folio"><PortfolioIntro eyebrow="Woosub Shin / Systems" title="What I build, and why."><p>Research questions determine the tools. These systems collect market evidence, make experiments reproducible, and separate account observation from execution authority.</p></PortfolioIntro>
+    <div className="folio-wrap"><nav className="folio-subnav" aria-label="Systems directory"><a href="#market-data">Market data</a><a href="#research-infrastructure">Research</a><a href="#execution-gateway">Execution engineering</a><a href="#telemetry">Account reporting</a></nav>
+      <section id="market-data" className="folio-system"><aside><p className="folio-eyebrow">Current development</p><p className="folio-system-status">C++ / Public market events / Python</p></aside><div><h2>Multi-venue market data and replay</h2><p>I am building a repeatable record of trades and order-book updates so that short-horizon execution hypotheses can be tested against the same market events.</p><p>The core supports capture, validation, canonical state reconstruction, and deterministic replay. Research layers examine fill uncertainty, adverse selection, and post-fill markouts.</p><p className="folio-finding">Local compute benchmarks describe a host and corpus. They are not exchange latency or proof of a tradable edge.</p><div className="folio-links"><Link href="/research/microstructure">Research question and status ↗</Link></div></div></section>
+      <section id="research-infrastructure" className="folio-system"><aside><p className="folio-eyebrow">Research infrastructure</p><p className="folio-system-status">ASRA / Python / Data provenance</p></aside><div><h2>Experiments that can be checked again</h2><p>Data contracts, frozen comparisons, deterministic artifacts, and chronological evaluation support the research process. I use these tools to separate a reproducible finding from an attractive backtest.</p><p>ASRA means AI Systematic Research Architecture. AI-assisted implementation and review support the work; the research question, controls, and conclusions remain my responsibility.</p><div className="folio-links"><Link href="/asra">ASRA research process ↗</Link><Link href="/projects/multi-asset-research-lab">Multi-Asset Research Lab ↗</Link><Link href="/projects/btc-futures-research#observatory">BTC research evidence system ↗</Link></div></div></section>
+      <section id="execution-gateway" className="folio-system"><aside><p className="folio-eyebrow">Execution engineering</p><p className="folio-system-status">Transport / Recovery / State consistency</p></aside><div><h2>Systematic Execution Gateway</h2><p>Transport, recovery, state consistency, and operational safety are engineering questions. They are evaluated separately from forecasting performance and strategy profitability.</p><p className="folio-finding">NO AUTOMATIC EXECUTION AUTHORITY. A research finding does not grant trading, routing, sizing, leverage, or veto approval. This website remains read-only.</p><div className="folio-links"><Link href="/build-log#pr41-boundary-digest">Engineering verification history ↗</Link><Link href="/projects/multi-asset-research-lab/claims">Claims ledger ↗</Link></div></div></section>
+      <section id="telemetry" className="folio-system"><aside><p className="folio-eyebrow">Published account observations</p><p className="folio-system-status">Read-only / Flow-adjusted reporting</p></aside><div><h2>The personal trading record</h2><p>Sanitized public feeds report current positions and flow-adjusted account performance. The calendar distinguishes authenticated ledger data, historical realized-cash exports, partial dates, and missing observations.</p><p>These are account outcomes. They are not attributed to H_PLUS_C, the behavioral model, the historical EMA study, or the current microstructure experiments.</p><div className="folio-links"><Link className="folio-primary" href="/trading">Open the trading record ↗</Link></div></div></section>
+      <RelatedWork title="Earlier work remains accessible"><Link href="/projects/btc-final-system">Retained historical EMA study ↗</Link><Link href="/research">Research archive ↗</Link><Link href="/papers">Academic papers ↗</Link><Link href="/build-log">Build log ↗</Link></RelatedWork>
+    </div><div className="folio-wrap folio-section" />
+  </div></PageShell>;
 }

@@ -1,114 +1,14 @@
-import { metadataFor } from "@/lib/site-metadata";
-import {
-  CtaLink,
-  EditorialSection,
-  PageHero,
-  ResearchTag,
-  StatusLabel,
-} from "@/components/editorial";
+import Link from "next/link";
 import { PageShell } from "@/components/site-shell";
+import { PortfolioIntro } from "@/components/portfolio-editorial";
+import { paperConnections } from "@/lib/portfolio-content";
+import { metadataFor } from "@/lib/site-metadata";
 
-export const metadata = metadataFor(
-  "/papers",
-  "Papers",
-  "Woosub Shin’s MSc thesis on futures volatility-regime filtering and seminar paper on GSADF-based Bitcoin bubble diagnostics, with original PDF downloads.",
-);
-
-const papers = [
-  {
-    abstract:
-      "Studies whether daily EGARCH volatility regimes can serve as a risk and admissibility layer for an intraday NQ, ES, and Crude Oil (CL) futures framework. The volatility model is evaluated as conditioning context, not as a price-direction predictor.",
-    accent: "blue" as const,
-    methods: ["EGARCH(1,1)", "Student-t", "Ablation", "Walk-forward", "Bootstrap"],
-    pdfHref: "/papers/volatility-regime-filtering-thesis.pdf",
-    projectHref: "/projects/volatility-regime-filtering",
-    scope: "E-mini Nasdaq-100 (NQ), E-mini S&P 500 (ES), and Crude Oil (CL) intraday futures",
-    title: "Volatility Regime Filtering in Futures Markets",
-    type: "MSc Economics thesis",
-  },
-  {
-    abstract:
-      "Applies right-tailed explosive-root testing to examine periods of statistically explosive Bitcoin price behavior. The study is framed as a time-series diagnostic, not as market guidance or a trading rule.",
-    accent: "amber" as const,
-    methods: ["GSADF", "Right-tailed tests", "Explosive roots", "Time series"],
-    pdfHref: "/papers/bitcoin-bubble-gsadf-seminar-paper.pdf",
-    projectHref: "/projects/bitcoin-bubble-gsadf",
-    scope: "Bitcoin price dynamics",
-    title: "Bitcoin Bubble Detection with GSADF",
-    type: "Seminar paper",
-  },
-] as const;
+export const metadata = metadataFor("/papers", "Academic Papers", "Original MSc and seminar papers, their research questions and methods, and how they connect to Woosub Shin’s current trading and market research.");
 
 export default function PapersPage() {
-  return (
-    <PageShell>
-      <PageHero
-        accent="blue"
-        eyebrow="MeanyDeany · Publication archive"
-        title="Papers"
-        intro="The academic foundation of the research program: original work in financial econometrics and crypto-asset time-series diagnostics."
-        metadata={[
-          { label: "Archive", value: "2 academic papers" },
-          { label: "Methods", value: "EGARCH · GSADF" },
-          { label: "Scope", value: "NQ · ES · Crude Oil (CL) · Bitcoin" },
-          { label: "Format", value: "Original PDF files" },
-        ]}
-      />
-
-      <EditorialSection
-        accent="blue"
-        eyebrow="Academic work"
-        title="Publication record"
-        intro="Each entry separates its summary, empirical scope, and methods from the actions used to read the paper or inspect its project context."
-      >
-        <ol>
-          {papers.map((paper, index) => (
-            <li
-              key={paper.title}
-              className="grid gap-7 border-t border-[#7E8B9D]/18 py-10 first:border-t-0 first:pt-0 lg:grid-cols-[3rem_minmax(0,1.2fr)_minmax(16rem,0.8fr)] lg:gap-10"
-            >
-              <p className="font-mono text-xs text-[#8CB5FF]">
-                {String(index + 1).padStart(2, "0")}
-              </p>
-              <article>
-                <StatusLabel accent={paper.accent}>{paper.type}</StatusLabel>
-                <h3 className="mt-5 text-2xl font-semibold leading-tight tracking-[-0.03em] text-[#F4F7FB] sm:text-3xl">
-                  {paper.title}
-                </h3>
-                <p className="mt-5 max-w-3xl text-base leading-8 text-[#A8B3C2]">
-                  {paper.abstract}
-                </p>
-                <dl className="mt-7 border-y border-[#7E8B9D]/15">
-                  <div className="grid gap-2 py-4 sm:grid-cols-[7rem_1fr]">
-                    <dt className="text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#6F7D90]">
-                      Market scope
-                    </dt>
-                    <dd className="text-sm leading-6 text-[#DCE3EC]">{paper.scope}</dd>
-                  </div>
-                </dl>
-              </article>
-              <div className="flex flex-col items-start justify-between gap-8">
-                <div>
-                  <p className="text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#6F7D90]">
-                    Methods
-                  </p>
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    {paper.methods.map((method) => (
-                      <ResearchTag key={method}>{method}</ResearchTag>
-                    ))}
-                  </div>
-                </div>
-                <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row lg:flex-col xl:flex-row">
-                  <CtaLink href={paper.pdfHref} kind="primary" newTab>
-                    View PDF
-                  </CtaLink>
-                  <CtaLink href={paper.projectHref}>Project page</CtaLink>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </EditorialSection>
-    </PageShell>
-  );
+  return <PageShell><div className="folio"><PortfolioIntro eyebrow="Woosub Shin / Academic work" title="The academic foundation."><p>Two papers in financial econometrics and Bitcoin price dynamics. Each is a starting point for the questions I now study in futures markets, not a claim about today’s account performance.</p></PortfolioIntro><section className="folio-wrap" aria-label="Academic papers">
+    {paperConnections.map(paper => <article className="folio-paper" key={paper.pdfHref}><div><p className="folio-eyebrow">{paper.type}</p><h2>{paper.title}</h2><p className="folio-lead">{paper.question}</p><p>{paper.methods}</p><div className="folio-links"><a className="folio-primary" href={paper.pdfHref} target="_blank" rel="noreferrer">Read original PDF ↗</a><Link href={paper.projectHref}>Research summary ↗</Link></div></div><dl><dt>Approach</dt><dd>{paper.approach}</dd><dt>Connection to current work</dt><dd>{paper.connection}</dd><dt>Continue reading</dt><dd><Link className="folio-text-link" href={paper.nextHref}>{paper.nextLabel} ↗</Link></dd></dl></article>)}
+    <aside className="folio-related"><p>The headings above are portfolio display titles. Original titles, market coverage, sample definitions, and results are governed by the linked PDFs and detailed project pages. These are academic papers, not claims of peer-reviewed journal publication.</p></aside>
+  </section><section className="folio-wrap folio-contact"><div><p className="folio-eyebrow">From the papers to the present</p><h2>Research continues<br />beyond the thesis.</h2></div><div className="folio-links"><Link href="/research">Research archive ↗</Link><Link href="/research/microstructure">Current work ↗</Link><Link href="/resume">Background ↗</Link></div></section></div></PageShell>;
 }

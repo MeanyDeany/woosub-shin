@@ -5,22 +5,13 @@ import "./globals.css";
 import "./navigation.css";
 import "./astra.css";
 import "./trading-desk.css";
+import "./portfolio.css";
 
 const siteUrl = "https://meanydeany.com";
 const siteTitle = "Woosub Shin — Trader / Quantitative Researcher";
-const siteDescription =
-  "Woosub Shin is a futures trader and quantitative researcher focused on BTC market microstructure, systematic trading, financial econometrics, and research systems.";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
+const siteDescription = "Woosub Shin is a futures trader and quantitative researcher. Explore his personal trading record, academic papers, market research, and systems in development.";
+const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
+const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
 const themeScript = `
 (() => {
   try {
@@ -34,53 +25,15 @@ const themeScript = `
   }
 })();
 `;
-
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
-  title: {
-    default: siteTitle,
-    template: "%s | Woosub Shin",
-  },
+  title: { default: siteTitle, template: "%s | Woosub Shin" },
   description: siteDescription,
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    type: "website",
-    url: "/",
-    siteName: "Woosub Shin",
-    title: siteTitle,
-    description: siteDescription,
-  },
-  twitter: {
-    card: "summary",
-    title: siteTitle,
-    description: siteDescription,
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  alternates: { canonical: "/" },
+  openGraph: { type: "website", url: "/", siteName: "Woosub Shin", title: siteTitle, description: siteDescription },
+  twitter: { card: "summary", title: siteTitle, description: siteDescription },
+  robots: { index: true, follow: true },
 };
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-      </head>
-      <body className="flex min-h-full flex-col">
-        {children}
-        <Analytics />
-      </body>
-    </html>
-  );
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
+  return <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}><head><script dangerouslySetInnerHTML={{ __html: themeScript }} /></head><body className="flex min-h-full flex-col">{children}<Analytics /></body></html>;
 }
