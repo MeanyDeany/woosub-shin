@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { PageShell } from "@/components/site-shell";
-import { PortfolioIntro, RelatedWork } from "@/components/portfolio-editorial";
+import { RelatedWork } from "@/components/portfolio-editorial";
 import { BtcTradingDesk } from "@/components/btc-trading-desk";
 import { metadataFor } from "@/lib/site-metadata";
 import { deriveBtcLifetimePerformanceFeedUrl } from "@/lib/btc-lifetime-performance";
@@ -12,7 +12,8 @@ export const metadata = metadataFor("/trading", "Personal Trading Record", "Pers
 
 export default function TradingPage() {
   return <PageShell><div className="folio">
-    <PortfolioIntro eyebrow="Woosub Shin / Personal trading" title="The trading record."><p>My account outcomes, not a strategy advertisement. Positions, published returns, and daily history are shown with their source and reporting limits.</p></PortfolioIntro>
+    {/* The full dashboard owns this page's h1; this introduction provides context. */}
+    <header className="folio-intro folio-wrap"><p className="folio-eyebrow">Woosub Shin / Personal trading record</p><p className="folio-lead">My account outcomes, not a strategy advertisement. Positions, published returns, and daily history are shown with their source and reporting limits.</p></header>
     <div className="folio-wrap"><nav className="folio-subnav" aria-label="Trading record sections"><a href="#account-record">Performance and calendar</a><a href="#order-history">Order-history coverage</a><a href="#record-method">How to read the record</a><Link href="/research/trader-behavior">From trades to research ↗</Link></nav></div>
     <section id="account-record" className="folio-account" aria-label="Read-only account performance and trading calendar">
       <BtcTradingDesk
