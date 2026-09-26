@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { PageShell } from "@/components/site-shell";
 import { RelatedWork } from "@/components/portfolio-editorial";
+import { TradingAccountingGuide } from "@/components/trading-accounting-guide";
 import { BtcTradingDesk } from "@/components/btc-trading-desk";
 import { metadataFor } from "@/lib/site-metadata";
 import { deriveBtcLifetimePerformanceFeedUrl } from "@/lib/btc-lifetime-performance";
@@ -16,6 +17,7 @@ export default function TradingPage() {
     <header className="folio-intro folio-wrap"><p className="folio-eyebrow">Woosub Shin / Personal trading record</p><p className="folio-lead">My account outcomes, not a strategy advertisement. Positions, published returns, and daily history are shown with their source and reporting limits.</p></header>
     <div className="folio-wrap"><nav className="folio-subnav" aria-label="Trading record sections"><a href="#account-record">Performance and calendar</a><a href="#order-history">Order-history coverage</a><a href="#record-method">How to read the record</a><Link href="/research/trader-behavior">From trades to research ↗</Link></nav></div>
     <section id="account-record" className="folio-account" aria-label="Read-only account performance and trading calendar">
+      <TradingAccountingGuide />
       <BtcTradingDesk
         positionFeedUrl={deriveBtcLiveMultiPositionFeedUrl(process.env.NEXT_PUBLIC_BTC_RESEARCH_OBSERVATORY_URL, process.env.NEXT_PUBLIC_BTC_MULTI_POSITION_URL)}
         performanceFeedUrl={deriveBtcLifetimePerformanceFeedUrl(process.env.NEXT_PUBLIC_BTC_RESEARCH_OBSERVATORY_URL, process.env.NEXT_PUBLIC_BTC_LIFETIME_PERFORMANCE_URL)}
@@ -31,7 +33,7 @@ export default function TradingPage() {
       <p className="folio-eyebrow">Reading the numbers</p><h2>Three records. Different meanings.</h2>
       <div className="folio-table-wrap" role="region" aria-label="Account reporting coverage" tabIndex={0}><table className="folio-status-table"><caption>Reporting windows and permitted interpretations</caption><thead><tr><th scope="col">Record</th><th scope="col">Coverage</th><th scope="col">What it means</th></tr></thead><tbody>
         <tr><th scope="row">Authenticated account performance</th><td>From 01 Aug 2026</td><td>Published flow-adjusted reporting. Deposits and withdrawals are not trading PnL. The interface does not recalculate returns.</td></tr>
-        <tr><th scope="row">Historical transaction exports</th><td>Calendar from 15 Nov 2024</td><td>Supported stablecoin realized cash PnL only. Missing boundary valuations prevent historical daily returns. Partial dates stay visibly partial.</td></tr>
+        <tr><th scope="row">Historical transaction exports</th><td>Calendar from 15 Nov 2024</td><td>BTCUSDT/BTCUSDC stablecoin realized cash PnL only, not complete account PnL. Missing boundary valuations prevent historical daily returns. Partial dates stay visibly partial.</td></tr>
         <tr><th scope="row">Research results</th><td>Each study’s stated sample</td><td>Backtests, forecast losses, imitation accuracy, and hypothetical markouts are not this account’s return series.</td></tr>
       </tbody></table></div>
       <p>Authenticated ledger rows take precedence. Unsupported BNB fees and ambiguous events are not assigned invented USD values. Missing observations are unavailable, not zero. Personal journal notes stay in the browser.</p>
