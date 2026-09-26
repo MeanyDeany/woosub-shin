@@ -8,7 +8,7 @@ import { metadataFor } from "@/lib/site-metadata";
 export const metadata = metadataFor(
   "/resume",
   "Resume and Background",
-  "Woosub Shin, Trader and Quantitative Researcher. Economics MSc from the University of Copenhagen, with work in futures trading, market microstructure, financial econometrics, and systematic research.",
+  "meanydeany: trader and quantitative researcher. MSc Economics at the University of Copenhagen; undergraduate Quantitative Economics & Econometrics at UC San Diego.",
 );
 
 const selectedResearch = [
@@ -23,10 +23,10 @@ export default function ResumePage() {
       <div className="research-page">
         <PageHero
           eyebrow="About / Resume"
-          title="Woosub Shin."
+          title="Woosub Shin"
           intro="Futures trader and quantitative researcher. My work connects financial econometrics, market microstructure, and systematic research."
-          actions={<><CtaLink href="mailto:woosub815@gmail.com" kind="primary">Email Woosub</CtaLink><CtaLink href="/contact">Get in touch</CtaLink><CtaLink href="https://github.com/MeanyDeany" newTab>GitHub profile</CtaLink></>}
-          metadata={[{ label: "Location", value: "Seoul, South Korea" }, { label: "Education", value: "MSc Economics / University of Copenhagen" }, { label: "Tools", value: "Python / SQL / Git / Linux" }]}
+          actions={<><CtaLink href="mailto:woosub815@gmail.com" kind="primary">Email meanydeany</CtaLink><CtaLink href="/contact">Get in touch</CtaLink><CtaLink href="https://github.com/MeanyDeany" newTab>GitHub profile</CtaLink></>}
+          metadata={[{ label: "Location", value: "Seoul, South Korea" }, { label: "Education", value: "University of Copenhagen / UC San Diego" }, { label: "Tools", value: "Python / SQL / Git / Linux" }]}
         />
 
         <EditorialSection id="background" eyebrow="Background" title="Trading, research, and systems">
@@ -36,12 +36,19 @@ export default function ResumePage() {
               <p>My current work focuses on BTC market microstructure and low-latency market-data systems. Earlier work independently confirmed short-horizon BTC risk information and separately tested its policy translation. {researchEvidence.policyUtility.finding}</p>
               <p>My focus is trading, quantitative research, market microstructure, and execution systems.</p>
             </div>
-            <article className="research-card">
-              <h3>M.Sc. Economics</h3>
-              <p className="site-strong mt-3">University of Copenhagen</p>
-              <p className="research-prose mt-4">Financial econometrics, time-series analysis, empirical asset pricing, volatility modeling, and systematic strategy research.</p>
-              <p className="research-prose mt-4">The academic foundation informs how I define a question, align information in time, compare alternatives, and communicate uncertainty.</p>
-            </article>
+            <div className="grid gap-8" aria-label="Education">
+              <article className="research-card">
+                <h3>M.Sc. Economics</h3>
+                <p className="site-strong mt-3">University of Copenhagen</p>
+                <p className="research-prose mt-4">Financial econometrics, time-series analysis, empirical asset pricing, volatility modeling, and systematic strategy research.</p>
+                <p className="research-prose mt-4">The academic foundation informs how I define a question, align information in time, compare alternatives, and communicate uncertainty.</p>
+              </article>
+              <article className="research-card">
+                <h3>Undergraduate degree</h3>
+                <p className="site-strong mt-3">University of California, San Diego</p>
+                <p className="research-prose mt-4">Quantitative Economics &amp; Econometrics</p>
+              </article>
+            </div>
           </div>
         </EditorialSection>
 
@@ -76,7 +83,7 @@ export default function ResumePage() {
 
         <EditorialSection id="contact" eyebrow="Contact" title="Trading, quantitative research, and professional opportunities">
           <p className="research-prose">I am interested in trading and quantitative roles where market judgment, research, and systems work meet.</p>
-          <div className="research-actions"><CtaLink href="mailto:woosub815@gmail.com">woosub815@gmail.com</CtaLink><Link href="/contact" className="research-button">Contact Woosub</Link><CtaLink href="https://github.com/MeanyDeany" newTab>GitHub profile</CtaLink></div>
+          <div className="research-actions"><CtaLink href="mailto:woosub815@gmail.com">Email meanydeany</CtaLink><Link href="/contact" className="research-button">Contact meanydeany</Link><CtaLink href="https://github.com/MeanyDeany" newTab>GitHub profile</CtaLink></div>
         </EditorialSection>
       </div>
     </PageShell>

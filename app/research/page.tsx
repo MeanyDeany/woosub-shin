@@ -14,7 +14,7 @@ import { metadataFor } from "@/lib/site-metadata";
 export const metadata = metadataFor(
   "/research",
   "Trading Research",
-  "Trading research by Woosub Shin covering risk forecasting, strategy validation, measurement, market microstructure, and academic work with explicit evidence boundaries.",
+  "Trading research by meanydeany covering risk forecasting, strategy validation, measurement, market microstructure, and academic work with explicit evidence boundaries.",
 );
 
 const principles = [
@@ -62,7 +62,7 @@ export default function ResearchPage() {
     <PageShell>
       <div className="research-page">
         <ResearchHero
-          eyebrow="Woosub Shin / Research"
+          eyebrow="meanydeany / Research"
           title="Trading research and validation"
           intro="Risk forecasting, strategy research, measurement, and academic work. Each result keeps its own evidence class, assessment window, and limitations."
         >

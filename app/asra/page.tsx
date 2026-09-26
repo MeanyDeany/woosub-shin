@@ -20,7 +20,7 @@ import { metadataFor } from "@/lib/site-metadata";
 export const metadata = metadataFor(
   "/asra",
   "ASRA — AI Systematic Research Architecture",
-  "ASRA, Woosub Shin’s AI Systematic Research Architecture. Independent risk information survived, policy utility was not confirmed, and repaired measurement did not demonstrate incremental historical BTC return transfer.",
+  "ASRA, meanydeany’s AI Systematic Research Architecture. Independent risk information survived, policy utility was not confirmed, and repaired measurement did not demonstrate incremental historical BTC return transfer.",
 );
 
 const forecast = researchEvidence.independentRiskForecast;
@@ -32,7 +32,7 @@ export default function AsraPage() {
     <PageShell>
       <div className="research-page">
         <ResearchHero
-          eyebrow="Woosub Shin / Research program"
+          eyebrow="meanydeany / Research program"
           title="ASRA"
           intro="AI Systematic Research Architecture"
         >
@@ -118,7 +118,7 @@ export default function AsraPage() {
             </article>
             <article className="research-card">
               <h3>Human responsibility and separate systems</h3>
-              <p>AI supports candidate generation, implementation and review. Woosub Shin remains responsible for research questions, evidence standards and published claims.</p>
+              <p>AI supports candidate generation, implementation and review. meanydeany remains responsible for research questions, evidence standards and published claims.</p>
               <p>Existing lab and BTC pages document research infrastructure and architectural lineage. Operational telemetry is read-only systems evidence.</p>
               <Link className="research-link" href="/projects">Inspect systems and research infrastructure <span aria-hidden="true">→</span></Link>
             </article>

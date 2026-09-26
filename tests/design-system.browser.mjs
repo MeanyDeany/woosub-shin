@@ -27,6 +27,13 @@ try {
         const heading = h1s[0];
         return {
           h1Count: h1s.length, heading: heading?.textContent,
+          realNameCount: (document.body.innerText.match(/Woosub Shin/g) ?? []).length,
+          nameAliasCount: (document.body.innerText.match(/\b(?:Woosub|Shin)\b|신우섭/gi) ?? []).length,
+          brand: document.querySelector(".research-wordmark")?.textContent?.trim(),
+          title: document.title,
+          metadata: [...document.querySelectorAll('head meta[content]')].map(e => e.getAttribute("content")).join(" "),
+          accessibleCopy: [...document.querySelectorAll('[aria-label],[title],[alt],[placeholder]')].map(e => ["aria-label", "title", "alt", "placeholder"].map(key => e.getAttribute(key) ?? "").join(" ")).join(" "),
+          hasUndergraduate: document.body.innerText.includes("Quantitative Economics & Econometrics") && /UC San Diego|University of California, San Diego/.test(document.body.innerText),
           font: heading ? getComputedStyle(heading).fontFamily : null,
           headingSize: heading ? parseFloat(getComputedStyle(heading).fontSize) : null,
           ledgerHeading: Boolean(heading?.closest(".trading-desk")),
@@ -41,6 +48,13 @@ try {
         };
       });
       const problems = [];
+      const expectedNameCount = pathname === "/resume" ? 1 : 0;
+      if (snapshot.realNameCount !== expectedNameCount || snapshot.nameAliasCount !== expectedNameCount * 2) problems.push("real-name display boundary");
+      if (pathname === "/resume" && snapshot.heading !== "Woosub Shin") problems.push("real name must be the resume heading only");
+      if (snapshot.brand !== "meanydeany") problems.push("public brand mismatch");
+      if (/woosub|\bshin\b|신우섭/i.test(`${snapshot.title} ${snapshot.metadata} ${snapshot.accessibleCopy}`)) problems.push("real name in metadata or accessible copy");
+      if ((snapshot.title.match(/meanydeany/g) ?? []).length !== 1) problems.push("missing or duplicate metadata brand");
+      if (["/", "/resume"].includes(pathname) && !snapshot.hasUndergraduate) problems.push("undergraduate education missing");
       if (response?.status() !== 200) problems.push("HTTP status");
       if (snapshot.h1Count !== 1) problems.push("primary heading count");
       if (!snapshot.ledgerHeading && !snapshot.font?.includes("Georgia")) problems.push("display font mismatch");
@@ -52,7 +66,7 @@ try {
       if (!snapshot.hasContent || snapshot.overlay) problems.push("blank page or error overlay");
       if (snapshot.bodyBackground !== (theme === "dark" ? "rgb(17, 20, 22)" : "rgb(243, 240, 233)")) problems.push("shared canvas mismatch");
       const name = pathname === "/" ? "home" : pathname.slice(1).replaceAll("/", "-");
-      await page.screenshot({ path: `${out}/${name}-${theme}-${width}.png`, fullPage: ["/research", "/resume", "/contact"].includes(pathname) });
+      await page.screenshot({ path: `${out}/${name}-${theme}-${width}.png`, fullPage: ["/", "/research", "/resume", "/contact"].includes(pathname) });
       results.push({ pathname, theme, width, status: response?.status(), ...snapshot, problems });
       if (problems.length) failures.push({ pathname, theme, width, problems });
     }
@@ -78,5 +92,5 @@ try {
   assert.deepEqual(failures, []);
   assert.deepEqual(exceptions, []);
   assert.deepEqual(consoleErrors, []);
-  console.log(`DESIGN_SYSTEM_OK: ${results.length} page/theme/viewport combinations; typography sizes, shared grid, navigation and accounting-guide checks passed.`);
+  console.log(`DESIGN_SYSTEM_OK: ${results.length} page/theme/viewport combinations; identity boundary, education, metadata, typography sizes, shared grid, navigation and accounting-guide checks passed.`);
 } finally { await browser.close(); }

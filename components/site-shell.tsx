@@ -12,8 +12,8 @@ export function SiteHeader() {
   return (
     <header className="research-header">
       <div className="research-header__inner">
-        <Link href="/" className="research-wordmark" aria-label="Woosub Shin — Home">
-          Woosub Shin
+        <Link href="/" className="research-wordmark" aria-label="meanydeany / Home">
+          meanydeany
         </Link>
         <ActiveNavigation />
       </div>
@@ -28,7 +28,7 @@ export function SiteFooter() {
     <footer className="research-footer">
       <div className="research-footer__inner">
         <div className="research-footer__identity">
-          <p className="research-footer__name">Woosub Shin</p>
+          <p className="research-footer__name">meanydeany</p>
           <p>Trader / Quantitative research / Market microstructure</p>
         </div>
         <nav aria-label="Footer navigation" className="research-footer__links">
@@ -40,7 +40,7 @@ export function SiteFooter() {
           <a href="https://github.com/MeanyDeany" target="_blank" rel="noreferrer">GitHub ↗</a>
         </nav>
         <div className="research-footer__record">
-          <p>© {currentYear} Woosub Shin</p>
+          <p>© {currentYear} meanydeany</p>
           <p><VisitorStats /></p>
           <p>Research results and account telemetry have separate scopes</p>
         </div>
