@@ -6,21 +6,32 @@ export type BinanceDailyPerformanceDay = {
   actual_duration_seconds: number | null;
   net_pnl: number | null;
   return_pct: number | null;
+  flow_adjusted_net_pnl: number | null;
+  flow_adjusted_return_pct: number | null;
 };
 
 export type BinanceDailyPerformanceTelemetry = {
-  schema_version: 1;
-  dataset_id: "binance_usdm_public_daily_performance_v1";
+  schema_version: 1 | 2;
+  dataset_id:
+    | "binance_usdm_public_daily_performance_v1"
+    | "binance_usdm_public_daily_performance_v2";
   generated_at_utc: string;
   observed_at_utc: string;
   tracking_started_at_utc: "2026-08-01T00:00:00Z";
   venue: "BINANCE_USDM";
   environment: "PRODUCTION";
-  scope: "BINANCE_USDM_ACCOUNT_WIDE_DAILY_TRADING_V1";
+  scope:
+    | "BINANCE_USDM_ACCOUNT_WIDE_DAILY_TRADING_V1"
+    | "BINANCE_USDM_ACCOUNT_WIDE_DAILY_TRADING_V2";
   reporting_currency: "USD";
   days: BinanceDailyPerformanceDay[];
-  return_method: "MODIFIED_DIETZ_FLOW_ADJUSTED_V2";
-  capital_flow_handling: "EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2";
+  return_method: "MODIFIED_DIETZ_FLOW_ADJUSTED_V2" | "BINANCE_FUTURES_WALLET_PNL_V1";
+  capital_flow_handling:
+    | "EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2"
+    | "SUBTRACT_NET_CAPITAL_FLOW_ADD_GROSS_INFLOW_TO_DENOMINATOR_V1";
+  secondary_return_method: "MODIFIED_DIETZ_FLOW_ADJUSTED_V2" | null;
+  secondary_capital_flow_handling: "EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2" | null;
+  metric_basis: "FLOW_ADJUSTED_MTM" | "BINANCE_FUTURES_PNL_ANALYSIS";
   freshness_ttl_seconds: 180;
   authority_classification: "PERFORMANCE_TELEMETRY_ONLY";
   external_action_permitted: false;
@@ -33,8 +44,10 @@ export const DEFAULT_BTC_DAILY_PERFORMANCE_FEED_URL =
 const sha256=/^[0-9a-f]{64}$/;
 const utc=/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?Z$/;
 const date=/^\d{4}-\d{2}-\d{2}$/;
-const topKeys=["schema_version","dataset_id","generated_at_utc","observed_at_utc","tracking_started_at_utc","venue","environment","scope","reporting_currency","days","return_method","capital_flow_handling","freshness_ttl_seconds","authority_classification","external_action_permitted","telemetry_sha256"] as const;
-const dayKeys=["date_utc","status","start_observed_at_utc","end_observed_at_utc","actual_duration_seconds","net_pnl","return_pct"] as const;
+const topKeysV1=["schema_version","dataset_id","generated_at_utc","observed_at_utc","tracking_started_at_utc","venue","environment","scope","reporting_currency","days","return_method","capital_flow_handling","freshness_ttl_seconds","authority_classification","external_action_permitted","telemetry_sha256"] as const;
+const topKeysV2=[...topKeysV1,"secondary_return_method","secondary_capital_flow_handling"] as const;
+const dayKeysV1=["date_utc","status","start_observed_at_utc","end_observed_at_utc","actual_duration_seconds","net_pnl","return_pct"] as const;
+const dayKeysV2=[...dayKeysV1,"flow_adjusted_net_pnl","flow_adjusted_return_pct"] as const;
 
 function isRecord(value: unknown): value is Record<string,unknown>{return typeof value==="object"&&value!==null&&!Array.isArray(value);}
 function exactKeys(value:Record<string,unknown>,expected:readonly string[],field:string){const actual=Object.keys(value).sort();const wanted=[...expected].sort();if(actual.length!==wanted.length||actual.some((key,index)=>key!==wanted[index])) throw new Error(`${field} fields do not match contract`);}
@@ -43,9 +56,9 @@ function finite(value:unknown,field:string):number{if(typeof value!=="number"||!
 function nullableTimestamp(value:unknown,field:string):string|null{return value===null?null:timestamp(value,field);}
 function nullableFinite(value:unknown,field:string):number|null{return value===null?null:finite(value,field);}
 
-function parseDay(value:unknown,index:number):BinanceDailyPerformanceDay{
+function parseDay(value:unknown,index:number,schema:1|2):BinanceDailyPerformanceDay{
   if(!isRecord(value)) throw new Error("Daily performance row must be an object");
-  exactKeys(value,dayKeys,"Daily performance row");
+  exactKeys(value,schema===2?dayKeysV2:dayKeysV1,"Daily performance row");
   if(typeof value.date_utc!=="string"||!date.test(value.date_utc)||!Number.isFinite(Date.parse(value.date_utc+"T00:00:00Z"))) throw new Error("Daily date is invalid");
   if(value.status!=="CLOSED"&&value.status!=="IN_PROGRESS"&&value.status!=="MISSING") throw new Error("Daily status is invalid");
   const start=nullableTimestamp(value.start_observed_at_utc,`days[${index}].start_observed_at_utc`);
@@ -57,24 +70,33 @@ function parseDay(value:unknown,index:number):BinanceDailyPerformanceDay{
   }
   const pnl=nullableFinite(value.net_pnl,`days[${index}].net_pnl`);
   const ret=nullableFinite(value.return_pct,`days[${index}].return_pct`);
+  const flowPnl=schema===2?nullableFinite(value.flow_adjusted_net_pnl,`days[${index}].flow_adjusted_net_pnl`):pnl;
+  const flowRet=schema===2?nullableFinite(value.flow_adjusted_return_pct,`days[${index}].flow_adjusted_return_pct`):ret;
   if(value.status==="MISSING"){
-    if(start!==null||end!==null||duration!==null||pnl!==null||ret!==null) throw new Error("Missing daily row must contain null measurements");
+    if(start!==null||end!==null||duration!==null||pnl!==null||ret!==null||flowPnl!==null||flowRet!==null) throw new Error("Missing daily row must contain null measurements");
   }else{
-    if(start===null||end===null||duration===null||pnl===null||ret===null) throw new Error("Measured daily row is incomplete");
+    if(start===null||end===null||duration===null||pnl===null||ret===null||flowPnl===null||flowRet===null) throw new Error("Measured daily row is incomplete");
     if(Date.parse(start)>=Date.parse(end)||Math.floor((Date.parse(end)-Date.parse(start))/1000)!==duration) throw new Error("Daily row timestamps are inconsistent");
   }
-  return {date_utc:value.date_utc,status:value.status,start_observed_at_utc:start,end_observed_at_utc:end,actual_duration_seconds:duration,net_pnl:pnl,return_pct:ret};
+  return {date_utc:value.date_utc,status:value.status,start_observed_at_utc:start,end_observed_at_utc:end,actual_duration_seconds:duration,net_pnl:pnl,return_pct:ret,flow_adjusted_net_pnl:flowPnl,flow_adjusted_return_pct:flowRet};
 }
 
 export function parseBtcDailyPerformanceTelemetry(value:unknown):BinanceDailyPerformanceTelemetry{
   if(!isRecord(value)) throw new Error("Daily performance telemetry must be an object");
-  exactKeys(value,topKeys,"Daily performance telemetry");
-  if(value.schema_version!==1||value.dataset_id!=="binance_usdm_public_daily_performance_v1"||value.tracking_started_at_utc!=="2026-08-01T00:00:00Z"||value.venue!=="BINANCE_USDM"||value.environment!=="PRODUCTION"||value.scope!=="BINANCE_USDM_ACCOUNT_WIDE_DAILY_TRADING_V1"||value.reporting_currency!=="USD"||value.return_method!=="MODIFIED_DIETZ_FLOW_ADJUSTED_V2"||value.capital_flow_handling!=="EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2"||value.freshness_ttl_seconds!==180||value.authority_classification!=="PERFORMANCE_TELEMETRY_ONLY"||value.external_action_permitted!==false) throw new Error("Unsupported daily performance contract");
+  const schema=value.schema_version;
+  if(schema!==1&&schema!==2) throw new Error("Unsupported daily performance schema");
+  exactKeys(value,schema===2?topKeysV2:topKeysV1,"Daily performance telemetry");
+
+  const commonValid=value.tracking_started_at_utc==="2026-08-01T00:00:00Z"&&value.venue==="BINANCE_USDM"&&value.environment==="PRODUCTION"&&value.reporting_currency==="USD"&&value.freshness_ttl_seconds===180&&value.authority_classification==="PERFORMANCE_TELEMETRY_ONLY"&&value.external_action_permitted===false;
+  const v1Valid=schema===1&&value.dataset_id==="binance_usdm_public_daily_performance_v1"&&value.scope==="BINANCE_USDM_ACCOUNT_WIDE_DAILY_TRADING_V1"&&value.return_method==="MODIFIED_DIETZ_FLOW_ADJUSTED_V2"&&value.capital_flow_handling==="EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2";
+  const v2Valid=schema===2&&value.dataset_id==="binance_usdm_public_daily_performance_v2"&&value.scope==="BINANCE_USDM_ACCOUNT_WIDE_DAILY_TRADING_V2"&&value.return_method==="BINANCE_FUTURES_WALLET_PNL_V1"&&value.capital_flow_handling==="SUBTRACT_NET_CAPITAL_FLOW_ADD_GROSS_INFLOW_TO_DENOMINATOR_V1"&&value.secondary_return_method==="MODIFIED_DIETZ_FLOW_ADJUSTED_V2"&&value.secondary_capital_flow_handling==="EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2";
+  if(!commonValid||(!v1Valid&&!v2Valid)) throw new Error("Unsupported daily performance contract");
+
   const generated=timestamp(value.generated_at_utc,"generated_at_utc");
   const observed=timestamp(value.observed_at_utc,"observed_at_utc");
   if(Date.parse(observed)>Date.parse(generated)) throw new Error("Daily performance timestamps are not chronological");
   if(!Array.isArray(value.days)||value.days.length===0) throw new Error("Daily performance days are unavailable");
-  const days=value.days.map(parseDay);
+  const days=value.days.map((item,index)=>parseDay(item,index,schema));
   let expected="2026-08-01";
   for(const [index,item] of days.entries()){
     if(item.date_utc!==expected) throw new Error("Daily performance dates are not contiguous");
@@ -83,7 +105,11 @@ export function parseBtcDailyPerformanceTelemetry(value:unknown):BinanceDailyPer
   }
   if(days.at(-1)?.date_utc!==observed.slice(0,10)) throw new Error("Daily performance does not end on the observed UTC day");
   if(typeof value.telemetry_sha256!=="string"||!sha256.test(value.telemetry_sha256)) throw new Error("Daily performance SHA-256 is invalid");
-  return {schema_version:1,dataset_id:"binance_usdm_public_daily_performance_v1",generated_at_utc:generated,observed_at_utc:observed,tracking_started_at_utc:"2026-08-01T00:00:00Z",venue:"BINANCE_USDM",environment:"PRODUCTION",scope:"BINANCE_USDM_ACCOUNT_WIDE_DAILY_TRADING_V1",reporting_currency:"USD",days,return_method:"MODIFIED_DIETZ_FLOW_ADJUSTED_V2",capital_flow_handling:"EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2",freshness_ttl_seconds:180,authority_classification:"PERFORMANCE_TELEMETRY_ONLY",external_action_permitted:false,telemetry_sha256:value.telemetry_sha256};
+
+  if(schema===2){
+    return {schema_version:2,dataset_id:"binance_usdm_public_daily_performance_v2",generated_at_utc:generated,observed_at_utc:observed,tracking_started_at_utc:"2026-08-01T00:00:00Z",venue:"BINANCE_USDM",environment:"PRODUCTION",scope:"BINANCE_USDM_ACCOUNT_WIDE_DAILY_TRADING_V2",reporting_currency:"USD",days,return_method:"BINANCE_FUTURES_WALLET_PNL_V1",capital_flow_handling:"SUBTRACT_NET_CAPITAL_FLOW_ADD_GROSS_INFLOW_TO_DENOMINATOR_V1",secondary_return_method:"MODIFIED_DIETZ_FLOW_ADJUSTED_V2",secondary_capital_flow_handling:"EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2",metric_basis:"BINANCE_FUTURES_PNL_ANALYSIS",freshness_ttl_seconds:180,authority_classification:"PERFORMANCE_TELEMETRY_ONLY",external_action_permitted:false,telemetry_sha256:value.telemetry_sha256};
+  }
+  return {schema_version:1,dataset_id:"binance_usdm_public_daily_performance_v1",generated_at_utc:generated,observed_at_utc:observed,tracking_started_at_utc:"2026-08-01T00:00:00Z",venue:"BINANCE_USDM",environment:"PRODUCTION",scope:"BINANCE_USDM_ACCOUNT_WIDE_DAILY_TRADING_V1",reporting_currency:"USD",days,return_method:"MODIFIED_DIETZ_FLOW_ADJUSTED_V2",capital_flow_handling:"EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2",secondary_return_method:null,secondary_capital_flow_handling:null,metric_basis:"FLOW_ADJUSTED_MTM",freshness_ttl_seconds:180,authority_classification:"PERFORMANCE_TELEMETRY_ONLY",external_action_permitted:false,telemetry_sha256:value.telemetry_sha256};
 }
 
 function validHttpsUrl(value?:string):string|undefined{if(!value)return undefined;try{const url=new URL(value);if(url.protocol!=="https:")return undefined;url.search="";url.hash="";return url.toString();}catch{return undefined;}}
