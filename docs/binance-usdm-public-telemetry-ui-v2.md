@@ -43,6 +43,21 @@ Lifetime trading PnL is realized net PnL plus the change in unrealized PnL since
 
 Aggregate current unrealized PnL is public, but position size, entry price, mark price, balances, and per-position PnL remain private.
 
+
+## Binance-compatible daily performance
+
+The daily calendar consumes `binance_usdm_public_daily_performance_v2` from:
+
+```text
+/public/execution/daily-performance.json
+```
+
+The primary daily fields follow the Binance Futures PNL Analysis wallet-balance basis. Daily PnL is ending wallet balance minus beginning wallet balance minus net capital inflow. Daily PnL % divides that PnL by beginning wallet balance plus positive inflow. Open-position unrealized PnL is therefore excluded from the primary daily metric until it is realized into wallet balance.
+
+The same row also retains `flow_adjusted_net_pnl` and `flow_adjusted_return_pct` using the existing Modified Dietz mark-to-market method. These secondary fields are useful for research/account-equity context but are intentionally not labelled as Binance PnL.
+
+The frontend accepts the older V1 contract during rollout so the website and feed can be deployed independently without fabricating or mislabelling values.
+
 ## Validation and authority
 
 Both parsers fail closed on unknown fields, unsupported schema identities, malformed timestamps, inconsistent counts or ordering, malformed SHA-256 identities, or any authority coordinate other than `external_action_permitted: false`.
