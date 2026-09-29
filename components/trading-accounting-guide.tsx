@@ -1,7 +1,7 @@
 /** Explains existing accounting scopes; contains no account data or calculations. */
 export function TradingAccountingGuide() {
   return <aside className="td-accounting-guide" aria-label="Calendar accounting guide">
-    <p><strong>Read the calendar by source.</strong> V2 ledger days default to Binance-compatible wallet PnL, which excludes open-position unrealized PnL until it is realized. The same ledger row keeps a secondary flow-adjusted MTM measure including changes in unrealized PnL. Historical CSV days show BTC-only stablecoin cash subtotals, not complete Binance account PnL.</p>
+    <p><strong>Read the calendar by source.</strong> V2 ledger days default to Binance-compatible wallet PnL, which excludes open-position unrealized PnL until it is realized. The same ledger row keeps a secondary flow-adjusted MTM measure including changes in unrealized PnL. Historical export days show BTC-only stablecoin cash subtotals, not complete Binance account PnL. The earliest supplied export date is not treated as the account inception date.</p>
     <details>
       <summary>Accounting scope, excluded records, and UTC boundaries</summary>
       <dl>
