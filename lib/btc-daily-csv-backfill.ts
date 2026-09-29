@@ -5,7 +5,7 @@
  * - Binance Futures Transaction History export ending 2025-11-14 (UTC+09:00)
  * - Binance Futures Transaction History export through 2026-09-24 local time (UTC+09:00)
  *
- * Complete UTC window: 2024-11-15 through 2026-09-22. The second export is
+ * Complete UTC window: 2024-11-13 through 2026-09-22. The second export is
  * incomplete for 2026-09-23 UTC, so later dates are intentionally excluded.
  *
  * For supported BTCUSDT/BTCUSDC rows:
@@ -53,11 +53,27 @@ export type CalendarPerformanceDay =
       unsupported_performance_event_count: number;
     };
 
-export const CSV_REALIZED_BACKFILL_START = "2024-11-15";
+export const CSV_REALIZED_BACKFILL_START = "2024-11-13";
 export const CSV_REALIZED_BACKFILL_END = "2026-09-22";
-export const CSV_REALIZED_BACKFILL_TOTAL = -128.09855281;
+export const CSV_REALIZED_BACKFILL_TOTAL = -157.9821828;
 
 export const CSV_REALIZED_BACKFILL: readonly CsvRealizedBackfillDay[] = [
+  {
+    "date_utc": "2024-11-13",
+    "net_pnl": -29.88362999,
+    "partial": false,
+    "excluded_bnb_commission_bnb": 0,
+    "ambiguous_event_count": 0,
+    "unsupported_performance_event_count": 0
+  },
+  {
+    "date_utc": "2024-11-14",
+    "net_pnl": 0,
+    "partial": false,
+    "excluded_bnb_commission_bnb": 0,
+    "ambiguous_event_count": 0,
+    "unsupported_performance_event_count": 0
+  },
   {
     "date_utc": "2024-11-15",
     "net_pnl": 1.42108361,
