@@ -30,7 +30,7 @@ The calendar can hold a private text note for the site owner. Notes remain in br
 
 ## Freshness
 
-Public feeds poll every 30 seconds while visible, use a 10-second request deadline and preserve the last validated value on failed refresh. The source's 180-second freshness TTL is authoritative. A failed or malformed feed never implies that the account is flat or that a missing day had zero PnL.
+Public feeds poll every 30 seconds while visible, use a 10-second request deadline and preserve the last validated value on failed refresh. Each source publishes its own freshness TTL: performance and trade-day win-rate feeds currently use 180 seconds, while the lower-frequency withdrawal summary uses 600 seconds. A failed or malformed feed never implies that the account is flat, that a missing day had zero PnL, or that no withdrawal occurred.
 
 The public daily projection is produced by the execution-gateway reporting layer from the existing authenticated flow-adjusted ledger. The website itself has no Binance credential, private exchange call, order route or execution capability.
 
@@ -42,15 +42,17 @@ The dashboard also shows a separate trade-day win rate derived from actual Binan
 
 For each UTC date with futures fills, the resolved trading result is realized trade PnL after trading commissions and with funding excluded. Historical USDT/USDC commissions are used directly. Historical BNB commissions are translated to USD with the contemporaneous BNBUSDT 1-minute close, so the aggregate win rate is explicitly approximate rather than presented as exchange-native accounting.
 
-A date enters the win-rate denominator only when it has a resolved realized outcome. Fill-only or flat dates are excluded instead of being mislabeled as losses. Current sanitized coverage through 2026-09-28 UTC contains 286 active trade dates: 152 winning resolved days, 70 losing resolved days and 64 fill-only/flat dates excluded from the denominator. The displayed win rate is therefore approximately 68.47% = 152 / (152 + 70).
+A date enters the win-rate denominator only when it has a resolved realized outcome. Fill-only or flat dates are excluded instead of being mislabeled as losses. The historical base through 2026-09-28 UTC contains 152 winning resolved days and 70 losing resolved days, for approximately 68.47%.
 
-Funding fees do not affect this statistic. They remain part of the separate account cash-PnL and wallet-PnL views where appropriate.
+From 2026-09-29 UTC onward, the public win-rate feed extends that frozen historical base from authenticated ledger REALIZED_PNL and COMMISSION events. FUNDING_FEE is explicitly excluded. The server refreshes the feed with the same read-only reporting cycle, and the website polls it every 30 seconds. Funding fees remain part of the separate account cash-PnL and wallet-PnL views where appropriate.
 
 
 ## External withdrawal summary
 
-The account card also publishes a sanitized aggregate from the supplied Binance withdrawal-history export. The supplied file contains 24 completed external withdrawals from 2025-04-13 through 2026-09-25: 12 direct USDT/USDC withdrawals and 12 XRP withdrawals.
+The account card publishes a sanitized historical-plus-live external-withdrawal aggregate. The frozen historical base comes from the supplied Binance withdrawal-history export and contains 24 completed external withdrawals through 2026-09-25: 12 direct USDT/USDC withdrawals and 12 XRP withdrawals.
 
-No wallet address, TXID, account ID or raw withdrawal row is shipped to the site. USDT and USDC are valued at par. XRP is valued at the contemporaneous historical USDT equivalent rather than current XRP price. Eleven of the twelve XRP withdrawals match a preceding stablecoin transfer within 6.4 minutes; the remaining 2025-10-11 withdrawal uses the sole same-day 50 USDC funding transfer and is therefore the least precise component. The aggregate is explicitly labelled an estimate.
+No wallet address, TXID, account ID or raw withdrawal row is shipped to the site. Historical USDT and USDC are valued at par. Historical XRP uses the contemporaneous transaction-implied USDT valuation already documented for the export, so the base remains explicitly approximate.
 
-The sanitized net amount sent is approximately 5,933.11 USDT equivalent. Estimated withdrawal fees are approximately 9.77 USDT equivalent, for approximately 5,942.87 USDT equivalent of account outflow. Futures TRANSFER and COIN_SWAP rows are not themselves counted as external withdrawals; the dedicated Binance withdrawal-history export defines the external-withdrawal set.
+From 2026-09-26 UTC onward, a GET-only Binance withdrawal-history publisher extends the aggregate automatically. USDT/USDC continue at par. New non-stablecoin withdrawals use the Binance spot 1-minute close at the withdrawal apply minute with a direct USDT or USDC pair. If a new asset cannot be valued from either direct pair, publication fails closed rather than silently omitting it. The private incremental state stores only hashed withdrawal identities and sanitized valuation facts, never addresses or TXIDs.
+
+The frozen historical base is approximately 5,933.11 USDT equivalent net sent plus 9.77 USDT equivalent fees, or 5,942.87 USDT equivalent total account outflow. Any completed withdrawal after the live-extension boundary is added automatically. Futures TRANSFER and COIN_SWAP rows are not counted as external withdrawals.
