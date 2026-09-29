@@ -103,7 +103,7 @@ test("Trading page does not claim nonexistent order history or recalculate perfo
   const text = textContent(html);
   assert.match(text, /Daily history is not order history/);
   assert.match(text, /Order-level feed: not published/);
-  assert.match(text, /15 Nov 2024/);
+  assert.match(text, /13 Nov 2024/);
   assert.match(text, /01 Aug 2026/);
   assert.match(text, /interface does not recalculate returns/);
   assert.match(text, /Missing observations are unavailable, not zero/);
