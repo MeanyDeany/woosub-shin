@@ -66,3 +66,32 @@ test("backfill prepends historical rows and replaces only MISSING ledger rows", 
   assert.equal(sep23?.source, "LEDGER");
   assert.equal(sep23?.status, "MISSING");
 });
+
+
+test("legacy MTM mode prefers the historical export for closed covered dates", () => {
+  const closed = {
+    date_utc: "2026-09-15",
+    status: "CLOSED",
+    start_observed_at_utc: "2026-09-15T00:00:00Z",
+    end_observed_at_utc: "2026-09-16T00:00:00Z",
+    actual_duration_seconds: 86400,
+    net_pnl: -533,
+    return_pct: -8,
+  };
+  const current = {
+    date_utc: "2026-09-23",
+    status: "IN_PROGRESS",
+    start_observed_at_utc: "2026-09-23T00:00:00Z",
+    end_observed_at_utc: "2026-09-23T12:00:00Z",
+    actual_duration_seconds: 43200,
+    net_pnl: 12,
+    return_pct: 0.2,
+  };
+  const result = applyCsvRealizedBackfill([closed,current], {preferHistoricalOverMeasured:true});
+  const sep15=result.find(day=>day.date_utc==="2026-09-15");
+  const sep23=result.find(day=>day.date_utc==="2026-09-23");
+  assert.equal(sep15?.source,"CSV_REALIZED");
+  assert.equal(sep15?.net_pnl,-1.35459686);
+  assert.equal(sep23?.source,"LEDGER");
+  assert.equal(sep23?.net_pnl,12);
+});
