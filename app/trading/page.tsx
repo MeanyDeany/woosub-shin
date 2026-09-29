@@ -8,6 +8,7 @@ import { deriveBtcLifetimePerformanceFeedUrl } from "@/lib/btc-lifetime-performa
 import { deriveBtcLiveMultiPositionFeedUrl } from "@/lib/btc-live-multi-position";
 import { deriveBtcRollingPerformanceFeedUrl } from "@/lib/btc-rolling-performance";
 import { deriveBtcDailyPerformanceFeedUrl } from "@/lib/btc-daily-performance";
+import { deriveBtcTradeDayWinRateFeedUrl } from "@/lib/btc-trade-day-win-rate";
 
 export const metadata = metadataFor("/trading", "Personal Trading Record", "Personal Binance USD-M account performance, positions, UTC daily history, and an explicit guide to the difference between account outcomes and research results.");
 
@@ -23,6 +24,7 @@ export default function TradingPage() {
         performanceFeedUrl={deriveBtcLifetimePerformanceFeedUrl(process.env.NEXT_PUBLIC_BTC_RESEARCH_OBSERVATORY_URL, process.env.NEXT_PUBLIC_BTC_LIFETIME_PERFORMANCE_URL)}
         rollingFeedUrl={deriveBtcRollingPerformanceFeedUrl(process.env.NEXT_PUBLIC_BTC_RESEARCH_OBSERVATORY_URL, process.env.NEXT_PUBLIC_BTC_ROLLING_PERFORMANCE_URL)}
         dailyFeedUrl={deriveBtcDailyPerformanceFeedUrl(process.env.NEXT_PUBLIC_BTC_RESEARCH_OBSERVATORY_URL, process.env.NEXT_PUBLIC_BTC_DAILY_PERFORMANCE_URL)}
+      winRateFeedUrl={deriveBtcTradeDayWinRateFeedUrl(process.env.NEXT_PUBLIC_BTC_RESEARCH_OBSERVATORY_URL, process.env.NEXT_PUBLIC_BTC_TRADE_DAY_WIN_RATE_URL)}
       />
     </section>
     <section id="order-history" className="folio-wrap folio-section">
