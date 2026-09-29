@@ -1,5 +1,5 @@
 /**
- * Historical Binance USD-M stablecoin realized-cash PnL for the public calendar.
+ * Historical Binance USD-M stablecoin trading cash flow for the public calendar.
  *
  * Sources:
  * - Binance Futures Transaction History export ending 2025-11-14 (UTC+09:00)
@@ -18,9 +18,14 @@
  * mixed into net_pnl. INSURANCE_CLEAR and other ambiguous performance events are
  * also excluded. Dates containing either condition are labelled partial.
  *
- * This is not mark-to-market daily PnL. Daily return is unavailable. From
- * 2026-08-01 onward an authenticated CLOSED/IN_PROGRESS ledger row always wins;
- * CSV data is used only to display an otherwise MISSING row.
+ * This is not mark-to-market daily PnL. Daily return is unavailable.
+ *
+ * The subtotal intentionally includes funding and stablecoin commission, so a
+ * negative day may be carrying/funding drag even when no closed trade realized
+ * a loss. While the live feed is legacy FLOW_ADJUSTED_MTM, a completed date
+ * covered by this export uses the historical cash subtotal instead of the legacy
+ * MTM daily value. A Binance-compatible V2 CLOSED/IN_PROGRESS row remains
+ * authoritative when available.
  */
 
 import type { BinanceDailyPerformanceDay } from "@/lib/btc-daily-performance";
