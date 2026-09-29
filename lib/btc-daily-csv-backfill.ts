@@ -44,6 +44,8 @@ export type CalendarPerformanceDay =
       actual_duration_seconds: null;
       net_pnl: number;
       return_pct: null;
+      flow_adjusted_net_pnl: null;
+      flow_adjusted_return_pct: null;
       source: "CSV_REALIZED";
       partial: boolean;
       excluded_bnb_commission_bnb: number;
@@ -5485,6 +5487,8 @@ function csvDay(day: CsvRealizedBackfillDay): CalendarPerformanceDay {
     actual_duration_seconds: null,
     net_pnl: day.net_pnl,
     return_pct: null,
+    flow_adjusted_net_pnl: null,
+    flow_adjusted_return_pct: null,
     source: "CSV_REALIZED",
     partial: day.partial,
     excluded_bnb_commission_bnb: day.excluded_bnb_commission_bnb,
