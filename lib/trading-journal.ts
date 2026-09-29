@@ -1,6 +1,6 @@
 /** Private, browser-local daily records. Never an exchange performance source. */
 export const JOURNAL_KEY = "meanydeany.trading-journal.v1";
-export const TRACKING_START = "2024-11-15";
+export const TRACKING_START = "2024-11-13";
 export const MAX_IMPORT_BYTES = 2_000_000;
 export type JournalEntry = {
   date: string;
