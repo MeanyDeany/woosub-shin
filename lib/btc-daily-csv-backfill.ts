@@ -5513,7 +5513,7 @@ function csvDay(day: CsvRealizedBackfillDay): CalendarPerformanceDay {
   };
 }
 
-export function applyCsvRealizedBackfill(days: readonly BinanceDailyPerformanceDay[]): CalendarPerformanceDay[] {
+export function applyCsvRealizedBackfill(days: readonly BinanceDailyPerformanceDay[], options: { preferHistoricalOverMeasured?: boolean } = {}): CalendarPerformanceDay[] {
   const firstLedgerDate = days[0]?.date_utc ?? "9999-12-31";
   const result: CalendarPerformanceDay[] = [];
 
@@ -5522,11 +5522,19 @@ export function applyCsvRealizedBackfill(days: readonly BinanceDailyPerformanceD
   }
 
   for (const day of days) {
+    const historical = byDate.get(day.date_utc);
+    if (
+      options.preferHistoricalOverMeasured
+      && day.status !== "IN_PROGRESS"
+      && historical
+    ) {
+      result.push(csvDay(historical));
+      continue;
+    }
     if (day.status !== "MISSING") {
       result.push({ ...day, source: "LEDGER" as const });
       continue;
     }
-    const historical = byDate.get(day.date_utc);
     result.push(historical ? csvDay(historical) : { ...day, source: "LEDGER" as const });
   }
 
