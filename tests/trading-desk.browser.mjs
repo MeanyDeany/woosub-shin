@@ -33,9 +33,9 @@ try {
   await page.locator('.td-instrument').filter({hasText:'BTCUSDC'}).waitFor();
   const withdrawalMetric = page.locator('.td-metric').filter({hasText:'External withdrawals'});
   await withdrawalMetric.waitFor();
-  assert.match(await withdrawalMetric.textContent(), /\$5,942\.87/);
-  assert.match(await withdrawalMetric.textContent(), /net sent ≈ \$5,933\.11/);
-  assert.match(await withdrawalMetric.textContent(), /fees ≈ \$9\.77/);
+  assert.match(await withdrawalMetric.textContent(), /5,942\.87 USDT eq\./);
+  assert.match(await withdrawalMetric.textContent(), /net sent ≈ 5,933\.11 USDT eq\./);
+  assert.match(await withdrawalMetric.textContent(), /fees ≈ 9\.77 USDT eq\./);
   await page.locator('#journal-note').waitFor({ state:'visible' });
   const skip = page.locator('.research-skip-link');
   assert.equal(await skip.evaluate(el => getComputedStyle(el).opacity), '0');
