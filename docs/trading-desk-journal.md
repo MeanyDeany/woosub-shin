@@ -1,6 +1,12 @@
 # Public account dashboard and private notes
 
-The home account section and `/projects/btc-futures-research/live-position` share a compact responsive dashboard. Existing public V2 positions, V2 lifetime performance and V1 rolling performance remain read-only. The detail page additionally consumes the public V1 UTC daily-performance projection.
+The home account section and `/projects/btc-futures-research/live-position` share a compact responsive dashboard. Existing public V2 positions and V2 lifetime performance remain read-only. The dashboard accepts rolling-performance V1 during rollout and uses rolling-performance V2 when available; V2 makes 7D/30D wallet-balance PnL the primary recent-performance measure while retaining Modified Dietz MTM values as secondary fields. The detail page consumes the public daily-performance V2 projection with the same primary wallet-PnL basis.
+
+## Recent performance
+
+`/public/execution/rolling-performance.json` supplies fixed 7-day and 30-day account windows. V2 uses the same primary wallet-balance accounting as daily V2: ending wallet balance minus starting wallet balance minus net capital inflow, with positive inflows added to the return denominator. Open-position unrealized movement is excluded from the primary rolling result until realized. The prior Modified Dietz mark-to-market PnL and return remain explicit secondary fields.
+
+The website never infers 7D/30D returns from daily percentages. If the rolling feed is missing, malformed or stale, the dashboard shows that state instead of synthesizing a result.
 
 ## Public daily calendar
 

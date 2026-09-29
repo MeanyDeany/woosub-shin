@@ -25,7 +25,8 @@ const copy = {
     pnl: "window PnL",
     live: "LIVE",
     stale: "STALE",
-    boundary: "Flow-adjusted account telemetry · read-only",
+    boundaryBinance: "Wallet-PnL account telemetry · read-only",
+    boundaryLegacy: "Flow-adjusted MTM account telemetry · read-only",
   },
   ko: {
     eyebrow: "Rolling account return",
@@ -35,7 +36,8 @@ const copy = {
     pnl: "구간 PnL",
     live: "LIVE",
     stale: "STALE",
-    boundary: "입출금 조정 계정 텔레메트리 · read-only",
+    boundaryBinance: "지갑잔고 기준 계정 텔레메트리 · read-only",
+    boundaryLegacy: "MTM 입출금 조정 계정 텔레메트리 · read-only",
   },
 } as const;
 
@@ -152,7 +154,7 @@ export function BtcRollingPerformance({ feedUrl, locale = "en" }: Props) {
 
       <div className="border-t border-[#7E8B9D]/12 bg-[#0B0F16] px-6 py-4 sm:px-8">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <p className="font-mono text-[10px] font-semibold text-[#7CF0B9]">{text.boundary}</p>
+          <p className="font-mono text-[10px] font-semibold text-[#7CF0B9]">{telemetry.metric_basis === "BINANCE_FUTURES_PNL_ANALYSIS" ? text.boundaryBinance : text.boundaryLegacy}</p>
           <code className="font-mono text-[10px] text-[#8CEBFF]">
             {telemetry.telemetry_sha256.slice(0, 12)}…{telemetry.telemetry_sha256.slice(-8)}
           </code>

@@ -6,20 +6,31 @@ export type BinanceRollingPerformanceWindow = {
   actual_duration_seconds: number;
   net_pnl: number;
   return_pct: number;
+  flow_adjusted_net_pnl: number | null;
+  flow_adjusted_return_pct: number | null;
 };
 
 export type BinanceRollingPerformanceTelemetry = {
-  schema_version: 1;
-  dataset_id: "binance_usdm_public_rolling_performance_v1";
+  schema_version: 1 | 2;
+  dataset_id:
+    | "binance_usdm_public_rolling_performance_v1"
+    | "binance_usdm_public_rolling_performance_v2";
   generated_at_utc: string;
   observed_at_utc: string;
   venue: "BINANCE_USDM";
   environment: "PRODUCTION";
-  scope: "BINANCE_USDM_ACCOUNT_WIDE_ROLLING_TRADING_V1";
+  scope:
+    | "BINANCE_USDM_ACCOUNT_WIDE_ROLLING_TRADING_V1"
+    | "BINANCE_USDM_ACCOUNT_WIDE_ROLLING_TRADING_V2";
   reporting_currency: "USD";
   windows: [BinanceRollingPerformanceWindow, BinanceRollingPerformanceWindow];
-  return_method: "MODIFIED_DIETZ_FLOW_ADJUSTED_V2";
-  capital_flow_handling: "EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2";
+  return_method: "MODIFIED_DIETZ_FLOW_ADJUSTED_V2" | "BINANCE_FUTURES_WALLET_PNL_V1";
+  capital_flow_handling:
+    | "EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2"
+    | "SUBTRACT_NET_CAPITAL_FLOW_ADD_GROSS_INFLOW_TO_DENOMINATOR_V1";
+  secondary_return_method: "MODIFIED_DIETZ_FLOW_ADJUSTED_V2" | null;
+  secondary_capital_flow_handling: "EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2" | null;
+  metric_basis: "FLOW_ADJUSTED_MTM" | "BINANCE_FUTURES_PNL_ANALYSIS";
   freshness_ttl_seconds: 180;
   authority_classification: "PERFORMANCE_TELEMETRY_ONLY";
   external_action_permitted: false;
@@ -31,7 +42,7 @@ export const DEFAULT_BTC_ROLLING_PERFORMANCE_FEED_URL =
 
 const sha256 = /^[0-9a-f]{64}$/;
 const utcTimestampPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?Z$/;
-const topKeys = [
+const topKeysV1 = [
   "schema_version",
   "dataset_id",
   "generated_at_utc",
@@ -48,7 +59,12 @@ const topKeys = [
   "external_action_permitted",
   "telemetry_sha256",
 ] as const;
-const windowKeys = [
+const topKeysV2 = [
+  ...topKeysV1,
+  "secondary_return_method",
+  "secondary_capital_flow_handling",
+] as const;
+const windowKeysV1 = [
   "window",
   "requested_days",
   "start_observed_at_utc",
@@ -56,6 +72,11 @@ const windowKeys = [
   "actual_duration_seconds",
   "net_pnl",
   "return_pct",
+] as const;
+const windowKeysV2 = [
+  ...windowKeysV1,
+  "flow_adjusted_net_pnl",
+  "flow_adjusted_return_pct",
 ] as const;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -93,9 +114,10 @@ function parseWindow(
   label: "7D" | "30D",
   requestedDays: 7 | 30,
   observedAt: string,
+  schema: 1 | 2,
 ): BinanceRollingPerformanceWindow {
   if (!isRecord(value)) throw new Error("Rolling window must be an object");
-  exactKeys(value, windowKeys, "Rolling window");
+  exactKeys(value, schema === 2 ? windowKeysV2 : windowKeysV1, "Rolling window");
   if (value.window !== label || value.requested_days !== requestedDays) {
     throw new Error("Rolling window identity is invalid");
   }
@@ -111,14 +133,22 @@ function parseWindow(
   ) {
     throw new Error("Rolling window duration is invalid");
   }
+  const netPnl = finiteNumber(value.net_pnl, "net_pnl");
+  const returnPct = finiteNumber(value.return_pct, "return_pct");
   return {
     window: label,
     requested_days: requestedDays,
     start_observed_at_utc: start,
     end_observed_at_utc: end,
     actual_duration_seconds: value.actual_duration_seconds,
-    net_pnl: finiteNumber(value.net_pnl, "net_pnl"),
-    return_pct: finiteNumber(value.return_pct, "return_pct"),
+    net_pnl: netPnl,
+    return_pct: returnPct,
+    flow_adjusted_net_pnl:
+      schema === 2 ? finiteNumber(value.flow_adjusted_net_pnl, "flow_adjusted_net_pnl") : netPnl,
+    flow_adjusted_return_pct:
+      schema === 2
+        ? finiteNumber(value.flow_adjusted_return_pct, "flow_adjusted_return_pct")
+        : returnPct,
   };
 }
 
@@ -126,20 +156,33 @@ export function parseBtcRollingPerformanceTelemetry(
   value: unknown,
 ): BinanceRollingPerformanceTelemetry {
   if (!isRecord(value)) throw new Error("Rolling performance telemetry must be an object");
-  exactKeys(value, topKeys, "Rolling performance telemetry");
-  if (
-    value.schema_version !== 1 ||
-    value.dataset_id !== "binance_usdm_public_rolling_performance_v1" ||
-    value.venue !== "BINANCE_USDM" ||
-    value.environment !== "PRODUCTION" ||
-    value.scope !== "BINANCE_USDM_ACCOUNT_WIDE_ROLLING_TRADING_V1" ||
-    value.reporting_currency !== "USD" ||
-    value.return_method !== "MODIFIED_DIETZ_FLOW_ADJUSTED_V2" ||
-    value.capital_flow_handling !== "EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2" ||
-    value.freshness_ttl_seconds !== 180 ||
-    value.authority_classification !== "PERFORMANCE_TELEMETRY_ONLY" ||
-    value.external_action_permitted !== false
-  ) {
+  const schema = value.schema_version;
+  if (schema !== 1 && schema !== 2) throw new Error("Unsupported rolling performance schema");
+  exactKeys(value, schema === 2 ? topKeysV2 : topKeysV1, "Rolling performance telemetry");
+
+  const commonValid =
+    value.venue === "BINANCE_USDM" &&
+    value.environment === "PRODUCTION" &&
+    value.reporting_currency === "USD" &&
+    value.freshness_ttl_seconds === 180 &&
+    value.authority_classification === "PERFORMANCE_TELEMETRY_ONLY" &&
+    value.external_action_permitted === false;
+  const v1Valid =
+    schema === 1 &&
+    value.dataset_id === "binance_usdm_public_rolling_performance_v1" &&
+    value.scope === "BINANCE_USDM_ACCOUNT_WIDE_ROLLING_TRADING_V1" &&
+    value.return_method === "MODIFIED_DIETZ_FLOW_ADJUSTED_V2" &&
+    value.capital_flow_handling === "EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2";
+  const v2Valid =
+    schema === 2 &&
+    value.dataset_id === "binance_usdm_public_rolling_performance_v2" &&
+    value.scope === "BINANCE_USDM_ACCOUNT_WIDE_ROLLING_TRADING_V2" &&
+    value.return_method === "BINANCE_FUTURES_WALLET_PNL_V1" &&
+    value.capital_flow_handling ===
+      "SUBTRACT_NET_CAPITAL_FLOW_ADD_GROSS_INFLOW_TO_DENOMINATOR_V1" &&
+    value.secondary_return_method === "MODIFIED_DIETZ_FLOW_ADJUSTED_V2" &&
+    value.secondary_capital_flow_handling === "EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2";
+  if (!commonValid || (!v1Valid && !v2Valid)) {
     throw new Error("Unsupported rolling performance telemetry contract");
   }
 
@@ -152,11 +195,35 @@ export function parseBtcRollingPerformanceTelemetry(
     throw new Error("Rolling performance must contain exactly 7D and 30D windows");
   }
   const windows: [BinanceRollingPerformanceWindow, BinanceRollingPerformanceWindow] = [
-    parseWindow(value.windows[0], "7D", 7, observed),
-    parseWindow(value.windows[1], "30D", 30, observed),
+    parseWindow(value.windows[0], "7D", 7, observed, schema),
+    parseWindow(value.windows[1], "30D", 30, observed, schema),
   ];
   if (typeof value.telemetry_sha256 !== "string" || !sha256.test(value.telemetry_sha256)) {
     throw new Error("Rolling performance telemetry SHA-256 is invalid");
+  }
+
+  if (schema === 2) {
+    return {
+      schema_version: 2,
+      dataset_id: "binance_usdm_public_rolling_performance_v2",
+      generated_at_utc: generated,
+      observed_at_utc: observed,
+      venue: "BINANCE_USDM",
+      environment: "PRODUCTION",
+      scope: "BINANCE_USDM_ACCOUNT_WIDE_ROLLING_TRADING_V2",
+      reporting_currency: "USD",
+      windows,
+      return_method: "BINANCE_FUTURES_WALLET_PNL_V1",
+      capital_flow_handling:
+        "SUBTRACT_NET_CAPITAL_FLOW_ADD_GROSS_INFLOW_TO_DENOMINATOR_V1",
+      secondary_return_method: "MODIFIED_DIETZ_FLOW_ADJUSTED_V2",
+      secondary_capital_flow_handling: "EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2",
+      metric_basis: "BINANCE_FUTURES_PNL_ANALYSIS",
+      freshness_ttl_seconds: 180,
+      authority_classification: "PERFORMANCE_TELEMETRY_ONLY",
+      external_action_permitted: false,
+      telemetry_sha256: value.telemetry_sha256,
+    };
   }
 
   return {
@@ -171,6 +238,9 @@ export function parseBtcRollingPerformanceTelemetry(
     windows,
     return_method: "MODIFIED_DIETZ_FLOW_ADJUSTED_V2",
     capital_flow_handling: "EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2",
+    secondary_return_method: null,
+    secondary_capital_flow_handling: null,
+    metric_basis: "FLOW_ADJUSTED_MTM",
     freshness_ttl_seconds: 180,
     authority_classification: "PERFORMANCE_TELEMETRY_ONLY",
     external_action_permitted: false,

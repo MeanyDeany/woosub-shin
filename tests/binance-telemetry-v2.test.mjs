@@ -85,13 +85,13 @@ function positions(overrides = {}) {
 
 function rolling(overrides = {}) {
   return {
-    schema_version: 1,
-    dataset_id: "binance_usdm_public_rolling_performance_v1",
+    schema_version: 2,
+    dataset_id: "binance_usdm_public_rolling_performance_v2",
     generated_at_utc: "2026-09-24T08:35:04Z",
     observed_at_utc: "2026-09-24T08:35:03Z",
     venue: "BINANCE_USDM",
     environment: "PRODUCTION",
-    scope: "BINANCE_USDM_ACCOUNT_WIDE_ROLLING_TRADING_V1",
+    scope: "BINANCE_USDM_ACCOUNT_WIDE_ROLLING_TRADING_V2",
     reporting_currency: "USD",
     windows: [
       {
@@ -100,8 +100,10 @@ function rolling(overrides = {}) {
         start_observed_at_utc: "2026-09-17T08:35:03Z",
         end_observed_at_utc: "2026-09-24T08:35:03Z",
         actual_duration_seconds: 604800,
-        net_pnl: 120.5,
-        return_pct: 4.25,
+        net_pnl: 100.5,
+        return_pct: 3.75,
+        flow_adjusted_net_pnl: 120.5,
+        flow_adjusted_return_pct: 4.25,
       },
       {
         window: "30D",
@@ -109,10 +111,44 @@ function rolling(overrides = {}) {
         start_observed_at_utc: "2026-08-25T08:35:03Z",
         end_observed_at_utc: "2026-09-24T08:35:03Z",
         actual_duration_seconds: 2592000,
-        net_pnl: 640.25,
-        return_pct: 22.5,
+        net_pnl: 600.25,
+        return_pct: 20.5,
+        flow_adjusted_net_pnl: 640.25,
+        flow_adjusted_return_pct: 22.5,
       },
     ],
+    return_method: "BINANCE_FUTURES_WALLET_PNL_V1",
+    capital_flow_handling: "SUBTRACT_NET_CAPITAL_FLOW_ADD_GROSS_INFLOW_TO_DENOMINATOR_V1",
+    secondary_return_method: "MODIFIED_DIETZ_FLOW_ADJUSTED_V2",
+    secondary_capital_flow_handling: "EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2",
+    freshness_ttl_seconds: 180,
+    authority_classification: "PERFORMANCE_TELEMETRY_ONLY",
+    external_action_permitted: false,
+    telemetry_sha256: SHA_A,
+    ...overrides,
+  };
+}
+
+function rollingV1(overrides = {}) {
+  const base = rolling();
+  return {
+    schema_version: 1,
+    dataset_id: "binance_usdm_public_rolling_performance_v1",
+    generated_at_utc: base.generated_at_utc,
+    observed_at_utc: base.observed_at_utc,
+    venue: base.venue,
+    environment: base.environment,
+    scope: "BINANCE_USDM_ACCOUNT_WIDE_ROLLING_TRADING_V1",
+    reporting_currency: base.reporting_currency,
+    windows: base.windows.map((window) => ({
+      window: window.window,
+      requested_days: window.requested_days,
+      start_observed_at_utc: window.start_observed_at_utc,
+      end_observed_at_utc: window.end_observed_at_utc,
+      actual_duration_seconds: window.actual_duration_seconds,
+      net_pnl: window.flow_adjusted_net_pnl,
+      return_pct: window.flow_adjusted_return_pct,
+    })),
     return_method: "MODIFIED_DIETZ_FLOW_ADJUSTED_V2",
     capital_flow_handling: "EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2",
     freshness_ttl_seconds: 180,
@@ -192,12 +228,23 @@ test("derives the V2 path and migrates a legacy direct override", () => {
 });
 
 
-test("accepts exact 7D and 30D rolling performance telemetry", () => {
+test("accepts Binance-compatible V2 rolling telemetry with MTM secondary fields", () => {
   const parsed = parseBtcRollingPerformanceTelemetry(rolling());
   assert.deepEqual(parsed.windows.map((item) => item.window), ["7D", "30D"]);
-  assert.equal(parsed.windows[0].return_pct, 4.25);
-  assert.equal(parsed.windows[1].net_pnl, 640.25);
+  assert.equal(parsed.metric_basis, "BINANCE_FUTURES_PNL_ANALYSIS");
+  assert.equal(parsed.windows[0].return_pct, 3.75);
+  assert.equal(parsed.windows[0].flow_adjusted_return_pct, 4.25);
+  assert.equal(parsed.windows[1].net_pnl, 600.25);
+  assert.equal(parsed.windows[1].flow_adjusted_net_pnl, 640.25);
   assert.equal(parsed.external_action_permitted, false);
+});
+
+test("accepts legacy V1 rolling telemetry during rollout", () => {
+  const parsed = parseBtcRollingPerformanceTelemetry(rollingV1());
+  assert.equal(parsed.metric_basis, "FLOW_ADJUSTED_MTM");
+  assert.equal(parsed.windows[0].net_pnl, 120.5);
+  assert.equal(parsed.windows[0].flow_adjusted_net_pnl, 120.5);
+  assert.equal(parsed.secondary_return_method, null);
 });
 
 test("rejects rolling window reordering, extra fields, and action authority", () => {
