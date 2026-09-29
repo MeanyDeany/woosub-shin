@@ -86,6 +86,7 @@ export function BtcTradingDesk({ positionFeedUrl, performanceFeedUrl, rollingFee
   const metrics = performance.data;
   const items = positions.data?.positions ?? [];
   const visible = items.filter(p => (filter === "ALL" || p.position_state === filter) && p.symbol.includes(query.trim().toUpperCase()));
+  const rollingBinanceBasis = rolling.data?.metric_basis === "BINANCE_FUTURES_PNL_ANALYSIS";
   const busy = performance.refreshing || positions.refreshing || rolling.refreshing;
   const refresh = () => { void performance.refresh(); void positions.refresh(); void rolling.refresh(); };
   const Heading = compact ? "h2" : "h1";
@@ -111,8 +112,8 @@ export function BtcTradingDesk({ positionFeedUrl, performanceFeedUrl, rollingFee
         </tbody></table></div><div className="td-panel-foot"><span>{timestamp(positions.data?.observed_at_utc)}</span><span>Size and prices remain private</span></div>
       </section>
       <section className="td-panel td-periods" aria-labelledby="td-period-heading"><div className="td-panel-heading"><div><h3 id="td-period-heading">Recent performance</h3></div><Status label={feedState(rolling, now)} /></div>
-        <table className="td-table td-period-table"><caption className="td-sr-only">Published flow-adjusted rolling performance windows</caption><thead><tr><th scope="col">Period</th><th scope="col">Return</th><th scope="col">Net PnL</th></tr></thead><tbody>{([7, 30] as const).map((days, index) => { const window = rolling.data?.windows[index]; return <tr key={days}><th scope="row">{days} days{window && window.actual_duration_seconds < (days * 86400 - 60) && <small className="td-partial">Partial window</small>}</th><td className={`td-mono ${tone(window?.return_pct)}`}>{percent(window?.return_pct)}</td><td className={`td-mono ${tone(window?.net_pnl)}`}>{money(window?.net_pnl)}</td></tr>; })}</tbody></table>
-        <div className="td-period-note"><span className="td-note-icon" aria-hidden="true">↳</span><p>Returns use the published Modified Dietz calculation, not a sum of daily percentages.</p></div><div className="td-panel-foot"><span>{timestamp(rolling.data?.observed_at_utc)}</span></div>
+        <table className="td-table td-period-table"><caption className="td-sr-only">{rollingBinanceBasis ? "Published Binance-basis rolling performance windows" : "Published flow-adjusted rolling performance windows"}</caption><thead><tr><th scope="col">Period</th><th scope="col">Return</th><th scope="col">Net PnL</th></tr></thead><tbody>{([7, 30] as const).map((days, index) => { const window = rolling.data?.windows[index]; return <tr key={days}><th scope="row">{days} days{window && window.actual_duration_seconds < (days * 86400 - 60) && <small className="td-partial">Partial window</small>}</th><td className={`td-mono ${tone(window?.return_pct)}`}>{percent(window?.return_pct)}</td><td className={`td-mono ${tone(window?.net_pnl)}`}>{money(window?.net_pnl)}</td></tr>; })}</tbody></table>
+        <div className="td-period-note"><span className="td-note-icon" aria-hidden="true">↳</span><p>{!rolling.data && rolling.error ? "Rolling performance feed is unavailable; 7D/30D values are not inferred." : rollingBinanceBasis ? "Primary 7D/30D figures use wallet-balance PnL net of capital flows. Flow-adjusted MTM values remain preserved in the source." : "Legacy rolling figures use the published Modified Dietz mark-to-market calculation."}</p></div><div className="td-panel-foot"><span>{timestamp(rolling.data?.observed_at_utc)}</span></div>
       </section>
     </div>
     {!compact && <PublicDailyCalendar feedUrl={dailyFeedUrl} />}
