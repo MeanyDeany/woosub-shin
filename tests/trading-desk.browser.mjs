@@ -32,6 +32,10 @@ try {
   await page.goto(url);
   await page.locator('.td-instrument').filter({hasText:'BTCUSDC'}).waitFor();
   await page.getByText(/Primary 7D\/30D figures use wallet-balance PnL net of capital flows/).waitFor();
+  const winRateMetric = page.locator('.td-metric').filter({hasText:'Trade-day win rate'});
+  await winRateMetric.waitFor();
+  assert.match(await winRateMetric.textContent(), /68\.47%/);
+  assert.match(await winRateMetric.textContent(), /152 wins \/ 70 losses \/ 222 resolved UTC days \/ funding excluded/);
   const withdrawalMetric = page.locator('.td-metric').filter({hasText:'External withdrawals'});
   await withdrawalMetric.waitFor();
   assert.match(await withdrawalMetric.textContent(), /5,942\.87 USDT eq\./);
