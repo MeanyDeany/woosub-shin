@@ -10,10 +10,12 @@ import { applyCsvRealizedBackfill, type CalendarPerformanceDay } from "@/lib/btc
 import { JOURNAL_KEY, MAX_IMPORT_BYTES, TRACKING_START, calendarDays, emptyJournal, mergeJournal, parseJournal, shiftMonth, utcDay, type Journal, type JournalEntry } from "@/lib/trading-journal";
 import { BINANCE_WITHDRAWAL_SUMMARY } from "@/lib/binance-withdrawal-summary";
 import { BINANCE_TRADE_DAY_SUMMARY } from "@/lib/binance-trade-day-summary";
+import { parseBtcTradeDayWinRateTelemetry } from "@/lib/btc-trade-day-win-rate";
+import { parseBtcExternalWithdrawalSummaryTelemetry } from "@/lib/btc-live-withdrawal-summary";
 
 type Receipt = { observed_at_utc: string; freshness_ttl_seconds: number };
 type Feed<T> = { data: T | null; error: string | null; refreshing: boolean };
-type Props = { positionFeedUrl: string; performanceFeedUrl: string; rollingFeedUrl: string; dailyFeedUrl: string; compact?: boolean };
+type Props = { positionFeedUrl: string; performanceFeedUrl: string; rollingFeedUrl: string; dailyFeedUrl: string; winRateFeedUrl: string; withdrawalFeedUrl: string; compact?: boolean };
 const detailHref = "/projects/btc-futures-research/live-position";
 
 function useFeed<T extends Receipt>(url: string, parse: (value: unknown) => T) {
@@ -76,10 +78,12 @@ function Metric({ label, value, numeric, hint, primary = false }: { label: strin
   return <div className={`td-metric ${primary ? "td-metric-primary" : ""}`}><dt>{label}</dt><dd className={tone(numeric)}>{value}</dd><p>{hint}</p></div>;
 }
 
-export function BtcTradingDesk({ positionFeedUrl, performanceFeedUrl, rollingFeedUrl, dailyFeedUrl, compact = false }: Props) {
+export function BtcTradingDesk({ positionFeedUrl, performanceFeedUrl, rollingFeedUrl, dailyFeedUrl, winRateFeedUrl, withdrawalFeedUrl, compact = false }: Props) {
   const performance = useFeed(performanceFeedUrl, parseBtcLifetimePerformanceTelemetry);
   const positions = useFeed(positionFeedUrl, parseBtcLiveMultiPositionTelemetry);
   const rolling = useFeed(rollingFeedUrl, parseBtcRollingPerformanceTelemetry);
+  const winRate = useFeed(winRateFeedUrl, parseBtcTradeDayWinRateTelemetry);
+  const withdrawals = useFeed(withdrawalFeedUrl, parseBtcExternalWithdrawalSummaryTelemetry);
   const [now, setNow] = useState(0);
   const [filter, setFilter] = useState<"ALL" | "LONG" | "SHORT">("ALL");
   const [query, setQuery] = useState("");
@@ -88,8 +92,18 @@ export function BtcTradingDesk({ positionFeedUrl, performanceFeedUrl, rollingFee
   const items = positions.data?.positions ?? [];
   const visible = items.filter(p => (filter === "ALL" || p.position_state === filter) && p.symbol.includes(query.trim().toUpperCase()));
   const rollingBinanceBasis = rolling.data?.metric_basis === "BINANCE_FUTURES_PNL_ANALYSIS";
-  const busy = performance.refreshing || positions.refreshing || rolling.refreshing;
-  const refresh = () => { void performance.refresh(); void positions.refresh(); void rolling.refresh(); };
+  const liveWinRate = winRate.data;
+  const liveWithdrawals = withdrawals.data;
+  const winRatePct = liveWinRate?.win_rate_pct ?? BINANCE_TRADE_DAY_SUMMARY.win_rate_pct_estimate;
+  const winRateWins = liveWinRate?.winning_trade_day_count ?? BINANCE_TRADE_DAY_SUMMARY.winning_trade_day_count;
+  const winRateLosses = liveWinRate?.losing_trade_day_count ?? BINANCE_TRADE_DAY_SUMMARY.losing_trade_day_count;
+  const winRateResolved = liveWinRate?.resolved_trade_day_count ?? BINANCE_TRADE_DAY_SUMMARY.resolved_trade_day_count;
+  const withdrawalCount = liveWithdrawals?.completed_withdrawal_count ?? BINANCE_WITHDRAWAL_SUMMARY.completed_withdrawal_count;
+  const withdrawalNet = liveWithdrawals?.total_net_sent_usdt_equivalent_estimate ?? BINANCE_WITHDRAWAL_SUMMARY.total_net_sent_usdt_equivalent_estimate;
+  const withdrawalFees = liveWithdrawals?.withdrawal_fee_usdt_equivalent_estimate ?? BINANCE_WITHDRAWAL_SUMMARY.withdrawal_fee_usdt_equivalent_estimate;
+  const withdrawalOutflow = liveWithdrawals?.total_account_outflow_usdt_equivalent_estimate ?? BINANCE_WITHDRAWAL_SUMMARY.total_account_outflow_usdt_equivalent_estimate;
+  const busy = performance.refreshing || positions.refreshing || rolling.refreshing || winRate.refreshing || withdrawals.refreshing;
+  const refresh = () => { void performance.refresh(); void positions.refresh(); void rolling.refresh(); void winRate.refresh(); void withdrawals.refresh(); };
   const Heading = compact ? "h2" : "h1";
 
   return <div className={`trading-desk ${compact ? "td-compact" : ""}`}>
@@ -98,11 +112,11 @@ export function BtcTradingDesk({ positionFeedUrl, performanceFeedUrl, rollingFee
     <div className="td-section-kicker"><span>Account performance</span><Status label={feedState(performance, now)} /></div>
     <dl className="td-metrics" aria-label="Public account performance">
       <Metric primary label="Tracked return" value={percent(metrics?.lifetime_return_pct)} numeric={metrics?.lifetime_return_pct} hint="Authenticated tracking / since 01 Aug 2026" />
-      <Metric label="Trade-day win rate" value={`≈ ${BINANCE_TRADE_DAY_SUMMARY.win_rate_pct_estimate.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})}%`} numeric={BINANCE_TRADE_DAY_SUMMARY.win_rate_pct_estimate} hint={`${BINANCE_TRADE_DAY_SUMMARY.winning_trade_day_count} wins / ${BINANCE_TRADE_DAY_SUMMARY.losing_trade_day_count} losses / ${BINANCE_TRADE_DAY_SUMMARY.resolved_trade_day_count} resolved UTC days / funding excluded`} />
+      <Metric label="Trade-day win rate" value={`≈ ${winRatePct.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})}%`} numeric={winRatePct} hint={`${winRateWins} wins / ${winRateLosses} losses / ${winRateResolved} resolved UTC days / funding excluded / ${liveWinRate ? "live feed" : "historical snapshot fallback"}`} />
       <Metric label="Tracked net PnL" value={money(metrics?.lifetime_net_pnl)} numeric={metrics?.lifetime_net_pnl} hint="Authenticated window / account-wide" />
       <Metric label="Realized net PnL" value={money(metrics?.realized_net_pnl)} numeric={metrics?.realized_net_pnl} hint="Published realized component" />
       <Metric label="Current unrealized PnL" value={money(metrics?.current_unrealized_pnl)} numeric={metrics?.current_unrealized_pnl} hint={positions.data && items.length === 0 ? "No open positions" : "All open positions / not realized"} />
-      <Metric label="External withdrawals" value={`≈ ${BINANCE_WITHDRAWAL_SUMMARY.total_account_outflow_usdt_equivalent_estimate.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})} USDT eq.`} numeric={null} hint={`${BINANCE_WITHDRAWAL_SUMMARY.completed_withdrawal_count} completed / net sent ≈ ${BINANCE_WITHDRAWAL_SUMMARY.total_net_sent_usdt_equivalent_estimate.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})} USDT eq. + fees ≈ ${BINANCE_WITHDRAWAL_SUMMARY.withdrawal_fee_usdt_equivalent_estimate.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})} USDT eq.`} />
+      <Metric label="External withdrawals" value={`≈ ${withdrawalOutflow.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})} USDT eq.`} numeric={null} hint={`${withdrawalCount} completed / net sent ≈ ${withdrawalNet.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})} USDT eq. + fees ≈ ${withdrawalFees.toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})} USDT eq. / ${liveWithdrawals ? "live feed" : "historical snapshot fallback"}`} />
     </dl>
     <div className="td-observation-line"><span>{timestamp(metrics?.observed_at_utc)}</span><span>{performance.error ? "Showing the last verified values, where available." : "30-second refresh / deposits and withdrawals excluded from trading PnL"}</span></div>
     <div className="td-market-grid">
@@ -119,7 +133,7 @@ export function BtcTradingDesk({ positionFeedUrl, performanceFeedUrl, rollingFee
       </section>
     </div>
     {!compact && <PublicDailyCalendar feedUrl={dailyFeedUrl} />}
-    <details className="td-methodology"><summary>Data, privacy & methodology <span aria-hidden="true">+</span></summary><div><p>These are sanitized account observations, not ASRA strategy results or an execution interface. All non-zero symbols and hedge sides remain visible in the public feed. Exact sizes, prices, per-position PnL, balances and credentials are not published. Open-order presence is not proof of a protective stop.</p><p>Account tracking begins at 2026-08-01T00:00:00Z. The source supplies flow-adjusted performance; the interface does not recompute it. After 180 seconds, observations are marked stale. A failed update never means that the account is flat.</p><p>Daily PnL and PnL % are published read-only account telemetry derived from the authenticated ledger. The primary daily metric from V2 follows the Binance Futures PNL Analysis wallet-balance basis: ending wallet balance minus beginning wallet balance minus net capital inflow; the percentage denominator uses beginning wallet balance plus positive inflow. Open-position unrealized PnL is therefore excluded from the primary daily figure until realized. A separate flow-adjusted mark-to-market PnL/return is retained for research context. The public calendar currently extends back to 2024-11-13 because that is the earliest date present in the supplied Binance Futures export. It is not asserted to be the first-ever trade or account inception date. Historical CSV cells show stablecoin realized cash PnL only: supported BTCUSDT/BTCUSDC REALIZED_PNL, FUNDING_FEE and USDT/USDC COMMISSION. Capital flows are excluded; BNB-denominated commission and ambiguous income types are not converted into USD and make that date visibly partial. From 2026-08-01 onward authenticated ledger rows take precedence. The trade-day win rate is a separate realized-trading statistic rather than an account-return measure. It counts UTC dates with actual futures fills and a resolved realized outcome, classifies each day after trading commissions, excludes funding entirely, and excludes fill-only or flat days from the win-rate denominator. Historical BNB commissions are translated with contemporaneous BNBUSDT 1-minute close prices, so the published percentage is explicitly approximate. Current coverage runs through 2026-09-28 UTC. External-withdrawal totals come from the supplied Binance withdrawal-history export, not Futures TRANSFER or COIN_SWAP rows. Stablecoins are valued at par; XRP is valued at its contemporaneous transaction-implied USDT equivalent rather than current XRP price. No address or TXID is published. Personal notes stay browser-local and are never included in the public feed.</p>{metrics && <p className="td-mono td-hash">Performance source: {metrics.telemetry_sha256}</p>}</div></details>
+    <details className="td-methodology"><summary>Data, privacy & methodology <span aria-hidden="true">+</span></summary><div><p>These are sanitized account observations, not ASRA strategy results or an execution interface. All non-zero symbols and hedge sides remain visible in the public feed. Exact sizes, prices, per-position PnL, balances and credentials are not published. Open-order presence is not proof of a protective stop.</p><p>Account tracking begins at 2026-08-01T00:00:00Z. The source supplies flow-adjusted performance; the interface does not recompute it. After 180 seconds, observations are marked stale. A failed update never means that the account is flat.</p><p>Daily PnL and PnL % are published read-only account telemetry derived from the authenticated ledger. The primary daily metric from V2 follows the Binance Futures PNL Analysis wallet-balance basis: ending wallet balance minus beginning wallet balance minus net capital inflow; the percentage denominator uses beginning wallet balance plus positive inflow. Open-position unrealized PnL is therefore excluded from the primary daily figure until realized. A separate flow-adjusted mark-to-market PnL/return is retained for research context. The public calendar currently extends back to 2024-11-13 because that is the earliest date present in the supplied Binance Futures export. It is not asserted to be the first-ever trade or account inception date. Historical CSV cells show stablecoin realized cash PnL only: supported BTCUSDT/BTCUSDC REALIZED_PNL, FUNDING_FEE and USDT/USDC COMMISSION. Capital flows are excluded; BNB-denominated commission and ambiguous income types are not converted into USD and make that date visibly partial. From 2026-08-01 onward authenticated ledger rows take precedence. The trade-day win rate is a separate realized-trading statistic rather than an account-return measure. It counts UTC dates with actual futures fills and a resolved realized outcome, classifies each day after trading commissions, excludes funding entirely, and excludes fill-only or flat days from the win-rate denominator. Historical BNB commissions are translated with contemporaneous BNBUSDT 1-minute close prices, so the historical base is explicitly approximate. The live extension starts 2026-09-29 UTC and updates from authenticated REALIZED_PNL and COMMISSION ledger events while FUNDING_FEE is excluded. External-withdrawal totals use the supplied Binance withdrawal-history export as a frozen historical base through 2026-09-25 and a GET-only Binance withdrawal-history live extension from 2026-09-26. Historical stablecoins are valued at par and historical XRP uses contemporaneous transaction-implied USDT; new non-stablecoin withdrawals use a contemporaneous Binance spot 1-minute close. No address or TXID is published. Personal notes stay browser-local and are never included in the public feed.</p>{metrics && <p className="td-mono td-hash">Performance source: {metrics.telemetry_sha256}</p>}</div></details>
   </div>;
 }
 
