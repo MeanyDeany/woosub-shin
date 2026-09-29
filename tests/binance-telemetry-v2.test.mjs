@@ -140,13 +140,15 @@ function rollingV1(overrides = {}) {
     environment: base.environment,
     scope: "BINANCE_USDM_ACCOUNT_WIDE_ROLLING_TRADING_V1",
     reporting_currency: base.reporting_currency,
-    windows: base.windows.map(
-      ({ flow_adjusted_net_pnl: _p, flow_adjusted_return_pct: _r, ...window }) => ({
-        ...window,
-        net_pnl: window.flow_adjusted_net_pnl ?? window.net_pnl,
-        return_pct: window.flow_adjusted_return_pct ?? window.return_pct,
-      }),
-    ),
+    windows: base.windows.map((window) => ({
+      window: window.window,
+      requested_days: window.requested_days,
+      start_observed_at_utc: window.start_observed_at_utc,
+      end_observed_at_utc: window.end_observed_at_utc,
+      actual_duration_seconds: window.actual_duration_seconds,
+      net_pnl: window.flow_adjusted_net_pnl,
+      return_pct: window.flow_adjusted_return_pct,
+    })),
     return_method: "MODIFIED_DIETZ_FLOW_ADJUSTED_V2",
     capital_flow_handling: "EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2",
     freshness_ttl_seconds: 180,
