@@ -1,5 +1,5 @@
 /**
- * Historical Binance USD-M stablecoin realized-cash PnL for the public calendar.
+ * Historical Binance USD-M stablecoin trading cash flow for the public calendar.
  *
  * Sources:
  * - Binance Futures Transaction History export ending 2025-11-14 (UTC+09:00)
@@ -18,9 +18,14 @@
  * mixed into net_pnl. INSURANCE_CLEAR and other ambiguous performance events are
  * also excluded. Dates containing either condition are labelled partial.
  *
- * This is not mark-to-market daily PnL. Daily return is unavailable. From
- * 2026-08-01 onward an authenticated CLOSED/IN_PROGRESS ledger row always wins;
- * CSV data is used only to display an otherwise MISSING row.
+ * This is not mark-to-market daily PnL. Daily return is unavailable.
+ *
+ * The subtotal intentionally includes funding and stablecoin commission, so a
+ * negative day may be carrying/funding drag even when no closed trade realized
+ * a loss. While the live feed is legacy FLOW_ADJUSTED_MTM, a completed date
+ * covered by this export uses the historical cash subtotal instead of the legacy
+ * MTM daily value. A Binance-compatible V2 CLOSED/IN_PROGRESS row remains
+ * authoritative when available.
  */
 
 import type { BinanceDailyPerformanceDay } from "@/lib/btc-daily-performance";
@@ -5513,7 +5518,7 @@ function csvDay(day: CsvRealizedBackfillDay): CalendarPerformanceDay {
   };
 }
 
-export function applyCsvRealizedBackfill(days: readonly BinanceDailyPerformanceDay[]): CalendarPerformanceDay[] {
+export function applyCsvRealizedBackfill(days: readonly BinanceDailyPerformanceDay[], options: { preferHistoricalOverMeasured?: boolean } = {}): CalendarPerformanceDay[] {
   const firstLedgerDate = days[0]?.date_utc ?? "9999-12-31";
   const result: CalendarPerformanceDay[] = [];
 
@@ -5522,11 +5527,19 @@ export function applyCsvRealizedBackfill(days: readonly BinanceDailyPerformanceD
   }
 
   for (const day of days) {
+    const historical = byDate.get(day.date_utc);
+    if (
+      options.preferHistoricalOverMeasured
+      && day.status !== "IN_PROGRESS"
+      && historical
+    ) {
+      result.push(csvDay(historical));
+      continue;
+    }
     if (day.status !== "MISSING") {
       result.push({ ...day, source: "LEDGER" as const });
       continue;
     }
-    const historical = byDate.get(day.date_utc);
     result.push(historical ? csvDay(historical) : { ...day, source: "LEDGER" as const });
   }
 

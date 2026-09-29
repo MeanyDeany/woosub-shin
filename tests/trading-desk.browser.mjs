@@ -67,10 +67,10 @@ try {
   await page.getByRole('button', {name:'Earliest export', exact:true}).click();
   assert.match(await page.locator('.td-calendar-toolbar h3').textContent(), /November 2024/);
   await page.getByRole('button', {name:/2024-11-13/}).click();
-  await page.getByText('Historical export cash PnL', {exact:true}).first().waitFor();
-  assert.match(await page.locator('.td-csv-explain').textContent(), /stablecoin cash subtotal/i);
+  await page.getByText('Historical net cash PnL', {exact:true}).first().waitFor();
+  assert.match(await page.locator('.td-csv-explain').textContent(), /transaction-export net cash subtotal/i);
   await page.getByRole('button', {name:/2024-11-21/}).click();
-  await page.getByText(/Historical export \/ partial cash PnL/).waitFor();
+  await page.getByText(/Historical export \/ partial net cash PnL/).waitFor();
   assert.match(await page.locator('.td-csv-explain').textContent(), /BNB commission/i);
   assert.equal(await page.getByRole('button', {name:'Previous month',exact:true}).isDisabled(), true);
   await page.getByRole('button', {name:'Today', exact:true}).click();
@@ -81,7 +81,7 @@ try {
   await page.getByRole('button', {name:'Previous month',exact:true}).click();
   assert.match(await page.locator('.td-calendar-toolbar h3').textContent(), /August 2026/);
   await page.getByRole('button', {name:'2026-08-20, +$177.90 public PnL'}).click();
-  await page.getByText('Historical export cash PnL', {exact:true}).first().waitFor();
+  await page.getByText('Historical net cash PnL', {exact:true}).first().waitFor();
   assert.match(await page.locator('.td-csv-explain').textContent(), /does not include UTC-boundary unrealized mark-to-market/i);
   await fs.mkdir('/tmp/desk-qa', { recursive:true });
   // Seed a few explicitly synthetic daily records solely for visual QA.
