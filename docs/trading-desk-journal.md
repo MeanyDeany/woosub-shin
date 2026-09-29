@@ -35,6 +35,18 @@ Public feeds poll every 30 seconds while visible, use a 10-second request deadli
 The public daily projection is produced by the execution-gateway reporting layer from the existing authenticated flow-adjusted ledger. The website itself has no Binance credential, private exchange call, order route or execution capability.
 
 
+
+## Trade-day win rate
+
+The dashboard also shows a separate trade-day win rate derived from actual Binance USD-M fill history rather than from calendar MTM marks. The day basis is UTC to match the public trading calendar.
+
+For each UTC date with futures fills, the resolved trading result is realized trade PnL after trading commissions and with funding excluded. Historical USDT/USDC commissions are used directly. Historical BNB commissions are translated to USD with the contemporaneous BNBUSDT 1-minute close, so the aggregate win rate is explicitly approximate rather than presented as exchange-native accounting.
+
+A date enters the win-rate denominator only when it has a resolved realized outcome. Fill-only or flat dates are excluded instead of being mislabeled as losses. Current sanitized coverage through 2026-09-28 UTC contains 286 active trade dates: 152 winning resolved days, 70 losing resolved days and 64 fill-only/flat dates excluded from the denominator. The displayed win rate is therefore approximately 68.47% = 152 / (152 + 70).
+
+Funding fees do not affect this statistic. They remain part of the separate account cash-PnL and wallet-PnL views where appropriate.
+
+
 ## External withdrawal summary
 
 The account card also publishes a sanitized aggregate from the supplied Binance withdrawal-history export. The supplied file contains 24 completed external withdrawals from 2025-04-13 through 2026-09-25: 12 direct USDT/USDC withdrawals and 12 XRP withdrawals.
