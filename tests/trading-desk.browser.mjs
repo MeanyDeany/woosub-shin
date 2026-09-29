@@ -31,6 +31,11 @@ const url = 'http://localhost:3000/projects/btc-futures-research/live-position';
 try {
   await page.goto(url);
   await page.locator('.td-instrument').filter({hasText:'BTCUSDC'}).waitFor();
+  const withdrawalMetric = page.locator('.td-metric').filter({hasText:'External withdrawals'});
+  await withdrawalMetric.waitFor();
+  assert.match(await withdrawalMetric.textContent(), /5,942\.87 USDT eq\./);
+  assert.match(await withdrawalMetric.textContent(), /net sent ≈ 5,933\.11 USDT eq\./);
+  assert.match(await withdrawalMetric.textContent(), /fees ≈ 9\.77 USDT eq\./);
   await page.locator('#journal-note').waitFor({ state:'visible' });
   const skip = page.locator('.research-skip-link');
   assert.equal(await skip.evaluate(el => getComputedStyle(el).opacity), '0');
@@ -59,13 +64,13 @@ try {
   await page.locator('input[type=file]').setInputFiles({ name:'journal-backup.json', mimeType:'application/json', buffer:Buffer.from(backup) });
   await page.getByText(/Imported 1 private records/).waitFor();
   assert.equal(await page.locator('#journal-note').inputValue(), 'Synthetic QA note. Followed the plan.');
-  await page.getByRole('button', {name:'Start', exact:true}).click();
+  await page.getByRole('button', {name:'Earliest export', exact:true}).click();
   assert.match(await page.locator('.td-calendar-toolbar h3').textContent(), /November 2024/);
-  await page.getByRole('button', {name:/2024-11-15/}).click();
-  await page.getByText('CSV realized PnL', {exact:true}).first().waitFor();
-  assert.match(await page.locator('.td-csv-explain').textContent(), /Stablecoin realized cash PnL/i);
+  await page.getByRole('button', {name:/2024-11-13/}).click();
+  await page.getByText('Historical export cash PnL', {exact:true}).first().waitFor();
+  assert.match(await page.locator('.td-csv-explain').textContent(), /stablecoin cash subtotal/i);
   await page.getByRole('button', {name:/2024-11-21/}).click();
-  await page.getByText(/CSV partial realized PnL/).waitFor();
+  await page.getByText(/Historical export \/ partial cash PnL/).waitFor();
   assert.match(await page.locator('.td-csv-explain').textContent(), /BNB commission/i);
   assert.equal(await page.getByRole('button', {name:'Previous month',exact:true}).isDisabled(), true);
   await page.getByRole('button', {name:'Today', exact:true}).click();
@@ -76,7 +81,7 @@ try {
   await page.getByRole('button', {name:'Previous month',exact:true}).click();
   assert.match(await page.locator('.td-calendar-toolbar h3').textContent(), /August 2026/);
   await page.getByRole('button', {name:'2026-08-20, +$177.90 public PnL'}).click();
-  await page.getByText('CSV realized PnL', {exact:true}).first().waitFor();
+  await page.getByText('Historical export cash PnL', {exact:true}).first().waitFor();
   assert.match(await page.locator('.td-csv-explain').textContent(), /does not include UTC-boundary unrealized mark-to-market/i);
   await fs.mkdir('/tmp/desk-qa', { recursive:true });
   // Seed a few explicitly synthetic daily records solely for visual QA.
@@ -97,5 +102,5 @@ try {
   empty=false; malformed=true; await page.reload(); await page.getByText('Position feed unavailable',{exact:true}).waitFor();
   assert.equal(await page.getByText('No open positions in this observation',{exact:true}).count(),0);
   assert.deepEqual(issues,[]);
-  console.log('BROWSER_QA_PASS: public daily calendar from first trade, CSV realized/partial history, private notes, ledger precedence, position filters, month navigation, keyboard access, desktop/mobile, stale/flat/invalid feeds');
+  console.log('BROWSER_QA_PASS: public export-coverage calendar, historical export cash-PnL labels, withdrawal summary, private notes, ledger precedence, position filters, month navigation, keyboard access, desktop/mobile, stale/flat/invalid feeds');
 } finally { await browser.close(); }

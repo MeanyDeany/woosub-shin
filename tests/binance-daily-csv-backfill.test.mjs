@@ -20,13 +20,15 @@ const missing = (date_utc) => ({
 });
 
 test("CSV backfill has the frozen complete UTC export window and exact aggregate", () => {
-  assert.equal(CSV_REALIZED_BACKFILL_START, "2024-11-15");
+  assert.equal(CSV_REALIZED_BACKFILL_START, "2024-11-13");
   assert.equal(CSV_REALIZED_BACKFILL_END, "2026-09-22");
-  assert.equal(CSV_REALIZED_BACKFILL.length, 677);
+  assert.equal(CSV_REALIZED_BACKFILL.length, 679);
   assert.equal(
     Number(CSV_REALIZED_BACKFILL.reduce((sum, day) => sum + day.net_pnl, 0).toFixed(8)),
     CSV_REALIZED_BACKFILL_TOTAL,
   );
+  assert.equal(CSV_REALIZED_BACKFILL.find(day => day.date_utc === "2024-11-13")?.net_pnl, -29.88362999);
+  assert.equal(CSV_REALIZED_BACKFILL.find(day => day.date_utc === "2024-11-14")?.net_pnl, 0);
   assert.equal(CSV_REALIZED_BACKFILL.find(day => day.date_utc === "2024-11-15")?.net_pnl, 1.42108361);
   assert.equal(CSV_REALIZED_BACKFILL.find(day => day.date_utc === "2024-11-21")?.partial, true);
   assert.equal(CSV_REALIZED_BACKFILL.find(day => day.date_utc === "2026-08-20")?.net_pnl, 177.90120133);
@@ -50,7 +52,7 @@ test("backfill prepends historical rows and replaces only MISSING ledger rows", 
     missing("2026-09-22"),
     missing("2026-09-23"),
   ]);
-  assert.equal(result[0].date_utc, "2024-11-15");
+  assert.equal(result[0].date_utc, "2024-11-13");
   assert.equal(result[0].source, "CSV_REALIZED");
   const aug19=result.find(day=>day.date_utc==="2026-08-19");
   const aug20=result.find(day=>day.date_utc==="2026-08-20");

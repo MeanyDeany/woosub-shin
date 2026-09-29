@@ -4,17 +4,17 @@ The home account section and `/projects/btc-futures-research/live-position` shar
 
 ## Public daily calendar
 
-The calendar begins on 2024-11-15, the first supplied Binance futures transaction date. Historical values through the complete CSV export window are derived from the supplied Binance Futures Transaction History files. Authenticated daily telemetry from 2026-08-01 onward comes from `/public/execution/daily-performance.json`. V2 makes Binance-compatible wallet PnL and PnL % the primary daily figures while retaining the existing flow-adjusted mark-to-market figures as secondary context. Every visitor sees the same public calendar; browser-local notes never override financial values.
+The calendar currently begins on 2024-11-13 because that is the earliest date in the supplied Binance Futures transaction export. This is a data-coverage boundary, not a verified first-ever trade or account-inception date. Historical values through the complete CSV export window are derived from the supplied Binance Futures Transaction History files. Authenticated daily telemetry from 2026-08-01 onward comes from `/public/execution/daily-performance.json`. V2 makes Binance-compatible wallet PnL and PnL % the primary daily figures while retaining the existing flow-adjusted mark-to-market figures as secondary context. Every visitor sees the same public calendar; browser-local notes never override financial values.
 
 A row is one of:
 
 - `CLOSED`: a completed UTC day with validated backend anchors;
 - `IN_PROGRESS`: the latest UTC day through the latest authenticated observation;
-- `MISSING`: the backend could not support that day from validated boundary evidence. For dates through 2026-09-22, the UI may replace this display-only gap with a clearly labelled historical CSV realized-PnL fallback.
+- `MISSING`: the backend could not support that day from validated boundary evidence. For dates through 2026-09-22, the UI may replace this display-only gap with a clearly labelled historical export realized-cash-PnL fallback.
 
 The CSV history uses the two user-provided Binance Futures Transaction History exports in UTC+09:00 and re-buckets every event to UTC days. It sums supported BTCUSDT/BTCUSDC REALIZED_PNL, FUNDING_FEE and USDT/USDC COMMISSION under the same stablecoin-par convention used by the authenticated reporting layer. TRANSFER and COIN_SWAP flows are excluded. BNB-denominated commissions are not assigned a made-up USD value, and ambiguous INSURANCE_CLEAR rows are not silently counted; dates containing those items are labelled partial. CSV history has no wallet-balance boundary observations, so it never publishes a daily return. From 2026-08-01 onward CLOSED/IN_PROGRESS ledger rows always override CSV history; CSV is used only when that ledger row is MISSING.
 
-The V2 primary daily PnL follows the Binance Futures PNL Analysis wallet-balance definition: ending wallet balance minus beginning wallet balance minus net capital inflow. Its PnL % denominator is beginning wallet balance plus positive inflow. Open-position unrealized PnL is excluded from this primary figure until it reaches wallet balance. The older Modified Dietz flow-adjusted mark-to-market PnL/return remains available as a secondary research measure. The current day is visibly incomplete. Monthly summaries keep authenticated ledger-day PnL and CSV realized PnL separate so unlike accounting bases are not silently added together; daily percentage returns are never summed.
+The V2 primary daily PnL follows the Binance Futures PNL Analysis wallet-balance definition: ending wallet balance minus beginning wallet balance minus net capital inflow. Its PnL % denominator is beginning wallet balance plus positive inflow. Open-position unrealized PnL is excluded from this primary figure until it reaches wallet balance. The older Modified Dietz flow-adjusted mark-to-market PnL/return remains available as a secondary research measure. The current day is visibly incomplete. Monthly summaries keep authenticated ledger-day PnL and historical export realized cash PnL separate so unlike accounting bases are not silently added together; daily percentage returns are never summed.
 
 The public projection contains no balances, exact position sizes, prices, credentials, order identifiers or personal notes.
 
@@ -27,3 +27,12 @@ The calendar can hold a private text note for the site owner. Notes remain in br
 Public feeds poll every 30 seconds while visible, use a 10-second request deadline and preserve the last validated value on failed refresh. The source's 180-second freshness TTL is authoritative. A failed or malformed feed never implies that the account is flat or that a missing day had zero PnL.
 
 The public daily projection is produced by the execution-gateway reporting layer from the existing authenticated flow-adjusted ledger. The website itself has no Binance credential, private exchange call, order route or execution capability.
+
+
+## External withdrawal summary
+
+The account card also publishes a sanitized aggregate from the supplied Binance withdrawal-history export. The supplied file contains 24 completed external withdrawals from 2025-04-13 through 2026-09-25: 12 direct USDT/USDC withdrawals and 12 XRP withdrawals.
+
+No wallet address, TXID, account ID or raw withdrawal row is shipped to the site. USDT and USDC are valued at par. XRP is valued at the contemporaneous historical USDT equivalent rather than current XRP price. Eleven of the twelve XRP withdrawals match a preceding stablecoin transfer within 6.4 minutes; the remaining 2025-10-11 withdrawal uses the sole same-day 50 USDC funding transfer and is therefore the least precise component. The aggregate is explicitly labelled an estimate.
+
+The sanitized net amount sent is approximately 5,933.11 USDT equivalent. Estimated withdrawal fees are approximately 9.77 USDT equivalent, for approximately 5,942.87 USDT equivalent of account outflow. Futures TRANSFER and COIN_SWAP rows are not themselves counted as external withdrawals; the dedicated Binance withdrawal-history export defines the external-withdrawal set.
