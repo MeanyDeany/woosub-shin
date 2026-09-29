@@ -31,8 +31,11 @@ const url = 'http://localhost:3000/projects/btc-futures-research/live-position';
 try {
   await page.goto(url);
   await page.locator('.td-instrument').filter({hasText:'BTCUSDC'}).waitFor();
-  await page.getByText('External withdrawals', {exact:true}).waitFor();
-  await page.getByText(/\$5,933\.11/).waitFor();
+  const withdrawalMetric = page.locator('.td-metric').filter({hasText:'External withdrawals'});
+  await withdrawalMetric.waitFor();
+  assert.match(await withdrawalMetric.textContent(), /\$5,942\.87/);
+  assert.match(await withdrawalMetric.textContent(), /net sent ≈ \$5,933\.11/);
+  assert.match(await withdrawalMetric.textContent(), /fees ≈ \$9\.77/);
   await page.locator('#journal-note').waitFor({ state:'visible' });
   const skip = page.locator('.research-skip-link');
   assert.equal(await skip.evaluate(el => getComputedStyle(el).opacity), '0');
