@@ -17,7 +17,7 @@ export type BinanceTradeDayWinRateTelemetry = {
   trading_commission_included: true;
   historical_bnb_commission_valuation: "CONTEMPORANEOUS_BNBUSDT_1M_CLOSE_ESTIMATE";
   live_commission_basis: "AUTHENTICATED_USDT_USDC_LEDGER_PAR";
-  freshness_ttl_seconds: 180;
+  freshness_ttl_seconds: 180 | 600;
   authority_classification: "PERFORMANCE_TELEMETRY_ONLY";
   external_action_permitted: false;
   telemetry_sha256: string;
@@ -99,7 +99,7 @@ export function parseBtcTradeDayWinRateTelemetry(
     value.trading_commission_included === true &&
     value.historical_bnb_commission_valuation === "CONTEMPORANEOUS_BNBUSDT_1M_CLOSE_ESTIMATE" &&
     value.live_commission_basis === "AUTHENTICATED_USDT_USDC_LEDGER_PAR" &&
-    value.freshness_ttl_seconds === 180 &&
+    (value.freshness_ttl_seconds === 180 || value.freshness_ttl_seconds === 600) &&
     value.authority_classification === "PERFORMANCE_TELEMETRY_ONLY" &&
     value.external_action_permitted === false;
   if (!fixedValid) throw new Error("Unsupported trade-day win-rate telemetry contract");
@@ -142,7 +142,7 @@ export function parseBtcTradeDayWinRateTelemetry(
     trading_commission_included: true,
     historical_bnb_commission_valuation: "CONTEMPORANEOUS_BNBUSDT_1M_CLOSE_ESTIMATE",
     live_commission_basis: "AUTHENTICATED_USDT_USDC_LEDGER_PAR",
-    freshness_ttl_seconds: 180,
+    freshness_ttl_seconds: value.freshness_ttl_seconds,
     authority_classification: "PERFORMANCE_TELEMETRY_ONLY",
     external_action_permitted: false,
     telemetry_sha256: value.telemetry_sha256,
