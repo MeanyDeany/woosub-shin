@@ -86,6 +86,12 @@ export function parseBtcTradeDayWinRateTelemetry(
   if (keys.length !== expected.length || keys.some((key, i) => key !== expected[i])) {
     throw new Error("Trade-day win-rate telemetry fields do not match contract");
   }
+  // Narrow the validated source TTL directly before returning it.
+  const freshnessTtlSeconds = value.freshness_ttl_seconds;
+  if (freshnessTtlSeconds !== 180 && freshnessTtlSeconds !== 600) {
+    throw new Error("Unsupported trade-day win-rate freshness TTL");
+  }
+
   const fixedValid =
     value.schema_version === 1 &&
     value.dataset_id === "binance_usdm_public_trade_day_win_rate_v1" &&
@@ -99,7 +105,6 @@ export function parseBtcTradeDayWinRateTelemetry(
     value.trading_commission_included === true &&
     value.historical_bnb_commission_valuation === "CONTEMPORANEOUS_BNBUSDT_1M_CLOSE_ESTIMATE" &&
     value.live_commission_basis === "AUTHENTICATED_USDT_USDC_LEDGER_PAR" &&
-    (value.freshness_ttl_seconds === 180 || value.freshness_ttl_seconds === 600) &&
     value.authority_classification === "PERFORMANCE_TELEMETRY_ONLY" &&
     value.external_action_permitted === false;
   if (!fixedValid) throw new Error("Unsupported trade-day win-rate telemetry contract");
@@ -142,7 +147,7 @@ export function parseBtcTradeDayWinRateTelemetry(
     trading_commission_included: true,
     historical_bnb_commission_valuation: "CONTEMPORANEOUS_BNBUSDT_1M_CLOSE_ESTIMATE",
     live_commission_basis: "AUTHENTICATED_USDT_USDC_LEDGER_PAR",
-    freshness_ttl_seconds: value.freshness_ttl_seconds,
+    freshness_ttl_seconds: freshnessTtlSeconds,
     authority_classification: "PERFORMANCE_TELEMETRY_ONLY",
     external_action_permitted: false,
     telemetry_sha256: value.telemetry_sha256,

@@ -81,3 +81,32 @@ test("derives daily public URL safely",()=>{
   assert.equal(deriveBtcDailyPerformanceFeedUrl("https://btc-data.meanydeany.com/public/execution/observatory.json"),"https://btc-data.meanydeany.com/public/execution/daily-performance.json");
   assert.equal(deriveBtcDailyPerformanceFeedUrl(undefined,"http://unsafe.example"),DEFAULT_BTC_DAILY_PERFORMANCE_FEED_URL);
 });
+
+for (const [name, fixture] of [["V1", v1Payload], ["V2", v2Payload]]) {
+  for (const ttl of [180, 600]) {
+    test(`daily ${name} preserves the validated ${ttl}-second source TTL`, () => {
+      const payload = { ...fixture(), freshness_ttl_seconds: ttl };
+      const parsed = parseBtcDailyPerformanceTelemetry(payload);
+      assert.equal(parsed.freshness_ttl_seconds, ttl);
+      assert.equal(parsed.observed_at_utc, payload.observed_at_utc);
+      assert.equal(parsed.telemetry_sha256, payload.telemetry_sha256);
+      assert.equal(parsed.external_action_permitted, false);
+    });
+  }
+  test(`daily ${name} rejects unsupported or coerced TTL values`, () => {
+    for (const ttl of [0, -180, 179, 181, 599, 601, 3600, "180", "600", null, undefined, true, NaN, Infinity]) {
+      assert.throws(() => parseBtcDailyPerformanceTelemetry({ ...fixture(), freshness_ttl_seconds: ttl }));
+    }
+  });
+  test(`daily ${name} retains authority, chronology and SHA checks at 600 seconds`, () => {
+    for (const fields of [
+      { external_action_permitted: true },
+      { authority_classification: "EXECUTION_AUTHORIZED" },
+      { observed_at_utc: "2027-01-01T00:00:00Z" },
+      { telemetry_sha256: "invalid" },
+      { unsupported: true },
+    ]) {
+      assert.throws(() => parseBtcDailyPerformanceTelemetry({ ...fixture(), freshness_ttl_seconds: 600, ...fields }));
+    }
+  });
+}

@@ -144,7 +144,7 @@ function rollingV1(overrides = {}) {
     venue: base.venue,
     environment: base.environment,
     scope: "BINANCE_USDM_ACCOUNT_WIDE_ROLLING_TRADING_V1",
-    reporting_currency: base.reporting_currency,
+    reporting_currency: "USD",
     windows: base.windows.map((window) => ({
       window: window.window,
       requested_days: window.requested_days,
@@ -329,3 +329,40 @@ test("rejects malformed trade-day win-rate counts and derives its feed safely", 
     DEFAULT_BTC_TRADE_DAY_WIN_RATE_FEED_URL,
   );
 });
+
+// PR56 accepted the new runtime TTL but did not compile. Cover both rollout
+// values across every account-feed parser without weakening other contracts.
+for (const [name, parse, fixture] of [
+  ["lifetime V2", parseBtcLifetimePerformanceTelemetry, performance],
+  ["positions V2", parseBtcLiveMultiPositionTelemetry, positions],
+  ["rolling V1", parseBtcRollingPerformanceTelemetry, rollingV1],
+  ["rolling V2", parseBtcRollingPerformanceTelemetry, rolling],
+  ["trade-day win rate V1", parseBtcTradeDayWinRateTelemetry, tradeDayWinRate],
+]) {
+  for (const ttl of [180, 600]) {
+    test(`${name} preserves the validated ${ttl}-second source TTL`, () => {
+      const payload = fixture({ freshness_ttl_seconds: ttl });
+      const parsed = parse(payload);
+      assert.equal(parsed.freshness_ttl_seconds, ttl);
+      assert.equal(parsed.observed_at_utc, payload.observed_at_utc);
+      assert.equal(parsed.telemetry_sha256, payload.telemetry_sha256);
+      assert.equal(parsed.external_action_permitted, false);
+    });
+  }
+  test(`${name} rejects unsupported or coerced TTL values`, () => {
+    for (const ttl of [0, -180, 179, 181, 599, 601, 3600, "180", "600", null, undefined, true, NaN, Infinity]) {
+      assert.throws(() => parse(fixture({ freshness_ttl_seconds: ttl })));
+    }
+  });
+  test(`${name} retains authority, chronology and SHA checks at 600 seconds`, () => {
+    for (const fields of [
+      { external_action_permitted: true },
+      { authority_classification: "EXECUTION_AUTHORIZED" },
+      { observed_at_utc: "2027-01-01T00:00:00Z" },
+      { telemetry_sha256: "invalid" },
+      { unsupported: true },
+    ]) {
+      assert.throws(() => parse(fixture({ freshness_ttl_seconds: 600, ...fields })));
+    }
+  });
+}
