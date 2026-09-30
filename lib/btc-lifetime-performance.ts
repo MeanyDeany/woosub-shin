@@ -14,7 +14,7 @@ export type BtcLifetimePerformanceTelemetry = {
   lifetime_return_pct: number;
   return_method: "MODIFIED_DIETZ_FLOW_ADJUSTED_V2";
   capital_flow_handling: "EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2";
-  freshness_ttl_seconds: 180;
+  freshness_ttl_seconds: 180 | 600;
   authority_classification: "PERFORMANCE_TELEMETRY_ONLY";
   external_action_permitted: false;
   telemetry_sha256: string;
@@ -112,7 +112,7 @@ export function parseBtcLifetimePerformanceTelemetry(
     value.reporting_currency !== "USD" ||
     value.return_method !== "MODIFIED_DIETZ_FLOW_ADJUSTED_V2" ||
     value.capital_flow_handling !== "EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2" ||
-    value.freshness_ttl_seconds !== 180 ||
+    (value.freshness_ttl_seconds !== 180 && value.freshness_ttl_seconds !== 600) ||
     value.authority_classification !== "PERFORMANCE_TELEMETRY_ONLY" ||
     value.external_action_permitted !== false
   ) {
@@ -152,7 +152,7 @@ export function parseBtcLifetimePerformanceTelemetry(
     ),
     return_method: "MODIFIED_DIETZ_FLOW_ADJUSTED_V2",
     capital_flow_handling: "EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2",
-    freshness_ttl_seconds: 180,
+    freshness_ttl_seconds: value.freshness_ttl_seconds,
     authority_classification: "PERFORMANCE_TELEMETRY_ONLY",
     external_action_permitted: false,
     telemetry_sha256: exactSha(value.telemetry_sha256, "telemetry_sha256"),
