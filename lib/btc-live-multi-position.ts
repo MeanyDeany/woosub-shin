@@ -17,7 +17,7 @@ export type BinanceOpenPositionsTelemetry = {
   open_position_count: number;
   positions: BinanceOpenPosition[];
   observation_identity_sha256: string;
-  freshness_ttl_seconds: 180;
+  freshness_ttl_seconds: 180 | 600;
   authority_classification: "AUTHENTICATED_READ_ONLY_TELEMETRY";
   external_action_permitted: false;
   telemetry_sha256: string;
@@ -131,7 +131,7 @@ export function parseBtcLiveMultiPositionTelemetry(value: unknown): BinanceOpenP
     value.dataset_id !== "binance_usdm_public_open_positions_v2" ||
     value.venue !== "BINANCE_USDM" ||
     value.environment !== "PRODUCTION" ||
-    value.freshness_ttl_seconds !== 180 ||
+    (value.freshness_ttl_seconds !== 180 && value.freshness_ttl_seconds !== 600) ||
     value.authority_classification !== "AUTHENTICATED_READ_ONLY_TELEMETRY" ||
     value.external_action_permitted !== false
   ) {
@@ -182,7 +182,7 @@ export function parseBtcLiveMultiPositionTelemetry(value: unknown): BinanceOpenP
       value.observation_identity_sha256,
       "observation_identity_sha256",
     ),
-    freshness_ttl_seconds: 180,
+    freshness_ttl_seconds: value.freshness_ttl_seconds,
     authority_classification: "AUTHENTICATED_READ_ONLY_TELEMETRY",
     external_action_permitted: false,
     telemetry_sha256: exactSha(value.telemetry_sha256, "telemetry_sha256"),
