@@ -160,11 +160,16 @@ export function parseBtcRollingPerformanceTelemetry(
   if (schema !== 1 && schema !== 2) throw new Error("Unsupported rolling performance schema");
   exactKeys(value, schema === 2 ? topKeysV2 : topKeysV1, "Rolling performance telemetry");
 
+  // Narrow the validated source TTL directly before returning it.
+  const freshnessTtlSeconds = value.freshness_ttl_seconds;
+  if (freshnessTtlSeconds !== 180 && freshnessTtlSeconds !== 600) {
+    throw new Error("Unsupported rolling performance freshness TTL");
+  }
+
   const commonValid =
     value.venue === "BINANCE_USDM" &&
     value.environment === "PRODUCTION" &&
     value.reporting_currency === "USD" &&
-    (value.freshness_ttl_seconds === 180 || value.freshness_ttl_seconds === 600) &&
     value.authority_classification === "PERFORMANCE_TELEMETRY_ONLY" &&
     value.external_action_permitted === false;
   const v1Valid =
@@ -219,7 +224,7 @@ export function parseBtcRollingPerformanceTelemetry(
       secondary_return_method: "MODIFIED_DIETZ_FLOW_ADJUSTED_V2",
       secondary_capital_flow_handling: "EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2",
       metric_basis: "BINANCE_FUTURES_PNL_ANALYSIS",
-      freshness_ttl_seconds: value.freshness_ttl_seconds,
+      freshness_ttl_seconds: freshnessTtlSeconds,
       authority_classification: "PERFORMANCE_TELEMETRY_ONLY",
       external_action_permitted: false,
       telemetry_sha256: value.telemetry_sha256,
@@ -241,7 +246,7 @@ export function parseBtcRollingPerformanceTelemetry(
     secondary_return_method: null,
     secondary_capital_flow_handling: null,
     metric_basis: "FLOW_ADJUSTED_MTM",
-    freshness_ttl_seconds: value.freshness_ttl_seconds,
+    freshness_ttl_seconds: freshnessTtlSeconds,
     authority_classification: "PERFORMANCE_TELEMETRY_ONLY",
     external_action_permitted: false,
     telemetry_sha256: value.telemetry_sha256,
