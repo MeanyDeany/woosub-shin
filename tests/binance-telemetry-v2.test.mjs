@@ -343,6 +343,26 @@ function tradeDayWinRateV3(overrides = {}) {
   };
 }
 
+function tradeDayWinRateV4(overrides = {}) {
+  return {
+    ...tradeDayWinRateV2(),
+    schema_version: 4,
+    dataset_id: "binance_usdm_public_trade_day_win_rate_v4",
+    scope: "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V4",
+    cash_method: "REALIZED_PNL_PLUS_COMMISSION_PLUS_FUNDING_BY_UTC_DAY_V1",
+    cash_days: [
+      {
+        date_utc: "2026-09-29",
+        realized_pnl: 10,
+        commission: -1,
+        funding_fee: -100,
+        net_pnl: -91,
+      },
+    ],
+    ...overrides,
+  };
+}
+
 test("accepts live funding-excluded trade-day win-rate telemetry", () => {
   const parsed = parseBtcTradeDayWinRateTelemetry(tradeDayWinRate());
   assert.equal(parsed.schema_version, 1);
@@ -397,6 +417,56 @@ test("rejects inconsistent V3 KST calendar outcomes", () => {
   }));
 });
 
+test("accepts V4 UTC cash-day outcomes including funding", () => {
+  const parsed = parseBtcTradeDayWinRateTelemetry(tradeDayWinRateV4());
+  assert.equal(parsed.schema_version, 4);
+  assert.equal(parsed.cash_method, "REALIZED_PNL_PLUS_COMMISSION_PLUS_FUNDING_BY_UTC_DAY_V1");
+  assert.deepEqual(parsed.cash_days, [{
+    date_utc: "2026-09-29",
+    realized_pnl: 10,
+    commission: -1,
+    funding_fee: -100,
+    net_pnl: -91,
+  }]);
+  assert.deepEqual(parsed.calendar_days, []);
+});
+
+test("V4 cash days allow funding-only and zero-net outcomes", () => {
+  const fundingOnly = tradeDayWinRateV4({
+    cash_days: [{
+      date_utc: "2026-09-29",
+      realized_pnl: 0,
+      commission: 0,
+      funding_fee: -0.4329135,
+      net_pnl: -0.4329135,
+    }],
+  });
+  assert.equal(parseBtcTradeDayWinRateTelemetry(fundingOnly).cash_days[0].net_pnl, -0.4329135);
+
+  const zeroNet = tradeDayWinRateV4({
+    cash_days: [{
+      date_utc: "2026-09-29",
+      realized_pnl: 1,
+      commission: 0,
+      funding_fee: -1,
+      net_pnl: 0,
+    }],
+  });
+  assert.equal(parseBtcTradeDayWinRateTelemetry(zeroNet).cash_days[0].net_pnl, 0);
+});
+
+test("rejects inconsistent V4 cash-day details", () => {
+  const base = tradeDayWinRateV4();
+  assert.throws(() => parseBtcTradeDayWinRateTelemetry({
+    ...base,
+    cash_days: [{ ...base.cash_days[0], net_pnl: -90 }],
+  }));
+  assert.throws(() => parseBtcTradeDayWinRateTelemetry({
+    ...base,
+    cash_method: "WRONG",
+  }));
+});
+
 test("rejects inconsistent V2 trade-day outcome details", () => {
   const base = tradeDayWinRateV2();
   assert.throws(() => parseBtcTradeDayWinRateTelemetry({
@@ -444,6 +514,7 @@ for (const [name, parse, fixture] of [
   ["trade-day win rate V1", parseBtcTradeDayWinRateTelemetry, tradeDayWinRate],
   ["trade-day win rate V2", parseBtcTradeDayWinRateTelemetry, tradeDayWinRateV2],
   ["trade-day win rate V3", parseBtcTradeDayWinRateTelemetry, tradeDayWinRateV3],
+  ["trade-day win rate V4", parseBtcTradeDayWinRateTelemetry, tradeDayWinRateV4],
 ]) {
   for (const ttl of [180, 600]) {
     test(`${name} preserves the validated ${ttl}-second source TTL`, () => {

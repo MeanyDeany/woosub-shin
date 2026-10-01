@@ -14,25 +14,37 @@ export type BinanceCalendarTradeDayOutcome = {
   outcome: "WIN" | "LOSS";
 };
 
+export type BinanceCashDayOutcome = {
+  date_utc: string;
+  realized_pnl: number;
+  commission: number;
+  funding_fee: number;
+  net_pnl: number;
+};
+
 export type BinanceTradeDayWinRateTelemetry = {
-  schema_version: 1 | 2 | 3;
+  schema_version: 1 | 2 | 3 | 4;
   dataset_id:
     | "binance_usdm_public_trade_day_win_rate_v1"
     | "binance_usdm_public_trade_day_win_rate_v2"
-    | "binance_usdm_public_trade_day_win_rate_v3";
+    | "binance_usdm_public_trade_day_win_rate_v3"
+    | "binance_usdm_public_trade_day_win_rate_v4";
   generated_at_utc: string;
   observed_at_utc: string;
   coverage_start_utc: "2024-11-13";
   scope:
     | "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V1"
     | "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V2"
-    | "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V3";
+    | "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V3"
+    | "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V4";
   historical_base_through_utc: "2026-09-28";
   live_extension_start_utc: "2026-09-29T00:00:00Z";
   days: BinanceTradeDayOutcome[];
   calendar_timezone: "Asia/Seoul" | null;
   calendar_extension_start_utc: "2026-09-28T15:00:00Z" | null;
   calendar_days: BinanceCalendarTradeDayOutcome[];
+  cash_days: BinanceCashDayOutcome[];
+  cash_method: "REALIZED_PNL_PLUS_COMMISSION_PLUS_FUNDING_BY_UTC_DAY_V1" | null;
   resolved_trade_day_count: number;
   winning_trade_day_count: number;
   losing_trade_day_count: number;
@@ -86,8 +98,10 @@ const exactKeysV3 = [
   "calendar_extension_start_utc",
   "calendar_days",
 ] as const;
+const exactKeysV4 = [...exactKeysV2, "cash_days", "cash_method"] as const;
 const outcomeKeys = ["date_utc", "realized_pnl", "commission", "net_pnl", "outcome"] as const;
 const calendarOutcomeKeys = ["date_local", "realized_pnl", "commission", "net_pnl", "outcome"] as const;
+const cashOutcomeKeys = ["date_utc", "realized_pnl", "commission", "funding_fee", "net_pnl"] as const;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -118,12 +132,12 @@ export function parseBtcTradeDayWinRateTelemetry(
 ): BinanceTradeDayWinRateTelemetry {
   if (!isRecord(value)) throw new Error("Trade-day win-rate telemetry must be an object");
   const schemaVersion = value.schema_version;
-  if (schemaVersion !== 1 && schemaVersion !== 2 && schemaVersion !== 3) {
+  if (schemaVersion !== 1 && schemaVersion !== 2 && schemaVersion !== 3 && schemaVersion !== 4) {
     throw new Error("Unsupported trade-day win-rate schema version");
   }
   const keys = Object.keys(value).sort();
   const expected = [
-    ...(schemaVersion === 3 ? exactKeysV3 : schemaVersion === 2 ? exactKeysV2 : exactKeysV1),
+    ...(schemaVersion === 4 ? exactKeysV4 : schemaVersion === 3 ? exactKeysV3 : schemaVersion === 2 ? exactKeysV2 : exactKeysV1),
   ].sort();
   if (keys.length !== expected.length || keys.some((key, i) => key !== expected[i])) {
     throw new Error("Trade-day win-rate telemetry fields do not match contract");
@@ -140,8 +154,11 @@ export function parseBtcTradeDayWinRateTelemetry(
     : schemaVersion === 2
       ? value.dataset_id === "binance_usdm_public_trade_day_win_rate_v2" &&
         value.scope === "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V2"
-      : value.dataset_id === "binance_usdm_public_trade_day_win_rate_v3" &&
-        value.scope === "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V3";
+      : schemaVersion === 3
+        ? value.dataset_id === "binance_usdm_public_trade_day_win_rate_v3" &&
+          value.scope === "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V3"
+        : value.dataset_id === "binance_usdm_public_trade_day_win_rate_v4" &&
+          value.scope === "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V4";
   const fixedValid =
     versionValid &&
     value.coverage_start_utc === "2024-11-13" &&
@@ -164,6 +181,12 @@ export function parseBtcTradeDayWinRateTelemetry(
     )
   ) {
     throw new Error("Unsupported trade-day calendar contract");
+  }
+  if (
+    schemaVersion === 4 &&
+    value.cash_method !== "REALIZED_PNL_PLUS_COMMISSION_PLUS_FUNDING_BY_UTC_DAY_V1"
+  ) {
+    throw new Error("Unsupported cash-day contract");
   }
 
   const generated = timestamp(value.generated_at_utc, "generated_at_utc");
@@ -276,31 +299,70 @@ export function parseBtcTradeDayWinRateTelemetry(
     }
   }
 
+  const cashDays: BinanceCashDayOutcome[] = [];
+  if (schemaVersion === 4) {
+    if (!Array.isArray(value.cash_days)) throw new Error("Cash-day outcomes must be an array");
+    let previousCashDate = "";
+    for (const [index, item] of value.cash_days.entries()) {
+      if (!isRecord(item)) throw new Error(`cash_days[${index}] must be an object`);
+      const itemKeys = Object.keys(item).sort();
+      const expectedItemKeys = [...cashOutcomeKeys].sort();
+      if (
+        itemKeys.length !== expectedItemKeys.length ||
+        itemKeys.some((key, i) => key !== expectedItemKeys[i])
+      ) throw new Error(`cash_days[${index}] fields do not match contract`);
+      const dateUtc = item.date_utc;
+      if (
+        typeof dateUtc !== "string" ||
+        !utcDatePattern.test(dateUtc) ||
+        new Date(`${dateUtc}T00:00:00Z`).toISOString().slice(0, 10) !== dateUtc ||
+        dateUtc < "2026-09-29" ||
+        dateUtc > observed.slice(0, 10) ||
+        (previousCashDate !== "" && dateUtc <= previousCashDate)
+      ) throw new Error(`cash_days[${index}].date_utc is invalid`);
+      previousCashDate = dateUtc;
+      const realizedPnl = finiteNumber(item.realized_pnl, `cash_days[${index}].realized_pnl`);
+      const commission = finiteNumber(item.commission, `cash_days[${index}].commission`);
+      const fundingFee = finiteNumber(item.funding_fee, `cash_days[${index}].funding_fee`);
+      const netPnl = finiteNumber(item.net_pnl, `cash_days[${index}].net_pnl`);
+      if (Math.abs(netPnl - (realizedPnl + commission + fundingFee)) > 1e-9) {
+        throw new Error(`cash_days[${index}] PnL components are inconsistent`);
+      }
+      cashDays.push({ date_utc: dateUtc, realized_pnl: realizedPnl, commission, funding_fee: fundingFee, net_pnl: netPnl });
+    }
+  }
+
   if (typeof value.telemetry_sha256 !== "string" || !sha256.test(value.telemetry_sha256)) {
     throw new Error("Trade-day win-rate telemetry SHA-256 is invalid");
   }
 
   return {
     schema_version: schemaVersion,
-    dataset_id: schemaVersion === 3
-      ? "binance_usdm_public_trade_day_win_rate_v3"
-      : schemaVersion === 2
-        ? "binance_usdm_public_trade_day_win_rate_v2"
-        : "binance_usdm_public_trade_day_win_rate_v1",
+    dataset_id: schemaVersion === 4
+      ? "binance_usdm_public_trade_day_win_rate_v4"
+      : schemaVersion === 3
+        ? "binance_usdm_public_trade_day_win_rate_v3"
+        : schemaVersion === 2
+          ? "binance_usdm_public_trade_day_win_rate_v2"
+          : "binance_usdm_public_trade_day_win_rate_v1",
     generated_at_utc: generated,
     observed_at_utc: observed,
     coverage_start_utc: "2024-11-13",
-    scope: schemaVersion === 3
-      ? "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V3"
-      : schemaVersion === 2
-        ? "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V2"
-        : "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V1",
+    scope: schemaVersion === 4
+      ? "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V4"
+      : schemaVersion === 3
+        ? "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V3"
+        : schemaVersion === 2
+          ? "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V2"
+          : "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V1",
     historical_base_through_utc: "2026-09-28",
     live_extension_start_utc: "2026-09-29T00:00:00Z",
     days,
     calendar_timezone: schemaVersion === 3 ? "Asia/Seoul" : null,
     calendar_extension_start_utc: schemaVersion === 3 ? "2026-09-28T15:00:00Z" : null,
     calendar_days: calendarDays,
+    cash_days: cashDays,
+    cash_method: schemaVersion === 4 ? "REALIZED_PNL_PLUS_COMMISSION_PLUS_FUNDING_BY_UTC_DAY_V1" : null,
     resolved_trade_day_count: resolved,
     winning_trade_day_count: winning,
     losing_trade_day_count: losing,
