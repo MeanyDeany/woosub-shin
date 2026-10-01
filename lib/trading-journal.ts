@@ -71,8 +71,8 @@ export function monthSummary(journal: Journal, month: string) {
   const net = measured.reduce((sum, entry) => sum + (entry.pnlUsd ?? 0), 0);
   return { days: records.length, pnlDays: measured.length, net: measured.length ? net : null, positive: measured.filter(e => e.pnlUsd! > 0).length, negative: measured.filter(e => e.pnlUsd! < 0).length, flat: measured.filter(e => e.pnlUsd === 0).length };
 }
-export function mergeJournal(current: Journal, incoming: Journal): Journal {
+export function mergeJournal(current: Journal, incoming: Journal, today = utcDay()): Journal {
   const byDate = new Map(current.entries.map(entry => [entry.date, entry]));
   for (const entry of incoming.entries) byDate.set(entry.date, entry);
-  return parseJournal({ version: 1, timezone: "UTC", entries: [...byDate.values()] });
+  return parseJournal({ version: 1, timezone: "UTC", entries: [...byDate.values()] }, today);
 }
