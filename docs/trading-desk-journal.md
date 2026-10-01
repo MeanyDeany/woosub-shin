@@ -22,6 +22,8 @@ The CSV history uses the two user-provided Binance Futures Transaction History e
 
 The V2 primary daily PnL follows the Binance Futures PNL Analysis wallet-balance definition: ending wallet balance minus beginning wallet balance minus net capital inflow. Its PnL % denominator is beginning wallet balance plus positive inflow. Open-position unrealized PnL is excluded from this primary figure until it reaches wallet balance. The older Modified Dietz flow-adjusted mark-to-market PnL/return remains available as a secondary research measure. The current day is visibly incomplete. Monthly summaries keep authenticated ledger-day PnL and historical export realized cash PnL separate so unlike accounting bases are not silently added together; daily percentage returns are never summed.
 
+From 2026-09-29 Korea time, the calendar also overlays authenticated realized trade activity rebucketed to Asia/Seoul dates. This overlay uses REALIZED_PNL plus COMMISSION and excludes FUNDING_FEE. It is a user-facing trade-date view, not a replacement for UTC wallet accounting. A trade realized at 2026-09-28 16:33 UTC therefore appears as 2026-09-29 KST activity while the underlying UTC account PnL remains assigned to 2026-09-28.
+
 The public projection contains no balances, exact position sizes, prices, credentials, order identifiers or personal notes.
 
 ## Private notes
@@ -30,7 +32,7 @@ The calendar can hold a private text note for the site owner. Notes remain in br
 
 ## Freshness
 
-Public feeds poll every 30 seconds while visible, use a 10-second request deadline and preserve the last validated value on failed refresh. The source's 180-second freshness TTL is authoritative. A failed or malformed feed never implies that the account is flat or that a missing day had zero PnL.
+Public feeds poll every 30 seconds while visible, use a 10-second request deadline and preserve the last validated value on failed refresh. The current source's 600-second freshness TTL is authoritative; parsers also retain the earlier 180-second value during compatibility rollout. A failed or malformed feed never implies that the account is flat or that a missing day had zero PnL.
 
 The public daily projection is produced by the execution-gateway reporting layer from the existing authenticated flow-adjusted ledger. The website itself has no Binance credential, private exchange call, order route or execution capability.
 
@@ -38,7 +40,7 @@ The public daily projection is produced by the execution-gateway reporting layer
 
 ## Trade-day win rate
 
-The dashboard also shows a separate trade-day win rate derived from actual Binance USD-M fill history rather than from calendar MTM marks. The day basis is UTC to match the public trading calendar.
+The dashboard also shows a separate trade-day win rate derived from actual Binance USD-M fill history rather than from calendar MTM marks. Its statistical day basis remains UTC. The calendar may additionally show the same authenticated realized activity rebucketed to KST for human-readable trade dates; those KST rows never change the UTC win-rate denominator.
 
 For each UTC date with futures fills, the resolved trading result is realized trade PnL after trading commissions and with funding excluded. Historical USDT/USDC commissions are used directly. Historical BNB commissions are translated to USD with the contemporaneous BNBUSDT 1-minute close, so the aggregate win rate is explicitly approximate rather than presented as exchange-native accounting.
 

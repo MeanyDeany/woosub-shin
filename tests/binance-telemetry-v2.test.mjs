@@ -322,6 +322,27 @@ function tradeDayWinRateV2(overrides = {}) {
   };
 }
 
+function tradeDayWinRateV3(overrides = {}) {
+  return {
+    ...tradeDayWinRateV2(),
+    schema_version: 3,
+    dataset_id: "binance_usdm_public_trade_day_win_rate_v3",
+    scope: "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V3",
+    calendar_timezone: "Asia/Seoul",
+    calendar_extension_start_utc: "2026-09-28T15:00:00Z",
+    calendar_days: [
+      {
+        date_local: "2026-09-29",
+        realized_pnl: 97.603,
+        commission: 0,
+        net_pnl: 97.603,
+        outcome: "WIN",
+      },
+    ],
+    ...overrides,
+  };
+}
+
 test("accepts live funding-excluded trade-day win-rate telemetry", () => {
   const parsed = parseBtcTradeDayWinRateTelemetry(tradeDayWinRate());
   assert.equal(parsed.schema_version, 1);
@@ -343,6 +364,37 @@ test("accepts V2 resolved live trade-day outcomes", () => {
     outcome: "WIN",
   }]);
   assert.equal(parsed.resolved_trade_day_count, 223);
+});
+
+test("accepts V3 KST calendar trade-day outcomes", () => {
+  const parsed = parseBtcTradeDayWinRateTelemetry(tradeDayWinRateV3());
+  assert.equal(parsed.schema_version, 3);
+  assert.equal(parsed.calendar_timezone, "Asia/Seoul");
+  assert.equal(parsed.calendar_extension_start_utc, "2026-09-28T15:00:00Z");
+  assert.deepEqual(parsed.calendar_days, [{
+    date_local: "2026-09-29",
+    realized_pnl: 97.603,
+    commission: 0,
+    net_pnl: 97.603,
+    outcome: "WIN",
+  }]);
+  assert.equal(parsed.resolved_trade_day_count, 223);
+});
+
+test("rejects inconsistent V3 KST calendar outcomes", () => {
+  const base = tradeDayWinRateV3();
+  assert.throws(() => parseBtcTradeDayWinRateTelemetry({
+    ...base,
+    calendar_timezone: "UTC",
+  }));
+  assert.throws(() => parseBtcTradeDayWinRateTelemetry({
+    ...base,
+    calendar_days: [{ ...base.calendar_days[0], net_pnl: 96 }],
+  }));
+  assert.throws(() => parseBtcTradeDayWinRateTelemetry({
+    ...base,
+    calendar_days: [{ ...base.calendar_days[0], date_local: "2026-09-28" }],
+  }));
 });
 
 test("rejects inconsistent V2 trade-day outcome details", () => {
@@ -391,6 +443,7 @@ for (const [name, parse, fixture] of [
   ["rolling V2", parseBtcRollingPerformanceTelemetry, rolling],
   ["trade-day win rate V1", parseBtcTradeDayWinRateTelemetry, tradeDayWinRate],
   ["trade-day win rate V2", parseBtcTradeDayWinRateTelemetry, tradeDayWinRateV2],
+  ["trade-day win rate V3", parseBtcTradeDayWinRateTelemetry, tradeDayWinRateV3],
 ]) {
   for (const ttl of [180, 600]) {
     test(`${name} preserves the validated ${ttl}-second source TTL`, () => {

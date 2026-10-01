@@ -23,11 +23,11 @@ await page.route('**/public/execution/*.json', async route => {
   if (file === 'lifetime-performance.json') body = { ...common, schema_version: 2, dataset_id: 'binance_usdm_public_flow_adjusted_performance_v2', tracking_started_at_utc: '2026-08-01T00:00:00Z', scope: 'BINANCE_USDM_ACCOUNT_WIDE_TRADING_V2', reporting_currency: 'USD', realized_net_pnl: 150, current_unrealized_pnl: -9.77, lifetime_net_pnl: 140.23, lifetime_return_pct: 7.01, return_method: 'MODIFIED_DIETZ_FLOW_ADJUSTED_V2', capital_flow_handling: 'EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2', authority_classification: 'PERFORMANCE_TELEMETRY_ONLY' };
   if (file === 'daily-performance.json') {
     const last = observed.slice(0,10); const days=[]; let cursor='2026-08-01'; let n=0;
-    while(cursor<=last){ const start=cursor+'T00:00:00Z'; const isLast=cursor===last; const isCsvGap=cursor==='2026-08-20'; const isLiveGap=cursor==='2026-09-30'; const end=isLast?observed:new Date(Date.parse(start)+86400000-1000).toISOString(); days.push(isCsvGap||isLiveGap?{date_utc:cursor,status:'MISSING',start_observed_at_utc:null,end_observed_at_utc:null,actual_duration_seconds:null,net_pnl:null,return_pct:null,flow_adjusted_net_pnl:null,flow_adjusted_return_pct:null}:{date_utc:cursor,status:isLast?'IN_PROGRESS':'CLOSED',start_observed_at_utc:start,end_observed_at_utc:end,actual_duration_seconds:Math.floor((Date.parse(end)-Date.parse(start))/1000),net_pnl:(n%4===0?-10:16+n),return_pct:(n%4===0?-0.33:0.45+n/100),flow_adjusted_net_pnl:(n%4===0?-12:18+n),flow_adjusted_return_pct:(n%4===0?-0.4:0.5+n/100)}); cursor=new Date(Date.parse(start)+86400000).toISOString().slice(0,10); n++; }
+    while(cursor<=last){ const start=cursor+'T00:00:00Z'; const isLast=cursor===last; const isCsvGap=cursor==='2026-08-20'; const isLiveGap=cursor==='2026-09-29'||cursor==='2026-09-30'; const end=isLast?observed:new Date(Date.parse(start)+86400000-1000).toISOString(); days.push(isCsvGap||isLiveGap?{date_utc:cursor,status:'MISSING',start_observed_at_utc:null,end_observed_at_utc:null,actual_duration_seconds:null,net_pnl:null,return_pct:null,flow_adjusted_net_pnl:null,flow_adjusted_return_pct:null}:{date_utc:cursor,status:isLast?'IN_PROGRESS':'CLOSED',start_observed_at_utc:start,end_observed_at_utc:end,actual_duration_seconds:Math.floor((Date.parse(end)-Date.parse(start))/1000),net_pnl:(n%4===0?-10:16+n),return_pct:(n%4===0?-0.33:0.45+n/100),flow_adjusted_net_pnl:(n%4===0?-12:18+n),flow_adjusted_return_pct:(n%4===0?-0.4:0.5+n/100)}); cursor=new Date(Date.parse(start)+86400000).toISOString().slice(0,10); n++; }
     body={...common,schema_version:2,dataset_id:'binance_usdm_public_daily_performance_v2',tracking_started_at_utc:'2026-08-01T00:00:00Z',scope:'BINANCE_USDM_ACCOUNT_WIDE_DAILY_TRADING_V2',reporting_currency:'USD',days,return_method:'BINANCE_FUTURES_WALLET_PNL_V1',capital_flow_handling:'SUBTRACT_NET_CAPITAL_FLOW_ADD_GROSS_INFLOW_TO_DENOMINATOR_V1',secondary_return_method:'MODIFIED_DIETZ_FLOW_ADJUSTED_V2',secondary_capital_flow_handling:'EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2',authority_classification:'PERFORMANCE_TELEMETRY_ONLY'};
   }
   if (file === 'rolling-performance.json') body = { ...common, schema_version: 2, dataset_id: 'binance_usdm_public_rolling_performance_v2', scope: 'BINANCE_USDM_ACCOUNT_WIDE_ROLLING_TRADING_V2', reporting_currency: 'USD', return_method: 'BINANCE_FUTURES_WALLET_PNL_V1', capital_flow_handling: 'SUBTRACT_NET_CAPITAL_FLOW_ADD_GROSS_INFLOW_TO_DENOMINATOR_V1', secondary_return_method: 'MODIFIED_DIETZ_FLOW_ADJUSTED_V2', secondary_capital_flow_handling: 'EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2', authority_classification: 'PERFORMANCE_TELEMETRY_ONLY', windows: [7,30].map(days=>({ window: `${days}D`, requested_days: days, start_observed_at_utc: new Date(Date.parse(observed)-days*86400000).toISOString(), end_observed_at_utc: observed, actual_duration_seconds: days*86400, net_pnl: days === 7 ? 38 : 95, return_pct: days === 7 ? 1.9 : 4.75, flow_adjusted_net_pnl: days === 7 ? 42 : 104, flow_adjusted_return_pct: days === 7 ? 2.1 : 5.2 })) };
-  if (file === 'trade-day-win-rate.json') body = { schema_version: 2, dataset_id: 'binance_usdm_public_trade_day_win_rate_v2', generated_at_utc: new Date().toISOString(), observed_at_utc: observed, coverage_start_utc: '2024-11-13', scope: 'BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V2', historical_base_through_utc: '2026-09-28', live_extension_start_utc: '2026-09-29T00:00:00Z', days: [{ date_utc: '2026-09-30', realized_pnl: 25, commission: -1, net_pnl: 24, outcome: 'WIN' }], resolved_trade_day_count: 223, winning_trade_day_count: 153, losing_trade_day_count: 70, win_rate_pct: 100*153/223, method: 'REALIZED_PNL_PLUS_COMMISSION_EX_FUNDING_BY_UTC_DAY_V1', day_basis: 'UTC', funding_included: false, trading_commission_included: true, historical_bnb_commission_valuation: 'CONTEMPORANEOUS_BNBUSDT_1M_CLOSE_ESTIMATE', live_commission_basis: 'AUTHENTICATED_USDT_USDC_LEDGER_PAR', freshness_ttl_seconds: ttlSeconds, authority_classification: 'PERFORMANCE_TELEMETRY_ONLY', external_action_permitted: false, telemetry_sha256: sha };
+  if (file === 'trade-day-win-rate.json') body = { schema_version: 3, dataset_id: 'binance_usdm_public_trade_day_win_rate_v3', generated_at_utc: new Date().toISOString(), observed_at_utc: observed, coverage_start_utc: '2024-11-13', scope: 'BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V3', historical_base_through_utc: '2026-09-28', live_extension_start_utc: '2026-09-29T00:00:00Z', days: [{ date_utc: '2026-09-30', realized_pnl: 88.825, commission: 0, net_pnl: 88.825, outcome: 'WIN' }], calendar_timezone: 'Asia/Seoul', calendar_extension_start_utc: '2026-09-28T15:00:00Z', calendar_days: [{ date_local: '2026-09-29', realized_pnl: 97.603, commission: 0, net_pnl: 97.603, outcome: 'WIN' }, { date_local: '2026-09-30', realized_pnl: 88.825, commission: 0, net_pnl: 88.825, outcome: 'WIN' }], resolved_trade_day_count: 223, winning_trade_day_count: 153, losing_trade_day_count: 70, win_rate_pct: 100*153/223, method: 'REALIZED_PNL_PLUS_COMMISSION_EX_FUNDING_BY_UTC_DAY_V1', day_basis: 'UTC', funding_included: false, trading_commission_included: true, historical_bnb_commission_valuation: 'CONTEMPORANEOUS_BNBUSDT_1M_CLOSE_ESTIMATE', live_commission_basis: 'AUTHENTICATED_USDT_USDC_LEDGER_PAR', freshness_ttl_seconds: ttlSeconds, authority_classification: 'PERFORMANCE_TELEMETRY_ONLY', external_action_permitted: false, telemetry_sha256: sha };
   await route.fulfill({ status: body ? 200 : 404, contentType: 'application/json', body: JSON.stringify(body ?? {}) });
 });
 const url = 'http://localhost:3000/projects/btc-futures-research/live-position';
@@ -82,8 +82,6 @@ try {
   assert.match(await page.locator('.td-csv-explain').textContent(), /BNB commission/i);
   assert.equal(await page.getByRole('button', {name:'Previous month',exact:true}).isDisabled(), true);
   await page.getByRole('button', {name:'Today', exact:true}).click();
-  await page.getByText('Binance PnL', {exact:true}).first().waitFor();
-  await page.getByText('Flow-adjusted MTM PnL', {exact:true}).waitFor();
   const currentMonth = await page.locator('.td-calendar-toolbar h3').textContent();
   assert.doesNotMatch(currentMonth, /November 2024/);
 
@@ -97,14 +95,20 @@ try {
   };
 
   await goBackToMonth('September 2026');
-  await page.getByRole('button', {name:'2026-09-30, +$24.00 public PnL'}).click();
-  await page.getByText('Realized cash PnL (ex funding)', {exact:true}).waitFor();
+  await page.getByRole('button', {name:'2026-09-29, +$97.60 KST realized trade activity'}).click();
+  await page.getByText('KST realized activity', {exact:true}).first().waitFor();
   await page.getByText('Gross realized PnL', {exact:true}).waitFor();
   await page.getByText('Trading commission', {exact:true}).waitFor();
-  assert.match(await page.locator('.td-csv-explain').textContent(), /without inventing Binance-basis daily PnL/i);
+  await page.getByText('UTC account PnL', {exact:true}).waitFor();
+  assert.match(await page.locator('.td-public-day-values').textContent(), /\+\$97\.60/);
+  assert.match(await page.locator('.td-public-day-values').textContent(), /Not available/);
+  assert.match(await page.locator('.td-csv-explain').textContent(), /Asia\/Seoul calendar dates/i);
+
+  await page.getByRole('button', {name:'2026-09-30, +$88.83 KST realized trade activity'}).click();
+  assert.match(await page.locator('.td-public-day-values').textContent(), /\+\$88\.83/);
 
   await goBackToMonth('August 2026');
-  await page.getByRole('button', {name:'2026-08-20, +$177.90 public PnL'}).click();
+  await page.getByRole('button', {name:'2026-08-20, +$177.90 UTC public PnL'}).click();
   await page.getByText('Historical net cash PnL', {exact:true}).first().waitFor();
   assert.match(await page.locator('.td-csv-explain').textContent(), /does not include UTC-boundary unrealized mark-to-market/i);
   await fs.mkdir('/tmp/desk-qa', { recursive:true });
