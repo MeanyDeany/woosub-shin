@@ -1,12 +1,25 @@
+export type BinanceTradeDayOutcome = {
+  date_utc: string;
+  realized_pnl: number;
+  commission: number;
+  net_pnl: number;
+  outcome: "WIN" | "LOSS";
+};
+
 export type BinanceTradeDayWinRateTelemetry = {
-  schema_version: 1;
-  dataset_id: "binance_usdm_public_trade_day_win_rate_v1";
+  schema_version: 1 | 2;
+  dataset_id:
+    | "binance_usdm_public_trade_day_win_rate_v1"
+    | "binance_usdm_public_trade_day_win_rate_v2";
   generated_at_utc: string;
   observed_at_utc: string;
   coverage_start_utc: "2024-11-13";
-  scope: "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V1";
+  scope:
+    | "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V1"
+    | "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V2";
   historical_base_through_utc: "2026-09-28";
   live_extension_start_utc: "2026-09-29T00:00:00Z";
+  days: BinanceTradeDayOutcome[];
   resolved_trade_day_count: number;
   winning_trade_day_count: number;
   losing_trade_day_count: number;
@@ -28,7 +41,8 @@ export const DEFAULT_BTC_TRADE_DAY_WIN_RATE_FEED_URL =
 
 const sha256 = /^[0-9a-f]{64}$/;
 const utcTimestampPattern = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,6})?Z$/;
-const exactKeys = [
+const utcDatePattern = /^\d{4}-\d{2}-\d{2}$/;
+const exactKeysV1 = [
   "schema_version",
   "dataset_id",
   "generated_at_utc",
@@ -52,6 +66,8 @@ const exactKeys = [
   "external_action_permitted",
   "telemetry_sha256",
 ] as const;
+const exactKeysV2 = [...exactKeysV1, "days"] as const;
+const outcomeKeys = ["date_utc", "realized_pnl", "commission", "net_pnl", "outcome"] as const;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -81,22 +97,29 @@ export function parseBtcTradeDayWinRateTelemetry(
   value: unknown,
 ): BinanceTradeDayWinRateTelemetry {
   if (!isRecord(value)) throw new Error("Trade-day win-rate telemetry must be an object");
+  const schemaVersion = value.schema_version;
+  if (schemaVersion !== 1 && schemaVersion !== 2) {
+    throw new Error("Unsupported trade-day win-rate schema version");
+  }
   const keys = Object.keys(value).sort();
-  const expected = [...exactKeys].sort();
+  const expected = [...(schemaVersion === 2 ? exactKeysV2 : exactKeysV1)].sort();
   if (keys.length !== expected.length || keys.some((key, i) => key !== expected[i])) {
     throw new Error("Trade-day win-rate telemetry fields do not match contract");
   }
-  // Narrow the validated source TTL directly before returning it.
+
   const freshnessTtlSeconds = value.freshness_ttl_seconds;
   if (freshnessTtlSeconds !== 180 && freshnessTtlSeconds !== 600) {
     throw new Error("Unsupported trade-day win-rate freshness TTL");
   }
 
+  const versionValid = schemaVersion === 1
+    ? value.dataset_id === "binance_usdm_public_trade_day_win_rate_v1" &&
+      value.scope === "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V1"
+    : value.dataset_id === "binance_usdm_public_trade_day_win_rate_v2" &&
+      value.scope === "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V2";
   const fixedValid =
-    value.schema_version === 1 &&
-    value.dataset_id === "binance_usdm_public_trade_day_win_rate_v1" &&
+    versionValid &&
     value.coverage_start_utc === "2024-11-13" &&
-    value.scope === "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V1" &&
     value.historical_base_through_utc === "2026-09-28" &&
     value.live_extension_start_utc === "2026-09-29T00:00:00Z" &&
     value.method === "REALIZED_PNL_PLUS_COMMISSION_EX_FUNDING_BY_UTC_DAY_V1" &&
@@ -111,12 +134,14 @@ export function parseBtcTradeDayWinRateTelemetry(
 
   const generated = timestamp(value.generated_at_utc, "generated_at_utc");
   const observed = timestamp(value.observed_at_utc, "observed_at_utc");
-  if (Date.parse(observed) > Date.parse(generated)) throw new Error("Trade-day win-rate timestamps are not chronological");
+  if (Date.parse(observed) > Date.parse(generated)) {
+    throw new Error("Trade-day win-rate timestamps are not chronological");
+  }
 
   const winning = nonNegativeInt(value.winning_trade_day_count, "winning_trade_day_count");
   const losing = nonNegativeInt(value.losing_trade_day_count, "losing_trade_day_count");
   const resolved = nonNegativeInt(value.resolved_trade_day_count, "resolved_trade_day_count");
-  if (resolved !== winning + losing || resolved === 0) {
+  if (winning < 152 || losing < 70 || resolved !== winning + losing || resolved === 0) {
     throw new Error("Trade-day win-rate counts are inconsistent");
   }
   const rate = finiteNumber(value.win_rate_pct, "win_rate_pct");
@@ -124,19 +149,66 @@ export function parseBtcTradeDayWinRateTelemetry(
   if (Math.abs(rate - expectedRate) > 1e-10) {
     throw new Error("Trade-day win rate does not match counts");
   }
+
+  const days: BinanceTradeDayOutcome[] = [];
+  if (schemaVersion === 2) {
+    if (!Array.isArray(value.days)) throw new Error("Trade-day outcomes must be an array");
+    let previousDate = "";
+    for (const [index, item] of value.days.entries()) {
+      if (!isRecord(item)) throw new Error(`days[${index}] must be an object`);
+      const itemKeys = Object.keys(item).sort();
+      const expectedItemKeys = [...outcomeKeys].sort();
+      if (
+        itemKeys.length !== expectedItemKeys.length ||
+        itemKeys.some((key, i) => key !== expectedItemKeys[i])
+      ) throw new Error(`days[${index}] fields do not match contract`);
+      const dateUtc = item.date_utc;
+      if (
+        typeof dateUtc !== "string" ||
+        !utcDatePattern.test(dateUtc) ||
+        new Date(`${dateUtc}T00:00:00Z`).toISOString().slice(0, 10) !== dateUtc ||
+        dateUtc < "2026-09-29" ||
+        dateUtc > observed.slice(0, 10) ||
+        (previousDate !== "" && dateUtc <= previousDate)
+      ) throw new Error(`days[${index}].date_utc is invalid`);
+      previousDate = dateUtc;
+      const realizedPnl = finiteNumber(item.realized_pnl, `days[${index}].realized_pnl`);
+      const commission = finiteNumber(item.commission, `days[${index}].commission`);
+      const netPnl = finiteNumber(item.net_pnl, `days[${index}].net_pnl`);
+      if (realizedPnl === 0 || netPnl === 0 || Math.abs(netPnl - (realizedPnl + commission)) > 1e-9) {
+        throw new Error(`days[${index}] PnL components are inconsistent`);
+      }
+      if (
+        (item.outcome !== "WIN" && item.outcome !== "LOSS") ||
+        (netPnl > 0) !== (item.outcome === "WIN")
+      ) throw new Error(`days[${index}].outcome is inconsistent`);
+      days.push({ date_utc: dateUtc, realized_pnl: realizedPnl, commission, net_pnl: netPnl, outcome: item.outcome });
+    }
+    const liveWins = days.filter(day => day.outcome === "WIN").length;
+    const liveLosses = days.length - liveWins;
+    if (winning !== 152 + liveWins || losing !== 70 + liveLosses || resolved !== 222 + days.length) {
+      throw new Error("Trade-day outcomes do not match aggregate counts");
+    }
+  }
+
   if (typeof value.telemetry_sha256 !== "string" || !sha256.test(value.telemetry_sha256)) {
     throw new Error("Trade-day win-rate telemetry SHA-256 is invalid");
   }
 
   return {
-    schema_version: 1,
-    dataset_id: "binance_usdm_public_trade_day_win_rate_v1",
+    schema_version: schemaVersion,
+    dataset_id: schemaVersion === 2
+      ? "binance_usdm_public_trade_day_win_rate_v2"
+      : "binance_usdm_public_trade_day_win_rate_v1",
     generated_at_utc: generated,
     observed_at_utc: observed,
     coverage_start_utc: "2024-11-13",
-    scope: "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V1",
+    scope: schemaVersion === 2
+      ? "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V2"
+      : "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V1",
     historical_base_through_utc: "2026-09-28",
     live_extension_start_utc: "2026-09-29T00:00:00Z",
+    days,
     resolved_trade_day_count: resolved,
     winning_trade_day_count: winning,
     losing_trade_day_count: losing,

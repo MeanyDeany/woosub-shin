@@ -303,12 +303,64 @@ function tradeDayWinRate(overrides = {}) {
   };
 }
 
+function tradeDayWinRateV2(overrides = {}) {
+  return {
+    ...tradeDayWinRate(),
+    schema_version: 2,
+    dataset_id: "binance_usdm_public_trade_day_win_rate_v2",
+    scope: "BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V2",
+    days: [
+      {
+        date_utc: "2026-09-29",
+        realized_pnl: 10,
+        commission: -1,
+        net_pnl: 9,
+        outcome: "WIN",
+      },
+    ],
+    ...overrides,
+  };
+}
+
 test("accepts live funding-excluded trade-day win-rate telemetry", () => {
   const parsed = parseBtcTradeDayWinRateTelemetry(tradeDayWinRate());
+  assert.equal(parsed.schema_version, 1);
+  assert.deepEqual(parsed.days, []);
   assert.equal(parsed.winning_trade_day_count, 153);
   assert.equal(parsed.losing_trade_day_count, 70);
   assert.equal(parsed.funding_included, false);
   assert.equal(parsed.win_rate_pct, 100 * 153 / 223);
+});
+
+test("accepts V2 resolved live trade-day outcomes", () => {
+  const parsed = parseBtcTradeDayWinRateTelemetry(tradeDayWinRateV2());
+  assert.equal(parsed.schema_version, 2);
+  assert.deepEqual(parsed.days, [{
+    date_utc: "2026-09-29",
+    realized_pnl: 10,
+    commission: -1,
+    net_pnl: 9,
+    outcome: "WIN",
+  }]);
+  assert.equal(parsed.resolved_trade_day_count, 223);
+});
+
+test("rejects inconsistent V2 trade-day outcome details", () => {
+  const base = tradeDayWinRateV2();
+  assert.throws(() => parseBtcTradeDayWinRateTelemetry({
+    ...base,
+    days: [{ ...base.days[0], net_pnl: 8 }],
+  }));
+  assert.throws(() => parseBtcTradeDayWinRateTelemetry({
+    ...base,
+    days: [{ ...base.days[0], outcome: "LOSS" }],
+  }));
+  assert.throws(() => parseBtcTradeDayWinRateTelemetry({
+    ...base,
+    winning_trade_day_count: 154,
+    resolved_trade_day_count: 224,
+    win_rate_pct: 100 * 154 / 224,
+  }));
 });
 
 test("rejects malformed trade-day win-rate counts and derives its feed safely", () => {
@@ -338,6 +390,7 @@ for (const [name, parse, fixture] of [
   ["rolling V1", parseBtcRollingPerformanceTelemetry, rollingV1],
   ["rolling V2", parseBtcRollingPerformanceTelemetry, rolling],
   ["trade-day win rate V1", parseBtcTradeDayWinRateTelemetry, tradeDayWinRate],
+  ["trade-day win rate V2", parseBtcTradeDayWinRateTelemetry, tradeDayWinRateV2],
 ]) {
   for (const ttl of [180, 600]) {
     test(`${name} preserves the validated ${ttl}-second source TTL`, () => {
