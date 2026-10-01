@@ -1,9 +1,9 @@
 import type { CalendarPerformanceDay } from "@/lib/btc-daily-csv-backfill";
-import type { BinanceTradeDayOutcome } from "@/lib/btc-trade-day-win-rate";
+import type { BinanceCashDayOutcome } from "@/lib/btc-trade-day-win-rate";
 
-export type LiveTradeDayFallback = {
+export type LiveCashDayFallback = {
   date_utc: string;
-  status: "LIVE_REALIZED";
+  status: "LIVE_CASH";
   start_observed_at_utc: null;
   end_observed_at_utc: null;
   actual_duration_seconds: null;
@@ -11,18 +11,18 @@ export type LiveTradeDayFallback = {
   return_pct: null;
   flow_adjusted_net_pnl: null;
   flow_adjusted_return_pct: null;
-  source: "LIVE_REALIZED";
+  source: "LIVE_CASH";
   realized_pnl: number;
   commission: number;
-  outcome: "WIN" | "LOSS";
+  funding_fee: number;
 };
 
-export type CalendarDisplayDay = CalendarPerformanceDay | LiveTradeDayFallback;
+export type CalendarDisplayDay = CalendarPerformanceDay | LiveCashDayFallback;
 
-function fallback(outcome: BinanceTradeDayOutcome): LiveTradeDayFallback {
+function fallback(outcome: BinanceCashDayOutcome): LiveCashDayFallback {
   return {
     date_utc: outcome.date_utc,
-    status: "LIVE_REALIZED",
+    status: "LIVE_CASH",
     start_observed_at_utc: null,
     end_observed_at_utc: null,
     actual_duration_seconds: null,
@@ -30,16 +30,16 @@ function fallback(outcome: BinanceTradeDayOutcome): LiveTradeDayFallback {
     return_pct: null,
     flow_adjusted_net_pnl: null,
     flow_adjusted_return_pct: null,
-    source: "LIVE_REALIZED",
+    source: "LIVE_CASH",
     realized_pnl: outcome.realized_pnl,
     commission: outcome.commission,
-    outcome: outcome.outcome,
+    funding_fee: outcome.funding_fee,
   };
 }
 
-export function applyLiveTradeDayFallback(
+export function applyLiveCashDayFallback(
   days: readonly CalendarPerformanceDay[],
-  outcomes: readonly BinanceTradeDayOutcome[],
+  outcomes: readonly BinanceCashDayOutcome[],
 ): CalendarDisplayDay[] {
   const merged = new Map<string, CalendarDisplayDay>(
     days.map(day => [day.date_utc, day]),
