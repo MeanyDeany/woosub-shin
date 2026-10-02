@@ -27,12 +27,18 @@ function loadStaticModule(relativeFilename) {
   new Function("require", "module", "exports", outputText)(localRequire, loadedModule, loadedModule.exports);
   return loadedModule.exports;
 }
-test("route inventory preserves all 18 legacy pages and includes three new portfolio pages", () => {
+test("public route inventory preserves portfolio pages and excludes private admin routes", () => {
   assert.equal(siteRoutes.length, 21);
   for (const route of ["/asra", "/trading", "/research/trader-behavior", "/research/microstructure", "/projects/btc-futures-research/live-position"]) assert.ok(siteRoutes.includes(route));
   assert.ok(!siteRoutes.includes("/astra"));
+  assert.ok(!siteRoutes.includes("/admin/traffic"));
   assert.equal(new Set(siteRoutes).size, siteRoutes.length);
-  assert.deepEqual([...siteRoutes].sort(), pageRoutes().sort());
+  const discoveredPages = pageRoutes();
+  assert.ok(discoveredPages.includes("/admin/traffic"));
+  assert.deepEqual(
+    [...siteRoutes].sort(),
+    discoveredPages.filter(route => !route.startsWith("/admin/")).sort(),
+  );
   assert.ok(siteRoutes.every(route => !/^\/ko(?:\/|$)/.test(route)));
 });
 test("sitemap and metadata include canonical portfolio routes and no language alternates", () => {

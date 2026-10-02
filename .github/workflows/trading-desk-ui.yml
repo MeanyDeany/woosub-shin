@@ -30,7 +30,7 @@ jobs:
       - name: Type check and lint
         run: |
           npx tsc --noEmit
-          npx eslint app/layout.tsx app/page.tsx app/asra/page.tsx app/contact/page.tsx app/resume/page.tsx app/research/page.tsx components/site-shell.tsx components/contact-form.tsx lib/site-metadata.ts components/btc-trading-desk.tsx components/home-live-telemetry.tsx components/portfolio-home.tsx components/portfolio-editorial.tsx components/trading-accounting-guide.tsx lib/portfolio-content.ts lib/trading-journal.ts app/trading/page.tsx app/projects/page.tsx app/papers/page.tsx app/research/trader-behavior/page.tsx app/research/microstructure/page.tsx app/projects/btc-futures-research/live-position/page.tsx
+          npx eslint proxy.ts app/layout.tsx app/page.tsx app/asra/page.tsx app/contact/page.tsx app/resume/page.tsx app/research/page.tsx app/admin/traffic/page.tsx app/admin/api/traffic/route.ts components/site-shell.tsx components/site-analytics.tsx components/contact-form.tsx components/admin-traffic-dashboard.tsx lib/site-metadata.ts lib/admin-traffic-auth.ts lib/vercel-web-analytics.ts components/btc-trading-desk.tsx components/home-live-telemetry.tsx components/portfolio-home.tsx components/portfolio-editorial.tsx components/trading-accounting-guide.tsx lib/portfolio-content.ts lib/trading-journal.ts app/trading/page.tsx app/projects/page.tsx app/papers/page.tsx app/research/trader-behavior/page.tsx app/research/microstructure/page.tsx app/projects/btc-futures-research/live-position/page.tsx
       - run: npm run build
       - name: Install transient browser QA tools
         run: |
@@ -42,7 +42,7 @@ jobs:
           npx agent-browser install --with-deps
       - name: Start production build and inspect with agent-browser
         run: |
-          npm run start >/tmp/desk-server.log 2>&1 &
+          ADMIN_TRAFFIC_PASSWORD_SHA256="$(printf '%s' 'test-admin-password-for-browser-qa' | sha256sum | awk '{print $1}')" npm run start >/tmp/desk-server.log 2>&1 &
           for i in $(seq 1 45); do curl --fail --silent http://localhost:3000 >/dev/null && break; sleep 2; done
           npx agent-browser open http://localhost:3000
           npx agent-browser snapshot -i > /tmp/portfolio-qa/agent-browser-snapshot.txt
@@ -50,6 +50,8 @@ jobs:
           npx agent-browser close
       - name: Existing account interaction and failure-mode checks
         run: node tests/trading-desk.browser.mjs
+      - name: Private traffic admin authentication and dashboard checks
+        run: node tests/admin-traffic.browser.mjs
       - name: Portfolio navigation, themes, mobile layout and artifact checks
         run: node tests/portfolio.browser.mjs
       - name: All-page shared design checks
@@ -60,6 +62,7 @@ jobs:
           name: trading-desk-qa
           path: |
             /tmp/desk-qa/
+            /tmp/admin-traffic-qa/
             /tmp/portfolio-qa/
             /tmp/desk-server.log
       - run: git diff --check

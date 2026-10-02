@@ -1,0 +1,437 @@
+.page {
+  min-height: 100dvh;
+  background:
+    radial-gradient(circle at 8% 0%, color-mix(in srgb, var(--cyan) 10%, transparent), transparent 32rem),
+    var(--background);
+  color: var(--foreground);
+  padding: 32px 28px 56px;
+}
+
+.shell {
+  width: min(1380px, 100%);
+  margin: 0 auto;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 13px;
+  letter-spacing: -0.02em;
+}
+
+.brand span:last-child {
+  color: var(--text-muted);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.logout,
+.rangeButton,
+.loginButton {
+  appearance: none;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--foreground);
+  border-radius: 999px;
+  font: 500 11px/1 var(--font-geist-mono), monospace;
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+.logout:hover,
+.rangeButton:hover,
+.loginButton:hover {
+  border-color: color-mix(in srgb, var(--cyan) 55%, var(--line));
+}
+
+.hero {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 34px 0 24px;
+}
+
+.eyebrow {
+  color: var(--cyan);
+  font: 600 10px/1.2 var(--font-geist-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  margin-bottom: 10px;
+}
+
+.hero h1 {
+  font-size: clamp(34px, 5vw, 64px);
+  line-height: 0.98;
+  letter-spacing: -0.055em;
+  font-weight: 560;
+  margin: 0;
+}
+
+.hero p {
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.6;
+  max-width: 650px;
+  margin: 14px 0 0;
+}
+
+.rangePicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.rangeButton {
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.rangeButtonActive {
+  color: var(--foreground);
+  background: var(--surface-elevated);
+  border-color: color-mix(in srgb, var(--cyan) 48%, var(--line));
+}
+
+.metricGrid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.metric {
+  min-width: 0;
+  padding: 22px 20px 21px 0;
+}
+
+.metric + .metric {
+  padding-left: 20px;
+  border-left: 1px solid var(--line);
+}
+
+.metricLabel {
+  color: var(--text-muted);
+  font: 500 9px/1.3 var(--font-geist-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.metricValue {
+  margin-top: 8px;
+  font: 540 clamp(25px, 3vw, 38px)/1 var(--font-geist-mono), monospace;
+  letter-spacing: -0.06em;
+  overflow-wrap: anywhere;
+}
+
+.metricHint {
+  margin-top: 8px;
+  color: var(--text-muted);
+  font-size: 10px;
+}
+
+.positive {
+  color: #16835f;
+}
+
+.negative {
+  color: #c54e59;
+}
+
+:global(html[data-theme="dark"]) .positive {
+  color: #63c79c;
+}
+
+:global(html[data-theme="dark"]) .negative {
+  color: #e26f76;
+}
+
+.chartPanel {
+  margin-top: 32px;
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+}
+
+.sectionHeading {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: baseline;
+  margin-bottom: 14px;
+}
+
+.sectionHeading h2 {
+  font-size: 15px;
+  font-weight: 560;
+  letter-spacing: -0.025em;
+}
+
+.sectionHeading span {
+  color: var(--text-muted);
+  font: 400 9px/1.3 var(--font-geist-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.chart {
+  width: 100%;
+  height: 250px;
+  display: block;
+  overflow: visible;
+}
+
+.chartGrid {
+  stroke: var(--line);
+  stroke-width: 1;
+}
+
+.chartArea {
+  fill: color-mix(in srgb, var(--cyan) 10%, transparent);
+}
+
+.chartLine {
+  fill: none;
+  stroke: var(--cyan);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.chartDot {
+  fill: var(--background);
+  stroke: var(--cyan);
+  stroke-width: 2;
+  vector-effect: non-scaling-stroke;
+}
+
+.chartFooter {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  color: var(--text-muted);
+  font: 400 9px/1.3 var(--font-geist-mono), monospace;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 34px 48px;
+  margin-top: 42px;
+}
+
+.panel {
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+  min-width: 0;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.table th,
+.table td {
+  border-bottom: 1px solid var(--line);
+  padding: 10px 0;
+}
+
+.table th {
+  color: var(--text-muted);
+  text-align: left;
+  font: 500 9px/1.3 var(--font-geist-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.table th:nth-child(2),
+.table th:nth-child(3),
+.table td:nth-child(2),
+.table td:nth-child(3) {
+  text-align: right;
+}
+
+.table td:first-child {
+  max-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-right: 18px;
+}
+
+.table td:nth-child(2),
+.table td:nth-child(3) {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 10px;
+}
+
+.empty {
+  color: var(--text-muted);
+  font-size: 11px;
+  padding: 20px 0;
+}
+
+.statusRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+  color: var(--text-muted);
+  font: 400 9px/1.5 var(--font-geist-mono), monospace;
+}
+
+.warning {
+  color: #9f6a14;
+}
+
+:global(html[data-theme="dark"]) .warning {
+  color: #d0a457;
+}
+
+.loginWrap {
+  min-height: calc(100dvh - 64px);
+  display: grid;
+  place-items: center;
+}
+
+.loginCard {
+  width: min(430px, 100%);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 30px 0;
+}
+
+.loginCard h1 {
+  margin: 0;
+  font-size: 30px;
+  letter-spacing: -0.04em;
+  font-weight: 560;
+}
+
+.loginCard p {
+  margin: 10px 0 24px;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.loginForm {
+  display: grid;
+  gap: 12px;
+}
+
+.loginForm label {
+  color: var(--text-muted);
+  font: 500 9px/1.2 var(--font-geist-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.loginForm input {
+  width: 100%;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--foreground);
+  padding: 12px 0;
+  outline: none;
+  font-family: var(--font-geist-mono), monospace;
+}
+
+.loginForm input:focus {
+  border-color: var(--cyan);
+}
+
+.loginButton {
+  justify-self: start;
+  margin-top: 6px;
+  border-radius: 0;
+  padding-inline: 0;
+  border-width: 0 0 1px;
+  background: transparent;
+}
+
+.loginError {
+  color: #c54e59;
+  font-size: 11px;
+  min-height: 16px;
+}
+
+.loading {
+  min-height: 240px;
+  display: grid;
+  place-items: center;
+  color: var(--text-muted);
+  font: 500 11px/1.4 var(--font-geist-mono), monospace;
+}
+
+@media (max-width: 1000px) {
+  .metricGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .metric:nth-child(n + 3) {
+    border-top: 1px solid var(--line);
+  }
+
+  .metric:nth-child(odd) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .page {
+    padding: 22px 16px 40px;
+  }
+
+  .hero {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .rangePicker {
+    justify-content: flex-start;
+  }
+
+  .metricGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .metric {
+    padding: 18px 12px 18px 0;
+  }
+
+  .metric + .metric {
+    padding-left: 12px;
+  }
+
+  .metric:nth-child(odd) {
+    padding-left: 0;
+  }
+
+  .metricValue {
+    font-size: 24px;
+  }
+
+  .chart {
+    height: 190px;
+  }
+}
