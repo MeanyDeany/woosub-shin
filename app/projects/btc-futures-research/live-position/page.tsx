@@ -16,7 +16,7 @@ export const metadata = metadataFor(
 );
 
 export default function LiveBtcPositionPage() {
-  return <PageShell><div style={{ minHeight: "100vh", background: "#090a0b" }}>
+  return <PageShell><div className="td-live-page">
     <Link className="td-page-back" href="/projects/btc-futures-research">← BTC research system</Link>
     <TradingAccountingGuide />
     <BtcTradingDesk
