@@ -82,6 +82,13 @@ try {
 
   await page.goto(`${baseUrl}/admin/traffic`);
   await page.getByRole("heading", { name: "Traffic", exact: true }).waitFor();
+  assert.equal(
+    await page.evaluate(() =>
+      localStorage.getItem("meanydeany.analytics.owner-excluded.v1"),
+    ),
+    "1",
+  );
+  await page.getByText("Owner browser: excluded from future analytics", { exact: true }).waitFor();
   await page.getByText("727", { exact: true }).first().waitFor();
   await page.getByText("188", { exact: true }).first().waitFor();
   await page.getByRole("heading", { name: "Top pages" }).waitFor();
