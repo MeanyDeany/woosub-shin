@@ -178,98 +178,124 @@
   scroll-margin-top: 5rem;
 }
 
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content > section) {
-  border-color: rgba(91, 111, 149, 0.14) !important;
-  background-color: rgba(255, 255, 255, 0.2) !important;
+:global(html[data-page="btc-research"][data-theme="light"] #main-content > section) {
+  border-color: var(--folio-line) !important;
+  background-color: var(--folio-bg) !important;
 }
 
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content > section:nth-of-type(even)) {
-  background-color: rgba(255, 255, 255, 0.38) !important;
-}
-
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #overview) {
-  background-image:
-    radial-gradient(circle at 12% 10%, rgba(77, 173, 255, 0.2), transparent 28rem),
-    radial-gradient(circle at 88% 12%, rgba(166, 139, 255, 0.15), transparent 30rem) !important;
-}
-
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content [class*="bg-[#06080C]"]),
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content [class*="bg-[#07090D]"]),
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content [class*="bg-[#080B11]"]),
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content [class*="bg-[#090811]"]),
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content [class*="bg-[#0A0D12]"]),
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content [class*="bg-[#0B0F16]"]),
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content [class*="bg-[#0D0C0B]"]),
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content [class*="bg-[#0E131C]"]) {
-  border-color: rgba(102, 126, 168, 0.18) !important;
-  background-color: rgba(255, 255, 255, 0.72) !important;
+:global(html[data-page="btc-research"][data-theme="light"] #overview) {
   background-image: none !important;
-  box-shadow: 0 22px 70px rgba(54, 84, 132, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(22px);
 }
 
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content div[class*="rounded-lg"]),
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content section[class*="rounded-lg"]),
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content article[class*="rounded-lg"]) {
-  border-radius: 1.45rem !important;
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="bg-[#06080C]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="bg-[#07090D]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="bg-[#080811]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="bg-[#080B11]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="bg-[#080C13]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="bg-[#090811]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="bg-[#0A0D12]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="bg-[#0B0F16]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="bg-[#0D0C0B]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="bg-[#0E131C]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="bg-[#12090C]"]) {
+  border-color: var(--folio-line) !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
 }
 
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content div[class*="rounded-md"]) {
-  border-radius: 1rem !important;
+:global(html[data-page="btc-research"][data-theme="light"] #main-content div[class*="rounded-lg"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content section[class*="rounded-lg"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content article[class*="rounded-lg"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content div[class*="rounded-md"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content section[class*="rounded-md"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content article[class*="rounded-md"]) {
+  border-radius: 0 !important;
 }
 
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content button[class*="bg-[#0B0F16]"]),
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content button[class*="bg-[#080B11]"]) {
-  border-color: rgba(102, 126, 168, 0.2) !important;
-  background-color: rgba(255, 255, 255, 0.72) !important;
-  color: #526079 !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
+:global(html[data-page="btc-research"][data-theme="light"] #main-content button[class*="bg-[#0B0F16]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content button[class*="bg-[#080B11]"]) {
+  border-color: var(--folio-line) !important;
+  background-color: transparent !important;
+  color: var(--folio-muted) !important;
+  box-shadow: none !important;
 }
 
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content button[aria-pressed="true"]) {
-  border-color: rgba(37, 128, 216, 0.5) !important;
-  background-color: rgba(37, 128, 216, 0.1) !important;
-  color: #173f72 !important;
+:global(html[data-page="btc-research"][data-theme="light"] #main-content button[aria-pressed="true"]) {
+  border-color: var(--folio-ink) !important;
+  background-color: var(--folio-wash) !important;
+  color: var(--folio-ink) !important;
 }
 
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content svg rect[fill="#06080C"]),
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content svg rect[fill="#07090D"]),
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content svg rect[fill="#080B11"]),
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content svg rect[fill="#0B0F16"]) {
-  fill: rgba(255, 255, 255, 0.7) !important;
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="border-[#7E8B9D]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="border-[#7187AB]"]) {
+  border-color: var(--folio-line) !important;
 }
 
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content svg text[fill="#7E8B9D"]),
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content svg text[fill="#B6C0CF"]),
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content svg text[fill="#DCE3EC"]) {
-  fill: #5f6c82 !important;
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="text-[#F4F7FB]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="text-[#F5F8FC]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="text-[#DCE3EC]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content .text-white),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class~="text-white"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="text-[#111A2E]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="text-[#24324A]"]) {
+  color: var(--folio-ink) !important;
 }
 
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content svg text[fill="#F4F7FB"]),
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content svg text[fill="#F5F5F7"]),
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content svg text[fill="white"]) {
-  fill: #111a2e !important;
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="text-[#475466]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="text-[#5F6C82]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="text-[#657189]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="text-[#68768C]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="text-[#6F7D90]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="text-[#76849A]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="text-[#77839A]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="text-[#7E8B9D]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="text-[#8996A8]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="text-[#93A0B4]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="text-[#9BA8BA]"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content [class*="text-[#B6C0CF]"]) {
+  color: var(--folio-muted) !important;
 }
 
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content svg line[stroke="#7E8B9D"]),
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content svg path[stroke="#7E8B9D"]) {
-  stroke: #6e7f99 !important;
+:global(html[data-page="btc-research"][data-theme="light"] #main-content svg rect[fill="#06080C"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content svg rect[fill="#07090D"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content svg rect[fill="#080B11"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content svg rect[fill="#0B0F16"]) {
+  fill: var(--folio-wash) !important;
 }
 
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content pre),
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content code) {
-  border-color: rgba(102, 126, 168, 0.18) !important;
-  background: rgba(245, 249, 255, 0.88) !important;
-  color: #23344f !important;
+:global(html[data-page="btc-research"][data-theme="light"] #main-content svg text[fill="#7E8B9D"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content svg text[fill="#B6C0CF"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content svg text[fill="#DCE3EC"]) {
+  fill: var(--folio-muted) !important;
 }
 
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content table),
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content thead),
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content tbody),
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content tr),
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content th),
-:global(html[data-page="btc-research"]:not([data-theme="dark"]) #main-content td) {
-  border-color: rgba(102, 126, 168, 0.16) !important;
+:global(html[data-page="btc-research"][data-theme="light"] #main-content svg text[fill="#F4F7FB"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content svg text[fill="#F5F5F7"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content svg text[fill="white"]) {
+  fill: var(--folio-ink) !important;
+}
+
+:global(html[data-page="btc-research"][data-theme="light"] #main-content svg line[stroke="#7E8B9D"]),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content svg path[stroke="#7E8B9D"]) {
+  stroke: var(--folio-line) !important;
+}
+
+:global(html[data-page="btc-research"][data-theme="light"] #main-content pre),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content code) {
+  border-color: var(--folio-line) !important;
+  background: var(--folio-wash) !important;
+  color: var(--folio-ink) !important;
+}
+
+:global(html[data-page="btc-research"][data-theme="light"] #main-content table),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content thead),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content tbody),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content tr),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content th),
+:global(html[data-page="btc-research"][data-theme="light"] #main-content td) {
+  border-color: var(--folio-line) !important;
 }
 
 @media (max-width: 720px) {

@@ -37,6 +37,7 @@
 .folio-connections strong span{color:var(--folio-accent)}
 .folio-connections a>span{display:block;font-size:12px;color:var(--folio-muted);line-height:1.65;max-width:25ch}
 .folio-account{padding-top:44px;background:#090c10;border-top:1px solid #30363b;border-bottom:1px solid #30363b;--folio-ink:#f0eee7;--folio-muted:#b0b3af;--folio-accent:#d5b793;--folio-line:#353a3c}
+:root[data-theme="light"] .folio-account{background:var(--folio-bg);border-color:var(--folio-line);--folio-ink:#202725;--folio-muted:#59625e;--folio-accent:#785637;--folio-line:#c9cec5}
 .folio-account .folio-section-heading{padding-bottom:16px}
 .folio-account .folio-section-heading h2{font-size:38px}
 .folio-section{padding-top:82px;padding-bottom:82px}
