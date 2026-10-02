@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import styles from "@/app/admin/traffic/admin-traffic.module.css";
+import { markOwnerBrowserExcluded } from "@/lib/owner-analytics";
 
 type Period = "today" | "7d" | "30d" | "90d";
 type Totals = { pageviews: number; visitors: number };
@@ -164,6 +165,12 @@ export function AdminTrafficDashboard() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    try {
+      markOwnerBrowserExcluded(window.localStorage);
+    } catch {
+      // Storage can be unavailable in hardened/private browser modes.
+    }
+
     const controller = new AbortController();
     fetch(`/admin/api/traffic?period=${period}`, {
       cache: "no-store",
@@ -281,6 +288,7 @@ export function AdminTrafficDashboard() {
             <div className={styles.statusRow}>
               <span>Updated {new Date(data.generatedAt).toLocaleString("en-GB", { timeZone: "UTC" })} UTC</span>
               <span>Source: Vercel Web Analytics aggregate API</span>
+              <span>Owner browser: excluded from future analytics</span>
               {data.warnings.map(warning => <span className={styles.warning} key={warning}>{warning}</span>)}
             </div>
           </>
