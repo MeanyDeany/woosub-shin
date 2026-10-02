@@ -1,7 +1,7 @@
 export const TRAFFIC_ADMIN_USERNAME = "meanydeany";
 
 const DEFAULT_PASSWORD_SHA256 =
-  "64a52b5c32b0e46cecfe0511a86404bdc6057617ef8dad92ea015e9a7fa84c0d";
+  "e7e1b1d6b6b63935019f49a6ef4d07a851c9c3ca52143bafe419db0ff9ada190";
 
 function expectedPasswordHash() {
   const configured = process.env.ADMIN_TRAFFIC_PASSWORD_SHA256?.trim().toLowerCase();
