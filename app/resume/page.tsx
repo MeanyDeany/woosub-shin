@@ -14,7 +14,7 @@ export const metadata = metadataFor(
 const selectedResearch = [
   researchEvidence.independentRiskForecast,
   researchEvidence.futuresVolatilityThesis,
-  researchEvidence.dailyEma,
+  researchEvidence.r15Candidate,
 ] as const;
 
 export default function ResumePage() {

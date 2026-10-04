@@ -35,34 +35,34 @@ const progression = [
   },
   {
     index: "03",
-    title: "Frozen final-system search",
+    title: "R15 signal and payoff research",
     detail:
-      "Candidate definitions, costs, partitions, benchmarks, and gates are frozen before accepted-source execution so losers cannot be rescued after results appear.",
-    status: "Completed V1",
+      "A raw-return reference connects multi-timeframe predictors to a 15-minute target under explicit timing and hypothetical zero-friction accounting.",
+    status: "Retained",
     accent: "emerald" as const,
   },
   {
     index: "04",
-    title: "Deep validation and strategy freeze",
+    title: "Volatility-aware and ensemble model development",
     detail:
-      "The sole V1 survivor is stress-tested for costs, parameter neighborhood continuity, calendar concentration, attribution, and uncertainty before a retained manifest is issued.",
-    status: "Completed V1",
+      "Target normalization and scale-aligned signal blending produced positive gross results. Fixed paired comparisons kept model selection separate from headline returns.",
+    status: "Completed",
     accent: "emerald" as const,
   },
   {
     index: "05",
-    title: "Forward research runtime",
+    title: "Bound source-role runtime",
     detail:
-      "Historical strategy state is checkpointed, bridged through public completed bars, and activated behind an explicit prospective boundary with append-only research observations.",
-    status: "Active",
+      "R15 is bound behind a WSS-primary, mandatory asynchronous REST-audit contract with fail-closed quarantine and deterministic replay.",
+    status: "Offline validated",
     accent: "cyan" as const,
   },
   {
     index: "06",
-    title: "Prospective evidence accumulation",
+    title: "Prospective validation",
     detail:
-      "New state observations now arrive after the freeze. The useful unit is not raw row count alone, but clean continuity plus genuinely new trend episodes and state transitions.",
-    status: "Accumulating",
+      "The 3 Oct 2026 checkpoint records readiness for separately governed observation, with zero forward-valid origins at that checkpoint and no live-trading approval.",
+    status: "Not yet passed",
     accent: "blue" as const,
   },
   {
@@ -76,10 +76,10 @@ const progression = [
 ] as const;
 
 const proofPoints = [
-  { label: "Retained systems", value: "1 BTC research system" },
-  { label: "Retrospective FULL return", value: "+165.92%" },
-  { label: "FULL Sharpe / MaxDD", value: "0.769 / -29.37%" },
-  { label: "Forward boundary", value: "22 Aug 2026" },
+  { label: "Retained candidate", value: "R15_RAW_1X" },
+  { label: "FULL zero-friction gross return", value: "+1,463.45%" },
+  { label: "RECENT gross return / Sharpe", value: "+108.63% / 1.719" },
+  { label: "Source-role checkpoint", value: "3 Oct 2026 / offline verified" },
 ] as const;
 
 const principles = [
@@ -124,7 +124,7 @@ export default function MultiAssetResearchLabPage() {
         accent="cyan"
         eyebrow="Multi-Asset Research Lab"
         title="Research infrastructure and its historical lineage."
-        intro="The Lab documents data contracts, deterministic replay, frozen comparisons, validation, and the retained BTC system’s historical-to-forward handoff. ASRA is the current research program; these records preserve its infrastructure lineage without asserting that every historical component is already integrated."
+        intro="The Lab documents data contracts, deterministic replay, frozen comparisons, R15 gross-candidate validation, and the source-role runtime now waiting for prospective evidence. ASRA is the current research program; historical findings and execution authority remain separate."
         actions={
           <>
             <CtaLink href="/asra" kind="primary">
@@ -136,8 +136,8 @@ export default function MultiAssetResearchLabPage() {
           </>
         }
         metadata={[
-          { label: "Historical scope", value: "Retained system · forward-observation handoff" },
-          { label: "Concrete implementation", value: "BTCUSDT 5m / Daily EMA 50/200" },
+          { label: "Historical scope", value: "R15 exposed historical development" },
+          { label: "Concrete implementation", value: "BTCUSDT / R15 15-minute payoff research" },
           { label: "Multi-asset scope", value: "Asset-neutral architecture; BTC implementation" },
           { label: "Execution authority", value: "None" },
         ]}
@@ -155,25 +155,25 @@ export default function MultiAssetResearchLabPage() {
       />
 
       <EditorialSection
-        eyebrow="Retained historical system"
-        title="Historical evidence keeps its limitations"
-        intro="The retained BTC system documents the research lifecycle. Its three completed trades, concentrated growth, and post-selection limitations remain material. Independent risk forecast confirmation is the strongest current scientific result and is assessed separately."
+        eyebrow="R15 model development"
+        title="From signal design to comparative validation"
+        intro="R15 brings raw-return prediction, volatility-aware targets and ensemble design into a shared research framework. Results are hypothetical and before all trading frictions; they are distinct from the personal account record."
         tone="elevated"
       >
         <EvidenceBand accent="emerald" items={proofPoints} />
         <div className="mt-8 glass-panel rounded-[2rem] p-6 sm:p-8">
           <div className="flex flex-wrap items-center gap-3">
-            <StatusLabel accent="blue">RETAINED HISTORICAL SYSTEM</StatusLabel>
-            <ResearchTag>Daily EMA 50/200</ResearchTag>
-            <ResearchTag>Long / flat</ResearchTag>
-            <ResearchTag>Funding-adjusted</ResearchTag>
-            <ResearchTag>Forward observation active</ResearchTag>
+            <StatusLabel accent="blue">Historical model research</StatusLabel>
+            <ResearchTag>R15_RAW_1X</ResearchTag>
+            <ResearchTag>Long / short / pass</ResearchTag>
+            <ResearchTag>Zero-friction gross</ResearchTag>
+            <ResearchTag>Source-role runtime</ResearchTag>
           </div>
           <p className="mt-6 max-w-4xl text-lg leading-8 text-[#5F6C82]">
-            The retained BTC system returned +165.92% over the FULL retrospective validation period with a 0.769 Sharpe and -29.37% maximum drawdown under the frozen 5bp Funding-adjusted accounting convention. The result survived 10bp cost stress and all thirteen deep-validation gates, but it remains post-selection historical evidence with only three completed primary trades.
+            R15_RAW_1X returned +1,463.45% over the FULL zero-friction replay with a 1.955 daily Sharpe and -46.03% minute-open maximum drawdown. RECENT returned +108.63% with a 1.719 Sharpe and -27.55% MDD. Commission, spread, slippage, and funding are zero in these cited payoff results, so this remains exposed historical development rather than execution-confirmed profitability.
           </p>
           <div className="mt-7">
-            <CtaLink href="/projects/btc-final-system" kind="text">See the result, diagnostics, and forward handoff</CtaLink>
+            <CtaLink href="/projects/btc-final-system" kind="text">See the R15 result, diagnostics, and runtime boundary</CtaLink>
             <div className="mt-4"><CtaLink href="/research/risk-forecasting#independent-assessment">Inspect independent risk forecast confirmation</CtaLink></div>
           </div>
         </div>

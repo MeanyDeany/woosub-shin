@@ -21,7 +21,7 @@ const tags = [
   "Systematic trading research",
   "Regime conditioning",
   "Momentum",
-  "Dual EMA",
+  "EMA trend",
   "RSI2",
   "Cost stress",
   "Bootstrap",
@@ -68,12 +68,12 @@ export default function BtcRegimeChallengerPage() {
       <PageHero
         accent="cyan"
         eyebrow="BTC systematic research · Post-selection historical challenger"
-        title="C4: a sparse regime router that beat the retained baseline on historical risk-adjusted performance"
+        title="C4: a sparse regime router that beat its legacy baseline on historical risk-adjusted performance"
         intro="C4 combines three mutually exclusive long/flat sleeves: Momentum90 in TREND_UP, EMA 50/180 in TREND_DOWN, and an EMA200-filtered RSI2 reversal state in NORMAL_VOL__TRANSITION. Every other regime is flat."
         actions={
           <>
             <CtaLink href="/projects/btc-final-system" kind="primary">
-              View retained BTC baseline
+              View current R15 candidate
             </CtaLink>
             <CtaLink href="/research">Read research methodology</CtaLink>
           </>
@@ -161,7 +161,7 @@ export default function BtcRegimeChallengerPage() {
           </table>
         </div>
         <p className="mt-5 text-sm leading-7 text-[#657189]">
-          At 20bp per transition side, C4 still exceeded the retained EMA 50/200 baseline on Sharpe in the historical comparison, but no longer dominated it on return, drawdown, and Calmar simultaneously.
+          At 20bp per transition side, C4 still exceeded its legacy retained baseline on Sharpe in the historical comparison, but no longer dominated it on return, drawdown, and Calmar simultaneously. This legacy comparison predates R15 and is not a head-to-head test against it.
         </p>
       </EditorialSection>
 

@@ -1,270 +1,147 @@
 import { metadataFor } from "@/lib/site-metadata";
-import {
-  CtaLink,
-  EditorialSection,
-  EvidenceBand,
-  PageHero,
-  ResearchTag,
-  StatusLabel,
-} from "@/components/editorial";
+import { CtaLink, EditorialSection, EvidenceBand, PageHero, ResearchTag } from "@/components/editorial";
 import { PageShell } from "@/components/site-shell";
 
 export const metadata = metadataFor(
   "/projects/btc-final-system",
-  "Daily EMA Long/Flat — Retained Historical System",
-  "A retained BTC Daily EMA 50/200 historical research study with three completed trades, concentration, cost sensitivity, post-selection limitations, and a separate forward-observation boundary.",
+  "R15 | Signal Design, Model Development and Validation",
+  "A 15-minute BTC research framework by meanydeany: multi-timeframe prediction, volatility-normalized targets, dual-head ensembles, reproducible historical evaluation and source-validated runtime engineering.",
 );
 
-const primaryMetrics = [
-  { label: "FULL return", value: "+165.92%" },
-  { label: "CAGR", value: "+23.83%" },
-  { label: "Sharpe", value: "0.769" },
-  { label: "Max drawdown", value: "-29.37%" },
+const recentMetrics = [
+  { label: "RECENT gross return", value: "+108.63%" },
+  { label: "Daily Sharpe", value: "1.719" },
+  { label: "Minute-open MaxDD", value: "-27.55%" },
+  { label: "Gross bp / trade", value: "0.482" },
+] as const;
+const fullMetrics = [
+  { label: "FULL gross return", value: "+1,463.45%" },
+  { label: "Daily Sharpe", value: "1.955" },
+  { label: "Minute-open MaxDD", value: "-46.03%" },
+  { label: "Simulated trades", value: "47,543" },
 ] as const;
 
-const references = [
+const contributions = [
+  { title: "Signal design", text: "I connected 36 predictors across four timeframes to a 15-minute return target, with monthly training and explicit information-availability rules." },
+  { title: "Model development", text: "I tested a volatility-normalized target and a scale-aligned dual-head ensemble, then compared growth, drawdown and incremental value on the same historical support." },
+  { title: "Comparative evaluation", text: "I used paired block comparisons and calendar subperiods to distinguish a stronger historical point estimate from evidence that warrants replacing the reference model." },
+  { title: "Research engineering", text: "I carried the work into deterministic replay, independently reconciled accounting and a runtime with separate market-data admission and audit responsibilities." },
+] as const;
+
+const arms = [
   {
-    name: "Dual EMA 50/200 · retained",
-    returnValue: "+165.92%",
-    sharpe: "0.769",
-    drawdown: "-29.37%",
-    note: "5bp funding-adjusted research accounting",
+    name: "R15 RAW 1X", role: "Reference model", title: "A fixed point of comparison.",
+    fullReturn: "+1,463.45%", recentReturn: "+108.63%", fullMdd: "-46.03%", recentMdd: "-27.55%",
+    note: "Predicts the raw 15-minute return. Keeping this benchmark fixed makes it possible to measure what each subsequent modeling choice adds.",
   },
   {
-    name: "BTC price-only buy & hold",
-    returnValue: "+38.33%",
-    sharpe: "0.394",
-    drawdown: "-66.94%",
-    note: "Exact-period reference",
+    name: "R15 VOLNORM 1X", role: "Volatility-aware modeling", title: "Scale the target to the market.",
+    fullReturn: "+6,763.15%", recentReturn: "+157.86%", fullMdd: "-21.48%", recentMdd: "-19.31%",
+    note: "Normalizes the prediction target by causal volatility. In the reported replay, it combined higher gross returns with lower minute-open drawdowns than RAW in both periods.",
   },
   {
-    name: "BTC perpetual long · funding-adjusted",
-    returnValue: "+2.27%",
-    sharpe: "0.265",
-    drawdown: "-68.12%",
-    note: "Exact-period reference",
+    name: "R15 BLEND 1X", role: "Dual-head ensemble", title: "Combine signals on a common scale.",
+    fullReturn: "+6,001.97%", recentReturn: "+203.15%", fullMdd: "-24.82%", recentMdd: "-22.27%",
+    note: "Aligns raw and volatility-normalized scores before equal weighting. It recorded the highest RECENT gross return of these three models, with greater drawdown than VOLNORM.",
   },
 ] as const;
 
-const validationFunnel = [
-  ["01", "Frozen search", "Three low-turnover long/flat candidates were defined before the accepted-source search ran."],
-  ["02", "Single survivor", "Daily Dual EMA 50/200 was the only candidate to pass all eight frozen search gates."],
-  ["03", "Deep validation", "The retained candidate passed all thirteen frozen retention gates, including 10bp cost stress and neighborhood continuity."],
-  ["04", "Strategy freeze", "EMA periods, warmup, daily aggregation, state mapping, and next-5m-open timing were frozen into a retained manifest."],
-  ["05", "Forward handoff", "Historical state was bridged into the public-data runtime without publishing bridge bars as forward evidence."],
-  ["06", "Prospective observation", "The first retained forward research observation was recorded from the 08:30 UTC bar on 22 Aug 2026."],
-] as const;
-
-const limitations = [
-  "Only three completed primary trades exist in the retrospective sample.",
-  "One long trend accounted for 97.4% of positive completed-trade log growth.",
-  "Paired block-bootstrap Sharpe-difference intervals cross zero in both LATER and FULL partitions.",
-  "The historical sample participated in research and candidate selection; this is retrospective post-selection evidence, not untouched OOS confirmation.",
-  "Fixed transition friction does not include additional slippage or market impact.",
-  "Forward observations are research-state records only. They are not orders, positions, entries, or a live performance track record.",
-] as const;
-
-const strategyRules = [
-  "BTCUSDT · Binance USD-M · completed 5-minute factual bars",
-  "Exact UTC-day aggregation with 365 completed UTC-day warmup",
-  "EMA50 and EMA200, each SMA-seeded before recursive updates",
-  "EMA50 > EMA200 → LONG_RESEARCH_STATE; otherwise FLAT_RESEARCH_STATE",
-  "Daily decision becomes effective only at the next exact 5-minute open",
-  "No short, leverage, position sizing, stop, take-profit, broker, or order surface",
+const protocol = [
+  "Market: BTCUSDT Binance USD-M linear perpetual.",
+  "Inputs: 36 predictors from completed 1m, 5m, 15m and 1h data.",
+  "Training: monthly Ridge estimation using the preceding 365 decision-days and training-only preprocessing.",
+  "Timing: decision at D+3s, hypothetical entry at D+60s and exit at D+16m.",
+  "Exposure: at most one pending or active position, fixed entry quantity, no overlapping stacking or same-decision reversal.",
+  "Evaluation: calendar-marked returns, temporal subperiods and paired 7-day and 30-day block comparisons.",
 ] as const;
 
 export default function BtcFinalSystemPage() {
-  return (
-    <PageShell>
-      <PageHero
-        accent="cyan"
-        eyebrow="Retained historical system · BTC Final Research System V1"
-        title="Daily EMA long/flat: a retained historical system."
-        intro="Daily Dual EMA 50/200 documents frozen search, historical validation, and a separate forward-observation boundary. Only three completed historical trades underpin the result; concentration, post-selection, and cost sensitivity limit the claim. This is not the strongest current scientific result."
-        actions={
-          <>
-            <CtaLink href="#result" kind="primary">See the historical result</CtaLink>
-            <CtaLink href="#forward">See the forward boundary</CtaLink>
-            <CtaLink href="/research/risk-forecasting#independent-assessment">Inspect the strongest confirmed finding</CtaLink>
-          </>
-        }
-        metadata={[
-          { label: "Role", value: "RETAINED HISTORICAL SYSTEM" },
-          { label: "Forward state", value: "Prospective observation active" },
-          { label: "Trading authority", value: "None" },
-          { label: "Strategy", value: "Daily Dual EMA 50/200 · long/flat" },
-        ]}
-      />
+  return <PageShell><div className="research-page">
+    <PageHero
+      eyebrow="meanydeany / Systematic strategy research"
+      title="R15: from signal to system."
+      intro="I built a 15-minute BTC research framework connecting multi-timeframe prediction, volatility-aware modeling and ensemble design. The work combines reproducible historical evaluation with deterministic replay and market-data validation."
+      actions={<><CtaLink href="#challengers" kind="primary">Explore the model development</CtaLink><CtaLink href="#recent">View historical results</CtaLink><CtaLink href="#runtime">Inside the engineering</CtaLink></>}
+      metadata={[
+        { label: "Market", value: "BTCUSDT perpetual" },
+        { label: "Prediction horizon", value: "15 minutes" },
+        { label: "Model inputs", value: "36 predictors / 4 timeframes" },
+        { label: "Evidence", value: "Historical research / before costs" },
+      ]}
+    />
 
-      <EditorialSection
-        id="result"
-        eyebrow="Retrospective result"
-        title="Historical result and its comparison context"
-        intro="FULL covers 1 Jan 2022 through 30 Jul 2026 under 5bp per transition side and exact authenticated funding. These are research metrics, not a live track record."
-        tone="elevated"
-      >
-        <EvidenceBand accent="emerald" items={primaryMetrics} />
+    <EditorialSection id="contribution" eyebrow="My contribution" title="Prediction, evaluation and engineering in one research workflow.">
+      <div className="research-grid">
+        {contributions.map(item => <article key={item.title} className="research-card"><h3>{item.title}</h3><p className="research-prose mt-4">{item.text}</p></article>)}
+      </div>
+    </EditorialSection>
 
-        <div className="mt-8 grid gap-5 lg:grid-cols-3">
-          {references.map((item, index) => (
-            <article key={item.name} className="glass-panel rounded-[2rem] p-6 sm:p-8">
-              <div className="flex items-center justify-between gap-4">
-                <span className="font-mono text-xs text-[#087E9B]">0{index + 1}</span>
-                {index === 0 ? <StatusLabel accent="emerald">Retained</StatusLabel> : <StatusLabel accent="blue">Reference</StatusLabel>}
-              </div>
-              <h3 className="mt-7 text-2xl font-semibold tracking-[-0.03em] text-[#111A2E]">{item.name}</h3>
-              <dl className="mt-7 divide-y divide-[#7187AB]/14 border-y border-[#7187AB]/14">
-                {[
-                  ["Return", item.returnValue],
-                  ["Sharpe", item.sharpe],
-                  ["MaxDD", item.drawdown],
-                ].map(([label, value]) => (
-                  <div key={label} className="flex items-center justify-between gap-4 py-3">
-                    <dt className="text-xs uppercase tracking-[0.1em] text-[#77839A]">{label}</dt>
-                    <dd className="font-mono text-sm font-semibold text-[#111A2E]">{value}</dd>
-                  </div>
-                ))}
-              </dl>
-              <p className="mt-5 text-sm leading-6 text-[#657189]">{item.note}</p>
-            </article>
-          ))}
-        </div>
+    <EditorialSection id="challengers" eyebrow="Model development" title="One benchmark. Two extensions."
+      intro="I explored two ways to improve the growth and drawdown profile: scale the target by volatility, then combine the raw and normalized forecasts. Each model answers a different design question.">
+      <p className="research-note mb-8">Hypothetical gross results, with commission, spread, slippage and funding set to zero. FULL: 1 Jan 2022 to 29 Jul 2026. RECENT: 1 Jan 2025 to 29 Jul 2026. Both periods use UTC dates, include 29 July and are historical development samples, not live account returns.</p>
+      <div className="research-grid">
+        {arms.map(arm => <article key={arm.name} className="research-card flex flex-col" data-r15-model={arm.name}>
+          <p className="research-kicker">{arm.role}</p>
+          <h3>{arm.name}</h3>
+          <p className="site-strong mt-4">{arm.title}</p>
+          <p className="research-prose mt-4">{arm.note}</p>
+          <dl className="metadata-list mt-auto pt-6">
+            {[["FULL gross return", arm.fullReturn], ["RECENT gross return", arm.recentReturn], ["FULL minute-open MDD", arm.fullMdd], ["RECENT minute-open MDD", arm.recentMdd]].map(([label, value]) => <div key={label} className="metadata-row flex flex-wrap justify-between gap-4 border-t py-3"><dt>{label}</dt><dd className="font-mono">{value}</dd></div>)}
+          </dl>
+        </article>)}
+        <article className="research-card" data-r15-decision>
+        <p className="research-kicker">Selection decision</p>
+        <h3>Promising extensions.<br />Disciplined model selection.</h3>
+        <p className="research-prose mt-4">Both extensions produced positive gross results and useful growth-risk tradeoffs on the tested history. I kept RAW as the reference because the paired comparisons did not establish sufficiently consistent incremental improvement to replace it. That separates a promising design from an established upgrade.</p>
+        <details className="mt-5">
+          <summary className="research-note cursor-pointer">Read the comparison evidence</summary>
+          <p className="research-prose mt-4">VOLNORM passed its own gross-return support requirement. Its paired arithmetic-return uplift over RAW included zero in the FULL 30-day interval and both RECENT intervals. BLEND passed its own gross-growth requirement, but all four paired log-growth intervals versus VOLNORM included zero; its FULL point difference was negative and its minute-open drawdown was greater in both periods. The two studies used different primary estimands, so their tests are not interchangeable.</p>
+          <p className="research-note mt-4">The intervals are pointwise and conditional on already-exposed historical paths. They do not correct for all prior research searches or prove future performance. The recorded decisions remain unchanged: RAW is the incumbent; neither extension has been promoted.</p>
+        </details>
+        </article>
+      </div>
+    </EditorialSection>
 
-        <div className="mt-8 grid gap-5 md:grid-cols-3">
-          {[
-            ["10bp stress", "+165.12%", "Sharpe 0.767 · MaxDD -29.37%"],
-            ["Ex-2024 return", "+35.56%", "Strongest full calendar year neutralized"],
-            ["EMA neighborhood", "8 / 8 positive", "6 / 8 also beat B&H Sharpe in LATER and FULL"],
-          ].map(([label, value, detail]) => (
-            <article key={label} className="glass-panel rounded-[1.75rem] p-6">
-              <p className="text-[0.67rem] font-semibold uppercase tracking-[0.14em] text-[#77839A]">{label}</p>
-              <p className="mt-4 text-3xl font-semibold tracking-[-0.04em] text-[#111A2E]">{value}</p>
-              <p className="mt-3 text-sm leading-6 text-[#657189]">{detail}</p>
-            </article>
-          ))}
-        </div>
-      </EditorialSection>
+    <EditorialSection id="recent" eyebrow="Reference model / Recent sample" title="The benchmark in numbers."
+      intro="R15_RAW_1X, 1 Jan 2025 through 29 Jul 2026: 575 UTC calendar days. Hypothetical, zero-friction performance before commission, spread, slippage and funding.">
+      <EvidenceBand items={recentMetrics} />
+      <div className="mt-8 flex flex-wrap gap-3"><ResearchTag>16,675 simulated trades</ResearchTag><ResearchTag>51.66% trade win rate</ResearchTag><ResearchTag>30.21% time in position</ResearchTag></div>
+      <p className="research-prose mt-7">The average gross result is 0.482 basis points per trade. This connects the prediction research to the next economic question: how much of that small per-trade margin can survive execution costs and fill uncertainty?</p>
+    </EditorialSection>
 
-      <EditorialSection
-        accent="violet"
-        eyebrow="Validation funnel"
-        title="The result had to survive a sequence, not a screenshot"
-        intro="Search, validation, freeze, and runtime handoff were separated so later layers could not rewrite earlier evidence after seeing the outcome."
-        tone="deep"
-      >
-        <ol className="grid gap-4 lg:grid-cols-2">
-          {validationFunnel.map(([index, title, detail]) => (
-            <li key={index} className="glass-panel rounded-[1.75rem] p-6 sm:p-7">
-              <div className="flex gap-5">
-                <span className="font-mono text-xs text-[#7251C8]">{index}</span>
-                <div>
-                  <h3 className="text-xl font-semibold tracking-[-0.025em] text-[#111A2E]">{title}</h3>
-                  <p className="mt-3 text-sm leading-6 text-[#657189]">{detail}</p>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </EditorialSection>
+    <EditorialSection id="full" eyebrow="Reference model / Full sample" title="A longer view of growth and risk."
+      intro="R15_RAW_1X, 1 Jan 2022 through 29 Jul 2026: 1,671 UTC calendar days. The same hypothetical, zero-friction accounting applies.">
+      <EvidenceBand items={fullMetrics} />
+      <p className="research-prose mt-7">The FULL replay averaged 0.632 gross basis points per trade. The 2025 result was weaker than 2023, 2024 and partial 2026, which is why the research examines subperiods alongside the aggregate. Drawdown is measured at minute opens; intraminute loss and liquidation paths are not measured here.</p>
+    </EditorialSection>
 
-      <EditorialSection
-        id="forward"
-        accent="cyan"
-        eyebrow="Prospective forward boundary"
-        title="The historical system crossed into a new clock on 22 Aug 2026"
-        intro="The handoff preserved causal strategy state while preventing historical bridge bars from being relabeled as prospective evidence."
-        tone="elevated"
-      >
-        <EvidenceBand
-          accent="cyan"
-          items={[
-            { label: "Activated", value: "22 Aug 2026 · 08:29:51 UTC" },
-            { label: "Bridge", value: "6,626 completed 5m bars" },
-            { label: "First forward bar", value: "08:30:00 UTC" },
-            { label: "First effective state", value: "FLAT · from 08:35 UTC" },
-          ]}
-        />
+    <EditorialSection id="method" eyebrow="Research method" title="Every result has a timing and accounting contract.">
+      <div className="research-grid">
+        <article className="research-card"><h3>Time-respecting implementation</h3><ul className="research-prose mt-5 space-y-4">{protocol.map(item => <li key={item}>{item}</li>)}</ul></article>
+        <article className="research-card"><h3>Reproducibility and evidence scope</h3>
+          <p className="research-prose mt-4">Saved monthly models, deterministic signal replay and independently reconstructed equity paths make the reported results checkable. The BLEND experiment reused both saved model heads and evaluated a fixed combination rule rather than refitting to obtain a better result.</p>
+          <p className="research-prose mt-4">R15 began as a post-outcome Ridge-only diagnostic after the C55 payoff primary did not pass. Later development used the same exposed historical sample. Freezing each subsequent comparison improves discipline; it does not turn that history into an untouched holdout.</p>
+          <p className="research-note mt-4">Exact minute-open fills are simulation assumptions, not verified maker fills. These studies do not report net executable returns or the performance of the personal account.</p>
+        </article>
+      </div>
+    </EditorialSection>
 
-        <div className="mt-8 glass-panel rounded-[2rem] p-6 sm:p-8">
-          <div className="flex flex-wrap items-center gap-3">
-            <StatusLabel accent="emerald">Research only</StatusLabel>
-            <ResearchTag>Append-only forward ledger</ResearchTag>
-            <ResearchTag>Checkpoint-backed state</ResearchTag>
-            <ResearchTag>No retroactive forward rows</ResearchTag>
-          </div>
-          <div className="mt-7 grid gap-5 lg:grid-cols-4">
-            {[
-              ["Historical seed", "30 Jul · 08:10", "Immutable retained state"],
-              ["Bootstrap context", "22 Aug · 08:20", "Public completed bars only"],
-              ["Handoff context", "22 Aug · 08:25", "Not forward evidence"],
-              ["Forward", "22 Aug · 08:30", "Effective from 08:35"],
-            ].map(([label, time, detail]) => (
-              <div key={label} className="rounded-[1.35rem] border border-[#7187AB]/16 bg-white/42 p-5">
-                <p className="text-[0.65rem] font-semibold uppercase tracking-[0.13em] text-[#087E9B]">{label}</p>
-                <p className="mt-3 font-mono text-sm font-semibold text-[#111A2E]">{time}</p>
-                <p className="mt-2 text-sm leading-6 text-[#657189]">{detail}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </EditorialSection>
+    <EditorialSection id="runtime" eyebrow="Research engineering" title="From historical replay to verifiable market observations."
+      intro="A dedicated source-role runtime separates primary WebSocket observations from mandatory asynchronous REST audits. It checks data identity, timing, consistency and recovery without making the audit a synchronous admission bottleneck.">
+      <EvidenceBand items={[
+        { label: "Offline checks passed", value: "427 / 427" },
+        { label: "Mutation tests passed", value: "20 / 20" },
+        { label: "Primary source", value: "WebSocket" },
+        { label: "Audit contract", value: "Asynchronous REST" },
+      ]} />
+      <p className="research-prose mt-7">The 3 Oct 2026 checkpoint comprises 99 inherited checks, 61 policy scenarios and 267 runtime/adversarial checks, plus 20 mutation categories. Model identity and numerical logic stayed fixed while source-handling behavior was validated.</p>
+      <p className="research-note mt-4">This is a dated engineering checkpoint, not a live status feed. At that checkpoint, forward-valid origins were 0, forward validation had not passed and LIVE_READY was false. It authorized no trading. Prospective evidence and realistic execution evaluation remain separate steps.</p>
+    </EditorialSection>
 
-      <EditorialSection
-        accent="blue"
-        eyebrow="Frozen strategy"
-        title="Simple rule, heavy evidence plumbing"
-        intro="The retained strategy itself is intentionally interpretable. Most of the engineering exists to make the input clock, state history, accounting, and handoff auditable."
-      >
-        <div className="grid gap-5 lg:grid-cols-[0.9fr_1.1fr]">
-          <article className="glass-panel rounded-[2rem] p-6 sm:p-8">
-            <h3 className="text-2xl font-semibold tracking-[-0.03em] text-[#111A2E]">Scientific definition</h3>
-            <ul className="mt-6 divide-y divide-[#7187AB]/14 border-y border-[#7187AB]/14">
-              {strategyRules.map((item) => (
-                <li key={item} className="py-4 text-sm leading-6 text-[#5F6C82]">{item}</li>
-              ))}
-            </ul>
-          </article>
-          <article className="glass-panel rounded-[2rem] p-6 sm:p-8">
-            <h3 className="text-2xl font-semibold tracking-[-0.03em] text-[#111A2E]">What remains uncertain</h3>
-            <ul className="mt-6 space-y-4">
-              {limitations.map((item, index) => (
-                <li key={item} className="flex gap-4 text-sm leading-6 text-[#5F6C82]">
-                  <span className="font-mono text-[0.65rem] text-[#A85D08]">{String(index + 1).padStart(2, "0")}</span>
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </article>
-        </div>
-      </EditorialSection>
-
-      <EditorialSection
-        accent="amber"
-        eyebrow="Interpretation"
-        title="A retained research system is still not a trading approval"
-        intro="The claim for this retained historical system is narrow: retrospective evidence with three completed trades, concentrated growth, and post-selection limitations. Prospective research-state observations have a separate explicit forward boundary."
-        tone="warm"
-      >
-        <div className="grid gap-5 md:grid-cols-2">
-          <article className="glass-panel rounded-[1.75rem] p-6 sm:p-8">
-            <StatusLabel accent="emerald">Supported</StatusLabel>
-            <p className="mt-6 text-2xl font-semibold leading-tight tracking-[-0.03em] text-[#111A2E]">
-              Historical evidence, exact accounting, explicit robustness tests, frozen state, and prospective observation are all operational.
-            </p>
-          </article>
-          <article className="glass-panel rounded-[1.75rem] p-6 sm:p-8">
-            <StatusLabel accent="amber">Not authorized</StatusLabel>
-            <p className="mt-6 text-2xl font-semibold leading-tight tracking-[-0.03em] text-[#111A2E]">
-              No broker, order routing, entry permission, short permission, leverage, sizing, paper trading, or live trading exists in this system.
-            </p>
-          </article>
-        </div>
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <CtaLink href="/projects/btc-futures-research">Open the underlying BTC evidence system</CtaLink>
-          <CtaLink href="/projects/multi-asset-research-lab/claims">Read the claims ledger</CtaLink>
-          <CtaLink href="/build-log">Read the build log</CtaLink>
-        </div>
-      </EditorialSection>
-    </PageShell>
-  );
+    <EditorialSection id="sources" eyebrow="Evidence and next step" title="A research portfolio with a traceable result."
+      intro="This work connects model design to the practical questions of costs, fills and market-data reliability. The next question is economic translation, not another headline backtest.">
+      <p className="research-note">Reviewed 4 Oct 2026 from the completed R15 Alpha V2 and Dual-Head Ensemble V1 reports, with the Source Role Runtime V1 checkpoint dated 3 Oct 2026. A machine-readable summary preserves the reported metrics, assumptions and original decisions. It is a publication snapshot, not a live trading feed.</p>
+      <div className="research-actions mt-8"><CtaLink href="/research/r15-summary.json">View the evidence summary</CtaLink><CtaLink href="/research/microstructure">Execution research</CtaLink><CtaLink href="/trading">Personal account record</CtaLink><CtaLink href="/contact">Discuss the research</CtaLink></div>
+    </EditorialSection>
+  </div></PageShell>;
 }

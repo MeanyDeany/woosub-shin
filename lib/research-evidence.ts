@@ -12,7 +12,7 @@ export type WorkState = "completed" | "in_progress" | "proposed" | "blocked" | "
 export type ClaimOutcome = "confirmed" | "not_confirmed" | "supported_within_scope";
 export type ResearchRecordId =
   | "independent-risk-forecast" | "policy-utility" | "risk-baseline-challenge"
-  | "nonlinear-sensor-recovery" | "native-horizon-selection" | "daily-ema"
+  | "nonlinear-sensor-recovery" | "native-horizon-selection" | "r15-gross-candidate"
   | "futures-volatility-thesis" | "bitcoin-gsadf" | "c4-challenger"
   | "native-scheduler" | "turnover-decomposition" | "candidate-generator-v3"
   | "small-signal-sensitivity";
@@ -88,7 +88,7 @@ export type ResearchMetric = {
   readonly assessmentId: string;
   readonly value: string;
   readonly label: string;
-  readonly unit: "percent" | "segments" | "ratio" | "trials" | "percentage_points" | "count" | "mse";
+  readonly unit: "percent" | "segments" | "ratio" | "trials" | "percentage_points" | "count" | "mse" | "bp";
   readonly interpretation: string;
   readonly priority: "primary" | "detail";
 };
@@ -96,7 +96,7 @@ export type ResearchMetric = {
 type ResearchRecordBase = {
   readonly id: ResearchRecordId;
   readonly version: string;
-  readonly reviewedAt: "2026-09-09";
+  readonly reviewedAt: string;
   readonly title: string;
   readonly shortTitle: string;
   readonly question: string;
@@ -461,30 +461,37 @@ export const researchEvidence = {
     followUpRecord: "native-scheduler",
     detailHref: "/research/nonlinear-measurement#native-horizon-selection",
   },
-  dailyEma: {
-    id: "daily-ema", version: "V1", reviewedAt,
-    title: "Daily EMA Long/Flat", shortTitle: "Daily EMA 50/200",
-    question: "What survives the full research lifecycle for a low-turnover BTC system?",
-    evidenceClass: "RETROSPECTIVE", workState: "completed", role: "RETAINED HISTORICAL SYSTEM",
-    classification: null, claimOutcome: "supported_within_scope", outcomeLabel: "RETAINED HISTORICAL SYSTEM",
-    finding: "Daily Dual EMA 50/200 is retained as a historical BTC long/flat research system spanning backtesting, cost stress and a separate forward-observation protocol.",
+  r15Candidate: {
+    id: "r15-gross-candidate", version: "R15_RAW_1X", reviewedAt: "2026-10-04",
+    title: "R15: From Signal to System", shortTitle: "R15 BTC research",
+    question: "How can multi-timeframe prediction, volatility-aware targets and ensemble design be evaluated in one reproducible BTC framework?",
+    evidenceClass: "DEVELOPMENT", workState: "completed", role: "Signal design / Model development / Validation",
+    classification: "EXPOSED_HISTORICAL_DEVELOPMENT", claimOutcome: "supported_within_scope", outcomeLabel: "HISTORICAL GROSS EVIDENCE",
+    finding: "I built and compared a raw-return benchmark, a volatility-normalized model and a dual-head ensemble. Both extensions produced positive gross results; RAW remains the fixed reference while incremental value is assessed against predefined statistical criteria.",
     assessment: {
-      id: "daily-ema-historical-full", domain: "Historical BTCUSDT long/flat research", horizon: "Daily decision; next 5-minute open",
-      comparison: "Exact-period BTC price-only buy-and-hold and funding-adjusted perpetual long references",
-      model: { id: null, label: "Daily Dual EMA 50/200" }, baseline: null,
-      window: { label: "FULL: 1 Jan 2022 through 30 Jul 2026; endpoint semantics follow the original study.", timezone: "UTC" },
-      protocol: "Frozen backtest at 5bp per transition side with exact funding, cost stress, concentration analysis and separately identified forward observation.",
+      id: "r15-gross-historical", domain: "Historical BTCUSDT gross payoff research", horizon: "15-minute payoff",
+      comparison: "R15_RAW_1X reference, VOLNORM target normalization and BLEND signal integration",
+      model: { id: "R15_RAW_1X", label: "R15 RAW 1X" }, baseline: null,
+      window: { label: "FULL: 2022-01-01 through 2026-07-29; RECENT: 2025-01-01 through 2026-07-29, inclusive.", timezone: "UTC" },
+      protocol: "Monthly Ridge fits, fixed causal timing and hypothetical minute-open replay. Commission, spread, slippage and funding are zero. Successor comparisons use paired 7-day and 30-day calendar blocks.",
     },
-    metrics: [], method: "Frozen low-turnover candidate search, deep validation, cost stress and concentration review.",
-    keyCaveat: "3 completed historical trades; growth is concentrated, and selection used the historical sample. This is not the strongest current scientific result.",
+    metrics: [
+      { id: "r15-recent-gross-return", assessmentId: "r15-gross-historical", value: "+108.63%", label: "RECENT hypothetical gross return", unit: "percent", priority: "primary", interpretation: "1 Jan 2025 through 29 Jul 2026; before all trading frictions, not personal account PnL." },
+      { id: "r15-recent-sharpe", assessmentId: "r15-gross-historical", value: "1.719", label: "RECENT daily Sharpe", unit: "ratio", priority: "primary", interpretation: "Daily arithmetic-return Sharpe using sqrt(365), on exposed historical development paths." },
+      { id: "r15-recent-mdd", assessmentId: "r15-gross-historical", value: "-27.55%", label: "RECENT minute-open MaxDD", unit: "percent", priority: "primary", interpretation: "Intraminute drawdown and liquidation paths are not measured." },
+      { id: "r15-recent-gross-bp", assessmentId: "r15-gross-historical", value: "0.482", label: "RECENT gross bp per trade", unit: "bp", priority: "detail", interpretation: "Unit-notional return before commission, spread, slippage and funding." },
+    ],
+    method: "36 predictors across four timeframes, monthly Ridge training, volatility-normalized targets, scale-aligned ensembles and independently reconciled replay.",
+    keyCaveat: "Hypothetical, zero-friction historical development results. Paired comparisons did not establish a sufficiently consistent upgrade; neither extension has been promoted. No net executable-return or live-account claim.",
     limitations: [
-      "One long trend accounted for 97.4% of positive completed-trade log growth.",
-      "The evidence is retrospective and post-selection, not untouched out-of-sample confirmation.",
-      "Cost sensitivity remains; fixed friction excludes additional slippage and market impact.",
-      "Forward observation is separate research-state evidence, not a live performance track record or trading permission.",
+      "The same historical paths were exposed during research and candidate selection; they are not an untouched holdout.",
+      "The original C55 payoff primary did not pass; R15 began as a post-outcome Ridge-only diagnostic.",
+      "VOLNORM paired arithmetic-return uplift and BLEND paired log-growth uplift did not meet their respective replacement criteria.",
+      "Minute-open fills and drawdowns do not establish maker fillability or intraminute loss paths.",
+      "The dated 3 Oct 2026 runtime checkpoint had zero forward-valid origins and LIVE_READY false; it is not a live status feed.",
     ], observations: [], authority: researchAuthority,
-    source: { availability: "public", label: "Retained historical-system study", href: "/projects/btc-final-system", note: "Public portfolio study; underlying research source and code are not publicly linked." },
-    code: unavailableCode, lineage: [], nextQuestion: "What does continued observation show under the frozen protocol, without changing the historical rules?",
+    source: { availability: "public", label: "R15 evidence summary", href: "/research/r15-summary.json", note: "Reviewed 4 Oct 2026 from completed local research reports. Static published metrics and source-file fingerprints; underlying raw research files and models are not published." },
+    code: unavailableCode, lineage: [], nextQuestion: "How much historical gross margin can survive realistic execution costs, fill uncertainty and separately governed prospective evaluation?",
     detailHref: "/projects/btc-final-system",
   },
   futuresVolatilityThesis: {
@@ -539,7 +546,7 @@ export const researchEvidence = {
     finding: "The sparse C4 regime router exceeded the retained baseline on historical risk-adjusted performance under the original comparison, with selection and cost-stress limitations.",
     assessment: {
       id: "c4-historical-challenger", domain: "Historical BTCUSDT long/flat research", horizon: "Daily sleeves",
-      comparison: "C4 regime router vs retained Daily EMA 50/200", model: { id: "C4", label: "C4 regime router" }, baseline: { id: null, label: "Daily EMA 50/200" },
+      comparison: "C4 regime router vs the legacy retained historical baseline", model: { id: "C4", label: "C4 regime router" }, baseline: { id: null, label: "Legacy retained historical baseline" },
       window: { label: "2022-01-01 to 2026-07-30; terminal period partial, as specified in the existing study.", timezone: null },
       protocol: "Post-selection historical stress audit; exact comparator and cost cases remain in the existing project study.",
     },
@@ -548,7 +555,7 @@ export const researchEvidence = {
     limitations: ["At severe transaction-cost stress, concentration and the comparison deteriorate. Retrospective bootstrap frequencies are not forecast probabilities."], observations: [],
     authority: researchAuthority,
     source: { availability: "public", label: "C4 historical challenger study", href: "/projects/btc-regime-challenger", note: "The existing public project page preserves the original comparison and limitations." },
-    code: unavailableCode, lineage: ["daily-ema"], nextQuestion: "What would a non-overlapping observation period show with the historical definitions fixed? No new active study is claimed.",
+    code: unavailableCode, lineage: [], nextQuestion: "What would a non-overlapping observation period show with the historical definitions fixed? No new active study is claimed.",
     detailHref: "/projects/btc-regime-challenger",
   },
   nativeScheduler: {
@@ -657,37 +664,38 @@ export type HistoricalPerformanceRow = {
   readonly note: string;
 };
 
-/** Frozen historical comparison. It remains separate from independent forecast evidence. */
+/** Historical R15 gross comparison. It remains separate from independent forecast evidence and personal account outcomes. */
 export const historicalResearchPerformance = {
   id: "historical-research-performance",
-  title: "Historical Research Performance",
-  evidenceClass: "RETROSPECTIVE" as const,
-  assessment: researchEvidence.dailyEma.assessment,
-  source: researchEvidence.dailyEma.source,
-  detailHref: researchEvidence.dailyEma.detailHref,
-  context: "FULL · 1 Jan 2022 through 30 Jul 2026 · retained system: 5bp per transition side with exact funding",
+  title: "R15 Model Development / Historical Gross Results",
+  evidenceClass: "DEVELOPMENT" as const,
+  assessment: researchEvidence.r15Candidate.assessment,
+  source: researchEvidence.r15Candidate.source,
+  detailHref: researchEvidence.r15Candidate.detailHref,
+  context: "Hypothetical zero-friction BTCUSDT replay · FULL 2022-01-01 to 2026-07-29 · RECENT 2025-01-01 to 2026-07-29",
   rows: [
     {
-      id: "daily-ema-50-200", name: "Daily EMA 50/200", role: "retained", roleLabel: "Retained",
-      returnValue: "+165.92%", sharpe: "0.769", maxDrawdown: "-29.37%",
-      note: "Frozen long/flat historical research system",
+      id: "r15-raw-1x", name: "R15 RAW 1X", role: "retained", roleLabel: "Retained",
+      returnValue: "+1,463.45%", sharpe: "1.955", maxDrawdown: "-46.03%",
+      note: "Frozen incumbent · FULL gross result",
     },
     {
-      id: "btc-price-only-buy-hold", name: "BTC price-only buy & hold", role: "reference", roleLabel: "Reference",
-      returnValue: "+38.33%", sharpe: "0.394", maxDrawdown: "-66.94%",
-      note: "Exact-period price-only comparison",
+      id: "r15-volnorm-1x", name: "R15 VOLNORM 1X", role: "reference", roleLabel: "Diagnostic",
+      returnValue: "+6,763.15%", sharpe: "3.170", maxDrawdown: "-21.48%",
+      note: "Volatility-aware target; higher descriptive gross return and lower drawdown, not promoted",
     },
     {
-      id: "btc-perpetual-long", name: "BTC perpetual long", role: "reference", roleLabel: "Reference",
-      returnValue: "+2.27%", sharpe: "0.265", maxDrawdown: "-68.12%",
-      note: "Funding-adjusted exact-period comparison",
+      id: "r15-blend-1x", name: "R15 BLEND 1X", role: "reference", roleLabel: "Diagnostic",
+      returnValue: "+6,001.97%", sharpe: "2.998", maxDrawdown: "-24.82%",
+      note: "Scale-aligned dual-head ensemble; promising gross result, not promoted",
     },
   ] as const satisfies readonly HistoricalPerformanceRow[],
   caveats: [
-    "RETROSPECTIVE, post-selection research; not untouched OOS confirmation.",
-    "3 completed historical trades underpin the retained system.",
-    "One trade contributed 97.4% of positive completed-trade log growth.",
-    "Historical research results, not live performance.",
+    "EXPOSED HISTORICAL DEVELOPMENT, not untouched OOS confirmation.",
+    "Commission, spread, slippage and funding are zero in the cited payoff studies.",
+    "Hypothetical exact minute-open fills do not establish maker fillability or realized execution PnL.",
+    "VOLNORM and BLEND were not promoted because the frozen paired incremental evidence did not support an upgrade.",
+    "At the 3 Oct 2026 runtime checkpoint, forward-valid origins were zero and LIVE_READY was false.",
   ],
 } as const;
 
@@ -696,7 +704,7 @@ export const completedResearch: readonly CompletedResearchRecord[] = [
   researchEvidence.independentRiskForecast, researchEvidence.policyUtility,
   researchEvidence.riskBaselineChallenge, researchEvidence.nonlinearSensorRecovery,
   researchEvidence.nativeHorizonSelection, researchEvidence.nativeScheduler,
-  researchEvidence.candidateGeneratorV3, researchEvidence.dailyEma,
+  researchEvidence.candidateGeneratorV3, researchEvidence.r15Candidate,
   researchEvidence.futuresVolatilityThesis, researchEvidence.bitcoinGsadf,
   researchEvidence.c4Challenger,
 ];

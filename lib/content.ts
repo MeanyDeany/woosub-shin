@@ -46,13 +46,13 @@ export const schedulerControls = [
 ] as const;
 
 export const operationalSnapshot = [
-  { label: "Historical retained BTC research systems", value: "1" },
-  { label: "Frozen final-system candidate", value: "Daily EMA 50/200 long/flat" },
-  { label: "Retrospective FULL return", value: "+165.92%" },
-  { label: "Retrospective FULL Sharpe", value: "0.769" },
-  { label: "Retrospective FULL MaxDD", value: "-29.37%" },
-  { label: "Forward research activation", value: "22 Aug 2026" },
-  { label: "Recorded forward handoff", value: "Append-only research observation" },
+  { label: "R15 reference model", value: "1" },
+  { label: "Retained gross candidate", value: "R15_RAW_1X" },
+  { label: "FULL zero-friction gross return", value: "+1,463.45%" },
+  { label: "FULL daily Sharpe", value: "1.955" },
+  { label: "FULL minute-open MaxDD", value: "-46.03%" },
+  { label: "Forward-valid origins / 3 Oct checkpoint", value: "0" },
+  { label: "Source-role runtime", value: "3 Oct checkpoint / offline runtime verified" },
   { label: "Execution integration", value: "NOT INCLUDED" },
 ] as const;
 
