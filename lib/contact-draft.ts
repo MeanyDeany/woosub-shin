@@ -9,7 +9,10 @@ export type ContactDraftFields = {
 
 /** Build an email draft, never send it or persist its contents. */
 export function buildContactDraft(fields: ContactDraftFields = {}) {
-  const singleLine = (value = "") => value.replace(/[\u0000-\u001f\u007f]+/g, " ").trim();
+  const singleLine = (value = "") => Array.from(value, (character) => {
+    const code = character.charCodeAt(0);
+    return code < 32 || code === 127 ? " " : character;
+  }).join("").trim();
   const name = singleLine(fields.name);
   const subject = name ? `[meanydeany.com] Message from ${name}` : "[meanydeany.com] Contact";
   const body = [
