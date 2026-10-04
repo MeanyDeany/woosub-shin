@@ -1,0 +1,168 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-10-04",
+  "kind": "STATIC_RESEARCH_PUBLICATION_SNAPSHOT",
+  "instrument": "BTCUSDT USD-M linear perpetual",
+  "evidence": "EXPOSED_HISTORICAL_DEVELOPMENT",
+  "incumbent": "R15_RAW_1X",
+  "performance_basis": "Hypothetical minute-open replay; not executed maker returns or personal account PnL",
+  "frictions_bp": {
+    "commission": 0,
+    "spread": 0,
+    "slippage": 0,
+    "funding": 0
+  },
+  "scope": {
+    "FULL": {
+      "start": "2022-01-01",
+      "end_inclusive": "2026-07-29",
+      "timezone": "UTC",
+      "calendar_days": 1671
+    },
+    "RECENT": {
+      "start": "2025-01-01",
+      "end_inclusive": "2026-07-29",
+      "timezone": "UTC",
+      "calendar_days": 575
+    }
+  },
+  "metrics": [
+    {
+      "arm": "R15_RAW_1X",
+      "period": "FULL",
+      "return_pct": 1463.4513012437806,
+      "daily_sharpe": 1.9552942675345324,
+      "minute_open_mdd_pct": -46.03438845554304,
+      "gross_bp_per_trade": 0.631723618686117,
+      "trades": 47543,
+      "win_rate_pct": 51.47760974275919,
+      "held_time_fraction": 0.296373179732695,
+      "start_utc": "2022-01-01T00:00:00+00:00",
+      "end_exclusive_utc": "2026-07-30T00:00:00+00:00",
+      "calendar_days": 1671
+    },
+    {
+      "arm": "R15_RAW_1X",
+      "period": "RECENT",
+      "return_pct": 108.62949761950134,
+      "daily_sharpe": 1.7187524258129419,
+      "minute_open_mdd_pct": -27.554207316306766,
+      "gross_bp_per_trade": 0.48234663255388815,
+      "trades": 16675,
+      "win_rate_pct": 51.65817091454274,
+      "held_time_fraction": 0.3020833333333333,
+      "start_utc": "2025-01-01T00:00:00+00:00",
+      "end_exclusive_utc": "2026-07-30T00:00:00+00:00",
+      "calendar_days": 575
+    },
+    {
+      "arm": "R15_VOLNORM_1X",
+      "period": "FULL",
+      "return_pct": 6763.14793253706,
+      "daily_sharpe": 3.169559603877551,
+      "minute_open_mdd_pct": -21.479957334904178,
+      "gross_bp_per_trade": 0.9154163882942303,
+      "trades": 48540,
+      "win_rate_pct": 52.859497321796454,
+      "held_time_fraction": 0.30258827049670856,
+      "start_utc": "2022-01-01T00:00:00+00:00",
+      "end_exclusive_utc": "2026-07-30T00:00:00+00:00",
+      "calendar_days": 1671
+    },
+    {
+      "arm": "R15_VOLNORM_1X",
+      "period": "RECENT",
+      "return_pct": 157.86068545560076,
+      "daily_sharpe": 2.2085480782410327,
+      "minute_open_mdd_pct": -19.312871100177333,
+      "gross_bp_per_trade": 0.6082920828243547,
+      "trades": 16498,
+      "win_rate_pct": 52.25481876591102,
+      "held_time_fraction": 0.2988768115942029,
+      "start_utc": "2025-01-01T00:00:00+00:00",
+      "end_exclusive_utc": "2026-07-30T00:00:00+00:00",
+      "calendar_days": 575
+    },
+    {
+      "arm": "R15_BLEND_1X",
+      "period": "FULL",
+      "return_pct": 6001.9697337743655,
+      "daily_sharpe": 2.9975121397038342,
+      "minute_open_mdd_pct": -24.81655248780331,
+      "gross_bp_per_trade": 0.8984471166588582,
+      "trades": 48468,
+      "win_rate_pct": 52.127176693901134,
+      "held_time_fraction": 0.30213943746259725,
+      "start_utc": "2022-01-01T00:00:00+00:00",
+      "end_exclusive_utc": "2026-07-30T00:00:00+00:00",
+      "calendar_days": 1671
+    },
+    {
+      "arm": "R15_BLEND_1X",
+      "period": "RECENT",
+      "return_pct": 203.1476372918331,
+      "daily_sharpe": 2.5189064937939416,
+      "minute_open_mdd_pct": -22.26929605162259,
+      "gross_bp_per_trade": 0.7019752451950421,
+      "trades": 16766,
+      "win_rate_pct": 52.02791363473697,
+      "held_time_fraction": 0.303731884057971,
+      "start_utc": "2025-01-01T00:00:00+00:00",
+      "end_exclusive_utc": "2026-07-30T00:00:00+00:00",
+      "calendar_days": 575
+    }
+  ],
+  "selection": {
+    "volnorm": {
+      "verdict": "NO_SUPPORTED_RETURN_UPGRADE_RETAIN_R15",
+      "completed_at_utc": "2026-10-01T14:55:57.579391+00:00",
+      "own_gross_support": true,
+      "paired_increment_support": false,
+      "promoted": false
+    },
+    "blend": {
+      "verdict": "POSITIVE_GROSS_CANDIDATE_NO_SUPPORTED_UPGRADE",
+      "completed_at_utc": "2026-10-01T16:54:54.460308+00:00",
+      "own_gross_support": true,
+      "paired_growth_support": false,
+      "drawdown_nonworsening": false,
+      "promoted": false
+    }
+  },
+  "runtime_checkpoint": {
+    "as_of_utc": "2026-10-03T08:39:01.534244+00:00",
+    "verdict": "SOURCE_ROLE_RUNTIME_V1_BOUND_READY_FOR_PROSPECTIVE_VALIDATION",
+    "architecture": "WSS_PRIMARY_REQUIRED_ASYNC_REST_AUDIT",
+    "offline_checks_passed": 427,
+    "mutation_tests_passed": 20,
+    "forward_valid_origins": 0,
+    "forward_validation_pass": false,
+    "LIVE_READY": false,
+    "is_live_status": false
+  },
+  "limitations": [
+    "Historical paths were exposed during research and candidate selection.",
+    "The original C55 payoff primary did not pass; R15 was retained as a post-outcome Ridge-only diagnostic.",
+    "Pointwise block intervals do not correct all historical searches or include retraining uncertainty.",
+    "Minute-open drawdown omits intraminute paths and is not liquidation analysis.",
+    "Zero commission does not establish zero execution friction.",
+    "No R15 personal account performance or live-trading authorization is claimed."
+  ],
+  "source_identities": [
+    {
+      "study": "R15 Alpha V2",
+      "artifact": "RESULTS.json",
+      "sha256": "dff01ffe8e2236e911e1aa37741fb48778a61b84ac248ac9c1a366cf5049b261"
+    },
+    {
+      "study": "R15 Dual-Head Ensemble V1",
+      "artifact": "RESULTS.json",
+      "sha256": "bab86967629c5946972a738e7312474e1cde3cacf73f4af800533c861ea79b19"
+    },
+    {
+      "study": "Source Role Runtime V1",
+      "artifact": "FINAL_RESULT.json",
+      "sha256": "3cdb7aae8d9ff00e373468ba6de77ef8fba007f1cd2f505e6df503d9a15b82ff"
+    }
+  ]
+}

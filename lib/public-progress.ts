@@ -3,32 +3,46 @@ export type ClaimTone = "amber" | "cyan" | "emerald" | "violet";
 
 export const buildLog = [
   {
-    date: "22 Aug 2026",
-    phase: "Final-system validation",
-    title: "One BTC research system survived frozen search and deep validation.",
+    date: "3 Oct 2026",
+    phase: "R15 source-role runtime",
+    title: "R15 gained a source-validated runtime with independent audit controls.",
     summary:
-      "Three low-turnover long/flat candidates were evaluated under one deterministic replay and funding-adjusted PnL engine. Daily Dual EMA 50/200 was the only search survivor and then passed all thirteen frozen deep-validation gates.",
+      "The 3 Oct checkpoint documents a separate R15 runtime with WebSocket-primary admission, mandatory asynchronous REST audits, deterministic replay and independent review.",
     proof: [
-      "FULL 5bp return +165.92%, Sharpe 0.769, MaxDD -29.37%",
-      "10bp stress return +165.12% with Sharpe 0.767",
-      "8/8 neighboring EMA pairs positive in LATER and FULL; 6/8 beat B&H Sharpe in both",
+      "427 / 427 offline checks passed across inherited, policy, and runtime/adversarial suites",
+      "20 / 20 actual-bound mutation categories failed preflight as required",
+      "Forward-valid origins: 0; forward validation: false; LIVE_READY: false",
     ],
     boundary:
-      "This is retrospective post-selection research evidence. Only three completed primary trades exist, one trend dominates positive trade growth, and paired bootstrap Sharpe-difference intervals cross zero.",
+      "Offline runtime verification is not prospective market evidence, fill validation, deployment permission, or live-trading approval.",
   },
   {
-    date: "22 Aug 2026",
-    phase: "Prospective forward handoff",
-    title: "The retained BTC system crossed an explicit historical-to-forward research boundary.",
+    date: "1 Oct 2026",
+    phase: "R15 gross-return validation",
+    title: "Volatility-aware target design extended the R15 model comparison.",
     summary:
-      "The exact retained EMA 50/200 strategy state was restored from an immutable historical checkpoint, bridged through public completed BTCUSDT bars, and activated into an append-only forward research runtime without relabeling bootstrap context as prospective evidence.",
+      "The research compared raw and volatility-normalized targets on shared historical support. VOLNORM recorded higher gross returns and lower minute-open drawdowns; RAW was retained because the paired tests did not establish a sufficiently consistent incremental improvement.",
     proof: [
-      "6,626 completed 5m bars bridged as bootstrap context",
-      "Activation at 08:29:51 UTC; first forward decision bar fixed at 08:30 UTC",
-      "First checkpoint-backed retained observation recorded after the 08:30 bar and effective from 08:35 UTC",
+      "R15_RAW_1X FULL: +1,463.45%, daily Sharpe 1.955, minute-open MDD -46.03%",
+      "R15_RAW_1X RECENT: +108.63%, daily Sharpe 1.719, minute-open MDD -27.55%",
+      "Gross bp/trade: 0.632 FULL and 0.482 RECENT before commission, spread, slippage, and funding",
     ],
     boundary:
-      "Forward observation is research evidence only. One observation is not performance validation, and the runtime has no broker, order, leverage, sizing, or execution authority.",
+      "Evidence is EXPOSED_HISTORICAL_DEVELOPMENT. The cited payoff studies are zero-friction and do not establish executed maker profitability or future returns.",
+  },
+  {
+    date: "1 Oct 2026",
+    phase: "R15 successor challenge",
+    title: "A scale-aligned ensemble tested how two forecast heads work together.",
+    summary:
+      "BLEND combined raw and volatility-normalized scores after aligning their scales. It produced positive gross growth and the highest RECENT return among the three 1X arms. Paired uncertainty and greater drawdown versus VOLNORM kept it a research variant rather than a replacement.",
+    proof: [
+      "BLEND FULL gross return +6,001.97%; RECENT +203.15%",
+      "All paired BLEND-minus-VOLNORM 7-day and 30-day intervals included zero",
+      "Observed MDD was worse than VOLNORM in both FULL and RECENT",
+    ],
+    boundary:
+      "The experiment adds evidence about ensemble design while preserving the comparison standard. RAW remains the reference; the published zero-friction results are not executed account performance.",
   },
   {
     date: "23 Jul 2026",
@@ -175,31 +189,31 @@ export const claimLedger: readonly {
   tone: ClaimTone;
 }[] = [
   {
-    claim: "A frozen BTC research system produced positive retrospective historical results under funding-adjusted accounting and cost stress.",
+    claim: "R15 connects short-horizon signal design to reproducible historical model evaluation.",
     evidence:
-      "BTC Daily Dual EMA 50/200 returned +165.92% over the FULL validation period with 0.769 Sharpe and -29.37% MaxDD under 5bp funding-adjusted accounting; 10bp stress returned +165.12% with 0.767 Sharpe.",
+      "On exposed historical zero-friction replay, R15_RAW_1X returned +1,463.45% FULL with 1.955 daily Sharpe and -46.03% minute-open MaxDD; RECENT returned +108.63% with 1.719 Sharpe and -27.55% MaxDD.",
     limit:
-      "The sample is retrospective and post-selection, only three completed primary trades exist, one trend dominates positive trade growth, and paired bootstrap Sharpe-difference intervals cross zero. This is not a live track record or future-profitability claim.",
+      "Commission, spread, slippage, and funding are zero in the cited studies. Gross bp/trade is 0.632 FULL and 0.482 RECENT, so execution friction and fillability remain central unresolved questions.",
     status: "Demonstrated",
     tone: "emerald",
   },
   {
-    claim: "The retained BTC research strategy crossed into an append-only prospective forward observation runtime on 22 Aug 2026.",
+    claim: "VOLNORM and BLEND are established replacements for the R15 reference.",
     evidence:
-      "An explicit 22 Aug 2026 activation restored the frozen historical state, bridged 6,626 public completed 5m bars as non-forward context, and published the first retained checkpoint-backed observation from the 08:30 UTC bar, effective from 08:35 UTC.",
+      "The extensions produced positive gross results with distinct growth-risk profiles. Their paired comparisons did not establish consistent incremental superiority, so neither extension was promoted; BLEND also had greater drawdown than VOLNORM.",
     limit:
-      "Forward research-state observation is not a trade, order, entry permission, execution signal, or performance validation. The runtime has no trading authority.",
-    status: "Demonstrated",
-    tone: "emerald",
-  },
-  {
-    claim: "The historical BTC result proves future profitability.",
-    evidence:
-      "The retained system has attractive retrospective metrics and robustness checks, but uncertainty remains material and the independent trend sample is sparse.",
-    limit:
-      "Future profitability is explicitly not claimed. New evidence must arrive prospectively after the frozen historical-to-forward boundary.",
+      "Diagnostic own-return support is not the same as supported incremental superiority. R15_RAW_1X remains the frozen incumbent.",
     status: "Not claimed",
     tone: "violet",
+  },
+  {
+    claim: "The dated runtime checkpoint establishes prospective profitability or live readiness.",
+    evidence:
+      "The bound source-role runtime passed 427 offline checks and 20 mutation categories under the WSS-primary / asynchronous REST-audit contract.",
+    limit:
+      "At the 3 Oct 2026 checkpoint, forward-valid origins were 0, forward validation was false and LIVE_READY was false. That engineering result did not grant deployment or trading authority and is not a live status feed.",
+    status: "Not approved",
+    tone: "amber",
   },
   {
     claim: "The separate BTC baseline evidence pipeline is operational.",

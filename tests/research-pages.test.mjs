@@ -82,15 +82,15 @@ test("behavioral case study retains every published result and its conditional i
   assert.match(html, /href="\/research\/microstructure"/);
 });
 
-test("frozen scientific values and historical caveats remain unchanged when moved off Home", () => {
+test("R15 replaces the legacy strategy panel while forecast evidence remains unchanged", () => {
   const historical = historicalResearchPerformance;
   assert.deepEqual(historical.rows.map(row => [row.name, row.role, row.returnValue, row.sharpe, row.maxDrawdown]), [
-    ["Daily EMA 50/200", "retained", "+165.92%", "0.769", "-29.37%"],
-    ["BTC price-only buy & hold", "reference", "+38.33%", "0.394", "-66.94%"],
-    ["BTC perpetual long", "reference", "+2.27%", "0.265", "-68.12%"],
+    ["R15 RAW 1X", "retained", "+1,463.45%", "1.955", "-46.03%"],
+    ["R15 VOLNORM 1X", "reference", "+6,763.15%", "3.170", "-21.48%"],
+    ["R15 BLEND 1X", "reference", "+6,001.97%", "2.998", "-24.82%"],
   ]);
   const caveats = historical.caveats.join(" ");
-  for (const term of [/RETROSPECTIVE/, /post-selection/, /3 completed historical trades/, /97\.4%/, /not untouched OOS confirmation/, /not live performance/]) assert.match(caveats, term);
+  for (const term of [/EXPOSED HISTORICAL DEVELOPMENT/, /not untouched OOS confirmation/, /Commission, spread, slippage and funding are zero/, /maker fillability/, /not promoted/, /3 Oct 2026/]) assert.match(caveats, term);
   const metrics = getMetricGroup(researchEvidence.independentRiskForecast).metrics.map(metric => metric.value);
   assert.deepEqual(metrics, ["+12.58%", "+11.65%", "4 / 4"]);
   assert.equal(portfolioStudies.find(study => study.id === "risk-forecasting").metric, metrics[0]);
@@ -145,4 +145,50 @@ test("public identity stays meanydeany and the real name appears only once in th
   const shell = fs.readFileSync(path.join(root, "components/site-shell.tsx"), "utf8");
   assert.match(shell, /aria-label="meanydeany \/ Home"/);
   assert.doesNotMatch(shell, /woosub shin|\bWoosub\b|신우섭/i);
+});
+
+
+test("R15 presents model design before selection detail without changing evidence", () => {
+  const html = renderPage("app/projects/btc-final-system/page.tsx");
+  const text = textContent(html);
+  assert.match(text, /R15: from signal to system/);
+  assert.match(text, /One benchmark\. Two extensions/);
+  for (const term of [/Signal design/, /Volatility-aware modeling/, /Dual-head ensemble/, /Promising extensions/, /paired comparisons did not establish/, /neither extension has been promoted/, /post-outcome Ridge-only diagnostic/, /At that checkpoint, forward-valid origins were 0/, /LIVE_READY was false/]) assert.match(text, term);
+  for (const term of [/Hypothetical gross results/, /commission, spread, slippage and funding set to zero/, /1 Jan 2022 to 29 Jul 2026/, /1 Jan 2025 to 29 Jul 2026/]) assert.match(text, term);
+  assert.doesNotMatch(text, /Daily EMA 50\/200|Dual EMA|failed successor|Not yet the execution edge/);
+  assert.match(html, /href="\/research\/r15-summary.json"/);
+  assert.equal((html.match(/<h1\b/g) ?? []).length, 1);
+  assert.ok(text.indexOf("My contribution") < text.indexOf("+6,763.15%"));
+  assert.ok(text.indexOf("Hypothetical gross results") < text.indexOf("+6,763.15%"));
+});
+
+test("R15 published metrics match the reviewed numeric snapshot and retain original decisions", () => {
+  const summary = JSON.parse(fs.readFileSync(path.join(root, "public/research/r15-summary.json"), "utf8"));
+  assert.equal(summary.incumbent, "R15_RAW_1X");
+  assert.equal(summary.evidence, "EXPOSED_HISTORICAL_DEVELOPMENT");
+  assert.equal(summary.metrics.length, 6);
+  assert.deepEqual(summary.frictions_bp, { commission: 0, spread: 0, slippage: 0, funding: 0 });
+  assert.equal(summary.selection.volnorm.promoted, false);
+  assert.equal(summary.selection.blend.promoted, false);
+  assert.equal(summary.selection.volnorm.verdict, "NO_SUPPORTED_RETURN_UPGRADE_RETAIN_R15");
+  assert.equal(summary.selection.blend.verdict, "POSITIVE_GROSS_CANDIDATE_NO_SUPPORTED_UPGRADE");
+  assert.equal(summary.runtime_checkpoint.is_live_status, false);
+  assert.match(summary.runtime_checkpoint.as_of_utc, /^2026-10-03/);
+  const text = textContent(renderPage("app/projects/btc-final-system/page.tsx"));
+  for (const row of summary.metrics) {
+    const gross = `+${row.return_pct.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%`;
+    const mdd = `${row.minute_open_mdd_pct.toFixed(2)}%`;
+    assert.ok(text.includes(gross), gross);
+    assert.ok(text.includes(mdd), mdd);
+  }
+  assert.equal(researchEvidence.r15Candidate.reviewedAt, "2026-10-04");
+  assert.doesNotMatch(JSON.stringify(summary), /\/Users\/|\/home\/|api[_-]?key/i);
+});
+
+test("R15 navigation replaces the retired EMA pitch across the portfolio", () => {
+  for (const route of ["app/research/page.tsx", "app/resume/page.tsx", "app/projects/page.tsx", "app/projects/multi-asset-research-lab/page.tsx"]) {
+    const text = textContent(renderPage(route));
+    assert.match(text, /R15/, route);
+    assert.doesNotMatch(text, /Dual EMA|Daily EMA 50\/200|165\.92%/, route);
+  }
 });

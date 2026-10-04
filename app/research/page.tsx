@@ -76,7 +76,7 @@ export default function ResearchPage() {
         <ResearchContents items={[
           { href: "#risk-forecasting", label: "Risk forecasting" },
           { href: "#measurement", label: "Measurement" },
-          { href: "#systematic-strategies", label: "Historical systems" },
+          { href: "#systematic-strategies", label: "Strategy research" },
           { href: "#academic", label: "Academic research" },
           { href: "#current-research", label: "Current / next" },
           { href: "#methodology", label: "Methodology" },
@@ -101,10 +101,10 @@ export default function ResearchPage() {
           </div>
         </ResearchSection>
 
-        <ResearchSection id="systematic-strategies" eyebrow="Retained historical research" title="Retained historical systems">
-          <p className="research-prose">These records document historical strategy research. Post-selection comparisons and later forward observation remain distinct from independent ASRA confirmation.</p>
+        <ResearchSection id="systematic-strategies" eyebrow="Strategy research" title="Model design and comparative evaluation">
+          <p className="research-prose">R15 connects short-horizon signal design, volatility-aware modeling and ensemble evaluation. Historical gross results and legacy strategy studies retain their own assumptions; they are separate from independent forecast confirmation and actual account performance.</p>
           <div className="finding-list">
-            <ResearchFindingCard record={researchEvidence.dailyEma} />
+            <ResearchFindingCard record={researchEvidence.r15Candidate} />
             <ResearchFindingCard record={researchEvidence.c4Challenger} />
           </div>
         </ResearchSection>
