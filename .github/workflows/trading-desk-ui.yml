@@ -31,6 +31,7 @@ jobs:
         run: |
           npx tsc --noEmit
           npx eslint proxy.ts app/layout.tsx app/page.tsx app/asra/page.tsx app/contact/page.tsx app/resume/page.tsx app/research/page.tsx app/admin/traffic/page.tsx app/admin/api/traffic/route.ts components/site-shell.tsx components/site-analytics.tsx components/contact-form.tsx components/admin-traffic-dashboard.tsx lib/site-metadata.ts lib/admin-traffic-auth.ts lib/vercel-web-analytics.ts lib/owner-analytics.ts components/btc-trading-desk.tsx components/home-live-telemetry.tsx components/portfolio-home.tsx components/portfolio-editorial.tsx components/trading-accounting-guide.tsx lib/portfolio-content.ts lib/research-evidence.ts lib/public-progress.ts lib/content.ts tests/r15-portfolio.browser.mjs app/projects/btc-final-system/page.tsx app/projects/btc-regime-challenger/page.tsx app/projects/multi-asset-research-lab/page.tsx lib/trading-journal.ts app/trading/page.tsx app/projects/page.tsx app/papers/page.tsx app/research/trader-behavior/page.tsx app/research/microstructure/page.tsx app/projects/btc-futures-research/live-position/page.tsx
+          npx eslint lib/contact-draft.ts app/api/contact/status/route.ts tests/contact-draft.test.mjs tests/contact.browser.mjs
       - run: npm run build
       - name: Install transient browser QA tools
         run: |
@@ -48,6 +49,8 @@ jobs:
           npx agent-browser snapshot -i > /tmp/portfolio-qa/agent-browser-snapshot.txt
           npx agent-browser screenshot /tmp/portfolio-qa/agent-browser-home.png --full
           npx agent-browser close
+      - name: Contact fallback, delivery failure and mobile layout checks
+        run: node tests/contact.browser.mjs
       - name: Existing account interaction and failure-mode checks
         run: node tests/trading-desk.browser.mjs
       - name: Private traffic admin authentication and dashboard checks
