@@ -16,6 +16,8 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
+      - name: Check read-only withdrawal publisher
+        run: python3 tests/binance-withdrawal-publisher.test.py
       - name: Review installed framework guidance and retain reviewed source
         run: |
           mkdir -p /tmp/portfolio-qa

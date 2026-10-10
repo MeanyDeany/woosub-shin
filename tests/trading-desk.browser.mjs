@@ -28,6 +28,7 @@ await page.route('**/public/execution/*.json', async route => {
   }
   if (file === 'rolling-performance.json') body = { ...common, schema_version: 2, dataset_id: 'binance_usdm_public_rolling_performance_v2', scope: 'BINANCE_USDM_ACCOUNT_WIDE_ROLLING_TRADING_V2', reporting_currency: 'USD', return_method: 'BINANCE_FUTURES_WALLET_PNL_V1', capital_flow_handling: 'SUBTRACT_NET_CAPITAL_FLOW_ADD_GROSS_INFLOW_TO_DENOMINATOR_V1', secondary_return_method: 'MODIFIED_DIETZ_FLOW_ADJUSTED_V2', secondary_capital_flow_handling: 'EXCLUDE_NEUTRAL_FLOWS_TIME_WEIGHTED_V2', authority_classification: 'PERFORMANCE_TELEMETRY_ONLY', windows: [7,30].map(days=>({ window: `${days}D`, requested_days: days, start_observed_at_utc: new Date(Date.parse(observed)-days*86400000).toISOString(), end_observed_at_utc: observed, actual_duration_seconds: days*86400, net_pnl: days === 7 ? 38 : 95, return_pct: days === 7 ? 1.9 : 4.75, flow_adjusted_net_pnl: days === 7 ? 42 : 104, flow_adjusted_return_pct: days === 7 ? 2.1 : 5.2 })) };
   if (file === 'trade-day-win-rate.json') body = { schema_version: 4, dataset_id: 'binance_usdm_public_trade_day_win_rate_v4', generated_at_utc: new Date().toISOString(), observed_at_utc: observed, coverage_start_utc: '2024-11-13', scope: 'BINANCE_USDM_ACCOUNT_WIDE_TRADE_DAY_WIN_RATE_V4', historical_base_through_utc: '2026-09-28', live_extension_start_utc: '2026-09-29T00:00:00Z', days: [{ date_utc: '2026-09-30', realized_pnl: 88.825, commission: 0, net_pnl: 88.825, outcome: 'WIN' }], cash_method: 'REALIZED_PNL_PLUS_COMMISSION_PLUS_FUNDING_BY_UTC_DAY_V1', cash_days: [{ date_utc: '2026-09-29', realized_pnl: 0, commission: 0, funding_fee: -0.4329135, net_pnl: -0.4329135 }, { date_utc: '2026-09-30', realized_pnl: 88.825, commission: 0, funding_fee: -2.44223219, net_pnl: 86.38276781 }], resolved_trade_day_count: 223, winning_trade_day_count: 153, losing_trade_day_count: 70, win_rate_pct: 100*153/223, method: 'REALIZED_PNL_PLUS_COMMISSION_EX_FUNDING_BY_UTC_DAY_V1', day_basis: 'UTC', funding_included: false, trading_commission_included: true, historical_bnb_commission_valuation: 'CONTEMPORANEOUS_BNBUSDT_1M_CLOSE_ESTIMATE', live_commission_basis: 'AUTHENTICATED_USDT_USDC_LEDGER_PAR', freshness_ttl_seconds: ttlSeconds, authority_classification: 'PERFORMANCE_TELEMETRY_ONLY', external_action_permitted: false, telemetry_sha256: sha };
+  if (file === 'external-withdrawals.json') body = { schema_version: 1, dataset_id: 'binance_public_external_withdrawals_v1', generated_at_utc: new Date().toISOString(), observed_at_utc: observed, coverage_start_utc: '2025-04-12T22:44:30Z', historical_base_through_utc: '2026-09-25T05:29:15Z', last_withdrawal_at_utc: observed, completed_withdrawal_count: 25, live_completed_withdrawal_count: 1, live_market_valued_withdrawal_count: 0, total_net_sent_usdt_equivalent_estimate: 5972.60577308, withdrawal_fee_usdt_equivalent_estimate: 10.26783582, total_account_outflow_usdt_equivalent_estimate: 5982.8736089, valuation_label: 'HISTORICAL_USDT_EQUIVALENT_ESTIMATE', live_valuation_method: 'STABLECOIN_PAR_OTHER_ASSETS_APPLY_TIME_1M_CLOSE_ESTIMATE', freshness_ttl_seconds: 900, external_action_permitted: false, telemetry_sha256: sha };
   await route.fulfill({ status: body ? 200 : 404, contentType: 'application/json', body: JSON.stringify(body ?? {}) });
 });
 const url = 'http://localhost:3000/projects/btc-futures-research/live-position';
@@ -40,10 +41,10 @@ try {
   assert.match(await winRateMetric.textContent(), /68\.61%/);
   assert.match(await winRateMetric.textContent(), /153 wins \/ 70 losses \/ 223 resolved UTC days \/ funding excluded \/ live/);
   const withdrawalMetric = page.locator('.td-metric').filter({hasText:'External withdrawals'});
-  await withdrawalMetric.waitFor();
-  assert.match(await withdrawalMetric.textContent(), /5,942\.87 USDT eq\./);
-  assert.match(await withdrawalMetric.textContent(), /net sent ≈ 5,933\.11 USDT eq\./);
-  assert.match(await withdrawalMetric.textContent(), /fees ≈ 9\.77 USDT eq\./);
+  await withdrawalMetric.getByText(/25 completed/).waitFor();
+  assert.match(await withdrawalMetric.textContent(), /5,982\.87 USDT eq\./);
+  assert.match(await withdrawalMetric.textContent(), /net sent ≈ 5,972\.61 USDT eq\./);
+  assert.match(await withdrawalMetric.textContent(), /fees ≈ 10\.27 USDT eq\./);
   await page.locator('#journal-note').waitFor({ state:'visible' });
   const skip = page.locator('.research-skip-link');
   assert.equal(await skip.evaluate(el => getComputedStyle(el).opacity), '0');
